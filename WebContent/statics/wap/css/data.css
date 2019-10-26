@@ -1,0 +1,182 @@
+.sreach{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 97%;
+    height: 30px;
+    line-height: 30px;
+    background: #ffffff;
+    margin: 7px auto;
+    border-radius: 15px;
+}
+.sreach input{
+    width: 70%;
+    margin-left: 20px;
+    font-size: 12px;
+    color: #999;
+    border: none;
+    outline: none;
+}
+.sreach .enter{
+    width: 18%;
+    height: 30px;
+    font-size: 12px;
+    color: #ffffff;
+    background: #f76623;
+    line-height: 30px;
+    text-align: center;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.sreach .enter a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+}
+/*价格*/
+.same_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    background: #fff;
+}
+.same_title .lefts{
+    display: flex;
+    align-items: center;
+    width:70%;
+}
+.same_title .line{
+    height: 18px;
+    margin-right: 5px;
+}
+.same_title .product{
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+}
+.same_title .top_triangle{
+    width: 0;
+    height: 0;
+    margin: 12px 5px 0;
+    border-width:3px;
+    border-style: solid;
+    border-color:#fa6d35 transparent transparent transparent;
+}
+.same_title .assure{
+    margin-top: 2px;
+    font-size: 12px;
+    color: #333;
+}
+.price_run .same_title{
+    margin: 7px 0;
+}
+.run_swiper{
+    width: 97%;
+    margin: 0 auto;
+    background: #ffffff;
+}
+.run_swiper .runImg img{
+    width: 100%;
+    height: 240px;
+}
+.run_swiper .swiper-container{
+    height: 240px;
+}
+.run_swiper .swiper-container .swiper-pagination{
+		margin-bottom:10px; 
+	}
+.addclass{
+    outline: none;
+    opacity: 1;
+    background: #fa6d35!important;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.addclass0{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 100%;
+    border: 1px solid #fa6d35;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.run_swiper .addclass0{
+    display: block;
+    margin-top: 5px;
+}
+/*价格查询*/
+.price_select{
+    margin-bottom:50px;
+}
+.price_select .same_title{
+    margin: 7px 0;
+}
+.in_box{
+    width: 97%;
+    margin: 0 auto;
+}
+.in_box.head{
+    background: #faf2e7;
+}
+.in_box ul{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 0 8px;
+}
+.in_box ul li{
+    font-size: 12px;
+    color: #333333;
+    font-weight: bold;
+    list-style: none;
+}
+.in_box ul li.first{
+    width: 13%;
+}
+.in_box ul li.second{
+	margin-left:5px;
+    width: 50%;
+    overflow: hidden;/*超出部分隐藏*/
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+}
+.in_box ul li.third{
+	margin-left:5px;
+    width: 16%;
+}
+.in_box ul li.fourth{
+	margin-left:5px;
+    width: 11%;
+    text-align: center;
+}
+.in_box ul li.fourth img{
+    width: 15px;
+}
+.in_box ul li.fifth{
+	margin-left:20px;
+    width: 20%;
+    overflow: hidden;/*超出部分隐藏*/
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+}
+.list ul li{
+    font-weight: normal;
+}
+.list:nth-child(even){
+    background: #fff;
+}
+.list:nth-child(odd){
+    background: #f7f7f7;
+}
+@media screen and (min-width:0px) and (max-width:320px){
+    .in_box ul li.third {
+        width: 18%;
+    }
+}

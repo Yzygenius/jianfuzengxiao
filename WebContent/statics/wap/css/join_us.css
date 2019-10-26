@@ -1,0 +1,229 @@
+.banner{
+    width: 100%;
+    margin: 7px 0 4px;
+}
+.banner img{
+    width: 100%;
+    height: 126px;
+}
+.join_nav ul{
+    display: flex;
+    justify-content:space-between;
+
+}
+.join_nav ul li{
+    position: relative;
+    width: 99px;
+    height: 65px;
+    box-sizing: border-box;
+    padding: 13px 0;
+    color: #b8c4ce;
+    text-align: center;
+    list-style: none;
+
+}
+.join_nav ul li.active{
+    background: #fff;
+    border-bottom: 2px solid #f76623;
+    color: #f76623;
+}
+.join_nav ul li img{
+    width: 18px;
+}
+.join_nav ul li p{
+    font-size: 12px;
+    margin-top: 4px;
+}
+.join_nav ul li:first-child p{
+    margin-top: 0;
+}
+.join_nav .sj{
+    display: none;
+    position: absolute;
+    bottom: -2px;
+    left: 45%;
+    width: 0;
+    height: 0;
+    border-left:4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 8px solid #f76623;
+}
+.join_box{
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 7px;
+    padding: 20px 0;
+    background: #ffffff;
+}
+/*公司介绍*/
+.sameName{
+    display: flex;
+    box-sizing: border-box;
+    padding-bottom: 7px;
+    width: 97%;
+    margin: 0 auto;
+    border-bottom: 1px solid #eff3f5;
+}
+.sameName p{
+    font-size: 17px;
+    color: #fa6d35;
+}
+.sameName span{
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 12px;
+    color: #cccccc;
+}
+.com_main{
+    box-sizing: border-box;
+    padding: 20px 15px;
+}
+.com_main .title{
+    text-align: center;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
+}
+.com_main span{
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    box-sizing: border-box;
+    padding-bottom: 15px;
+}
+.com_main p{
+    font-size: 12px;
+    color: #4b4545;
+    text-indent: 2em;
+    line-height: 22px;
+}
+.main_swiper{
+    width: 100%;
+    margin: 3px auto;
+    background: #fff;
+}
+.main_swiper .name_box{
+    float: left;
+    width: 165px;
+    box-sizing: border-box;
+    padding: 15px 0px;
+    margin-left: 1px;
+}
+.main_swiper .name_box img{
+    width: 100%;
+    height: 120px;
+    box-shadow: 0 0 3px rgba(124,114,90,.35);
+}
+/*留言*/
+.messages{
+    box-sizing: border-box;
+    padding: 20px 15px
+}
+.to{
+    display: block;
+    box-sizing: border-box;
+    padding: 0px 20px 3px;
+    font-size: 12px;
+    color: #333;
+}
+.messages p{
+    font-size: 12px;
+    color: #333;
+}
+.messages textarea{
+    width: 100%;
+    height: 201px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #eff3f5;
+    outline: none;
+}
+.messages .btn{
+    float: right;
+    width: 101px;
+    height: 31px;
+    margin-top: 5px;
+    line-height: 31px;
+    text-align: center;
+    background-color: #f76623;
+    color: #fff;
+    font-size: 12px;
+}
+.joinUs{
+    box-sizing: border-box;
+    padding: 10px 15px;
+}
+.joinUs .sele_title ul{
+    display: flex;
+    align-items: center;
+}
+.joinUs .sele_title ul li{
+    display: flex;
+    align-items: center;
+    height: 25px;
+    line-height:25px;
+    text-align: center;
+    list-style: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #333;
+}
+.joinUs .sele_title ul span{
+    box-sizing: border-box;
+    padding: 0 3px;
+}
+.joinUs .sele_title ul li p.add_class{
+    color: #f76623;
+    border-bottom: 1px solid #f76623;
+}
+.joinUs .sele_text{
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+.joinUs .sele_text h5{
+    font-weight: normal;
+    color: #333;
+    font-size: 13px;
+}
+.joinUs .sele_text p{
+    color: #666666;
+    font-size: 13px;
+    line-height: 22px;
+}
+.joinUs .join_foot{
+    box-sizing: border-box;
+    padding: 10px 0;
+    border-top: 1px solid #eff3f5;
+}
+.joinUs .join_foot p{
+    font-size: 12px;
+    color: #333;
+    line-height: 20px;
+}
+.joinUs .join_foot p span{
+    color: #f76623;
+}
+/*联系我们*/
+.contact_us{
+    box-sizing: border-box;
+    padding: 20px 15px;
+}
+.contact_us p span{
+    color: #666;
+}
+.contact_us p{
+    color: #333;
+    font-size: 13px;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+@media screen and (min-width:0px) and (max-width:320px){
+    .main_swiper .name_box img {
+        width: 100%;
+        height: 97px;
+        box-shadow: 0 0 3px rgba(124,114,90,.35);
+    }
+}

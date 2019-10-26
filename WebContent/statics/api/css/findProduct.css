@@ -1,0 +1,65 @@
+#mainArea{
+	width: calc(100% - 80px);
+	margin-left: 40px;
+}
+#mainArea #searchBar{
+	padding: 0 20px;
+	margin: 20px 0;
+	background: #ffffff;
+}
+#mainArea #searchBar li{
+	padding: 20px 0 5px 0;
+	border-bottom: 1px solid #e6e6e6;
+	overflow: hidden;
+}
+#mainArea #searchBar .searchTitle{
+	width: 80px;
+	text-align: right;
+	font-size: 16px;
+	color: #FA6D35;
+	float: left;
+}
+#mainArea #searchBar .active{
+	color: #ffffff;
+	background: #FA6D35;
+}
+.managementTypeChoose,.managementProductChoose,.locationChoose{
+	width: calc(100% - 80px);
+	float: left;
+	overflow: hidden;
+}
+#searchBar .managementTypeChoose span,#searchBar .managementProductChoose span,#searchBar .locationChoose span{
+	margin-right: 10px;
+	cursor: pointer;
+	float: left;
+	line-height: 25px;
+	padding: 0 5px;
+	margin-bottom: 15px;
+}
+.managementTypeChoose span:hover,.managementProductChoose span:hover,.locationChoose span:hover{
+	color: #ffffff;
+	background: #FA6D35;
+}
+#searchBar #keyWord{
+	width: 250px;
+	height: 40px;
+	outline: none;
+	border: 1px solid #a5b0b9;
+	text-indent: 10px;
+	float: right;
+	color: #666666;
+}
+#searchBar #searchBtn{
+	width: 60px;
+	height: 42px;
+	background: #FA6D35;
+	color: #ffffff;
+	text-align: center;
+	line-height: 42px;
+	float: right;
+	cursor: pointer;
+}
+#companyList{
+	margin-top: 20px;
+	height: 350px;
+}

@@ -1,0 +1,98 @@
+#mainArea{
+	width: calc(100% - 80px);
+	margin: 20px 40px;
+	overflow: hidden;
+}
+#mainArea #newsLeft{
+	float: left;
+	width: calc(80% - 96px);
+	overflow: hidden;
+	background: #ffffff;
+	padding: 40px;
+}
+#mainArea #newsRight{
+	float: left;
+	width: calc(20% - 4px);
+	margin-left: 20px;
+}
+#newsLeft .newsLeftTitle,#newsLeft .newsLeftList{
+	float: left;
+}
+#newsLeft #newsTitle #articleTitle{
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 50px;
+	
+}
+#newsLeft #newsTitle #articleDate{
+	font-size: 15px;
+	color: #999999;
+	text-align: center;
+	line-height: 50px;
+}
+#newsLeft #newsContent p{
+	color: #666666;
+	text-indent: 34px;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+#newsLeft #share{
+	overflow: hidden;
+	margin-top: 40px;
+}
+#newsLeft #share span{
+	float: left;
+	overflow: hidden;
+}
+#newsLeft #share span:first-child{
+	color: #666666;
+	margin: 0 20px 0 30px;
+}
+#newsLeft #share img{
+	width: 20px;
+	display: block;
+}
+#newsLeft #share a{
+	margin-right: 10px;
+	float: left;
+}
+
+
+
+
+#newsRight .titleName img{
+	height: 28px;
+}
+#newsRight .titleName span{
+	font-size: 25px;
+}
+.newsList ul{
+	background: #ffffff;
+	padding: 20px 10px;
+}
+.newsList li{
+	overflow: hidden;
+}
+.newsList li span{
+	float: left;
+}
+.newsList .redPoint{
+	width: 5px;
+	height: 5px;
+	background: #FA6D35;
+	margin: 12.5px 10px;
+}
+.newsList li span:nth-child(2){
+	width: calc(100% - 25px);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #000000;
+	font-size: 15px;
+	line-height: 30px;
+}
+.newsList li span:nth-child(2):hover{
+	color: #FA6D35;
+	cursor: pointer;
+}

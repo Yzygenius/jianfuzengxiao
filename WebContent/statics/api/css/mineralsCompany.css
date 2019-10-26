@@ -1,0 +1,333 @@
+#mainArea{
+	width: calc(100% - 80px);
+	margin-left: 40px;
+}
+#mainArea #searchBar{
+	padding: 0 20px;
+	margin: 20px 0;
+	background: #ffffff;
+}
+#mainArea #searchBar li{
+	padding: 20px 0 5px 0;
+	border-bottom: 1px solid #e6e6e6;
+	overflow: hidden;
+}
+#mainArea #searchBar .searchTitle{
+	width: 80px;
+	text-align: right;
+	font-size: 16px;
+	color: #FA6D35;
+	float: left;
+}
+#mainArea #searchBar .active{
+	color: #ffffff;
+	background: #FA6D35;
+}
+.managementTypeChoose,.managementProductChoose,.locationChoose{
+	width: calc(100% - 80px);
+	float: left;
+	overflow: hidden;
+}
+#searchBar .managementTypeChoose span,#searchBar .managementProductChoose span,#searchBar .locationChoose span{
+	margin-right: 10px;
+	cursor: pointer;
+	float: left;
+	line-height: 25px;
+	padding: 0 5px;
+	margin-bottom: 15px;
+}
+.managementTypeChoose span:hover,.managementProductChoose span:hover,.locationChoose span:hover{
+	color: #ffffff;
+	background: #FA6D35;
+}
+#searchBar #keyWord{
+	width: 250px;
+	height: 40px;
+	outline: none;
+	border: 1px solid #a5b0b9;
+	text-indent: 10px;
+	float: right;
+	color: #666666;
+}
+#searchBar #searchBtn{
+	width: 60px;
+	height: 42px;
+	background: #FA6D35;
+	color: #ffffff;
+	text-align: center;
+	line-height: 42px;
+	float: right;
+	cursor: pointer;
+}
+#starCompany{
+	background: #ffffff;
+	margin: 20px 0;
+	overflow: hidden;
+}
+#starCompany #companyLeft{
+	width: calc(20% - 20px);
+	height: 100%;
+	background: #fd6a35;
+	float: left;
+	margin-left: 20px;
+}
+#companyLeft img{
+	height: 50px;
+	display: block;
+	margin: 20px auto;
+}
+#companyLeft p{
+	color: #ffffff;
+	text-align: center;
+	font-size: 30px;
+}
+#companyLeft div{
+	overflow: hidden;
+	width: 151px;
+	margin: 20px auto;
+}
+#companyLeft div:first-child{
+	margin-top: calc(50% - 129px);
+}
+#companyLeft span{
+	width: 34px;
+	height: 46px;
+	background: url(/jikuang/statics/api/images/blackbg.png) no-repeat;
+	background-size: 100% 100%;
+	float: left;
+	margin-right: 5px;
+	color: #ffffff;
+	font-size: 25px;
+	text-align: center;
+	line-height: 46px;
+}
+#companyLeft span:last-child{
+	margin-right: 0;
+}
+
+#starCompany #companyRight{
+	width: calc(80% - 30px);
+	height: 100%;
+	float: left;
+	margin-left: 10px;
+}
+#companyRight .swiper-slide img{
+	width: 100%;
+	display: block;
+}
+#companyRight .swiper-slide p{
+	text-align: center;
+	line-height: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#companyRight .swiper-container{
+	width: 100%;
+	height: calc(100% - 20px);
+	margin: 10px 0;
+}
+
+
+
+#companyRanking{
+	width: 20%;
+	float: left;
+}
+#companyRanking #productList{
+	margin-top: 20px;
+	background: #ffffff;
+}
+#productList li{
+	width: calc(100% - 40px);
+	padding: 20px 20px 10px 20px;
+	border-top: 2px solid #e7e7e7;
+}
+#productList li:first-child{
+	border-top:0;
+}
+#productList li img{
+	width: 100%;
+	display: block;
+}
+#productList li p{
+	text-align: center;
+	line-height: 30px;
+	color: #000000;
+}
+#productList li p:last-child{
+	color: red;
+}
+.companyList ul{
+	background: #ffffff;
+	padding: 20px 10px;
+}
+.companyList li{
+	overflow: hidden;
+}
+.companyList li span{
+	float: left;
+}
+.companyList .redPoint{
+	width: 5px;
+	height: 5px;
+	background: #FA6D35;
+	margin: 12.5px 10px;
+}
+.companyList .threePoint{
+	width: 14px;
+    height: 14px;
+    background: #FA6D35;
+    margin: 8px 5.5px;
+    color: #ffffff;
+    font-size: 10px;
+    text-align: center;
+    line-height: 14px;
+}
+.companyList li span:nth-child(2){
+	width: calc(100% - 25px);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #666666;
+	font-size: 16px;
+	line-height: 30px;
+}
+.companyList li span:nth-child(2):hover{
+	color: #FA6D35;
+	cursor: pointer;
+}
+#companyList{
+	width: calc(80% - 20px);
+	margin-left: 20px;
+	float: left;
+}
+#companyList ul li{
+	background: #ffffff;
+	margin-bottom: 20px;
+	padding: 20px;
+	overflow: hidden;
+}
+#companyList .listLeft{
+	float: left;
+	width: 30%;
+}
+#companyList .listLeft div{
+	margin: 10px 0;
+	overflow: hidden;
+}
+#companyList .listLeft div span{
+	color: #666666;
+	float: left;
+}
+#companyList .listLeft div .leftTitle{
+	color: #a1a1a1;
+	width: 80px;
+	margin-right: 20px;
+}
+#companyList .listLeft .companyName{
+	font-size: 22px;
+	color: #000000;
+	cursor: pointer;
+}
+#companyList .listLeft .companyName:hover{
+	cursor: pointer;
+	color: #fa6d35;
+}
+#companyList .listRight{
+	width: 70%;
+	float: right;
+	overflow: hidden;
+}
+.listRight .goodsImagePrice{
+	width: 30%;
+	float:left;
+}
+.listRight .goodsImagePrice img{
+	width: 100%;
+	display:block;
+}
+.goodsImagePrice p{
+	color:red;
+	font-size:20px;
+	text-align:center;
+	line-height:40px;
+}
+.listRight .goodsChart{
+	width: 60%;
+	float:left;
+	margin-left:10%;
+}
+.listRight .goodsChart img{
+}
+
+
+
+#companyList #pageNumList{
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+#companyList #pageNumList ul{
+	overflow: hidden;
+	float: right;
+}
+#pageNumList ul li{
+	float: left;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	overflow: hidden;
+}
+#pageNumList ul li span{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	float: left;
+	border-top: 2px solid #cccccc;
+	border-bottom: 2px solid #cccccc;
+	border-left: 2px solid #cccccc;
+	cursor: pointer;
+}
+#pageNumList ul li span img{
+	margin: 7px 0;
+}
+#pageNumList li .active{
+	color: #ffffff;
+	background: #FA6D35;
+	border: 2px solid #FA6D35;
+}
+#pageNumList li .activeNext{
+	border-left: 0;
+}
+#pageNumList .pageNumbers{
+	/*width: 160px;*/
+	overflow: hidden;
+}
+#pageNumList #pageNumPullDown{
+	height: 30px;
+	border: 2px solid #cccccc;
+	margin-left: 10px;
+}
+#pageNumPullDown span{
+	border-width: 0;
+}
+#pageNumPullDown div{
+	overflow: hidden;
+}
+#pageNumPullDown div p{
+	float: left;
+	width: 25px;
+	text-align: center;
+	line-height: 30px;
+}
+#pageNumPullDown div img{
+	float: left;
+	margin: 10px 5px;
+}
+#pageNumList #pageText{
+	float: right;
+	color: #666666;
+	line-height: 34px;
+	margin-left: 20px;
+}

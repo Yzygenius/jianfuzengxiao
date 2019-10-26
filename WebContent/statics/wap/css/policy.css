@@ -1,0 +1,170 @@
+/*搜索*/
+.sreach{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 97%;
+    height: 30px;
+    line-height: 30px;
+    background: #ffffff;
+    margin: 7px auto;
+    border-radius: 15px;
+}
+.sreach input{
+    width: 70%;
+    margin-left: 20px;
+    font-size: 12px;
+    color: #999;
+    border: none;
+    outline: none;
+}
+.sreach .enter{
+    width: 18%;
+    height: 30px;
+    font-size: 12px;
+    color: #ffffff;
+    background: #f76623;
+    line-height: 30px;
+    text-align: center;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.sreach .enter a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+}
+.list{
+    width: 97%;
+    margin:7px auto;
+    box-sizing: border-box;
+    padding:15px 7px 15px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+.list ul li{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #333333;
+}
+.list ul li .text{
+    width: 75%;
+    box-sizing: border-box;
+    padding: 10px 0 10px 15px;
+}
+.list ul li .text.active{
+    color: #f76623;
+}
+.list ul li .date{
+    box-sizing: border-box;
+    padding-top: 11px;
+    color: #999;
+}
+.list ul li span{
+    position: absolute;
+    left: 0;
+    top: 1px;
+    display: block;
+    width: 5%;
+    height: 10px;
+    color: #f76623;
+    font-size:25px;
+}
+.list ul li.hidden{
+    display: none;
+}
+.list .see_more{
+    width: 28px;
+    margin: 5px auto 0;
+}
+.list .see_more img{
+    width: 100%;
+    margin-bottom: 5px;
+}
+/*政府政策*/
+.policy .same_title{
+    margin: 7px 0;
+}
+.same_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    background: #fff;
+}
+.same_title .lefts{
+    display: flex;
+    align-items: center;
+    width:70%;
+}
+.same_title .line{
+    height: 18px;
+    margin-right: 5px;
+}
+.same_title .product{
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+}
+.same_title .top_triangle{
+    width: 0;
+    height: 0;
+    margin: 12px 5px 0;
+    border-width:3px;
+    border-style: solid;
+    border-color:#fa6d35 transparent transparent transparent;
+}
+.same_title .assure{
+    margin-top: 2px;
+    font-size: 12px;
+    color: #333;
+}
+.same_title .more a{
+    color: #333333;
+}
+.same_title .more{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #333;
+}
+.same_title .more img {
+    width: 6px;
+    margin-left: 5px;
+}
+.policy .swiper3{
+    width: 97%;
+    margin: 0 auto 50px;
+    background: #ffffff;
+}
+.policy .swiper3 .foot_banner{
+    width: 100%;
+}
+.policy .swiper3 .foot_banner img {
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+}
+.addclass{
+    outline: none;
+    opacity: 1;
+    background: #fa6d35!important;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.addclass0{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 100%;
+    border: 1px solid #fa6d35;
+    margin: 0 4px;
+    cursor: pointer;
+}

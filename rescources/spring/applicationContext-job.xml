@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="  
+          http://www.springframework.org/schema/beans  
+          http://www.springframework.org/schema/beans/spring-beans.xsd  
+          http://www.springframework.org/schema/tx  
+          http://www.springframework.org/schema/tx/spring-tx.xsd  
+          http://www.springframework.org/schema/aop  
+          http://www.springframework.org/schema/aop/spring-aop.xsd" default-lazy-init="false">
+	<!-- 1  判断经理人未支付订单30分钟后失效  
+	<bean id="scanner" class="com.bamboo.job.ScannerJob"></bean>
+
+	<bean id="scannerJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="scanner" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="scannerTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="scannerJob" />
+		<property name="cronExpression" value="0 0/30 * * * ?" />
+	</bean>
+	-->
+	<!-- 1 经理人未支付订单30分钟后失效end <property name="cronExpression" value="0/15 *  * * * ?" /> 15秒 <property name="cronExpression" value="0 */1 * * * ?" /> 原来半小时 -->
+	
+	<!-- 2 发货方订单装货时间是否过期   每天晚上12：01触发  
+	<bean id="demindDataOut" class="com.bamboo.job.DemindDataOutJob"></bean>
+
+	<bean id="demindDataOutJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="demindDataOut" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="demindDataOutTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="demindDataOutJob" />
+		<property name="cronExpression" value="0 01 0 ? * *" /> 
+	</bean>
+	-->
+	<!-- 2 发货方订单装货时间是否过期 end -->
+	
+	
+	 <!-- 3 发货方订单过期 给货主发送短信通知   每天早晨08：00触发  
+	<bean id="orderFailureNot" class="com.bamboo.job.OrderFailureNotice"></bean>
+
+	<bean id="orderFailureNoticeJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orderFailureNot" />
+		<property name="targetMethod" value="sendCancel"/>
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="orderFailureNoticeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="orderFailureNoticeJob" />
+		<property name="cronExpression" value="0 00 08 ? * *" /> 
+	</bean>
+	-->
+	
+	<!--3 发货方订单过期 给货主发送短信通知 end 
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="scannerTrigger" />
+				<ref bean="demindDataOutTrigger" />
+				<ref bean="orderFailureNoticeTrigger" />
+			</list>
+		</property>
+	</bean>
+	-->
+</beans>	

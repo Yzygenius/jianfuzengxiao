@@ -1,0 +1,45 @@
+*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+body {
+	text-align: center;
+}
+
+.easyui-layout  fieldset {
+	width: auto;
+	border: 1px solid #95B8E7;
+	padding: 4px;
+	padding-top: 0;
+}
+
+.easyui-layout  fieldset legend {
+	color: #000;
+	font-weight: bold;
+}
+
+/*--index--end--*/ /*search*/
+.search-table {
+	width: 100%;
+}
+
+.search-table,.search-table th,.search-table td {
+	border: 1px solid #deecff;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.search-table th {
+	padding-right: 5px;
+	background: #f9f9f9;
+	text-align: right;
+	vertical-align: middle;
+	width: 100px;
+	font-weight: bold;
+}
+
+.search-table td {
+	padding: 7px 0 7px 0;
+	vertical-align: middle;
+	text-align: left;
+	padding-left: 5px;
+}
+
+

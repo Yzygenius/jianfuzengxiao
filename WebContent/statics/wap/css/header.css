@@ -1,0 +1,115 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-user-select: none;
+    -moz-user-focus: none;
+    -moz-user-select: none;
+}
+
+body{
+    background-color: #eff3f5;
+}
+.clear{
+    clear: both;
+}
+.header{
+    position: relative;
+}
+.login{
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+}
+.login ul{
+    float: right;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0px 5px;
+}
+.login ul li{
+    width: 33px;
+    text-align: center;
+    font-size:12px ;
+    color: #666;
+    list-style: none;
+}
+.login span{
+    display: block;
+    height: 10px;
+    border: 1px solid #ccc;
+}
+.head_nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    /*margin:  0;*/
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 0 8px;
+}
+.head_nav .logo_img{
+    width: 70px;
+    height: 18px;
+}
+.head_nav .logo_img img{
+    width: 100%;
+}
+.head_nav .menu{
+    display: flex;
+    align-items: center;
+    width: 17px;
+    margin-top: 0;
+}
+.head_nav .menu.select{
+    display: none;
+}
+.head_nav .menu img{
+    width: 100%;
+}
+.nav_list{
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 70px;
+    box-sizing: border-box;
+    padding: 0 0 5px;
+    text-align: center;
+    background-color: #ffffff;
+    font-size: 12px;
+    color: #666;
+    border-left: 2px solid #fa6d35;
+    z-index: 99999;
+}
+.nav_list a{
+    color: #666;
+}
+.nav_list ul li{
+    position: relative;
+    height: 22px;
+    line-height: 22px;
+    list-style: none;
+}
+.nav_list ul li.active{
+    color: #fa6d35;
+}
+.nav_list ul li .triangle{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width:0;
+    height:0;
+    border-width:3px 0 3px 3px;
+    border-style:solid;
+    border-color:transparent transparent transparent #fa6d35;/*透明 透明 透明 灰*/
+}
+.nav_list ul li .triangle.show{
+    display: block;
+}

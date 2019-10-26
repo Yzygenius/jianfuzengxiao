@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	   http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+       
+	<!-- 启用缓存注解功能
+	<cache:annotation-driven cache-manager="ehCacheManager" />
+	 -->
+	
+	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+	<bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:/xml/ehcache.xml" />
+	</bean>
+	
+	<bean id="ehCacheManager" class="com.bamboo.framework.cache.impl.EhCacheManager">
+		<property name="ehCacheManager" ref="ehcacheManagerFactory"/>
+		<property name="cacheConfig" ref="cacheConfig"/>
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="cacheManager" class="com.bamboo.framework.cache.CacheManager"
+		destroy-method="shutdown" init-method="initialize" lazy-init="false">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
+	
+	<bean id="cacheConfig" class="com.bamboo.framework.cache.impl.CacheConfig">
+		<property name="configuration">
+			<list>
+				<!-- AREA_INFO表的缓存，ID-VALUE  -->
+				<bean class="com.bamboo.framework.entity.TableCacheConfig">
+					<property name="cacheName" value="table.cache.idvalue.area"/>
+					<property name="cacheType" value="ID_VALUE"/>
+					<property name="sql" value="select area_code as value, area_name as label from area_info" />
+					<property name="configuration">
+						<bean class="net.sf.ehcache.config.CacheConfiguration">
+							<property name="maxElementsInMemory" value="10000"/>
+							<property name="eternal" value="false"/>
+							<property name="overflowToDisk" value="false"/>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

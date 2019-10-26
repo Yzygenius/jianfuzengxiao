@@ -1,0 +1,122 @@
+#mainArea{
+	width: 100%;
+	margin-left: 0;
+}
+#mainArea #bgImage{
+	width: 100%;
+	display: block;
+}
+
+
+#dynamicsList{
+	margin-top: 20px;
+	width: 80%;
+	margin-left: 10%;
+	background: #ffffff;
+	height: 500px;
+	overflow: hidden;
+	list-style: none;
+	padding: 40px;
+}
+#dynamicsList li{
+	overflow: hidden;
+	line-height: 50px;
+}
+#dynamicsList li span{
+	float: left;
+	color: #000000;
+}
+#dynamicsList li .newsTitle{
+	width: calc(100% - 200px);
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+#dynamicsList li span a{
+	color: #000000;
+}
+#dynamicsList .redPoint{
+	width: 5px;
+	height: 5px;
+	background: #FA6D35;
+	border-radius: 50%;
+	margin: 22.5px 10px 22.5px 0;
+}
+#dynamicsList li span:nth-child(2) a:hover{
+	color: #FA6D35;
+	cursor: pointer;
+}
+#dynamicsList li span:last-child{
+	margin-left: 20px;
+	color: #999999;
+}
+
+#pageNumList{
+	width: 80%;
+	margin: 20px 0;
+	margin-left: 10%;
+	overflow: hidden;
+}
+#pageNumList ul{
+	overflow: hidden;
+	float: right;
+}
+#pageNumList ul li{
+	float: left;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	overflow: hidden;
+}
+#pageNumList ul li span{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	float: left;
+	border-top: 2px solid #cccccc;
+	border-bottom: 2px solid #cccccc;
+	border-left: 2px solid #cccccc;
+	cursor: pointer;
+}
+#pageNumList ul li span img{
+	margin: 7px 0;
+}
+#pageNumList li .active{
+	color: #ffffff;
+	background: #FA6D35;
+	border: 2px solid #FA6D35;
+}
+#pageNumList li .activeNext{
+	border-left: 0;
+}
+#pageNumList .pageNumbers{
+	overflow: hidden;
+}
+#pageNumList #pageNumPullDown{
+	height: 30px;
+	border: 2px solid #cccccc;
+	margin-left: 10px;
+}
+#pageNumPullDown span{
+	border-width: 0;
+}
+#pageNumPullDown div{
+	overflow: hidden;
+}
+#pageNumPullDown div p{
+	float: left;
+	width: 25px;
+	text-align: center;
+	line-height: 30px;
+}
+#pageNumPullDown div img{
+	float: left;
+	margin: 10px 5px;
+}
+#pageNumList #pageText{
+	float: right;
+	color: #666666;
+	line-height: 34px;
+	margin-left: 20px;
+}

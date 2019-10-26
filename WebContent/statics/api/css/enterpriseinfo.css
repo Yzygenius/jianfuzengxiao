@@ -1,0 +1,623 @@
+#mainArea{
+	width: 100%;
+	margin-left: 0;
+}
+#head{
+	background: #ffffff;
+	padding: 10px 40px;
+	margin: 20px 0;
+	overflow: hidden;
+}
+#enterpriseImage{
+	float: left;
+	margin: 0 20px;
+}
+#enterpriseImage img{
+	width: 150px;
+	height: 150px;
+	display: block;
+	border-radius: 5px;
+}
+#enterpriseMessage{
+	float: left;
+}
+#enterpriseName{
+	min-width: 200px;
+	height: 40px;
+	font-size: 20px;
+	color: #666666;
+	line-height: 40px;
+	margin-bottom: 45px;
+}
+#enterpriseMessage ul{
+	overflow: hidden;
+}
+#enterpriseMessage ul li{
+	float: left;
+	margin-right: 40px;
+}
+#enterpriseMessage ul li p{
+	width: 118px;
+	color: #fa6d35;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+#enterpriseMessage ul li p img{
+	height: 18px;
+}
+#enterpriseMessage ul li div{
+	text-align: center;
+	vertical-align: middle;
+}
+#enterpriseMessage ul li div img{
+	vertical-align: middle;
+	height: 21px;
+}
+#enterpriseMessage ul li div span{
+	margin-left: 10px;
+	vertical-align: middle;
+}
+#setting{
+	float: right;
+	margin: 51.5px 20px 0 0;
+	cursor: pointer;
+}
+#setting img{
+	display: block;
+}
+
+#mainArea #content{
+	width: calc(100% - 80px);
+	margin-left: 40px;
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+#content .menuPenal,#content .contentList{
+	float: left;
+}
+#content .menuPenal li{
+	width: 146px;
+	height: 120px;
+	text-align: center;
+	font-size: 20px;
+	display: block;
+	border-left: 4px solid #e7e7e7;
+	cursor: pointer;
+}
+#content .menuPenal .active{
+	background: #ffffff;
+	color: #FA6D35;
+	border-left-color: #FA6D35;
+}
+#content .menuPenal li img{
+	height: 40px;
+	margin: 20px auto 0;
+}
+#content .menuPenal li .newsRight{
+	height: 10px;
+	margin: 0;
+	transform: translate(0px,-47px);
+	display: none;
+}
+#content .menuPenal .active .newsRight{
+	display: block;
+}
+#content .menuPenal li p{
+	margin: 5px 0;
+}
+#content .contentList{
+	width: calc(100% - 310px);
+	padding: 0 80px;
+	background: #ffffff;
+	min-height: 500px;
+}
+.contentList .contentli{
+	display:none;
+	min-height: 840px;
+}
+.contentList .active{
+	display: block;
+}
+.contentList .basicMessage table,.contentList .manageState table,
+#editProduceData table,#tradeInfoDetail table,
+#addMyTradeInfo table,#editPolicyLaws table,
+.publishTradeInfo table,.generalBasicInfo table,
+#supplierDetails table,#goodsSupply table,#editDynamics table{
+	width: 100%;
+}
+.contentList .basicMessage tr,
+.contentList .manageState tr,
+#editDynamics tr,#editProduceData tr,
+#tradeInfoDetail tr,#addMyTradeInfo tr,
+#editPolicyLaws tr,.publishTradeInfo tr,
+.generalBasicInfo tr,#supplierDetails table tr,
+#goodsSupply table tr,#editDynamics table tr,#revisePassword table tr{
+	line-height: 80px;
+}
+.basicMessage tr th,#editDynamics tr th,
+#editProduceData tr th,#tradeInfoDetail tr th,
+#addMyTradeInfo tr th,#editPolicyLaws tr th,
+.publishTradeInfo tr th,.generalBasicInfo  tr th,
+#supplierDetails table tr th,#goodsSupply table tr th,#revisePassword table tr th{
+	width: 230px;
+	color: #a5b0b9;
+    font-weight: inherit;
+    font-size: 20px;
+}
+.manageState tr th{
+	width: 150px;
+	color: #a5b0b9;
+    font-weight: inherit;
+    font-size: 20px;
+}
+.basicMessage tr td input,.manageState tr td input,
+#editDynamics tr td input,#editProduceData tr td input,
+#tradeInfoDetail tr td input,#addMyTradeInfo tr td input,
+#editPolicyLaws tr td input,.publishTradeInfo tr td input,
+.generalBasicInfo tr td input,#supplierDetails table tr td input,
+#goodsSupply table td input,#revisePassword table td input{
+	width: 600px;
+	line-height: 30px;
+	font-size: 18px;
+	color: #333333;
+	text-indent: 10px;
+	outline-color: #fa6d35;
+}
+.basicMessage tr td input::-webkit-input-placeholder,
+.manageState tr td input::-webkit-input-placeholder,
+#editDynamics tr td input::-webkit-input-placeholder,
+#editProduceData tr td input::-webkit-input-placehlder,
+#tradeInfoDetail tr td input::-webkit-input-placeholder,
+#addMyTradeInfo tr td input::-webkit-input-placeholder,
+#editPolicyLaws tr td input::-webkit-input-placeholder,
+.publishTradeInfo tr td input::-webkit-input-placeholder,
+.generalBasicInfo tr td input::-webkit-input-placeholder,
+#supplierDetails table td input::-webkit-input-placeholder,
+#goodsSupply table td input::-webkit-input-placeholder,,#revisePassword table td input::-webkit-input-placeholder{
+	color: #cccccc;
+}
+.basicMessage tr td td,.manageState tr td td,
+#editProduceData tr td td,#tradeInfoDetail tr td td,
+#addMyTradeInfo tr td td,#editPolicyLaws tr td td,
+.generalBasicInfo tr td td,#supplierDetails table tr td td,
+#goodsSupply table td td,#revisePassword table td td{
+	padding: 0;
+	margin: 0;
+}
+#localAddress_IT #chooseAddressBtn,#productPrice #priceHistory{
+	padding: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+    background: #fa6d35;
+    cursor: pointer;
+    float: right;
+    line-height: 22px;
+    margin: 4px 10px;
+}
+#companyProduce_TA textarea{
+	font-size: 18px;
+	text-indent: 10px;
+}
+#localProvince_AB text{
+    font-size: 18px!important;
+    text-indent: 10px;
+}
+#companyProduce_TA{
+	height: 450px!important;
+}
+.ke-container{
+	width: 100%!important;
+	height: 100%;
+}
+.ke-edit{
+	height: 400px!important;
+}
+.ke-edit-iframe{
+	height: 100%!important;
+}
+.ke-edit-textarea{
+	height: 100%!important;
+}
+#companyRate_CB .option{
+	display: inline-block;
+    width: 150px!important;
+}
+#productParam_TA,#addPolicyContent_TA{
+	width: 100%!important;
+	height: 450px!important;
+	margin: 20px 0;
+}
+
+.manageState{
+	padding: 20px 0;
+}
+
+#productPrice{
+	width: 400px!important;
+}
+#productPrice input{
+	width: 255px;
+}
+#priceSubmit,#addDynamicsSubmit,
+#editDynamicsSubmit,#produceDataSubmitBtn,
+#myTradeInfoSubmitBtn,#myTradeInfoEditBtn,
+#tradeInfoReturnBtn,#addPolicyLawsSubmit,#editPolicyLawsSubmit,
+#publishTradeInfoSubmitBtn,#submitBtn,#supplyGoodsBtn,
+#supplyReturnBtn,#supplySubmitBtn,#supplierSubmitBtn,#supplierListTableReturnBtn,#dynamicsReturnBtn,#revisePasswordSubmit{
+	width: 200px;
+    background: #fa6d35;
+    font-size: 25px;
+    color: #ffffff;
+    float: right;
+    line-height: 50px;
+    text-align: center;
+    margin: 50px 10px;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+}
+#priceCancle,#addDynamicsCancle,
+#deleteDynamicsCancle,#produceDataCancleBtn,
+#myTradeInfoCancleBtn,#deleteMyTradeInfo,
+#deletePolicyLawsCancle,#addPolicyLawsCancle,#publishTradeInfoCancleBtn,#supplierReturnBtn,#revisePasswordCancle{
+	width: 200px;
+    background: #ffffff;
+    font-size: 25px;
+    color: #666666;
+    float: right;
+    line-height: 50px;
+    text-align: center;
+    margin: 50px 10px;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+}
+#priceCancle:hover,#addDynamicsCancle:hover,
+#deleteDynamicsCancle:hover,#produceDataCancleBtn:hover,
+#myTradeInfoCancleBtn:hover,#deleteMyTradeInfo:hover,
+#deletePolicyLawsCancle:hover,#addPolicyLawsCancle:hover,#publishTradeInfoCancleBtn:hover,#supplierReturnBtn:hover,#revisePasswordCancle:hover{
+    background: #fa6d35;
+    color: #ffffff;
+}
+
+.produceData{
+	padding: 20px 0;
+}
+.produceData #produceDataTable tr:nth-child(even),#companyCulture table tr:nth-child(even),
+.tradeInfoList tr:nth-child(even),#policyLawsContent table tr:nth-child(even),#companyInfoContent table tr:nth-child(even),
+.supplierListTable tr:nth-child(even){
+	background: #f9f9f9;
+}
+.produceData #produceDataTable tr:hover,#companyCulture table tr:hover,
+.tradeInfoList tr:hover,#policyLawsContent table tr:hover,#companyInfoContent table tr:hover,
+.supplierListTable tr:hover{
+	background: #f9f9f9;
+}
+.produceData #produceDataTable tr:first-child:hover,#companyCulture table tr:first-child:hover,
+.tradeInfoList tr:first-child:hover,#policyLawsContent table tr:first-child:hover,
+#companyInfoContent table tr:first-child:hover,.supplierListTable tr:first-child:hover{
+	background: #ffffff;
+}
+.produceData #produceDataTable th,.produceData #produceDataTable td,
+#companyCulture table th,#companyCulture table td,
+.tradeInfoList th,.tradeInfoList td,#policyLawsContent table td,
+#companyInfoContent table td,.supplierListTable td{
+	border-top: 1px solid #ddd;
+}
+.produceData #produceDataTable,.tradeInfo .tradeInfoList,
+#myTradeInfo .tradeInfoList,#companyCulture table,#policyLawsContent table,
+#companyInfoContent table,.supplierListTable{
+	width: 100%;
+	border-collapse:collapse;
+    border: 1px solid #ddd;
+}
+.produceData #produceDataTable th,.tradeInfoList th,
+#companyCulture table th,#policyLawsContent table th,
+#companyInfoContent table th,.supplierListTable th{
+	text-align: left;
+	font-size: 18px;
+	padding: 15px 0;
+	text-indent: 20px;
+}
+.produceData #produceDataTable td,.tradeInfoList td,
+#companyCulture table td,#policyLawsContent table td,
+#companyInfoContent table td,.supplierListTable td{
+	text-align: left;
+	padding: 15px 0;
+	text-indent: 20px;
+}
+.produceData #addProduceData,.produceData #produceDataSearchBtn,
+#tradeInfoSearchBtn,#myTradeInfoSearchBtn,#addTradeInfo{
+	font-size: 15px;
+    background: #fa6d35;
+    color: #ffffff;
+    border: 0;
+    outline: none;
+    width: 80px;
+    line-height: 35px;
+    border-radius: 5px;
+    float: right;
+    margin-left: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 3.5px;
+}
+
+
+
+
+#dynamicsListSearch,#policyLawsListSearch,#companyInfoListSearch{
+	overflow: hidden;
+	padding: 20px 0;
+}
+#dynamicsListSearch .searchLeft,#policyLawsListSearch .searchLeft,#companyInfoListSearch .searchLeft{
+	float: left;
+	overflow: hidden;
+}
+.searchLeft span{
+	font-size: 20px;
+	color: #000000;
+	line-height: 42px;
+	float: left;
+}
+.searchLeft #dynamicsKeyWord,.searchLeft #policyLawsKeyWord,.searchLeft #companyInfoKeyWord{
+	width: 220px!important;
+	float: left;
+}
+#dynamicsListSearch .searchRight,#policyLawsListSearch .searchRight,#companyInfoListSearch .searchRight{
+	float: right;
+	line-height: 42px;
+}
+.searchRight button{
+	font-size: 15px;
+    background: #fa6d35;
+    color: #ffffff;
+    border: 0;
+    outline: none;
+    width: 80px;
+    line-height: 35px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+#companyCulture table .dynamicsNewsEdit,#policyLawsContent table .dynamicsNewsEdit{
+	width: 80px;
+	height: 35px;
+	color: #ffffff;
+	background: #fa6d35;
+	text-align: center;
+	text-indent: 0;
+	line-height: 35px;
+	border-radius: 5px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+
+
+.pageNumList{
+	width: 100%;
+	margin: 20px 0;
+	overflow: hidden;
+}
+.pageNumList ul{
+	overflow: hidden;
+	float: right;
+}
+.pageNumList ul li{
+	float: left;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	overflow: hidden;
+}
+.pageNumList ul li span{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	float: left;
+	border-top: 2px solid #cccccc;
+	border-bottom: 2px solid #cccccc;
+	border-left: 2px solid #cccccc;
+	cursor: pointer;
+}
+.pageNumList ul li span img{
+	margin: 7px 0;
+}
+.pageNumList li .active{
+	color: #ffffff;
+	background: #FA6D35;
+	border: 2px solid #FA6D35;
+}
+.pageNumList li .activeNext{
+	border-left: 0;
+}
+.pageNumList .pageNumbers{
+	overflow: hidden;
+}
+.pageNumList #pageNumPullDown{
+	height: 30px;
+	border: 2px solid #cccccc;
+	margin-left: 10px;
+}
+.pageNumPullDown span{
+	border-width: 0;
+}
+.pageNumPullDown div{
+	overflow: hidden;
+}
+.pageNumPullDown div p{
+	float: left;
+	width: 25px;
+	text-align: center;
+	line-height: 30px;
+}
+.pageNumPullDown div img{
+	float: left;
+	margin: 10px 5px;
+}
+.pageNumList #pageText{
+	float: right;
+	color: #666666;
+	line-height: 34px;
+	margin-left: 20px;
+}
+
+
+
+
+#addContent_TA,#addPolicyLawsContent_TA{
+	width: 100%!important;
+	height: 450px!important;
+}
+#addContent_TA textarea,#addPolicyLawsContent_TA textarea{
+	font-size: 18px;
+	text-indent: 10px;
+}
+#addDynamicsCancle,#addDynamicsSubmit,#addPolicyLawsCancle,#addPolicyLawsSubmit{
+	float: right;
+	margin-right: 10px;
+	border: 0;
+	outline: none;
+}
+#editDynamicsSubmit,#deleteDynamicsCancle,#editPolicyLawsSubmit,#deletePolicyLawsCancle{
+	float: right;
+	margin-right: 10px;
+	border: 0;
+	outline: none;
+	display: none;
+}
+
+#tradeInfoDetail{
+	margin-top: 40px;
+}
+
+.myTradeInfoLi{
+	padding: 20px 0;
+}
+
+#tradeInfoStartDate,#tradeInfoEndDate,#myTradeInfoStartDate,#myTradeInfoEndDate,
+#publishTradeInfoStartDate,#publishTradeInfoEndDate{
+	display: inline-block;
+}
+.option{
+	display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+#submit,#cancle{
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 25px;
+	float: right;
+	background: #ffffff;
+	border: 0;
+	outline: none;
+	color: #666666;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.submitActive,#submit:hover,#cancle:hover{
+	background: #fa6d35!important;
+	color: #ffffff!important;
+}
+
+#revisePassword{
+	background: #ffffff;
+	margin-bottom: 20px;
+}
+
+
+
+
+
+#windowPanel{
+	width: 100%;
+	height: 100%;
+	display: none; 
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,.6)
+}
+#windowPanel #companyMap{
+	width: 90%;
+	height: 90%;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	background: #e7e7e7;
+}
+#pageTitle{
+	height: 50px;
+	background: #ffffff;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+#pageTitle span:first-child{
+	font-size: 20px;
+	line-height: 50px;
+	float: left;
+	margin-left: 10px;
+}
+#pageTitle #closeBtn{
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px; 
+	border-radius: 50%;
+	border: 1px solid #fa6d35;
+	color: #fa6d35;
+	float: right;
+	margin: 14px 10px;
+	cursor: pointer;
+}
+#mapTitle ul{
+	overflow: hidden;
+	background: #ffffff;
+}
+#mapTitle li{
+	float: left;
+	overflow: hidden;
+	padding: 5px 0;
+}
+#mapTitle li span{
+	float: left;
+	overflow: hidden;
+}
+#mapTitle li span:first-child{
+	font-size: 18px;
+	line-height: 42px;
+	margin: 0 10px;
+}
+#mapSearch,#mapConfirm{
+	padding: 5px 8px;
+	color: #ffffff;
+	background: #fa6d35;
+	border-radius: 5px;
+	cursor: pointer;	
+	margin: 5.5px 10px;
+}
+#panel .poibox{background: #ffffff;}
+.amap-controls{display: none}
+#panel{width: 300px;max-height: 500px;position:absolute;}
+.amap-pl-pc .poi-more{display: none;}
+.amap-logo,.amap-copyright{display:none!important;}
+.amap_lib_placeSearch_list{max-height:474px;overflow-y: scroll;}
+.amap_lib_placeSearch_page{position:fixed;width:296px;margin-top:0;}
+
+
+

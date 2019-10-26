@@ -1,0 +1,202 @@
+#bgImage img{
+	width: 100%;
+}
+#mainArea{
+	width: calc(100% - 80px);
+	margin: 20px 40px;
+	overflow: hidden;
+}
+#mainArea #newsLeft{
+	overflow: hidden;
+}
+#newsLeft .menuPenal,#newsLeft .contentList{
+	float: left;
+}
+#newsLeft .menuPenal li{
+	width: 146px;
+	height: 120px;
+	text-align: center;
+	font-size: 20px;
+	display: block;
+	border-left: 4px solid #e7e7e7;
+	cursor: pointer;
+}
+#newsLeft .menuPenal .active{
+	background: #ffffff;
+	color: #FA6D35;
+	border-left-color: #FA6D35;
+}
+#newsLeft .menuPenal li img{
+	height: 40px;
+	margin: 20px auto 0;
+}
+#newsLeft .menuPenal li .newsRight{
+	height: 10px;
+	margin: 0;
+	transform: translate(0px,-47px);
+	display: none;
+}
+#newsLeft .menuPenal .active .newsRight{
+	display: block;
+}
+#newsLeft .menuPenal li p{
+	margin: 5px 0;
+}
+
+.contentList{
+	width: calc(100% - 250px);
+	min-height: 480px;
+	background: #ffffff;
+	overflow: hidden;
+	padding: 0 50px;
+}
+.contentList li{
+	display: none;
+}
+.contentList .active{
+	display: block;
+}
+.contentList .title{
+	overflow: hidden;
+	font-size: 25px;
+	margin-top: 20px;
+	line-height: 50px;
+	border-bottom: 1px solid #eff3f5;
+}
+.contentList .title span:first-child{
+	color: #FA6D35;
+	float: left;
+}
+.contentList .title span:last-child{
+	color: #6666;
+	float: right;
+}
+#aboutContent .contentTitle{
+	text-align: center;
+	padding: 20px 0;
+	color: #9999;
+}
+#aboutContent .contentTitle p:first-child{
+	font-size: 25px;
+	color: #000000;
+}
+#aboutContent .contentText p{
+	text-indent: 30px;
+	line-height: 35px;
+}
+#about .contentImage{
+	overflow: hidden;
+	margin: 30px 0;
+}
+#about .contentImage img{
+ width: 25%;
+ height: 175px;
+ float: left;
+}
+
+#suggestContent div{
+	overflow: hidden;
+}
+#suggestContent .suggestTitle{
+	width: 110px;
+	text-align: right;
+	line-height: 50px;
+	margin-right: 40px;
+}
+#suggestContent span{
+	font-size: 18px;
+	color: #000000;
+	float: left;
+}
+#suggestContent .suggestContent span:first-child{
+	font-size: 18px;
+	color: #000000;
+}
+.suggestContent span:last-child{
+	width: calc(100% - 152px);
+	overflow: hidden;
+}
+.suggestContent textarea{
+	width: calc(100% - 22px);
+	height: 400px;
+	outline: none;
+	margin-top: 20px;
+	padding: 10px;
+	font-size: 20px;
+	line-height: 30px;
+}
+#submit{
+	width: 150px;
+	height: 50px;
+	font-size: 25px;
+	background: #FA6D35;
+	color: #ffffff;
+	text-align: center;
+	line-height: 50px;
+	border: 0;
+	outline: none;
+	float: right;
+	margin: 20px 0;
+	cursor: pointer;
+}
+#joinContent{
+	margin: 40px 0;
+}
+#joinContent #menu {
+	overflow: hidden;
+}
+#menu div,#menu span{
+	float: left;
+	font-size: 20px;
+	color: #000000;
+	margin-right: 10px;
+	padding:  15px 0;
+}
+#menu div{
+	border-bottom: 2px solid #ffffff;
+	cursor: pointer;
+}
+#menu .active{
+	color: #FA6D35;
+	border-bottom-color: #FA6D35;
+}
+#joinContent #menuContent{
+	margin-top: 10px;
+}
+#menuContent .text{
+	display: none;
+}
+#menuContent .textActive{
+	display: block;
+}
+#menuContent .jobTitle{
+	font-size: 15px;
+	color: #000000;
+	line-height: 40px;
+	margin-top: 10px;
+}
+#menuContent div p{
+	line-height: 30px;
+	font-size: 15px;
+}
+#contactContent{
+	overflow: hidden;
+	padding: 40px 0;
+}
+#contactContent div{
+	float: left;
+}
+#contactContent .contactImage img{
+	width: 400px;
+	height: 300px;
+	border-radius: 5px;
+}
+#contactContent .contactInfo{
+	margin: 40px 0;
+	margin-left: 60px;
+}
+#contactContent .contactInfo p{
+	font-size: 20px;
+	color: #999999;
+	line-height: 40px;
+}

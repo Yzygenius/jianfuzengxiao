@@ -1,0 +1,135 @@
+html,body{
+	padding: 0;
+	margin: 0;
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#head{
+	padding: 20px 0;
+	overflow: hidden;
+	width: 1130px;
+	margin: 0 auto;
+}
+#head img{
+	float: left;
+	margin-right: 20px;
+}
+#head span{
+	float: left;
+}
+#head span p{
+	margin: 0;
+}
+#head span p:first-child{
+	font-size: 30px;
+	line-height: 46px;
+	color: #000000;
+}
+#head span p:last-child{
+	font-size: 16px;
+	line-height: 30px;
+	color: #fa6d35;
+	font-weight: bold;
+}
+#content{
+	background: #e7e7e7;
+}
+.loginTitle{
+	font-size: 25px;
+	line-height: 44px;
+}
+#login,#register{
+	padding: 50px 0;
+}
+#login ul{
+	width: 602px;
+	padding: 20px 40px;
+	margin: 0 auto;
+	background: #ffffff;
+}
+#register ul{
+	width: 500px;
+	padding: 20px 40px;
+	margin: 0 auto;
+	background: #ffffff;
+}
+#login li,#register li{
+	margin-bottom: 20px;
+}
+#account,#password{
+	width: 598px;
+	height: 40px;
+	line-height: 40px;
+	outline: none;
+    font-size: 16px;
+    text-indent: 10px;
+}
+#account input,#password input{
+	width: 540px;
+}
+#regAccount input,#regPassword input,#regPasswordAgain input{
+	width: 450px;
+}
+#login #verify{
+	width: 304px;
+}
+#loginBtn,#registerSubmitBtn{
+	width: 200px;
+	line-height: 40px;
+	background: #e13030;
+	border: 0;
+	color: #ffffff;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	outline: none;
+	float: left;
+}
+#registerBtn,#returnLoginBtn{
+	width: 200px;
+	line-height: 40px;
+	background: #e13030;
+	border: 0;
+	color: #ffffff;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	outline: none;
+	float: right;
+}
+
+#register{
+	display: none;
+}
+
+#basicInfoTitle{
+	width: 680px;
+	font-size: 25px;
+	text-align: center;
+	line-height: 70px;
+	background: #ffffff;
+	margin: 0 auto;
+}
+#basicInfo table{
+	width: 680px;
+	background: #ffffff;
+	margin: 0 auto;
+}
+#basicInfo table tr{
+	line-height: 60px;
+}
+#submitBasicInfo{
+	width: 200px;
+	line-height: 40px;
+	background: #e13030;
+	border: 0;
+	color: #ffffff;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	outline: none;
+	margin: 20px auto;
+}

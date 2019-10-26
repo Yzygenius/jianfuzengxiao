@@ -1,0 +1,64 @@
+#mainArea{
+	width: calc(100% - 80px);
+	margin: 20px 40px;
+	overflow: hidden;
+}
+#mainArea #newsLeft{
+	width : calc(100% - 80px);
+	float: left;
+	overflow: hidden;
+	background: #ffffff;
+	padding: 40px;
+}
+#newsLeft .newsLeftTitle,#newsLeft .newsLeftList{
+	float: left;
+}
+#newsLeft #newsTitle #articleTitle{
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 50px;
+	
+}
+#newsLeft #newsTitle #articleDate{
+	font-size: 15px;
+	color: #999999;
+	text-align: center;
+	line-height: 50px;
+}
+#newsLeft #newsContent{
+	color: #666666;
+	text-indent: 34px;
+}
+#newsLeft #newsContent p{
+	color: #666666;
+	text-indent: 34px;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+#newsLeft #newsContent img{
+	display: block;
+	margin: 0 auto;
+}
+
+#newsLeft #share{
+	overflow: hidden;
+	margin-top: 40px;
+}
+#newsLeft #share span{
+	float: left;
+	overflow: hidden;
+}
+#newsLeft #share span:first-child{
+	color: #666666;
+	margin: 0 20px 0 30px;
+}
+#newsLeft #share img{
+	width: 20px;
+	display: block;
+	margin-right: 10px;
+	float: left;
+	cursor: pointer;
+}
+
+

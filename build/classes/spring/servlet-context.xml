@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
+	<context:component-scan base-package="com.weishangcheng">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+
+	
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/api/**" />
+			<mvc:exclude-mapping path="/api/wsc/index.html"/>
+			<mvc:exclude-mapping path="/api/wsc/login.html"/>
+			<mvc:exclude-mapping path="/api/thirdpayBack/wxOrderPay.html"/>
+			<mvc:exclude-mapping path="/api/thirdpayBack/wxRechargePay.html"/>
+			<mvc:exclude-mapping path="/api/login.html"/>
+			<bean class="com.weishangcheng.api.security.APIInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/system/**" />
+			<mvc:exclude-mapping path="/system/captcha/**"/>
+			<mvc:exclude-mapping path="/system/login.html"/>
+			<bean class="com.weishangcheng.system.security.SystemInterceptor" />
+		</mvc:interceptor>
+		
+	</mvc:interceptors>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 重定向视图控制器标签 -->
+	<mvc:redirect-view-controller path="/redirect"
+		redirect-url="/status" context-relative="true" status-code="301"
+		keep-query-params="true" />
+
+	<mvc:default-servlet-handler />
+	<mvc:status-controller path="/status" status-code="200" /> 			<!-- 状态控制器标签 -->
+	<mvc:view-controller path="/error/**" status-code="200" /> 			<!-- 带状态的视图控制器标签 -->
+	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" /> 	<!-- 网站图标，注意 ！favicon.ico 放在 webapp 目录 -->
+
+	<!-- 支持上传文件 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置默认编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 设置文件上传的最大值100MB，100*1024*1024 -->
+		<property name="maxUploadSize" value="104857600"></property>
+	</bean>
+
+	<mvc:annotation-driven>
+		<mvc:path-matching suffix-pattern="false" registered-suffixes-only="true" />
+		<!-- 编码转换 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+</beans>

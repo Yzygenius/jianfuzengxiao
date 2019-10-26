@@ -1,0 +1,229 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.banner{
+    width: 100%;
+    margin: 7px 0 0;
+}
+.banner img{
+    width: 100%;
+    height: 225px;
+}
+.same_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    margin: 4px 0 7px;
+    background: #fff;
+}
+.same_title .lefts{
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+.same_title .line{
+    height: 18px;
+    margin-right: 5px;
+}
+.same_title .product{
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+}
+.same_title .top_triangle{
+    width: 0;
+    height: 0;
+    margin: 12px 5px 0;
+    border-width:3px;
+    border-style: solid;
+    border-color:#fa6d35 transparent transparent transparent;
+}
+.company_infor .inforText{
+    box-sizing: border-box;
+    padding: 10px 7px;
+    background: #ffffff;
+}
+.company_infor .inforText p{
+    font-size: 12px;
+    color: #333;
+    text-indent: 2em;
+    line-height: 16px;
+}
+/*企业信息*/
+.message .same_title{
+    margin: 7px 0;
+}
+.message .introduce{
+    box-sizing: border-box;
+    padding: 10px 15px 2px;
+    background: #ffffff;
+}
+.message .introduce .comName{
+    box-sizing: border-box;
+    padding-bottom: 7px;
+    font-size: 16px;
+    color: #fa6d35;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.message .introduce .peoName img{
+    width: 15px;
+}
+.message .introduce .peoName span{
+    font-size: 12px;
+    color: #666;
+    padding-left: 5px;
+}
+.message .introduce .compete{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: 7px;
+}
+.message .introduce .compete span{
+    font-size: 14px;
+    color: #666;
+    padding-right: 5px;
+}
+.message .introduce .compete img{
+    width: 12px;
+    margin-right: 3px;
+}
+.message .introduce .careful{
+    box-sizing: border-box;
+    padding: 7px 0;
+    border-top: 2px solid #fa6d35;
+}
+.message .introduce .careful p{
+    font-size: 12px;
+    color:#666666;
+    line-height: 20px;
+}
+.message .introduce .careful .style{
+    color: #fa6d35;
+}
+/*地理位置*/
+.local .same_title{
+    margin: 7px 0;
+}
+.map{
+    box-sizing: border-box;
+    padding: 10px;
+
+    background: #ffffff;
+}
+.map .img{
+    width: 100%;
+    height: 230px;
+    box-shadow: 0 0 4px rgba(124,114,90,.35);
+}
+.map p{
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-top: 6px;
+    font-size: 12px;
+    color: #666;
+}
+/*底部轮播*/
+.bot_swiper{
+    width: 100%;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    box-sizing: border-box;
+    padding: 15px 7px;
+    background: #ffffff;
+}
+.bot_swiper .botImg{
+    width: 100%;
+}
+.bot_swiper .botImg img{
+    width: 100%;
+    height: 231px;
+}
+.addclass{
+    outline: none;
+    opacity: 1;
+    background: #fa6d35!important;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.addclass0{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 100%;
+    border: 1px solid #fa6d35;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.bot_swiper .material{
+    margin-left: 10px;
+}
+.bot_swiper .material .materTit{
+    box-sizing: border-box;
+    padding: 5px 0;
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+    /* margin-left:150px; */
+}
+.bot_swiper .material .materP{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 4px 0;
+    width: 80%;
+    font-size: 12px;
+}
+.bot_swiper .material .materP span{
+	 width: 30%;
+    color: #999;
+}
+.bot_swiper .material .materP p{
+    width:80%;
+    text-align: left;
+    color: #666;
+}
+.bot_swiper .material .materP p.prices{
+    font-size: 16px;
+    color: #dd0010;
+}
+.bot_swiper .material .materP p.prices span{
+	width:80%;
+    color: #dd0010;
+}
+/*联系*/
+.contact{
+    display: flex;
+    justify-content: space-between;
+    width: 62%;
+    margin: 0 auto 50px;
+}
+.qq{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 108px;
+    height: 22px;
+    line-height: 22px;
+    background: #fa6d35;
+    border-radius: 10px;
+}
+.qq img{
+    width: 15px;
+    height: 15px;
+}
+.qq span{
+    font-size: 12px;
+    color: #ffffff;
+    margin-left:5px;
+}
+.wx img{
+    width: 18px;
+}
