@@ -5,6 +5,8 @@ public class HousesInfo extends Entity {
     
     protected  String  housesId;
     
+    protected  String  userId;
+    
     protected  String  housesStatus;
     
     protected  String  propertyOwnerName;
@@ -70,6 +72,12 @@ public class HousesInfo extends Entity {
     }
     public void setHousesId(String  housesId) {
         this.housesId = housesId;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String  userId) {
+        this.userId = userId;
     }
     public String getHousesStatus() {
         return housesStatus;

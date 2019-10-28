@@ -309,7 +309,7 @@ public class CodeGenerator {
 		buffer.append("            });").append(ENTER);
 		buffer.append("          } catch (DataAccessException e) {").append(ENTER);
 		buffer.append("          	logger.error(\"增加"+realClassName+" 错误：{}\", e.getMessage());").append(ENTER);
-		buffer.append("          	throw new SysException(\"10000\", \"增加"+realClassName+"错误\", e);").append(ENTER);
+		buffer.append("          	throw new SysException(\"增加"+realClassName+"错误\", \"10000\", e);").append(ENTER);
 		buffer.append("          }").append(ENTER);
 		buffer.append("          return entity;").append(ENTER);
 		buffer.append("       }").append(ENTER);//插入结束
@@ -351,7 +351,7 @@ public class CodeGenerator {
 		buffer.append("            rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());").append(ENTER);
 		buffer.append("         } catch (DataAccessException e) {").append(ENTER);
 		buffer.append("            logger.error(\"更新"+realClassName+"错误：{}\", e.getMessage());").append(ENTER);
-		buffer.append("            throw new SysException(\"10000\", \"更新"+realClassName+"错误\", e);").append(ENTER);
+		buffer.append("            throw new SysException(\"更新"+realClassName+"错误\", \"10000\", e);").append(ENTER);
 		buffer.append("         }").append(ENTER);
 		buffer.append("        return rowsAffected;").append(ENTER);
 		buffer.append("    }").append(ENTER);
@@ -371,7 +371,7 @@ public class CodeGenerator {
 		buffer.append("                           entity.get"+getClassName(strPKColumnNam)+"());").append(ENTER);
 		buffer.append("        } catch (DataAccessException e) {").append(ENTER);
 		buffer.append("            logger.error(\"删除"+realClassName+"错误：{}\", e.getMessage());").append(ENTER);
-		buffer.append("            throw new SysException(\"10000\", \"删除"+realClassName+"错误\", e);").append(ENTER);
+		buffer.append("            throw new SysException(\"删除"+realClassName+"错误\", \"10000\", e);").append(ENTER);
 		buffer.append("        }").append(ENTER);
 		buffer.append("        return rowsAffected;").append(ENTER);
 		buffer.append("    }").append(ENTER);
@@ -417,7 +417,7 @@ public class CodeGenerator {
 		
 		buffer.append("        } catch (DataAccessException e) {").append(ENTER);
 		buffer.append("            logger.error(\"查询"+realClassName+"错误：{}\", e.getMessage());").append(ENTER);
-		buffer.append("            throw new SysException(\"10000\", \"查询"+realClassName+"错误\", e);").append(ENTER);
+		buffer.append("            throw new SysException(\"查询"+realClassName+"错误\", \"10000\", e);").append(ENTER);
 		buffer.append("        }").append(ENTER);
 		buffer.append("        return resultList;").append(ENTER);
 		buffer.append("    }").append(ENTER);
@@ -446,7 +446,7 @@ public class CodeGenerator {
 		
 		buffer.append("        } catch (DataAccessException e) {").append(ENTER);
 		buffer.append("            logger.error(\"查询"+realClassName+"错误：{}\", e.getMessage());").append(ENTER);
-		buffer.append("            throw new SysException(\"10000\", \"查询"+realClassName+"错误\", e);").append(ENTER);
+		buffer.append("            throw new SysException(\"查询"+realClassName+"错误\", \"10000\", e);").append(ENTER);
 		buffer.append("        }").append(ENTER);
 		buffer.append("        return entity;").append(ENTER);
 		buffer.append("    }").append(ENTER);
@@ -523,7 +523,7 @@ public class CodeGenerator {
 		bufferMDAO.append("        } catch (DataAccessException e) {").append(ENTER);
 		bufferMDAO.append("            e.printStackTrace();").append(ENTER);
 		bufferMDAO.append("            logger.error(\"查询" + className + "错误：{}\", e.getMessage());").append(ENTER);
-		bufferMDAO.append("            throw new SysException(\"10000\", \"查询" + className + "错误\", e);").append(ENTER);
+		bufferMDAO.append("            throw new SysException(\"查询" + className + "错误\", \"10000\", e);").append(ENTER);
 		bufferMDAO.append("        }").append(ENTER);
 		bufferMDAO.append("        return pageInfo;").append(ENTER);
 		bufferMDAO.append("    }").append(ENTER);

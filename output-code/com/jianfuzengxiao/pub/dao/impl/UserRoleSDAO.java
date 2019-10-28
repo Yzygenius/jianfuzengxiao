@@ -40,7 +40,7 @@ private static Logger logger = LoggerFactory.getLogger(UserRoleSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加USER_ROLE 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加USER_ROLE错误", e);
+          	throw new SysException("增加USER_ROLE错误", "10000", e);
           }
           return entity;
        }
@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(UserRoleSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新USER_ROLE错误：{}", e.getMessage());
-            throw new SysException("10000", "更新USER_ROLE错误", e);
+            throw new SysException("更新USER_ROLE错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -89,7 +89,7 @@ private static Logger logger = LoggerFactory.getLogger(UserRoleSDAO.class);
                            entity.getUserRoleId());
         } catch (DataAccessException e) {
             logger.error("删除USER_ROLE错误：{}", e.getMessage());
-            throw new SysException("10000", "删除USER_ROLE错误", e);
+            throw new SysException("删除USER_ROLE错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -130,7 +130,7 @@ private static Logger logger = LoggerFactory.getLogger(UserRoleSDAO.class);
 			new BeanPropertyRowMapper<UserRoleMVO>(UserRoleMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询USER_ROLE错误：{}", e.getMessage());
-            throw new SysException("10000", "查询USER_ROLE错误", e);
+            throw new SysException("查询USER_ROLE错误", "10000", e);
         }
         return resultList;
     }
@@ -153,7 +153,7 @@ private static Logger logger = LoggerFactory.getLogger(UserRoleSDAO.class);
 			new BeanPropertyRowMapper<UserRoleMVO>(UserRoleMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询USER_ROLE错误：{}", e.getMessage());
-            throw new SysException("10000", "查询USER_ROLE错误", e);
+            throw new SysException("查询USER_ROLE错误", "10000", e);
         }
         return entity;
     }

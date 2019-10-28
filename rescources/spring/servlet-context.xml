@@ -8,15 +8,15 @@
 
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
-	<context:component-scan base-package="com.weishangcheng">
+	<context:component-scan base-package="com.jianfuzengxiao">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
 	
 	
-	<mvc:interceptors>
-		<mvc:interceptor>
+	<!--<mvc:interceptors>
+		 <mvc:interceptor>
 			<mvc:mapping path="/api/**" />
 			<mvc:exclude-mapping path="/api/wsc/index.html"/>
 			<mvc:exclude-mapping path="/api/wsc/login.html"/>
@@ -30,9 +30,9 @@
 			<mvc:exclude-mapping path="/system/captcha/**"/>
 			<mvc:exclude-mapping path="/system/login.html"/>
 			<bean class="com.weishangcheng.system.security.SystemInterceptor" />
-		</mvc:interceptor>
+		</mvc:interceptor> 
 		
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

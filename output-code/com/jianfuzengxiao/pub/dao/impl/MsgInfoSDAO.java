@@ -21,7 +21,7 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
 @Override
     public MsgInfoMVO insert(final MsgInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO MSG_INFO (msg_id,userid,msg_type_id,msg_type_name,title,content,status,create_time,update_time,sts) ");
+        sql.append("INSERT INTO MSG_INFO (msg_id,user_id,msg_type_id,msg_type_name,title,content,status,create_time,update_time,sts) ");
         sql.append("VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
         try {
             logger.info(sql.toString());
@@ -31,7 +31,7 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
                 	int i = 0;
                 	java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString()); 
                 	ps.setString(++i, StringUtils.trimToNull(entity.getMsgId()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getUserid()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getMsgTypeId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getMsgTypeName()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getTitle()));
@@ -45,7 +45,7 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加MSG_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加MSG_INFO错误", e);
+          	throw new SysException("增加MSG_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -56,9 +56,9 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
         sql.append("UPDATE  MSG_INFO  SET ");
         List<Object> params = new ArrayList<Object>();
         try {
-            if (entity.getUserid() != null) {
-                sql.append("userid=?,");
-                params.add(entity.getUserid());
+            if (entity.getUserId() != null) {
+                sql.append("user_id=?,");
+                params.add(entity.getUserId());
             }
             if (entity.getMsgTypeId() != null) {
                 sql.append("msg_type_id=?,");
@@ -99,7 +99,7 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新MSG_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新MSG_INFO错误", e);
+            throw new SysException("更新MSG_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -114,14 +114,14 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
                            entity.getMsgId());
         } catch (DataAccessException e) {
             logger.error("删除MSG_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除MSG_INFO错误", e);
+            throw new SysException("删除MSG_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
     @Override
     public List<MsgInfoMVO> queryList(MsgInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT msg_id,userid,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  MSG_INFO ");
         sql.append("WHERE 1=1 ");
         List<MsgInfoMVO> resultList = null;
@@ -132,9 +132,9 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
                 sql.append(" AND msg_id=?");
                 params.add(entity.getMsgId());
             }
-            	if (StringUtils.isNotBlank(entity.getUserid())) {
-                sql.append(" AND userid=?");
-                params.add(entity.getUserid());
+            	if (StringUtils.isNotBlank(entity.getUserId())) {
+                sql.append(" AND user_id=?");
+                params.add(entity.getUserId());
             }
             	if (StringUtils.isNotBlank(entity.getMsgTypeId())) {
                 sql.append(" AND msg_type_id=?");
@@ -175,14 +175,14 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
 			new BeanPropertyRowMapper<MsgInfoMVO>(MsgInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询MSG_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询MSG_INFO错误", e);
+            throw new SysException("查询MSG_INFO错误", "10000", e);
         }
         return resultList;
     }
     @Override
     public MsgInfoMVO queryBean(MsgInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT msg_id,userid,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  MSG_INFO ");
         sql.append("WHERE msg_id=? ");
         List<Object> params = new ArrayList<Object>();
@@ -198,7 +198,7 @@ private static Logger logger = LoggerFactory.getLogger(MsgInfoSDAO.class);
 			new BeanPropertyRowMapper<MsgInfoMVO>(MsgInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询MSG_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询MSG_INFO错误", e);
+            throw new SysException("查询MSG_INFO错误", "10000", e);
         }
         return entity;
     }

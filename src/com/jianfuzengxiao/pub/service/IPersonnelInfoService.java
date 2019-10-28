@@ -27,5 +27,17 @@ public interface IPersonnelInfoService extends IService {
 
 	/** 分页查询 */
 	public PageInfo queryPage(PersonnelInfoMVO entity, PageInfo pagInfo) throws SysException, AppException;
+	
+	public PageInfo queryHousesPage(PersonnelInfoMVO personnelInfo, PageInfo pageInfo) throws SysException, AppException;
+	
+	public List<PersonnelInfoMVO> queryHousesList(PersonnelInfoMVO personnelInfo) throws SysException, AppException;
+	
+	public PersonnelInfoMVO queryPersonnelBean(PersonnelInfoMVO personnelInfo) throws SysException, AppException;
+	
+	public PersonnelInfoMVO addUserPersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
+	
+	public PersonnelInfoMVO addPersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
+	
+	public int updatePersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
@@ -20,12 +21,15 @@ public class AdminInfoService extends BaseService implements IAdminInfoService {
 	/** 插入 */
 	@Override
 	public AdminInfoMVO insert(AdminInfoMVO adminInfo) throws SysException, AppException {
+		adminInfo.setCreateTime(DateUtil.nowTime());
+		adminInfo.setSts(STS_NORMAL);
 		return adminInfoMDAO.insert(adminInfo);
 	}
 
 	/** 更新 */
 	@Override
 	public int update(AdminInfoMVO adminInfo) throws SysException, AppException {
+		adminInfo.setUpdateTime(DateUtil.nowTime());
 		return adminInfoMDAO.update(adminInfo);
 	}
 

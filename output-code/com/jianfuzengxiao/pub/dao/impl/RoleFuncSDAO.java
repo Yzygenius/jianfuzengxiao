@@ -40,7 +40,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleFuncSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加ROLE_FUNC 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加ROLE_FUNC错误", e);
+          	throw new SysException("增加ROLE_FUNC错误", "10000", e);
           }
           return entity;
        }
@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleFuncSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新ROLE_FUNC错误：{}", e.getMessage());
-            throw new SysException("10000", "更新ROLE_FUNC错误", e);
+            throw new SysException("更新ROLE_FUNC错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -89,7 +89,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleFuncSDAO.class);
                            entity.getRoleFuncId());
         } catch (DataAccessException e) {
             logger.error("删除ROLE_FUNC错误：{}", e.getMessage());
-            throw new SysException("10000", "删除ROLE_FUNC错误", e);
+            throw new SysException("删除ROLE_FUNC错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -130,7 +130,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleFuncSDAO.class);
 			new BeanPropertyRowMapper<RoleFuncMVO>(RoleFuncMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ROLE_FUNC错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ROLE_FUNC错误", e);
+            throw new SysException("查询ROLE_FUNC错误", "10000", e);
         }
         return resultList;
     }
@@ -153,7 +153,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleFuncSDAO.class);
 			new BeanPropertyRowMapper<RoleFuncMVO>(RoleFuncMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ROLE_FUNC错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ROLE_FUNC错误", e);
+            throw new SysException("查询ROLE_FUNC错误", "10000", e);
         }
         return entity;
     }

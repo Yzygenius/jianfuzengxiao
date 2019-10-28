@@ -53,7 +53,7 @@ public class UserRoleMDAO extends UserRoleSDAO implements IUserRoleMDAO {
         } catch (DataAccessException e) {
             e.printStackTrace();
             logger.error("查询UserRole错误：{}", e.getMessage());
-            throw new SysException("10000", "查询UserRole错误", e);
+            throw new SysException("查询UserRole错误", "10000", e);
         }
         return pageInfo;
     }

@@ -42,7 +42,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
             });
           } catch (DataAccessException e) {
           	logger.error("增加ADUIT_DISTRIBUTION 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加ADUIT_DISTRIBUTION错误", e);
+          	throw new SysException("增加ADUIT_DISTRIBUTION错误", "10000", e);
           }
           return entity;
        }
@@ -84,7 +84,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-            throw new SysException("10000", "更新ADUIT_DISTRIBUTION错误", e);
+            throw new SysException("更新ADUIT_DISTRIBUTION错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -99,7 +99,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
                            entity.getId());
         } catch (DataAccessException e) {
             logger.error("删除ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-            throw new SysException("10000", "删除ADUIT_DISTRIBUTION错误", e);
+            throw new SysException("删除ADUIT_DISTRIBUTION错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -148,7 +148,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
 			new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ADUIT_DISTRIBUTION错误", e);
+            throw new SysException("查询ADUIT_DISTRIBUTION错误", "10000", e);
         }
         return resultList;
     }
@@ -171,7 +171,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
 			new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ADUIT_DISTRIBUTION错误", e);
+            throw new SysException("查询ADUIT_DISTRIBUTION错误", "10000", e);
         }
         return entity;
     }

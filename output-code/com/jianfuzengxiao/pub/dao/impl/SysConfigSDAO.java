@@ -42,7 +42,7 @@ private static Logger logger = LoggerFactory.getLogger(SysConfigSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加SYS_CONFIG 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加SYS_CONFIG错误", e);
+          	throw new SysException("增加SYS_CONFIG错误", "10000", e);
           }
           return entity;
        }
@@ -84,7 +84,7 @@ private static Logger logger = LoggerFactory.getLogger(SysConfigSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新SYS_CONFIG错误：{}", e.getMessage());
-            throw new SysException("10000", "更新SYS_CONFIG错误", e);
+            throw new SysException("更新SYS_CONFIG错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -99,7 +99,7 @@ private static Logger logger = LoggerFactory.getLogger(SysConfigSDAO.class);
                            entity.getConfigId());
         } catch (DataAccessException e) {
             logger.error("删除SYS_CONFIG错误：{}", e.getMessage());
-            throw new SysException("10000", "删除SYS_CONFIG错误", e);
+            throw new SysException("删除SYS_CONFIG错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -148,7 +148,7 @@ private static Logger logger = LoggerFactory.getLogger(SysConfigSDAO.class);
 			new BeanPropertyRowMapper<SysConfigMVO>(SysConfigMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询SYS_CONFIG错误：{}", e.getMessage());
-            throw new SysException("10000", "查询SYS_CONFIG错误", e);
+            throw new SysException("查询SYS_CONFIG错误", "10000", e);
         }
         return resultList;
     }
@@ -171,7 +171,7 @@ private static Logger logger = LoggerFactory.getLogger(SysConfigSDAO.class);
 			new BeanPropertyRowMapper<SysConfigMVO>(SysConfigMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询SYS_CONFIG错误：{}", e.getMessage());
-            throw new SysException("10000", "查询SYS_CONFIG错误", e);
+            throw new SysException("查询SYS_CONFIG错误", "10000", e);
         }
         return entity;
     }

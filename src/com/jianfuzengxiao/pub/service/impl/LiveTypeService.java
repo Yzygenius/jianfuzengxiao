@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
@@ -20,12 +21,15 @@ public class LiveTypeService extends BaseService implements ILiveTypeService {
 	/** 插入 */
 	@Override
 	public LiveTypeMVO insert(LiveTypeMVO liveType) throws SysException, AppException {
+		liveType.setCreateTime(DateUtil.nowTime());
+		liveType.setSts(STS_NORMAL);
 		return liveTypeMDAO.insert(liveType);
 	}
 
 	/** 更新 */
 	@Override
 	public int update(LiveTypeMVO liveType) throws SysException, AppException {
+		liveType.setUpdateTime(DateUtil.nowTime());
 		return liveTypeMDAO.update(liveType);
 	}
 

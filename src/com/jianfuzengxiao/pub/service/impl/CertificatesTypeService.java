@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
@@ -20,12 +21,15 @@ public class CertificatesTypeService extends BaseService implements ICertificate
 	/** 插入 */
 	@Override
 	public CertificatesTypeMVO insert(CertificatesTypeMVO certificatesType) throws SysException, AppException {
+		certificatesType.setCreateTime(DateUtil.nowTime());
+		certificatesType.setSts(STS_NORMAL);
 		return certificatesTypeMDAO.insert(certificatesType);
 	}
 
 	/** 更新 */
 	@Override
 	public int update(CertificatesTypeMVO certificatesType) throws SysException, AppException {
+		certificatesType.setUpdateTime(DateUtil.nowTime());
 		return certificatesTypeMDAO.update(certificatesType);
 	}
 

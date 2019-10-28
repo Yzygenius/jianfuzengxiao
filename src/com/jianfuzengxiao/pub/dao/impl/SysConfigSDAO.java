@@ -43,7 +43,7 @@ public class SysConfigSDAO extends BaseDAO<SysConfigMVO> implements ISysConfigSD
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加SYS_CONFIG 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加SYS_CONFIG错误", e);
+			throw new SysException("增加SYS_CONFIG错误", "10000", e);
 		}
 		return entity;
 	}
@@ -86,7 +86,7 @@ public class SysConfigSDAO extends BaseDAO<SysConfigMVO> implements ISysConfigSD
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新SYS_CONFIG错误：{}", e.getMessage());
-			throw new SysException("10000", "更新SYS_CONFIG错误", e);
+			throw new SysException("更新SYS_CONFIG错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -101,7 +101,7 @@ public class SysConfigSDAO extends BaseDAO<SysConfigMVO> implements ISysConfigSD
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getConfigId());
 		} catch (DataAccessException e) {
 			logger.error("删除SYS_CONFIG错误：{}", e.getMessage());
-			throw new SysException("10000", "删除SYS_CONFIG错误", e);
+			throw new SysException("删除SYS_CONFIG错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -151,7 +151,7 @@ public class SysConfigSDAO extends BaseDAO<SysConfigMVO> implements ISysConfigSD
 					new BeanPropertyRowMapper<SysConfigMVO>(SysConfigMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询SYS_CONFIG错误：{}", e.getMessage());
-			throw new SysException("10000", "查询SYS_CONFIG错误", e);
+			throw new SysException("查询SYS_CONFIG错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -175,7 +175,7 @@ public class SysConfigSDAO extends BaseDAO<SysConfigMVO> implements ISysConfigSD
 					new BeanPropertyRowMapper<SysConfigMVO>(SysConfigMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询SYS_CONFIG错误：{}", e.getMessage());
-			throw new SysException("10000", "查询SYS_CONFIG错误", e);
+			throw new SysException("查询SYS_CONFIG错误", "10000", e);
 		}
 		return entity;
 	}

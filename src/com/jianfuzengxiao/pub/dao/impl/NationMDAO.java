@@ -41,7 +41,7 @@ public class NationMDAO extends NationSDAO implements INationMDAO {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			logger.error("查询Nation错误：{}", e.getMessage());
-			throw new SysException("10000", "查询Nation错误", e);
+			throw new SysException("查询Nation错误", "10000", e);
 		}
 		return pageInfo;
 	}

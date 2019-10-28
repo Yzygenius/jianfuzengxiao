@@ -39,7 +39,7 @@ private static Logger logger = LoggerFactory.getLogger(AreaInfoSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加AREA_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加AREA_INFO错误", e);
+          	throw new SysException("增加AREA_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -69,7 +69,7 @@ private static Logger logger = LoggerFactory.getLogger(AreaInfoSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新AREA_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新AREA_INFO错误", e);
+            throw new SysException("更新AREA_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -84,7 +84,7 @@ private static Logger logger = LoggerFactory.getLogger(AreaInfoSDAO.class);
                            entity.getAreaCode());
         } catch (DataAccessException e) {
             logger.error("删除AREA_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除AREA_INFO错误", e);
+            throw new SysException("删除AREA_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -121,7 +121,7 @@ private static Logger logger = LoggerFactory.getLogger(AreaInfoSDAO.class);
 			new BeanPropertyRowMapper<AreaInfoMVO>(AreaInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询AREA_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询AREA_INFO错误", e);
+            throw new SysException("查询AREA_INFO错误", "10000", e);
         }
         return resultList;
     }
@@ -144,7 +144,7 @@ private static Logger logger = LoggerFactory.getLogger(AreaInfoSDAO.class);
 			new BeanPropertyRowMapper<AreaInfoMVO>(AreaInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询AREA_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询AREA_INFO错误", e);
+            throw new SysException("查询AREA_INFO错误", "10000", e);
         }
         return entity;
     }

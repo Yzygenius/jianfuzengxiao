@@ -58,7 +58,7 @@ public class CommunityInfoMDAO extends CommunityInfoSDAO implements ICommunityIn
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			logger.error("查询CommunityInfo错误：{}", e.getMessage());
-			throw new SysException("10000", "查询CommunityInfo错误", e);
+			throw new SysException("查询CommunityInfo错误", "10000", e);
 		}
 		return pageInfo;
 	}

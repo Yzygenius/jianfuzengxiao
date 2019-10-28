@@ -21,7 +21,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public PageInfo queryPage(HousesInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select houses_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"select houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("from HOUSES_INFO ");
 		sql.append("where 1=1");
 
@@ -31,6 +31,10 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
 					sql.append(" AND houses_id=?");
 					params.add(entity.getHousesId());
+				}
+				if (StringUtils.isNotBlank(entity.getUserId())) {
+					sql.append(" AND user_id like ?");
+					params.add("%" + entity.getUserId() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getHousesStatus())) {
 					sql.append(" AND houses_status=?");
@@ -158,7 +162,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			logger.error("查询HousesInfo错误：{}", e.getMessage());
-			throw new SysException("10000", "查询HousesInfo错误", e);
+			throw new SysException("查询HousesInfo错误", "10000", e);
 		}
 		return pageInfo;
 	}

@@ -38,7 +38,7 @@ public class NationSDAO extends BaseDAO<NationMVO> implements INationSDAO {
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加NATION 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加NATION错误", e);
+			throw new SysException("增加NATION错误", "10000", e);
 		}
 		return entity;
 	}
@@ -61,7 +61,7 @@ public class NationSDAO extends BaseDAO<NationMVO> implements INationSDAO {
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新NATION错误：{}", e.getMessage());
-			throw new SysException("10000", "更新NATION错误", e);
+			throw new SysException("更新NATION错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -76,7 +76,7 @@ public class NationSDAO extends BaseDAO<NationMVO> implements INationSDAO {
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getNationId());
 		} catch (DataAccessException e) {
 			logger.error("删除NATION错误：{}", e.getMessage());
-			throw new SysException("10000", "删除NATION错误", e);
+			throw new SysException("删除NATION错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -105,7 +105,7 @@ public class NationSDAO extends BaseDAO<NationMVO> implements INationSDAO {
 					new BeanPropertyRowMapper<NationMVO>(NationMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询NATION错误：{}", e.getMessage());
-			throw new SysException("10000", "查询NATION错误", e);
+			throw new SysException("查询NATION错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -128,7 +128,7 @@ public class NationSDAO extends BaseDAO<NationMVO> implements INationSDAO {
 					new BeanPropertyRowMapper<NationMVO>(NationMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询NATION错误：{}", e.getMessage());
-			throw new SysException("10000", "查询NATION错误", e);
+			throw new SysException("查询NATION错误", "10000", e);
 		}
 		return entity;
 	}

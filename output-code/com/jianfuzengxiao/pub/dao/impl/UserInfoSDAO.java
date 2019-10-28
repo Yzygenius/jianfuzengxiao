@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
 @Override
     public UserInfoMVO insert(final UserInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO USER_INFO (userid,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,cert_type_id,cert_type_name,cert_number,cert_start_time,cert_stop_time,cert_address,cert_office,status,audit_remark,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO USER_INFO (user_id,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,status,audit_remark,create_time,update_time,sts,lease_start_time) ");
+        sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'))");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -30,7 +30,7 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 public java.sql.PreparedStatement createPreparedStatement(Connection conn) throws SQLException{
                 	int i = 0;
                 	java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString()); 
-                	ps.setString(++i, StringUtils.trimToNull(entity.getUserid()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUsername()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getGender()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getFacePhoto()));
@@ -39,24 +39,27 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 	ps.setString(++i, StringUtils.trimToNull(entity.getNationId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getNationName()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getTelephone()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertTypeId()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertTypeName()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertNumber()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertStartTime()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertStopTime()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertAddress()));
-                	ps.setString(++i, StringUtils.trimToNull(entity.getCertOffice()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesTypeId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesTypeName()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesPositivePhoto()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesNegativePhoto()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesNumber()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesStartTime()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesStopTime()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesAddress()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCertificatesOffice()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getStatus()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getAuditRemark()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getLeaseStartTime()));
                 	return ps;
               }
             });
           } catch (DataAccessException e) {
           	logger.error("增加USER_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加USER_INFO错误", e);
+          	throw new SysException("增加USER_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -99,33 +102,41 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 sql.append("telephone=?,");
                 params.add(entity.getTelephone());
             }
-            if (entity.getCertTypeId() != null) {
-                sql.append("cert_type_id=?,");
-                params.add(entity.getCertTypeId());
+            if (entity.getCertificatesTypeId() != null) {
+                sql.append("certificates_type_id=?,");
+                params.add(entity.getCertificatesTypeId());
             }
-            if (entity.getCertTypeName() != null) {
-                sql.append("cert_type_name=?,");
-                params.add(entity.getCertTypeName());
+            if (entity.getCertificatesTypeName() != null) {
+                sql.append("certificates_type_name=?,");
+                params.add(entity.getCertificatesTypeName());
             }
-            if (entity.getCertNumber() != null) {
-                sql.append("cert_number=?,");
-                params.add(entity.getCertNumber());
+            if (entity.getCertificatesPositivePhoto() != null) {
+                sql.append("certificates_positive_photo=?,");
+                params.add(entity.getCertificatesPositivePhoto());
             }
-            if (entity.getCertStartTime() != null) {
-                sql.append("cert_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
-                params.add(entity.getCertStartTime());
+            if (entity.getCertificatesNegativePhoto() != null) {
+                sql.append("certificates_negative_photo=?,");
+                params.add(entity.getCertificatesNegativePhoto());
             }
-            if (entity.getCertStopTime() != null) {
-                sql.append("cert_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
-                params.add(entity.getCertStopTime());
+            if (entity.getCertificatesNumber() != null) {
+                sql.append("certificates_number=?,");
+                params.add(entity.getCertificatesNumber());
             }
-            if (entity.getCertAddress() != null) {
-                sql.append("cert_address=?,");
-                params.add(entity.getCertAddress());
+            if (entity.getCertificatesStartTime() != null) {
+                sql.append("certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
+                params.add(entity.getCertificatesStartTime());
             }
-            if (entity.getCertOffice() != null) {
-                sql.append("cert_office=?,");
-                params.add(entity.getCertOffice());
+            if (entity.getCertificatesStopTime() != null) {
+                sql.append("certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
+                params.add(entity.getCertificatesStopTime());
+            }
+            if (entity.getCertificatesAddress() != null) {
+                sql.append("certificates_address=?,");
+                params.add(entity.getCertificatesAddress());
+            }
+            if (entity.getCertificatesOffice() != null) {
+                sql.append("certificates_office=?,");
+                params.add(entity.getCertificatesOffice());
             }
             if (entity.getStatus() != null) {
                 sql.append("status=?,");
@@ -147,14 +158,18 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 sql.append("sts=?,");
                 params.add(entity.getSts());
             }
+            if (entity.getLeaseStartTime() != null) {
+                sql.append("lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
+                params.add(entity.getLeaseStartTime());
+            }
             sql.deleteCharAt(sql.length() - 1);
-            sql.append(" WHERE userid=?");
-            params.add(entity.getUserid());
+            sql.append(" WHERE user_id=?");
+            params.add(entity.getUserId());
             logger.info(sql.toString() + "--" + params.toString());
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新USER_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新USER_INFO错误", e);
+            throw new SysException("更新USER_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -162,30 +177,30 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
     public int delete(UserInfoMVO entity) throws SysException {
     	   int rowsAffected;
         StringBuilder sql = new StringBuilder();
-        sql.append("DELETE FROM USER_INFO WHERE userid=?");
+        sql.append("DELETE FROM USER_INFO WHERE user_id=?");
         try {
         	   logger.info(sql.toString());
             rowsAffected = jdbcTemplate.update(sql.toString(),
-                           entity.getUserid());
+                           entity.getUserId());
         } catch (DataAccessException e) {
             logger.error("删除USER_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除USER_INFO错误", e);
+            throw new SysException("删除USER_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
     @Override
     public List<UserInfoMVO> queryList(UserInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT userid,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,cert_type_id,cert_type_name,cert_number,date_format(cert_start_time,'%Y-%m-%d %H:%i:%s')cert_start_time,date_format(cert_stop_time,'%Y-%m-%d %H:%i:%s')cert_stop_time,cert_address,cert_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT user_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time ");
         sql.append("FROM  USER_INFO ");
         sql.append("WHERE 1=1 ");
         List<UserInfoMVO> resultList = null;
         List<Object> params = new ArrayList<Object>();
         try {
             if (entity != null) {
-            	if (StringUtils.isNotBlank(entity.getUserid())) {
-                sql.append(" AND userid=?");
-                params.add(entity.getUserid());
+            	if (StringUtils.isNotBlank(entity.getUserId())) {
+                sql.append(" AND user_id=?");
+                params.add(entity.getUserId());
             }
             	if (StringUtils.isNotBlank(entity.getUsername())) {
                 sql.append(" AND username=?");
@@ -219,33 +234,41 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 sql.append(" AND telephone=?");
                 params.add(entity.getTelephone());
             }
-            	if (StringUtils.isNotBlank(entity.getCertTypeId())) {
-                sql.append(" AND cert_type_id=?");
-                params.add(entity.getCertTypeId());
+            	if (StringUtils.isNotBlank(entity.getCertificatesTypeId())) {
+                sql.append(" AND certificates_type_id=?");
+                params.add(entity.getCertificatesTypeId());
             }
-            	if (StringUtils.isNotBlank(entity.getCertTypeName())) {
-                sql.append(" AND cert_type_name=?");
-                params.add(entity.getCertTypeName());
+            	if (StringUtils.isNotBlank(entity.getCertificatesTypeName())) {
+                sql.append(" AND certificates_type_name=?");
+                params.add(entity.getCertificatesTypeName());
             }
-            	if (StringUtils.isNotBlank(entity.getCertNumber())) {
-                sql.append(" AND cert_number=?");
-                params.add(entity.getCertNumber());
+            	if (StringUtils.isNotBlank(entity.getCertificatesPositivePhoto())) {
+                sql.append(" AND certificates_positive_photo=?");
+                params.add(entity.getCertificatesPositivePhoto());
             }
-            	if (StringUtils.isNotBlank(entity.getCertStartTime())) {
-                sql.append("  AND cert_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-                params.add(entity.getCertStartTime());
+            	if (StringUtils.isNotBlank(entity.getCertificatesNegativePhoto())) {
+                sql.append(" AND certificates_negative_photo=?");
+                params.add(entity.getCertificatesNegativePhoto());
             }
-            	if (StringUtils.isNotBlank(entity.getCertStopTime())) {
-                sql.append("  AND cert_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-                params.add(entity.getCertStopTime());
+            	if (StringUtils.isNotBlank(entity.getCertificatesNumber())) {
+                sql.append(" AND certificates_number=?");
+                params.add(entity.getCertificatesNumber());
             }
-            	if (StringUtils.isNotBlank(entity.getCertAddress())) {
-                sql.append(" AND cert_address=?");
-                params.add(entity.getCertAddress());
+            	if (StringUtils.isNotBlank(entity.getCertificatesStartTime())) {
+                sql.append("  AND certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+                params.add(entity.getCertificatesStartTime());
             }
-            	if (StringUtils.isNotBlank(entity.getCertOffice())) {
-                sql.append(" AND cert_office=?");
-                params.add(entity.getCertOffice());
+            	if (StringUtils.isNotBlank(entity.getCertificatesStopTime())) {
+                sql.append("  AND certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+                params.add(entity.getCertificatesStopTime());
+            }
+            	if (StringUtils.isNotBlank(entity.getCertificatesAddress())) {
+                sql.append(" AND certificates_address=?");
+                params.add(entity.getCertificatesAddress());
+            }
+            	if (StringUtils.isNotBlank(entity.getCertificatesOffice())) {
+                sql.append(" AND certificates_office=?");
+                params.add(entity.getCertificatesOffice());
             }
             	if (StringUtils.isNotBlank(entity.getStatus())) {
                 sql.append(" AND status=?");
@@ -267,6 +290,10 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
                 sql.append(" AND sts=?");
                 params.add(entity.getSts());
             }
+            	if (StringUtils.isNotBlank(entity.getLeaseStartTime())) {
+                sql.append("  AND lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+                params.add(entity.getLeaseStartTime());
+            }
         	   }
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(),
@@ -274,20 +301,20 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
 			new BeanPropertyRowMapper<UserInfoMVO>(UserInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询USER_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询USER_INFO错误", e);
+            throw new SysException("查询USER_INFO错误", "10000", e);
         }
         return resultList;
     }
     @Override
     public UserInfoMVO queryBean(UserInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT userid,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,cert_type_id,cert_type_name,cert_number,date_format(cert_start_time,'%Y-%m-%d %H:%i:%s')cert_start_time,date_format(cert_stop_time,'%Y-%m-%d %H:%i:%s')cert_stop_time,cert_address,cert_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT user_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time ");
         sql.append("FROM  USER_INFO ");
-        sql.append("WHERE userid=? ");
+        sql.append("WHERE user_id=? ");
         List<Object> params = new ArrayList<Object>();
         try {
             if (entity != null) {
-        	   		params.add(entity.getUserid());
+        	   		params.add(entity.getUserId());
         	   } else {
         	   		sql.append(" AND 1=2");
         	   }
@@ -297,7 +324,7 @@ private static Logger logger = LoggerFactory.getLogger(UserInfoSDAO.class);
 			new BeanPropertyRowMapper<UserInfoMVO>(UserInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询USER_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询USER_INFO错误", e);
+            throw new SysException("查询USER_INFO错误", "10000", e);
         }
         return entity;
     }

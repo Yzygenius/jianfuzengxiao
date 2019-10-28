@@ -48,7 +48,7 @@ public class FuncListSDAO extends BaseDAO<FuncListMVO> implements IFuncListSDAO 
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加FUNC_LIST 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加FUNC_LIST错误", e);
+			throw new SysException("增加FUNC_LIST错误", "10000", e);
 		}
 		return entity;
 	}
@@ -107,7 +107,7 @@ public class FuncListSDAO extends BaseDAO<FuncListMVO> implements IFuncListSDAO 
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新FUNC_LIST错误：{}", e.getMessage());
-			throw new SysException("10000", "更新FUNC_LIST错误", e);
+			throw new SysException("更新FUNC_LIST错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -122,7 +122,7 @@ public class FuncListSDAO extends BaseDAO<FuncListMVO> implements IFuncListSDAO 
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getFuncId());
 		} catch (DataAccessException e) {
 			logger.error("删除FUNC_LIST错误：{}", e.getMessage());
-			throw new SysException("10000", "删除FUNC_LIST错误", e);
+			throw new SysException("删除FUNC_LIST错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -188,7 +188,7 @@ public class FuncListSDAO extends BaseDAO<FuncListMVO> implements IFuncListSDAO 
 					new BeanPropertyRowMapper<FuncListMVO>(FuncListMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询FUNC_LIST错误：{}", e.getMessage());
-			throw new SysException("10000", "查询FUNC_LIST错误", e);
+			throw new SysException("查询FUNC_LIST错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -212,7 +212,7 @@ public class FuncListSDAO extends BaseDAO<FuncListMVO> implements IFuncListSDAO 
 					new BeanPropertyRowMapper<FuncListMVO>(FuncListMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询FUNC_LIST错误：{}", e.getMessage());
-			throw new SysException("10000", "查询FUNC_LIST错误", e);
+			throw new SysException("查询FUNC_LIST错误", "10000", e);
 		}
 		return entity;
 	}

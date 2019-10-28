@@ -41,7 +41,7 @@ public class RoleFuncSDAO extends BaseDAO<RoleFuncMVO> implements IRoleFuncSDAO 
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加ROLE_FUNC 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加ROLE_FUNC错误", e);
+			throw new SysException("增加ROLE_FUNC错误", "10000", e);
 		}
 		return entity;
 	}
@@ -76,7 +76,7 @@ public class RoleFuncSDAO extends BaseDAO<RoleFuncMVO> implements IRoleFuncSDAO 
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新ROLE_FUNC错误：{}", e.getMessage());
-			throw new SysException("10000", "更新ROLE_FUNC错误", e);
+			throw new SysException("更新ROLE_FUNC错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -91,7 +91,7 @@ public class RoleFuncSDAO extends BaseDAO<RoleFuncMVO> implements IRoleFuncSDAO 
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getRoleFuncId());
 		} catch (DataAccessException e) {
 			logger.error("删除ROLE_FUNC错误：{}", e.getMessage());
-			throw new SysException("10000", "删除ROLE_FUNC错误", e);
+			throw new SysException("删除ROLE_FUNC错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -132,7 +132,7 @@ public class RoleFuncSDAO extends BaseDAO<RoleFuncMVO> implements IRoleFuncSDAO 
 					new BeanPropertyRowMapper<RoleFuncMVO>(RoleFuncMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ROLE_FUNC错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ROLE_FUNC错误", e);
+			throw new SysException("查询ROLE_FUNC错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -155,7 +155,7 @@ public class RoleFuncSDAO extends BaseDAO<RoleFuncMVO> implements IRoleFuncSDAO 
 					new BeanPropertyRowMapper<RoleFuncMVO>(RoleFuncMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ROLE_FUNC错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ROLE_FUNC错误", e);
+			throw new SysException("查询ROLE_FUNC错误", "10000", e);
 		}
 		return entity;
 	}

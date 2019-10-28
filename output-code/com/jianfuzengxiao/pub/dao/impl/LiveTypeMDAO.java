@@ -57,7 +57,7 @@ public class LiveTypeMDAO extends LiveTypeSDAO implements ILiveTypeMDAO {
         } catch (DataAccessException e) {
             e.printStackTrace();
             logger.error("查询LiveType错误：{}", e.getMessage());
-            throw new SysException("10000", "查询LiveType错误", e);
+            throw new SysException("查询LiveType错误", "10000", e);
         }
         return pageInfo;
     }

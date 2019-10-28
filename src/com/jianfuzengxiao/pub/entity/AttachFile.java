@@ -3,7 +3,7 @@ package com.jianfuzengxiao.pub.entity;
 import com.bamboo.framework.entity.Entity;
 
 public class AttachFile extends Entity {
-
+	
 	// 文件状态
 	public final static String STATE_TEMP = "T";
 	public final static String STATE_PRODUCE = "P";
@@ -11,7 +11,7 @@ public class AttachFile extends Entity {
 	// 文件类型
 	public final static String TYPE_IMAGE = "I";
 	public final static String TYPE_FILE = "F";
-		
+
 	protected String fileId;
 
 	protected String fileType;

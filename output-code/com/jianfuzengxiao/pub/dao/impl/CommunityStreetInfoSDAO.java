@@ -43,7 +43,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
             });
           } catch (DataAccessException e) {
           	logger.error("增加COMMUNITY_STREET_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加COMMUNITY_STREET_INFO错误", e);
+          	throw new SysException("增加COMMUNITY_STREET_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -89,7 +89,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新COMMUNITY_STREET_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新COMMUNITY_STREET_INFO错误", e);
+            throw new SysException("更新COMMUNITY_STREET_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -104,7 +104,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
                            entity.getCommunityStreetId());
         } catch (DataAccessException e) {
             logger.error("删除COMMUNITY_STREET_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除COMMUNITY_STREET_INFO错误", e);
+            throw new SysException("删除COMMUNITY_STREET_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -157,7 +157,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
 			new BeanPropertyRowMapper<CommunityStreetInfoMVO>(CommunityStreetInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询COMMUNITY_STREET_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询COMMUNITY_STREET_INFO错误", e);
+            throw new SysException("查询COMMUNITY_STREET_INFO错误", "10000", e);
         }
         return resultList;
     }
@@ -180,7 +180,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
 			new BeanPropertyRowMapper<CommunityStreetInfoMVO>(CommunityStreetInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询COMMUNITY_STREET_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询COMMUNITY_STREET_INFO错误", e);
+            throw new SysException("查询COMMUNITY_STREET_INFO错误", "10000", e);
         }
         return entity;
     }

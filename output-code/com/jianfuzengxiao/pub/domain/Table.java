@@ -1,7 +1,7 @@
 package com.jianfuzengxiao.pub.domain;
 
 /**
- * @Created：2019-10-26
+ * @Created：2019-10-28
  * @Author null
  * @Version:1.0
  * @Email:jilongliang@sina.com
@@ -14,6 +14,7 @@ public interface Table {
     String CERTIFICATES_TYPE = "CERTIFICATES_TYPE";
     String COMMUNITY_INFO = "COMMUNITY_INFO";
     String COMMUNITY_STREET_INFO = "COMMUNITY_STREET_INFO";
+    String CONTRACT_FILE = "CONTRACT_FILE";
     String FUNC_LIST = "FUNC_LIST";
     String HOUSES_INFO = "HOUSES_INFO";
     String HOUSES_TYPE = "HOUSES_TYPE";

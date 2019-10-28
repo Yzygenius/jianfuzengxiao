@@ -3,18 +3,38 @@ package com.jianfuzengxiao.pub.entity;
 import com.bamboo.framework.entity.Entity;
 
 public class PersonnelInfo extends Entity {
-
+	
+	/** 1 app用户 */
+	public final static String per_sort_app = "1";
+	/** 2 通过app添加的用户 */
+	public final static String per_sort_not_app = "2";
+	
+	/** 1 未审核 */
+	public final static String status_waiting = "1";
+	/** 2 审核通过 */
+	public final static String status_passed = "2";
+	/** 3审核失败 */
+	public final static String status_reject = "3";
+	/** 4 过期 */
+	public final static String status_guoqi = "4";
+	/** 5 注销 */
+	public final static String status_zhuxiao = "5";
+	/** 6 撤销 */
+	public final static String status_cexiao = "6";
+	
 	protected String personnelId;
 
 	protected String housesId;
 
-	protected String userid;
+	protected String userId;
 
 	protected String perSort;
 
 	protected String liveTypeId;
 
 	protected String liveTypeName;
+
+	protected String leaseMode;
 
 	protected String leaseStartTime;
 
@@ -86,12 +106,12 @@ public class PersonnelInfo extends Entity {
 		this.housesId = housesId;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPerSort() {
@@ -116,6 +136,14 @@ public class PersonnelInfo extends Entity {
 
 	public void setLiveTypeName(String liveTypeName) {
 		this.liveTypeName = liveTypeName;
+	}
+
+	public String getLeaseMode() {
+		return leaseMode;
+	}
+
+	public void setLeaseMode(String leaseMode) {
+		this.leaseMode = leaseMode;
 	}
 
 	public String getLeaseStartTime() {

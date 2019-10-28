@@ -124,6 +124,10 @@ public class BaseController extends SuperController implements HandlerIntercepto
 		return apiResult(rc.code, rc.msg);
 	}
 	
+	protected String apiResult(RC rc, Object data) {
+		return toJson(new ApiResult(rc.code, rc.msg, data));
+	}
+	
 	protected String apiResult(String code, String msg) {
 		return toJson(new ApiResult(code, msg));
 	}

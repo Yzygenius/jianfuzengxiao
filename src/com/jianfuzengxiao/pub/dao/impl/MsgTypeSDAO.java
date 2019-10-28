@@ -42,7 +42,7 @@ public class MsgTypeSDAO extends BaseDAO<MsgTypeMVO> implements IMsgTypeSDAO {
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加MSG_TYPE 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加MSG_TYPE错误", e);
+			throw new SysException("增加MSG_TYPE错误", "10000", e);
 		}
 		return entity;
 	}
@@ -81,7 +81,7 @@ public class MsgTypeSDAO extends BaseDAO<MsgTypeMVO> implements IMsgTypeSDAO {
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新MSG_TYPE错误：{}", e.getMessage());
-			throw new SysException("10000", "更新MSG_TYPE错误", e);
+			throw new SysException("更新MSG_TYPE错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -96,7 +96,7 @@ public class MsgTypeSDAO extends BaseDAO<MsgTypeMVO> implements IMsgTypeSDAO {
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getMsgTypeId());
 		} catch (DataAccessException e) {
 			logger.error("删除MSG_TYPE错误：{}", e.getMessage());
-			throw new SysException("10000", "删除MSG_TYPE错误", e);
+			throw new SysException("删除MSG_TYPE错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -142,7 +142,7 @@ public class MsgTypeSDAO extends BaseDAO<MsgTypeMVO> implements IMsgTypeSDAO {
 					new BeanPropertyRowMapper<MsgTypeMVO>(MsgTypeMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询MSG_TYPE错误：{}", e.getMessage());
-			throw new SysException("10000", "查询MSG_TYPE错误", e);
+			throw new SysException("查询MSG_TYPE错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -166,7 +166,7 @@ public class MsgTypeSDAO extends BaseDAO<MsgTypeMVO> implements IMsgTypeSDAO {
 					new BeanPropertyRowMapper<MsgTypeMVO>(MsgTypeMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询MSG_TYPE错误：{}", e.getMessage());
-			throw new SysException("10000", "查询MSG_TYPE错误", e);
+			throw new SysException("查询MSG_TYPE错误", "10000", e);
 		}
 		return entity;
 	}

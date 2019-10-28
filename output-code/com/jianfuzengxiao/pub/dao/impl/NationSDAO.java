@@ -37,7 +37,7 @@ private static Logger logger = LoggerFactory.getLogger(NationSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加NATION 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加NATION错误", e);
+          	throw new SysException("增加NATION错误", "10000", e);
           }
           return entity;
        }
@@ -59,7 +59,7 @@ private static Logger logger = LoggerFactory.getLogger(NationSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新NATION错误：{}", e.getMessage());
-            throw new SysException("10000", "更新NATION错误", e);
+            throw new SysException("更新NATION错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(NationSDAO.class);
                            entity.getNationId());
         } catch (DataAccessException e) {
             logger.error("删除NATION错误：{}", e.getMessage());
-            throw new SysException("10000", "删除NATION错误", e);
+            throw new SysException("删除NATION错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -103,7 +103,7 @@ private static Logger logger = LoggerFactory.getLogger(NationSDAO.class);
 			new BeanPropertyRowMapper<NationMVO>(NationMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询NATION错误：{}", e.getMessage());
-            throw new SysException("10000", "查询NATION错误", e);
+            throw new SysException("查询NATION错误", "10000", e);
         }
         return resultList;
     }
@@ -126,7 +126,7 @@ private static Logger logger = LoggerFactory.getLogger(NationSDAO.class);
 			new BeanPropertyRowMapper<NationMVO>(NationMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询NATION错误：{}", e.getMessage());
-            throw new SysException("10000", "查询NATION错误", e);
+            throw new SysException("查询NATION错误", "10000", e);
         }
         return entity;
     }

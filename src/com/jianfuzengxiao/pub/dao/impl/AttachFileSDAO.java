@@ -45,7 +45,7 @@ public class AttachFileSDAO extends BaseDAO<AttachFileMVO> implements IAttachFil
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加ATTACH_FILE 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加ATTACH_FILE错误", e);
+			throw new SysException("增加ATTACH_FILE错误", "10000", e);
 		}
 		return entity;
 	}
@@ -92,7 +92,7 @@ public class AttachFileSDAO extends BaseDAO<AttachFileMVO> implements IAttachFil
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新ATTACH_FILE错误：{}", e.getMessage());
-			throw new SysException("10000", "更新ATTACH_FILE错误", e);
+			throw new SysException("更新ATTACH_FILE错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -107,7 +107,7 @@ public class AttachFileSDAO extends BaseDAO<AttachFileMVO> implements IAttachFil
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getFileId());
 		} catch (DataAccessException e) {
 			logger.error("删除ATTACH_FILE错误：{}", e.getMessage());
-			throw new SysException("10000", "删除ATTACH_FILE错误", e);
+			throw new SysException("删除ATTACH_FILE错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -161,7 +161,7 @@ public class AttachFileSDAO extends BaseDAO<AttachFileMVO> implements IAttachFil
 					new BeanPropertyRowMapper<AttachFileMVO>(AttachFileMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ATTACH_FILE错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ATTACH_FILE错误", e);
+			throw new SysException("查询ATTACH_FILE错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -185,7 +185,7 @@ public class AttachFileSDAO extends BaseDAO<AttachFileMVO> implements IAttachFil
 					new BeanPropertyRowMapper<AttachFileMVO>(AttachFileMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ATTACH_FILE错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ATTACH_FILE错误", e);
+			throw new SysException("查询ATTACH_FILE错误", "10000", e);
 		}
 		return entity;
 	}

@@ -42,7 +42,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加COMMUNITY_INFO 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加COMMUNITY_INFO错误", e);
+			throw new SysException("增加COMMUNITY_INFO错误", "10000", e);
 		}
 		return entity;
 	}
@@ -81,7 +81,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新COMMUNITY_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "更新COMMUNITY_INFO错误", e);
+			throw new SysException("更新COMMUNITY_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -96,7 +96,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getCommunityId());
 		} catch (DataAccessException e) {
 			logger.error("删除COMMUNITY_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "删除COMMUNITY_INFO错误", e);
+			throw new SysException("删除COMMUNITY_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -142,7 +142,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					new BeanPropertyRowMapper<CommunityInfoMVO>(CommunityInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询COMMUNITY_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询COMMUNITY_INFO错误", e);
+			throw new SysException("查询COMMUNITY_INFO错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -166,7 +166,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					new BeanPropertyRowMapper<CommunityInfoMVO>(CommunityInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询COMMUNITY_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询COMMUNITY_INFO错误", e);
+			throw new SysException("查询COMMUNITY_INFO错误", "10000", e);
 		}
 		return entity;
 	}

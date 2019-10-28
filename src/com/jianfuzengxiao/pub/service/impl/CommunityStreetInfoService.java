@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
@@ -20,12 +21,15 @@ public class CommunityStreetInfoService extends BaseService implements ICommunit
 	/** 插入 */
 	@Override
 	public CommunityStreetInfoMVO insert(CommunityStreetInfoMVO communityStreetInfo) throws SysException, AppException {
+		communityStreetInfo.setCreateTime(DateUtil.nowTime());
+		communityStreetInfo.setSts(STS_NORMAL);
 		return communityStreetInfoMDAO.insert(communityStreetInfo);
 	}
 
 	/** 更新 */
 	@Override
 	public int update(CommunityStreetInfoMVO communityStreetInfo) throws SysException, AppException {
+		communityStreetInfo.setUpdateTime(DateUtil.nowTime());
 		return communityStreetInfoMDAO.update(communityStreetInfo);
 	}
 

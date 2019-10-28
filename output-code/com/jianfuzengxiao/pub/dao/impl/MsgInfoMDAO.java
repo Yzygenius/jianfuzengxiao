@@ -20,7 +20,7 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
     private static Logger logger = LoggerFactory.getLogger(MsgInfoMDAO.class);
     public PageInfo queryPage(MsgInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select msg_id,userid,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("select msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("from MSG_INFO ");
         sql.append("where 1=1");
 
@@ -31,9 +31,9 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
                 sql.append(" AND msg_id=?");
                 params.add(entity.getMsgId());
             }
-            	if (StringUtils.isNotBlank(entity.getUserid())) {
-                sql.append(" AND userid like ?");
-                params.add("%" + entity.getUserid() + "%");
+            	if (StringUtils.isNotBlank(entity.getUserId())) {
+                sql.append(" AND user_id like ?");
+                params.add("%" + entity.getUserId() + "%");
             }
             	if (StringUtils.isNotBlank(entity.getMsgTypeId())) {
                 sql.append(" AND msg_type_id=?");
@@ -73,7 +73,7 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
         } catch (DataAccessException e) {
             e.printStackTrace();
             logger.error("查询MsgInfo错误：{}", e.getMessage());
-            throw new SysException("10000", "查询MsgInfo错误", e);
+            throw new SysException("查询MsgInfo错误", "10000", e);
         }
         return pageInfo;
     }

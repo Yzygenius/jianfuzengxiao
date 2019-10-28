@@ -57,7 +57,7 @@ public class MsgTypeMDAO extends MsgTypeSDAO implements IMsgTypeMDAO {
         } catch (DataAccessException e) {
             e.printStackTrace();
             logger.error("查询MsgType错误：{}", e.getMessage());
-            throw new SysException("10000", "查询MsgType错误", e);
+            throw new SysException("查询MsgType错误", "10000", e);
         }
         return pageInfo;
     }

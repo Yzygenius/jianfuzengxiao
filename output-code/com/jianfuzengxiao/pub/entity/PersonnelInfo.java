@@ -7,13 +7,15 @@ public class PersonnelInfo extends Entity {
     
     protected  String  housesId;
     
-    protected  String  userid;
+    protected  String  userId;
     
     protected  String  perSort;
     
     protected  String  liveTypeId;
     
     protected  String  liveTypeName;
+    
+    protected  String  leaseMode;
     
     protected  String  leaseStartTime;
     
@@ -81,11 +83,11 @@ public class PersonnelInfo extends Entity {
     public void setHousesId(String  housesId) {
         this.housesId = housesId;
     }
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
-    public void setUserid(String  userid) {
-        this.userid = userid;
+    public void setUserId(String  userId) {
+        this.userId = userId;
     }
     public String getPerSort() {
         return perSort;
@@ -104,6 +106,12 @@ public class PersonnelInfo extends Entity {
     }
     public void setLiveTypeName(String  liveTypeName) {
         this.liveTypeName = liveTypeName;
+    }
+    public String getLeaseMode() {
+        return leaseMode;
+    }
+    public void setLeaseMode(String  leaseMode) {
+        this.leaseMode = leaseMode;
     }
     public String getLeaseStartTime() {
         return leaseStartTime;

@@ -41,7 +41,7 @@ private static Logger logger = LoggerFactory.getLogger(CertificatesTypeSDAO.clas
             });
           } catch (DataAccessException e) {
           	logger.error("增加CERTIFICATES_TYPE 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加CERTIFICATES_TYPE错误", e);
+          	throw new SysException("增加CERTIFICATES_TYPE错误", "10000", e);
           }
           return entity;
        }
@@ -79,7 +79,7 @@ private static Logger logger = LoggerFactory.getLogger(CertificatesTypeSDAO.clas
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新CERTIFICATES_TYPE错误：{}", e.getMessage());
-            throw new SysException("10000", "更新CERTIFICATES_TYPE错误", e);
+            throw new SysException("更新CERTIFICATES_TYPE错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -94,7 +94,7 @@ private static Logger logger = LoggerFactory.getLogger(CertificatesTypeSDAO.clas
                            entity.getCertificatesTypeId());
         } catch (DataAccessException e) {
             logger.error("删除CERTIFICATES_TYPE错误：{}", e.getMessage());
-            throw new SysException("10000", "删除CERTIFICATES_TYPE错误", e);
+            throw new SysException("删除CERTIFICATES_TYPE错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -139,7 +139,7 @@ private static Logger logger = LoggerFactory.getLogger(CertificatesTypeSDAO.clas
 			new BeanPropertyRowMapper<CertificatesTypeMVO>(CertificatesTypeMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询CERTIFICATES_TYPE错误：{}", e.getMessage());
-            throw new SysException("10000", "查询CERTIFICATES_TYPE错误", e);
+            throw new SysException("查询CERTIFICATES_TYPE错误", "10000", e);
         }
         return resultList;
     }
@@ -162,7 +162,7 @@ private static Logger logger = LoggerFactory.getLogger(CertificatesTypeSDAO.clas
 			new BeanPropertyRowMapper<CertificatesTypeMVO>(CertificatesTypeMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询CERTIFICATES_TYPE错误：{}", e.getMessage());
-            throw new SysException("10000", "查询CERTIFICATES_TYPE错误", e);
+            throw new SysException("查询CERTIFICATES_TYPE错误", "10000", e);
         }
         return entity;
     }

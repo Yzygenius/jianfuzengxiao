@@ -24,9 +24,9 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 	public PersonnelInfoMVO insert(final PersonnelInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO PERSONNEL_INFO (personnel_id,houses_id,userid,per_sort,live_type_id,live_type_name,lease_start_time,lease_stop_time,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,create_time,update_time,sts) ");
+				"INSERT INTO PERSONNEL_INFO (personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,lease_start_time,lease_stop_time,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,create_time,update_time,sts) ");
 		sql.append(
-				"VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+				"VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -35,10 +35,11 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString());
 					ps.setString(++i, StringUtils.trimToNull(entity.getPersonnelId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getHousesId()));
-					ps.setString(++i, StringUtils.trimToNull(entity.getUserid()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getPerSort()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getLiveTypeId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getLiveTypeName()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getLeaseMode()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getLeaseStartTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getLeaseStopTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUsername()));
@@ -71,7 +72,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加PERSONNEL_INFO 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加PERSONNEL_INFO错误", e);
+			throw new SysException("增加PERSONNEL_INFO错误", "10000", e);
 		}
 		return entity;
 	}
@@ -87,9 +88,9 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 				sql.append("houses_id=?,");
 				params.add(entity.getHousesId());
 			}
-			if (entity.getUserid() != null) {
-				sql.append("userid=?,");
-				params.add(entity.getUserid());
+			if (entity.getUserId() != null) {
+				sql.append("user_id=?,");
+				params.add(entity.getUserId());
 			}
 			if (entity.getPerSort() != null) {
 				sql.append("per_sort=?,");
@@ -102,6 +103,10 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 			if (entity.getLiveTypeName() != null) {
 				sql.append("live_type_name=?,");
 				params.add(entity.getLiveTypeName());
+			}
+			if (entity.getLeaseMode() != null) {
+				sql.append("lease_mode=?,");
+				params.add(entity.getLeaseMode());
 			}
 			if (entity.getLeaseStartTime() != null) {
 				sql.append("lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
@@ -218,7 +223,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新PERSONNEL_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "更新PERSONNEL_INFO错误", e);
+			throw new SysException("更新PERSONNEL_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -233,7 +238,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getPersonnelId());
 		} catch (DataAccessException e) {
 			logger.error("删除PERSONNEL_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "删除PERSONNEL_INFO错误", e);
+			throw new SysException("删除PERSONNEL_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -242,7 +247,8 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 	public List<PersonnelInfoMVO> queryList(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT personnel_id,houses_id,userid,per_sort,live_type_id,live_type_name,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age  ");
 		sql.append("FROM  PERSONNEL_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<PersonnelInfoMVO> resultList = null;
@@ -257,9 +263,9 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					sql.append(" AND houses_id=?");
 					params.add(entity.getHousesId());
 				}
-				if (StringUtils.isNotBlank(entity.getUserid())) {
-					sql.append(" AND userid=?");
-					params.add(entity.getUserid());
+				if (StringUtils.isNotBlank(entity.getUserId())) {
+					sql.append(" AND user_id=?");
+					params.add(entity.getUserId());
 				}
 				if (StringUtils.isNotBlank(entity.getPerSort())) {
 					sql.append(" AND per_sort=?");
@@ -272,6 +278,10 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
 					sql.append(" AND live_type_name=?");
 					params.add(entity.getLiveTypeName());
+				}
+				if (StringUtils.isNotBlank(entity.getLeaseMode())) {
+					sql.append(" AND lease_mode=?");
+					params.add(entity.getLeaseMode());
 				}
 				if (StringUtils.isNotBlank(entity.getLeaseStartTime())) {
 					sql.append("  AND lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
@@ -387,7 +397,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询PERSONNEL_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询PERSONNEL_INFO错误", e);
+			throw new SysException("查询PERSONNEL_INFO错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -396,7 +406,8 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 	public PersonnelInfoMVO queryBean(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT personnel_id,houses_id,userid,per_sort,live_type_id,live_type_name,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age ");
 		sql.append("FROM  PERSONNEL_INFO ");
 		sql.append("WHERE personnel_id=? ");
 		List<Object> params = new ArrayList<Object>();
@@ -411,7 +422,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询PERSONNEL_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询PERSONNEL_INFO错误", e);
+			throw new SysException("查询PERSONNEL_INFO错误", "10000", e);
 		}
 		return entity;
 	}

@@ -58,7 +58,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加ADMIN_INFO 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加ADMIN_INFO错误", e);
+			throw new SysException("增加ADMIN_INFO错误", "10000", e);
 		}
 		return entity;
 	}
@@ -153,7 +153,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新ADMIN_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "更新ADMIN_INFO错误", e);
+			throw new SysException("更新ADMIN_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -168,7 +168,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getAdminId());
 		} catch (DataAccessException e) {
 			logger.error("删除ADMIN_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "删除ADMIN_INFO错误", e);
+			throw new SysException("删除ADMIN_INFO错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -270,7 +270,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 					new BeanPropertyRowMapper<AdminInfoMVO>(AdminInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ADMIN_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ADMIN_INFO错误", e);
+			throw new SysException("查询ADMIN_INFO错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -294,7 +294,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 					new BeanPropertyRowMapper<AdminInfoMVO>(AdminInfoMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ADMIN_INFO错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ADMIN_INFO错误", e);
+			throw new SysException("查询ADMIN_INFO错误", "10000", e);
 		}
 		return entity;
 	}

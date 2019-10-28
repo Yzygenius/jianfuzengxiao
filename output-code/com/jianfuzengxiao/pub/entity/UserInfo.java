@@ -3,7 +3,7 @@ import com.bamboo.framework.entity.Entity;
 public class UserInfo extends Entity {
 
     
-    protected  String  userid;
+    protected  String  userId;
     
     protected  String  username;
     
@@ -21,19 +21,23 @@ public class UserInfo extends Entity {
     
     protected  String  telephone;
     
-    protected  String  certTypeId;
+    protected  String  certificatesTypeId;
     
-    protected  String  certTypeName;
+    protected  String  certificatesTypeName;
     
-    protected  String  certNumber;
+    protected  String  certificatesPositivePhoto;
     
-    protected  String  certStartTime;
+    protected  String  certificatesNegativePhoto;
     
-    protected  String  certStopTime;
+    protected  String  certificatesNumber;
     
-    protected  String  certAddress;
+    protected  String  certificatesStartTime;
     
-    protected  String  certOffice;
+    protected  String  certificatesStopTime;
+    
+    protected  String  certificatesAddress;
+    
+    protected  String  certificatesOffice;
     
     protected  String  status;
     
@@ -44,12 +48,14 @@ public class UserInfo extends Entity {
     protected  String  updateTime;
     
     protected  String  sts;
+    
+    protected  String  leaseStartTime;
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
-    public void setUserid(String  userid) {
-        this.userid = userid;
+    public void setUserId(String  userId) {
+        this.userId = userId;
     }
     public String getUsername() {
         return username;
@@ -99,47 +105,59 @@ public class UserInfo extends Entity {
     public void setTelephone(String  telephone) {
         this.telephone = telephone;
     }
-    public String getCertTypeId() {
-        return certTypeId;
+    public String getCertificatesTypeId() {
+        return certificatesTypeId;
     }
-    public void setCertTypeId(String  certTypeId) {
-        this.certTypeId = certTypeId;
+    public void setCertificatesTypeId(String  certificatesTypeId) {
+        this.certificatesTypeId = certificatesTypeId;
     }
-    public String getCertTypeName() {
-        return certTypeName;
+    public String getCertificatesTypeName() {
+        return certificatesTypeName;
     }
-    public void setCertTypeName(String  certTypeName) {
-        this.certTypeName = certTypeName;
+    public void setCertificatesTypeName(String  certificatesTypeName) {
+        this.certificatesTypeName = certificatesTypeName;
     }
-    public String getCertNumber() {
-        return certNumber;
+    public String getCertificatesPositivePhoto() {
+        return certificatesPositivePhoto;
     }
-    public void setCertNumber(String  certNumber) {
-        this.certNumber = certNumber;
+    public void setCertificatesPositivePhoto(String  certificatesPositivePhoto) {
+        this.certificatesPositivePhoto = certificatesPositivePhoto;
     }
-    public String getCertStartTime() {
-        return certStartTime;
+    public String getCertificatesNegativePhoto() {
+        return certificatesNegativePhoto;
     }
-    public void setCertStartTime(String  certStartTime) {
-        this.certStartTime = certStartTime;
+    public void setCertificatesNegativePhoto(String  certificatesNegativePhoto) {
+        this.certificatesNegativePhoto = certificatesNegativePhoto;
     }
-    public String getCertStopTime() {
-        return certStopTime;
+    public String getCertificatesNumber() {
+        return certificatesNumber;
     }
-    public void setCertStopTime(String  certStopTime) {
-        this.certStopTime = certStopTime;
+    public void setCertificatesNumber(String  certificatesNumber) {
+        this.certificatesNumber = certificatesNumber;
     }
-    public String getCertAddress() {
-        return certAddress;
+    public String getCertificatesStartTime() {
+        return certificatesStartTime;
     }
-    public void setCertAddress(String  certAddress) {
-        this.certAddress = certAddress;
+    public void setCertificatesStartTime(String  certificatesStartTime) {
+        this.certificatesStartTime = certificatesStartTime;
     }
-    public String getCertOffice() {
-        return certOffice;
+    public String getCertificatesStopTime() {
+        return certificatesStopTime;
     }
-    public void setCertOffice(String  certOffice) {
-        this.certOffice = certOffice;
+    public void setCertificatesStopTime(String  certificatesStopTime) {
+        this.certificatesStopTime = certificatesStopTime;
+    }
+    public String getCertificatesAddress() {
+        return certificatesAddress;
+    }
+    public void setCertificatesAddress(String  certificatesAddress) {
+        this.certificatesAddress = certificatesAddress;
+    }
+    public String getCertificatesOffice() {
+        return certificatesOffice;
+    }
+    public void setCertificatesOffice(String  certificatesOffice) {
+        this.certificatesOffice = certificatesOffice;
     }
     public String getStatus() {
         return status;
@@ -170,5 +188,11 @@ public class UserInfo extends Entity {
     }
     public void setSts(String  sts) {
         this.sts = sts;
+    }
+    public String getLeaseStartTime() {
+        return leaseStartTime;
+    }
+    public void setLeaseStartTime(String  leaseStartTime) {
+        this.leaseStartTime = leaseStartTime;
     }
 }

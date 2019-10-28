@@ -40,7 +40,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleInfoSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加ROLE_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加ROLE_INFO错误", e);
+          	throw new SysException("增加ROLE_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleInfoSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新ROLE_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新ROLE_INFO错误", e);
+            throw new SysException("更新ROLE_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -89,7 +89,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleInfoSDAO.class);
                            entity.getRoleId());
         } catch (DataAccessException e) {
             logger.error("删除ROLE_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除ROLE_INFO错误", e);
+            throw new SysException("删除ROLE_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
@@ -130,7 +130,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleInfoSDAO.class);
 			new BeanPropertyRowMapper<RoleInfoMVO>(RoleInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ROLE_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ROLE_INFO错误", e);
+            throw new SysException("查询ROLE_INFO错误", "10000", e);
         }
         return resultList;
     }
@@ -153,7 +153,7 @@ private static Logger logger = LoggerFactory.getLogger(RoleInfoSDAO.class);
 			new BeanPropertyRowMapper<RoleInfoMVO>(RoleInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询ROLE_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询ROLE_INFO错误", e);
+            throw new SysException("查询ROLE_INFO错误", "10000", e);
         }
         return entity;
     }

@@ -5,7 +5,7 @@ public class MsgInfo extends Entity {
     
     protected  String  msgId;
     
-    protected  String  userid;
+    protected  String  userId;
     
     protected  String  msgTypeId;
     
@@ -29,11 +29,11 @@ public class MsgInfo extends Entity {
     public void setMsgId(String  msgId) {
         this.msgId = msgId;
     }
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
-    public void setUserid(String  userid) {
-        this.userid = userid;
+    public void setUserId(String  userId) {
+        this.userId = userId;
     }
     public String getMsgTypeId() {
         return msgTypeId;

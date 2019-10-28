@@ -43,7 +43,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 			});
 		} catch (DataAccessException e) {
 			logger.error("增加ADUIT_DISTRIBUTION 错误：{}", e.getMessage());
-			throw new SysException("10000", "增加ADUIT_DISTRIBUTION错误", e);
+			throw new SysException("增加ADUIT_DISTRIBUTION错误", "10000", e);
 		}
 		return entity;
 	}
@@ -86,7 +86,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 			rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
 		} catch (DataAccessException e) {
 			logger.error("更新ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-			throw new SysException("10000", "更新ADUIT_DISTRIBUTION错误", e);
+			throw new SysException("更新ADUIT_DISTRIBUTION错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -101,7 +101,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 			rowsAffected = jdbcTemplate.update(sql.toString(), entity.getId());
 		} catch (DataAccessException e) {
 			logger.error("删除ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-			throw new SysException("10000", "删除ADUIT_DISTRIBUTION错误", e);
+			throw new SysException("删除ADUIT_DISTRIBUTION错误", "10000", e);
 		}
 		return rowsAffected;
 	}
@@ -151,7 +151,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 					new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ADUIT_DISTRIBUTION错误", e);
+			throw new SysException("查询ADUIT_DISTRIBUTION错误", "10000", e);
 		}
 		return resultList;
 	}
@@ -175,7 +175,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 					new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
 		} catch (DataAccessException e) {
 			logger.error("查询ADUIT_DISTRIBUTION错误：{}", e.getMessage());
-			throw new SysException("10000", "查询ADUIT_DISTRIBUTION错误", e);
+			throw new SysException("查询ADUIT_DISTRIBUTION错误", "10000", e);
 		}
 		return entity;
 	}

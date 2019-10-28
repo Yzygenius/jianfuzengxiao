@@ -4,9 +4,14 @@ import com.bamboo.framework.entity.Entity;
 
 public class MsgInfo extends Entity {
 
+	/** 未读 */
+	public final static String status_not_read = "1";
+	/** 已读 */
+	public final static String status_readed = "2";
+	
 	protected String msgId;
 
-	protected String userid;
+	protected String userId;
 
 	protected String msgTypeId;
 
@@ -32,12 +37,12 @@ public class MsgInfo extends Entity {
 		this.msgId = msgId;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getMsgTypeId() {

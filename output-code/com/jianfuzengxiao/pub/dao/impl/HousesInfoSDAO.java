@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
 @Override
     public HousesInfoMVO insert(final HousesInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO HOUSES_INFO (houses_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO HOUSES_INFO (houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts) ");
+        sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -31,6 +31,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
                 	int i = 0;
                 	java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString()); 
                 	ps.setString(++i, StringUtils.trimToNull(entity.getHousesId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getHousesStatus()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getPropertyOwnerName()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getPropertyOwnerTel()));
@@ -66,7 +67,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
             });
           } catch (DataAccessException e) {
           	logger.error("增加HOUSES_INFO 错误：{}", e.getMessage());
-          	throw new SysException("10000", "增加HOUSES_INFO错误", e);
+          	throw new SysException("增加HOUSES_INFO错误", "10000", e);
           }
           return entity;
        }
@@ -77,6 +78,10 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
         sql.append("UPDATE  HOUSES_INFO  SET ");
         List<Object> params = new ArrayList<Object>();
         try {
+            if (entity.getUserId() != null) {
+                sql.append("user_id=?,");
+                params.add(entity.getUserId());
+            }
             if (entity.getHousesStatus() != null) {
                 sql.append("houses_status=?,");
                 params.add(entity.getHousesStatus());
@@ -204,7 +209,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
             rowsAffected = jdbcTemplate.update(sql.toString(), params.toArray());
          } catch (DataAccessException e) {
             logger.error("更新HOUSES_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "更新HOUSES_INFO错误", e);
+            throw new SysException("更新HOUSES_INFO错误", "10000", e);
          }
         return rowsAffected;
     }
@@ -219,14 +224,14 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
                            entity.getHousesId());
         } catch (DataAccessException e) {
             logger.error("删除HOUSES_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "删除HOUSES_INFO错误", e);
+            throw new SysException("删除HOUSES_INFO错误", "10000", e);
         }
         return rowsAffected;
     }
     @Override
     public List<HousesInfoMVO> queryList(HousesInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT houses_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  HOUSES_INFO ");
         sql.append("WHERE 1=1 ");
         List<HousesInfoMVO> resultList = null;
@@ -236,6 +241,10 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
             	if (StringUtils.isNotBlank(entity.getHousesId())) {
                 sql.append(" AND houses_id=?");
                 params.add(entity.getHousesId());
+            }
+            	if (StringUtils.isNotBlank(entity.getUserId())) {
+                sql.append(" AND user_id=?");
+                params.add(entity.getUserId());
             }
             	if (StringUtils.isNotBlank(entity.getHousesStatus())) {
                 sql.append(" AND houses_status=?");
@@ -364,14 +373,14 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
 			new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询HOUSES_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询HOUSES_INFO错误", e);
+            throw new SysException("查询HOUSES_INFO错误", "10000", e);
         }
         return resultList;
     }
     @Override
     public HousesInfoMVO queryBean(HousesInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT houses_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  HOUSES_INFO ");
         sql.append("WHERE houses_id=? ");
         List<Object> params = new ArrayList<Object>();
@@ -387,7 +396,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
 			new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
         } catch (DataAccessException e) {
             logger.error("查询HOUSES_INFO错误：{}", e.getMessage());
-            throw new SysException("10000", "查询HOUSES_INFO错误", e);
+            throw new SysException("查询HOUSES_INFO错误", "10000", e);
         }
         return entity;
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
@@ -20,12 +21,15 @@ public class MsgInfoService extends BaseService implements IMsgInfoService {
 	/** 插入 */
 	@Override
 	public MsgInfoMVO insert(MsgInfoMVO msgInfo) throws SysException, AppException {
+		msgInfo.setCreateTime(DateUtil.nowTime());
+		msgInfo.setSts(STS_NORMAL);
 		return msgInfoMDAO.insert(msgInfo);
 	}
 
 	/** 更新 */
 	@Override
 	public int update(MsgInfoMVO msgInfo) throws SysException, AppException {
+		msgInfo.setUpdateTime(DateUtil.nowTime());
 		return msgInfoMDAO.update(msgInfo);
 	}
 

@@ -62,7 +62,7 @@ public class SysConfigMDAO extends SysConfigSDAO implements ISysConfigMDAO {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			logger.error("查询SysConfig错误：{}", e.getMessage());
-			throw new SysException("10000", "查询SysConfig错误", e);
+			throw new SysException("查询SysConfig错误", "10000", e);
 		}
 		return pageInfo;
 	}

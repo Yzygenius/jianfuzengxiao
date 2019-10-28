@@ -78,7 +78,7 @@ public class FuncListMDAO extends FuncListSDAO implements IFuncListMDAO {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			logger.error("查询FuncList错误：{}", e.getMessage());
-			throw new SysException("10000", "查询FuncList错误", e);
+			throw new SysException("查询FuncList错误", "10000", e);
 		}
 		return pageInfo;
 	}

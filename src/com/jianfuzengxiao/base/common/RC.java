@@ -59,39 +59,17 @@ public enum RC {
 	UPDATEPWD_PARAM_PAY_PASSWORD("", "您已设置支付密码，请勿重复操作"),
 	UPDATEPWD_PARAM_PAY_PASSWORD_MODILE_NOT("", "该手机号与登录账号不匹配"),
 	
-	//    银行卡 27
-	BANKCARD_PARAM_BANKNO_INVALID("2701", "银行卡号无效"),
-	BANKCARD_PARAM_CUSTNAME_NULL("2702", "请填写持卡人姓名"),
-	BANKCARD_PARAM_BANKTYPE_INVALID("2703", "找不到卡号对应的银行"),
-	BANKCARD_PARAM_CARDID_INVALID("2704", "银行卡编码无效"),
-	BANKCARD_REPEAT_BIND_CARD("2705", "您已绑定过该银行卡，请勿重复绑定"),
-
-	//    个人信息 28
-	BASEINFO_PARAM_CITY_CODE_INVALID("2801", "归属区域无效"),
-
-	//    钱包 29
-	DRAW_PARAM_AMOUNT_INVALID("2901", "提现金额无效"),
-	DRAW_PARAM_CARD_ID_INVALID("2902", "提现银行卡无效"),
-	DRAW_AMOUNT_NOT_ENOUGH("2903", "可提现余额不足"),
-	DRAW_DEPOSIT_NOT_ENOUGH("2904", "可退押金余额为0"),
-	DRAW_RECHARGE_NULL("2905", "充值金额不能为空"),
-	MEMBER_BILL_ID_NULL("2906", "账目明细参数错误"),
+	//app用户30
+	USER_INFO_PARAM_USERID_INVALID("3001", "用户ID无效"),
+	USER_INFO_EXIST("3001", "用户已存在"),
+	USER_INFO_NOT_EXIST("3002", "用户不存在"),
 	
-	// API业务操作类
-	//    货主需求单 31
+	//  用户住户40
+	PERSONNEL_INFO_EXIST("4001", "人员已存在"),
+	PERSONNEL_PARAM_PERSONNEL_ID_INVALID("4002", "人员ID无效"),
 	
-	
-	// 订单类
-	ORDER_PARAM_PAY_MODE_INVALID("5101", "请选择支付方式"),
-	ORDER_PARAM_ORDER_CODE_INVALID("5102", "订单号无效"),
-	ORDER_PAY_MODE_NONSUPPORT("5103", "支付方式不支持"),
-	ORDER_BALANCE_NOT_ENOUGH("5104", "账户余额不足"),
-	ORDER_PAY_PASSWORD_ERROR("5105", "支付密码错误"),
-	DEMIND_VEHICLE_STATE_T("5106", "已经有运输中的订单"),
-	RECHARGE_PARAM_PAY_MODE_INVALID("5107", "请选择充值方式"),
-	RECHARGE_PARAM_AMOUNT_NULL("5108", "请输入充值金额"),
-	
-	
+	//房屋50
+	HOUSES_INFO_PARAM_HOUSES_ID_INVALID("5001", "房产ID无效"),
 	
 	// 通用类
 	COMMON_IMAGE_FILE_INVALID("7101", "图片文件无效"),
@@ -101,7 +79,9 @@ public enum RC {
 	OTHER_APP_VERSION_NOTFOUND("9002", "暂未找到最新版本信息"),
 	OTHER_WAIT_REALNAME("9003", "请先完成实名认证"),
 	OTHER_SMSCODE_ERROR("9004", "短信发送失败，请稍后再试"),
-	OTHER_ERROR("9999", "操作有误,请和管理员联系");
+	OTHER_CZ_ERROR("9997", "操作错误"),
+	OTHER_CW_ERROR("9998", "服务器开了小差，请联系管理员"),
+	OTHER_ERROR("9999", "系统忙，请稍后重试");
 //	OTHER_ERROR("9999", "服务器内部错误");
 	
 	public final static String RECEIPT_NOT_AUDIT_SUCCESS = "-1";

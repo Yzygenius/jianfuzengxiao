@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2019-10-26 17:47:04
+Date: 2019-10-28 19:56:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3639,11 +3639,12 @@ CREATE TABLE `certificates_type` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`certificates_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of certificates_type
 -- ----------------------------
+INSERT INTO `certificates_type` VALUES ('1', '身份证', '1', '2019-10-28 10:48:35', null, 'A');
 
 -- ----------------------------
 -- Table structure for community_info
@@ -3684,6 +3685,26 @@ CREATE TABLE `community_street_info` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for contract_file
+-- ----------------------------
+DROP TABLE IF EXISTS `contract_file`;
+CREATE TABLE `contract_file` (
+  `file_id` int(10) NOT NULL AUTO_INCREMENT,
+  `personnel_id` int(10) DEFAULT NULL,
+  `houses_id` int(10) DEFAULT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
+  `file_thumb` varchar(512) DEFAULT NULL COMMENT '文件路径地址',
+  `create_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `sts` char(1) NOT NULL DEFAULT 'A',
+  PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of contract_file
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for func_list
 -- ----------------------------
 DROP TABLE IF EXISTS `func_list`;
@@ -3712,6 +3733,7 @@ CREATE TABLE `func_list` (
 DROP TABLE IF EXISTS `houses_info`;
 CREATE TABLE `houses_info` (
   `houses_id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(32) DEFAULT NULL,
   `houses_status` int(4) NOT NULL COMMENT '1 房屋、2 店铺',
   `property_owner_name` varchar(32) DEFAULT NULL COMMENT '房屋（门店）产权人姓名',
   `property_owner_tel` varchar(16) DEFAULT NULL COMMENT '房屋（门店）产权人联系电话',
@@ -3779,11 +3801,18 @@ CREATE TABLE `live_type` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`live_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of live_type
 -- ----------------------------
+INSERT INTO `live_type` VALUES ('1', '房主（产权人）', '1', '2019-10-28 18:11:25', null, 'A');
+INSERT INTO `live_type` VALUES ('2', '店主（产权人）', '2', '2019-10-28 18:11:41', null, 'A');
+INSERT INTO `live_type` VALUES ('3', '房主（租赁）', '3', '2019-10-28 18:11:54', null, 'A');
+INSERT INTO `live_type` VALUES ('4', '店主（租赁）', '4', '2019-10-28 18:12:04', null, 'A');
+INSERT INTO `live_type` VALUES ('5', '租户', '5', '2019-10-28 18:12:15', null, 'A');
+INSERT INTO `live_type` VALUES ('6', '员工', '6', '2019-10-28 18:12:31', null, 'A');
+INSERT INTO `live_type` VALUES ('7', '家属', '7', '2019-10-28 18:12:44', null, 'A');
 
 -- ----------------------------
 -- Table structure for msg_info
@@ -3791,7 +3820,7 @@ CREATE TABLE `live_type` (
 DROP TABLE IF EXISTS `msg_info`;
 CREATE TABLE `msg_info` (
   `msg_id` int(10) NOT NULL AUTO_INCREMENT,
-  `userid` varchar(32) DEFAULT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
   `msg_type_id` int(10) DEFAULT NULL,
   `msg_type_name` varchar(32) NOT NULL,
   `title` varchar(128) NOT NULL DEFAULT '',
@@ -3819,11 +3848,16 @@ CREATE TABLE `msg_type` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`msg_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of msg_type
 -- ----------------------------
+INSERT INTO `msg_type` VALUES ('1', '申请已提报', '1', '2019-10-28 18:23:37', null, 'A');
+INSERT INTO `msg_type` VALUES ('2', '过期', '2', '2019-10-28 18:23:49', null, 'A');
+INSERT INTO `msg_type` VALUES ('3', '审核未通过', '3', '2019-10-28 18:24:01', null, 'A');
+INSERT INTO `msg_type` VALUES ('4', '审核通过', '4', '2019-10-28 18:24:30', null, 'A');
+INSERT INTO `msg_type` VALUES ('5', '身份信息更新提报', '5', '2019-10-28 18:34:47', null, 'A');
 
 -- ----------------------------
 -- Table structure for nation
@@ -3901,11 +3935,12 @@ INSERT INTO `nation` VALUES ('56', ' 基诺族');
 DROP TABLE IF EXISTS `personnel_info`;
 CREATE TABLE `personnel_info` (
   `personnel_id` int(10) NOT NULL AUTO_INCREMENT,
-  `houses_id` int(10) NOT NULL,
-  `userid` varchar(32) DEFAULT NULL,
+  `houses_id` int(10) DEFAULT NULL,
+  `user_id` varchar(32) DEFAULT '',
   `per_sort` int(1) DEFAULT NULL COMMENT '1 app用户2 通过app添加的用户',
   `live_type_id` int(10) DEFAULT NULL,
   `live_type_name` varchar(32) DEFAULT NULL,
+  `lease_mode` int(1) DEFAULT '1' COMMENT '1长期、2有效时长',
   `lease_start_time` datetime DEFAULT NULL COMMENT '租赁开始时间',
   `lease_stop_time` datetime DEFAULT NULL COMMENT '租赁结束时间',
   `username` varchar(64) DEFAULT NULL COMMENT '姓名',
@@ -3919,9 +3954,9 @@ CREATE TABLE `personnel_info` (
   `certificates_type_id` int(10) DEFAULT NULL,
   `certificates_type_name` varchar(64) DEFAULT '',
   `certificates_positive_photo` varchar(512) DEFAULT '' COMMENT '证件正面照片',
-  `certificates_positive_file` varchar(32) DEFAULT '',
-  `certificates_negative_photo` varchar(512) DEFAULT '',
-  `certificates_negative_file` varchar(32) DEFAULT '',
+  `certificates_positive_file` varchar(32) DEFAULT NULL,
+  `certificates_negative_photo` varchar(512) DEFAULT '' COMMENT '证件反面照片',
+  `certificates_negative_file` varchar(32) DEFAULT NULL,
   `certificates_number` varchar(64) DEFAULT '' COMMENT '证件号',
   `certificates_start_time` datetime DEFAULT NULL COMMENT '证件有效期开始时间',
   `certificates_stop_time` datetime DEFAULT NULL COMMENT '证件有效期结束时间',
@@ -3998,7 +4033,7 @@ CREATE TABLE `sys_config` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
-  `userid` varchar(32) NOT NULL,
+  `user_id` varchar(32) NOT NULL,
   `username` varchar(64) DEFAULT NULL,
   `gender` int(1) DEFAULT NULL COMMENT '1男2女',
   `face_photo` varchar(512) DEFAULT NULL,
@@ -4007,24 +4042,30 @@ CREATE TABLE `user_info` (
   `nation_id` int(4) DEFAULT NULL,
   `nation_name` varchar(16) DEFAULT NULL,
   `telephone` varchar(16) DEFAULT NULL COMMENT '联系电话',
-  `cert_type_id` int(10) DEFAULT NULL,
-  `cert_type_name` varchar(64) DEFAULT NULL,
-  `cert_number` varchar(64) DEFAULT NULL COMMENT '证件号码',
-  `cert_start_time` datetime DEFAULT NULL COMMENT '证件起始时间',
-  `cert_stop_time` datetime DEFAULT NULL,
-  `cert_address` varchar(512) DEFAULT NULL COMMENT '证件地址',
-  `cert_office` varchar(512) DEFAULT NULL COMMENT '办证机关',
+  `certificates_type_id` int(10) DEFAULT NULL,
+  `certificates_type_name` varchar(64) DEFAULT NULL,
+  `certificates_positive_photo` varchar(512) DEFAULT '' COMMENT '证件正面照片',
+  `certificates_negative_photo` varchar(512) DEFAULT '' COMMENT '证件背面照片',
+  `certificates_number` varchar(64) DEFAULT NULL COMMENT '证件号码',
+  `certificates_start_time` datetime DEFAULT NULL COMMENT '证件起始时间',
+  `certificates_stop_time` datetime DEFAULT NULL,
+  `certificates_address` varchar(512) DEFAULT NULL COMMENT '证件地址',
+  `certificates_office` varchar(512) DEFAULT NULL COMMENT '办证机关',
   `status` int(1) DEFAULT '1' COMMENT '1待认证2已认证3失败',
-  `audit_remark` varchar(512) DEFAULT '' COMMENT '认证失败原因',
+  `audit_remark` varchar(512) DEFAULT ' ' COMMENT '认证失败原因',
   `create_time` datetime NOT NULL,
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
-  PRIMARY KEY (`userid`)
+  `lease_start_time` datetime DEFAULT NULL COMMENT '居住开始时间',
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
+INSERT INTO `user_info` VALUES ('12', '12', '1', '12', null, '2001-00-00 00:00:00', '1', '1', '1', '12', '12', '12', '12', '1', '2001-00-00 00:00:00', '2001-00-00 00:00:00', '1', '1', '1', null, '2019-10-28 13:46:28', null, 'A', '2001-00-00 00:00:00');
+INSERT INTO `user_info` VALUES ('123456', '1q23', '2', '123', null, '2019-10-28 12:54:18', '1', '123', '11', '1', '123', '123', '123', '11', '2019-10-28 12:54:53', '2019-10-28 12:55:00', '11', '11', '1', null, '2019-10-28 12:55:17', null, 'A', '2019-10-28 13:05:24');
+INSERT INTO `user_info` VALUES ('1234561', '1q23', '1', '123', null, '2019-10-28 12:54:18', '1', '123', '11', '1', '123', '123', '123', '11', '2019-10-28 12:54:53', '2019-10-28 12:55:00', '11', '11', '1', null, '2019-10-28 13:05:17', null, 'A', '2019-10-28 12:56:43');
 
 -- ----------------------------
 -- Table structure for user_role
