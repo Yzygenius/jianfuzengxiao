@@ -4,6 +4,10 @@ import com.bamboo.framework.entity.Entity;
 
 public class AdminInfo extends Entity {
 
+	/**是否关联微信1否2是*/
+	public static final String is_wx_no = "1";
+	public static final String is_wx_yes = "2";
+	
 	protected String adminId;
 
 	protected String loginName;

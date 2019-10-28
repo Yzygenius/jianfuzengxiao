@@ -64,6 +64,11 @@ public enum RC {
 	USER_INFO_EXIST("3001", "用户已存在"),
 	USER_INFO_NOT_EXIST("3002", "用户不存在"),
 	
+	//管理员35
+	ADMIN_INFO_EXIST("3501", "用户已存在"),
+	ADMIN_INFO_NOT_EXIST("3502", "用户不存在"),
+	ADMIN_INFO_PARAM_ADMIN_ID_INVALID("3503", "用户ID无效"),
+	
 	//  用户住户40
 	PERSONNEL_INFO_EXIST("4001", "人员已存在"),
 	PERSONNEL_PARAM_PERSONNEL_ID_INVALID("4002", "人员ID无效"),
