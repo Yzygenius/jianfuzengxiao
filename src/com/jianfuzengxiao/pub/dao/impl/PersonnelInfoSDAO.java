@@ -70,6 +70,12 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					return ps;
 				}
 			});
+			
+			String sqlid = "SELECT @@IDENTITY as personnel_id";
+			logger.debug(sql.toString());
+			int count = jdbcTemplate.queryForObject(sqlid, Integer.class);
+			entity.setPersonnelId(String.valueOf(count));
+			
 		} catch (DataAccessException e) {
 			logger.error("增加PERSONNEL_INFO 错误：{}", e.getMessage());
 			throw new SysException("增加PERSONNEL_INFO错误", "10000", e);
@@ -260,7 +266,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getPersonnelId());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND houses_id=?");
+					sql.append(" AND houses_id in (?)");
 					params.add(entity.getHousesId());
 				}
 				if (StringUtils.isNotBlank(entity.getUserId())) {
@@ -272,7 +278,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getPerSort());
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id=?");
+					sql.append(" AND live_type_id in (?)");
 					params.add(entity.getLiveTypeId());
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
@@ -372,7 +378,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getEnterpriseName());
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status=?");
+					sql.append(" AND status in (?)");
 					params.add(entity.getStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getAuditRemark())) {

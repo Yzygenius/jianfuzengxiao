@@ -4,6 +4,7 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	
 	private String leaseDay;
 	private String age;
+	private String leaseContract;
 	
 	private String housesStatus;
 	private String provName;
@@ -16,7 +17,21 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String houseNumber;
 	private String housesAddress;
 	
+	private String adminId;
 	
+	
+	public String getLeaseContract() {
+		return leaseContract;
+	}
+	public void setLeaseContract(String leaseContract) {
+		this.leaseContract = leaseContract;
+	}
+	public String getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
 	public String getAge() {
 		return age;
 	}

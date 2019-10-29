@@ -19,6 +19,9 @@ import com.jianfuzengxiao.pub.entity.UserInfo;
 import com.jianfuzengxiao.pub.entity.UserInfoMVO;
 import com.jianfuzengxiao.pub.service.IUserInfoService;
 
+/**
+ * 用户
+ */
 @Controller
 @RequestMapping(value="/api/userInfo")
 public class UserInfoAPIController extends BaseController {
@@ -26,6 +29,35 @@ public class UserInfoAPIController extends BaseController {
 	
 	@Autowired
 	private IUserInfoService userInfoService;
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 首页校验，是否已经上报信息<br>
+	 * 如果已经上报信息，code 1 ，否 code 3002
+	 * </p>
+	 * @param model
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 下午3:37:07
+	 */
+	@ResponseBody
+	@RequestMapping(value="/verify", method=RequestMethod.POST)
+	public String verify(UserInfoMVO model){
+		try{
+			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			UserInfoMVO userInfoMVO = new UserInfoMVO();
+			userInfoMVO.setUserId(model.getUserId());
+			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
+			throwAppException(uList.size() < 1, RC.USER_INFO_NOT_EXIST);
+			userInfoMVO = uList.get(0);
+			return apiResult(RC.SUCCESS, userInfoMVO);
+		} catch (Exception e) {
+			return exceptionResult(logger, "校验错误", e);
+		}
+	}
 	
 	/**
 	 * 

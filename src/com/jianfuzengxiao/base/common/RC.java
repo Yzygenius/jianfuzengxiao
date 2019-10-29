@@ -75,6 +75,7 @@ public enum RC {
 	
 	//房屋50
 	HOUSES_INFO_PARAM_HOUSES_ID_INVALID("5001", "房产ID无效"),
+	HOUSES_INFO_REPORT_NULL("5002", "暂无房产上报信息"),
 	
 	// 通用类
 	COMMON_IMAGE_FILE_INVALID("7101", "图片文件无效"),

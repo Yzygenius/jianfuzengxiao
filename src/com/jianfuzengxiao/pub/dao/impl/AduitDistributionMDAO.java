@@ -66,4 +66,100 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 		}
 		return pageInfo;
 	}
+
+	@Override
+	public PageInfo queryHousesPage(AduitDistributionMVO entity, PageInfo pageInfo) throws SysException {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select a.id,a.admin_id,a.houses_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+		sql.append(",b.houses_status,b.property_owner_name,b.property_owner_tel,b.property_owner_idcard,b.community_name,b.community_street_name ");
+		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
+		sql.append("from ADUIT_DISTRIBUTION a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("where 1=1 ");
+
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getId())) {
+					sql.append(" AND a.id=?");
+					params.add(entity.getId());
+				}
+				if (StringUtils.isNotBlank(entity.getAdminId())) {
+					sql.append(" AND a.admin_id=?");
+					params.add(entity.getAdminId());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id=?");
+					params.add(entity.getHousesId());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts = ?");
+					params.add(entity.getSts());
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerName())) {
+					sql.append(" AND b.property_owner_name like ?");
+					params.add("%"+entity.getPropertyOwnerName()+"%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerTel())) {
+					sql.append(" AND b.property_owner_tel like ?");
+					params.add("%"+entity.getPropertyOwnerTel()+"%");
+				}
+			}
+			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
+					new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			logger.error("查询AduitDistribution错误：{}", e.getMessage());
+			throw new SysException("查询AduitDistribution错误", "10000", e);
+		}
+		return pageInfo;
+	}
+
+	@Override
+	public List<AduitDistributionMVO> queryHousesList(AduitDistributionMVO entity) throws SysException {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select a.id,a.admin_id,a.houses_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+		sql.append(",b.houses_status,b.property_owner_name,b.property_owner_tel,b.property_owner_idcard,b.community_name,b.community_street_name ");
+		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
+		sql.append("from ADUIT_DISTRIBUTION a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("where 1=1 ");
+		List<AduitDistributionMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getId())) {
+					sql.append(" AND a.id=?");
+					params.add(entity.getId());
+				}
+				if (StringUtils.isNotBlank(entity.getAdminId())) {
+					sql.append(" AND a.admin_id=?");
+					params.add(entity.getAdminId());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id=?");
+					params.add(entity.getHousesId());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts = ?");
+					params.add(entity.getSts());
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerName())) {
+					sql.append(" AND b.property_owner_name like ?");
+					params.add("%"+entity.getPropertyOwnerName()+"%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerTel())) {
+					sql.append(" AND b.property_owner_tel like ?");
+					params.add("%"+entity.getPropertyOwnerTel()+"%");
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询ADUIT_DISTRIBUTION错误：{}", e.getMessage());
+			throw new SysException("查询ADUIT_DISTRIBUTION错误", "10000", e);
+		}
+		return resultList;
+	}
 }

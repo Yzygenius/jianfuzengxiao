@@ -57,4 +57,9 @@ public class HousesInfoService extends BaseService implements IHousesInfoService
 		return housesInfoMDAO.queryPage(housesInfo, pagInfo);
 	}
 
+	@Override
+	public List<HousesInfoMVO> queryBuildingUnitNumList(HousesInfoMVO housesInfo) throws SysException, AppException {
+		return housesInfoMDAO.queryBuildingUnitNumList(housesInfo);
+	}
+
 }

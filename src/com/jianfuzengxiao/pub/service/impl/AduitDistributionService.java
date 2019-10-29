@@ -59,4 +59,16 @@ public class AduitDistributionService extends BaseService implements IAduitDistr
 		return aduitDistributionMDAO.queryPage(aduitDistribution, pagInfo);
 	}
 
+	@Override
+	public PageInfo queryHousesPage(AduitDistributionMVO aduitDistribution, PageInfo pageInfo)
+			throws SysException, AppException {
+		return aduitDistributionMDAO.queryHousesPage(aduitDistribution, pageInfo);
+	}
+
+	@Override
+	public List<AduitDistributionMVO> queryHousesList(AduitDistributionMVO aduitDistribution)
+			throws SysException, AppException {
+		return aduitDistributionMDAO.queryHousesList(aduitDistribution);
+	}
+
 }

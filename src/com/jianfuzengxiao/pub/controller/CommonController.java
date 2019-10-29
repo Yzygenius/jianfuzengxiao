@@ -27,8 +27,16 @@ import com.jianfuzengxiao.base.common.RandomUtil;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.pub.entity.AreaInfoMVO;
+import com.jianfuzengxiao.pub.entity.CertificatesTypeMVO;
+import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
+import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.NationMVO;
 import com.jianfuzengxiao.pub.service.IAreaInfoService;
+import com.jianfuzengxiao.pub.service.ICertificatesTypeService;
+import com.jianfuzengxiao.pub.service.ICommunityInfoService;
+import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
+import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.INationService;
 
 /**
@@ -44,6 +52,104 @@ public class CommonController extends BaseController {
 	
 	@Autowired
 	private INationService nationService;
+	
+	@Autowired
+	private ICertificatesTypeService certTypeService;
+	
+	@Autowired
+	private ICommunityInfoService communityInfoService;
+	
+	@Autowired
+	private ICommunityStreetInfoService communityStreetInfoService;
+	
+	@Autowired
+	private IHousesInfoService housesInfoService;
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取小区或街道列表
+	 * </p>
+	 * @param communityId 社区ID, communityStreetId 小区/街道ID, housesStatus 1 房屋、2 店铺, storiedBuildingNumber 楼号, unit 单元号, storeLocation 1内/2外铺
+	 * @return  storiedBuildingNumber 楼号, unit 单元号, houseNumber 门牌号(如果是房屋为门牌号、如果是店铺为店铺号), storeLocation 1内/2外铺
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午9:05:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getHousesList")
+	public String getHousesList(HousesInfoMVO model){
+		try {
+			List<HousesInfoMVO> list = housesInfoService.queryBuildingUnitNumList(model);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取房产列表出错", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取小区或街道列表
+	 * </p>
+	 * @param status 1小区2街道(如果是房屋，参数传1、如果是店铺参数传空或不用此参数), communityId 社区ID 
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午9:05:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getCommunityStreetList")
+	public String getCommunityStreetList(CommunityStreetInfoMVO model){
+		try {
+			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(model);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取小区/街道列表出错", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取社区列表
+	 * </p>
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午9:05:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getCommunityList")
+	public String getCommunityList(){
+		try {
+			List<CommunityInfoMVO> list = communityInfoService.queryList(new CommunityInfoMVO());
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取社区列表出错", e);
+		}
+	}	
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取证件类型
+	 * </p>
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午8:56:22
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getCertTypeList")
+	public String getCertTypeList(){
+		try {
+			List<CertificatesTypeMVO> list = certTypeService.queryList(new CertificatesTypeMVO());
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取证件类型列表出错", e);
+		}
+	}
 	
 	/**
 	 * 

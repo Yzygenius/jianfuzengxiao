@@ -4,6 +4,11 @@ import com.bamboo.framework.entity.Entity;
 
 public class PersonnelInfo extends Entity {
 	
+	/** 长期 */
+	public final static String lease_mode_changqi = "1";
+	/** 非长期 */
+	public final static String lease_mode_youxiaoqi = "2";
+	
 	/** 1 app用户 */
 	public final static String per_sort_app = "1";
 	/** 2 通过app添加的用户 */

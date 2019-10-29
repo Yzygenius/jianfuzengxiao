@@ -27,5 +27,9 @@ public interface IAduitDistributionService extends IService {
 
 	/** 分页查询 */
 	public PageInfo queryPage(AduitDistributionMVO entity, PageInfo pagInfo) throws SysException, AppException;
+	
+	public PageInfo queryHousesPage(AduitDistributionMVO aduitDistribution, PageInfo pageInfo) throws SysException, AppException;
+	
+	public List<AduitDistributionMVO> queryHousesList(AduitDistributionMVO aduitDistribution) throws SysException, AppException;
 
 }

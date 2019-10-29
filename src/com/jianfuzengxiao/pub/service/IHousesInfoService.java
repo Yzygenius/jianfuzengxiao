@@ -27,5 +27,7 @@ public interface IHousesInfoService extends IService {
 
 	/** 分页查询 */
 	public PageInfo queryPage(HousesInfoMVO entity, PageInfo pagInfo) throws SysException, AppException;
+	
+	public List<HousesInfoMVO> queryBuildingUnitNumList(HousesInfoMVO housesInfo) throws SysException, AppException;
 
 }

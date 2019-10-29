@@ -1,5 +1,6 @@
 package com.jianfuzengxiao.pub.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -11,11 +12,16 @@ import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
+import com.jianfuzengxiao.pub.dao.ILiveTypeMDAO;
 import com.jianfuzengxiao.pub.dao.IMsgTypeMDAO;
 import com.jianfuzengxiao.pub.dao.IPersonnelInfoMDAO;
 import com.jianfuzengxiao.pub.dao.IUserInfoMDAO;
+import com.jianfuzengxiao.pub.dao.impl.ContractFileMDAO;
+import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.LiveType;
+import com.jianfuzengxiao.pub.entity.LiveTypeMVO;
 import com.jianfuzengxiao.pub.entity.MsgInfo;
 import com.jianfuzengxiao.pub.entity.MsgInfoMVO;
 import com.jianfuzengxiao.pub.entity.MsgTypeMVO;
@@ -42,6 +48,12 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	
 	@Autowired
 	private IMsgTypeMDAO msgTypeMDAO;
+	
+	@Autowired
+	private ILiveTypeMDAO liveTypeMDAO;
+	
+	@Autowired
+	private ContractFileMDAO contractFileMDAO;
 
 	/** 插入 */
 	@Override
@@ -102,12 +114,44 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		UserInfoMVO userInfoMVO = new UserInfoMVO();
 		userInfoMVO.setUserId(model.getUserId());
 		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
-		//判断是否为自持
-		/*model.setLiveTypeId();
-		model.setLiveTypeName();
-		model.setLeaseMode();
-		model.setLeaseStartTime();
-		model.setLeaseStopTime();*/
+		
+		HousesInfoMVO housesInfo = new HousesInfoMVO();
+		housesInfo.setHousesId(model.getHousesId());
+		housesInfo = housesInfoMDAO.queryBean(housesInfo);
+		
+		LiveTypeMVO liveType = new LiveTypeMVO();
+		//如果身份一致，则为自持房产
+		if (StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), userInfoMVO.getCertificatesNumber())) {
+			//如果为房屋
+			if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_fangwu)) {
+				liveType.setLiveTypeId(LiveType.fangzhu_chanquanren);
+				liveType = liveTypeMDAO.queryBean(liveType);
+				model.setLiveTypeId(LiveType.fangzhu_chanquanren);
+				model.setLiveTypeName(liveType.getLiveTypeName());
+			}else if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_dianpu)) {
+				liveType.setLiveTypeId(LiveType.dianzhu_chanquanren);
+				liveType = liveTypeMDAO.queryBean(liveType);
+				model.setLiveTypeId(LiveType.dianzhu_chanquanren);
+				model.setLiveTypeName(liveType.getLiveTypeName());
+			}
+			model.setLeaseMode(PersonnelInfo.lease_mode_changqi);
+			model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
+		}else {//否则为租赁房产
+			//如果为房屋
+			if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_fangwu)) {
+				liveType.setLiveTypeId(LiveType.fangzhu_zulin);
+				liveType = liveTypeMDAO.queryBean(liveType);
+				model.setLiveTypeId(LiveType.fangzhu_zulin);
+				model.setLiveTypeName(liveType.getLiveTypeName());
+			}else if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_dianpu)) {
+				liveType.setLiveTypeId(LiveType.dianzhu_zulin);
+				liveType = liveTypeMDAO.queryBean(liveType);
+				model.setLiveTypeId(LiveType.dianzhu_zulin);
+				model.setLiveTypeName(liveType.getLiveTypeName());
+			}
+			model.setLeaseMode(PersonnelInfo.lease_mode_youxiaoqi);
+		}
+		
 		model.setUsername(userInfoMVO.getUsername());
 		model.setGender(userInfoMVO.getGender());
 		model.setFacePhoto(userInfoMVO.getFacePhoto());
@@ -127,10 +171,23 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		model.setStatus(PersonnelInfo.status_waiting);
 		model.setPerSort(PersonnelInfo.per_sort_app);
 		model.setAuditRemark(" ");
-		this.insert(model);
+		model = this.insert(model);
 		
 		//如果是租赁的上传租赁合同
-		//
+		////上传租赁合同
+		if (!StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), userInfoMVO.getCertificatesNumber())) {
+			List<String> sList = Arrays.asList(model.getLeaseContract().split(","));
+			for(int i=0; i< sList.size(); i++){
+				ContractFileMVO contractFile = new ContractFileMVO();
+				contractFile.setPersonnelId(model.getPersonnelId());
+				contractFile.setUserId(model.getUserId());
+				contractFile.setHousesId(model.getHousesId());
+				contractFile.setFileThumb(sList.get(i));
+				contractFile.setCreateTime(DateUtil.nowTime());
+				contractFile.setSts(STS_NORMAL);
+				contractFileMDAO.insert(contractFile);
+			}
+		}
 		
 		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
 		housesInfoMVO.setHousesId(model.getHousesId());

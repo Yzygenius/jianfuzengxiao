@@ -1,4 +1,8 @@
-package com.jianfuzengxiao.api.controller;
+package com.jianfuzengxiao.system.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
@@ -9,20 +13,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
-import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.service.IHousesInfoService;
 
 @Controller
-@RequestMapping(value="/api/housesInfo")
-public class HousesInfoAPIController extends BaseController {
-	private static Logger logger = LoggerFactory.getLogger(HousesInfoAPIController.class);
+@RequestMapping(value="/system/houses")
+public class HousesSysController extends BaseController {
+private static Logger logger = LoggerFactory.getLogger(HousesSysController.class);
 	
 	@Autowired
 	private IHousesInfoService housesInfoService;

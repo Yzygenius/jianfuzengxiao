@@ -5,6 +5,8 @@ import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,14 +15,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.bamboo.framework.common.encrypt.MD5;
 import com.bamboo.framework.common.util.DateUtil;
 import com.jianfuzengxiao.base.common.MD5Util;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfo;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
+import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.service.IAdminInfoService;
+import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 
+/**
+ * 小程序登录
+ */
 @Controller
 @RequestMapping(value="/wx/admin")
 public class AdminWXController extends BaseController {
@@ -28,6 +37,9 @@ public class AdminWXController extends BaseController {
 	
 	@Autowired
 	private IAdminInfoService adminInfoService;
+	
+	@Autowired
+	private IAduitDistributionService aduitDistributionService;
 	
 	/**
 	 *	 小程序登录校验
@@ -39,6 +51,8 @@ public class AdminWXController extends BaseController {
 	@RequestMapping(value="/verifyLogin")
 	public String verifyLogin(AdminInfoMVO model){
 		try {
+			throwAppException(StringUtils.isBlank(model.getWxOpenid()), RC.OTHER_TOKEN_TIMEOUT);
+			
 			AdminInfoMVO adminInfo = new AdminInfoMVO();
 			adminInfo.setWxOpenid(model.getWxOpenid());
 			adminInfo.setSts("A");
@@ -50,6 +64,12 @@ public class AdminWXController extends BaseController {
 				throwAppException(!StringUtils.equals(adminInfo.getPassword(), adminInfo.getWxPassword()), RC.OTHER_TOKEN_TIMEOUT);
 			}
 			adminInfo = alist.get(0);
+			//管辖房产数量
+			AduitDistributionMVO aduitDistributionMVO = new AduitDistributionMVO();
+			aduitDistributionMVO.setAdminId(adminInfo.getAdminId());
+			aduitDistributionMVO.setSts("A");
+			List<AduitDistributionMVO> adList = aduitDistributionService.queryList(aduitDistributionMVO);
+			adminInfo.setManageHousesCount(String.valueOf(adList.size()));
 			return apiResult(RC.SUCCESS, adminInfo);
 		} catch (Exception e) {
 			return exceptionResult(logger, "登录错误", e);
@@ -82,6 +102,12 @@ public class AdminWXController extends BaseController {
 			adminInfo.setWxPhoto(model.getWxPhoto());
 			adminInfo.setWxTime(DateUtil.nowTime());
 			adminInfoService.update(adminInfo);
+			//管辖房产数量
+			AduitDistributionMVO aduitDistributionMVO = new AduitDistributionMVO();
+			aduitDistributionMVO.setAdminId(adminInfo.getAdminId());
+			aduitDistributionMVO.setSts("A");
+			List<AduitDistributionMVO> adList = aduitDistributionService.queryList(aduitDistributionMVO);
+			adminInfo.setManageHousesCount(String.valueOf(adList.size()));
 			return apiResult(RC.SUCCESS, adminInfo);
 		} catch (Exception e) {
 			return exceptionResult(logger, "登录错误", e);
@@ -90,7 +116,7 @@ public class AdminWXController extends BaseController {
 	
 	/**
 	 * 	解除微信 
-	 * @param adminId 
+	 * @param adminId 管理员ID
 	 * @return
 	 */
 	@ResponseBody
@@ -107,8 +133,5 @@ public class AdminWXController extends BaseController {
 		}
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(MD5Util.MD5Encode("123"));
-	}
-	
+
 }

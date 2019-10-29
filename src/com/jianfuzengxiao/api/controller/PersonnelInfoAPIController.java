@@ -33,7 +33,7 @@ import com.jianfuzengxiao.pub.service.impl.PersonnelInfoService;
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 /**
- * 人员接口
+ * 房产、人员 接口
  */
 @Controller
 @RequestMapping(value="/api/personnel")
@@ -60,7 +60,7 @@ public class PersonnelInfoAPIController extends BaseController {
 	 * <p style="color:#36F;">
 	 * 上传房产信息
 	 * </p>
-	 * @param  userId 用户ID, housesId 房产ID , enterpriseName 即app店铺租户所填的企业名称 ,leaseStartTime  leaseStopTime 居住失效
+	 * @param  userId 用户ID, housesId 房产ID , enterpriseName 即app店铺租户所填的企业名称 ,leaseStartTime  leaseStopTime 居住失效 , leaseContract 租赁合同（如果多张转为用逗号隔开的字符串）
 	 * @return    
 	 * @throws 
 	 * @author 闫子扬 

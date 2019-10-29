@@ -178,7 +178,8 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	@Override
 	public PageInfo queryHousesPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select a.personnel_id,a.houses_id,a.user_id ");
+		sql.append("select a.personnel_id,a.houses_id,a.user_id,a.status,a.live_type_id,a.live_type_name,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
+		sql.append(",a.gender,a.nation_name,a.certificates_number,str_to_date(a.create_time,'%Y-%m-%d %H:%i:%s')create_time ");
 		sql.append(",b.houses_status,b.prov_name,b.city_name,b.area_name,ifnull(b.community_name,'')community_name,ifnull(b.community_street_name,'')community_street_name ");
 		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
 		sql.append("from PERSONNEL_INFO a ");
@@ -191,6 +192,18 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND a.user_id=?");
 					params.add(entity.getUserId());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (?)");
+					params.add(entity.getHousesId());
+				}
+				if (StringUtils.isNotBlank(entity.getStatus())) {
+					sql.append(" AND a.status in (?)");
+					params.add(entity.getStatus());
+				}
+				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+					sql.append(" AND a.live_type_id in (?)");
+					params.add(entity.getLiveTypeId());
 				}
 			}
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
