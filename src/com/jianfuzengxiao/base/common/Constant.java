@@ -48,6 +48,8 @@ public class Constant {
 	public final static String UPLOAD_FACE_IMAGE_DIR = "data/attach/image/face/";
 	// 上传证件图片文件目录
 	public final static String UPLOAD_CERT_IMAGE_DIR = "data/attach/image/cert/";
+	// 上传租赁合同图片文件目录
+	public final static String UPLOAD_LEASE_CONTRACT_IMAGE_DIR = "data/attach/image/contract/";
 	// 上传其他图片文件目录
 	public final static String UPLOAD_OTHER_IMAGE_DIR = "data/attach/image/other/";
 	

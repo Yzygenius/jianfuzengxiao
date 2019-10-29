@@ -248,7 +248,7 @@ public class CommonController extends BaseController {
 	 * <p style="color:#36F;">
 	 * 上传文件
 	 * </p>
-	 * @param file 文件, picType A人脸照片、B证件照片、C其他照片
+	 * @param file 文件, picType A人脸照片、B证件照片、 C租赁合同、Z其他照片
 	 * @return    
 	 * @throws 
 	 * @author 闫子扬 
@@ -269,6 +269,9 @@ public class CommonController extends BaseController {
 			uploadImgDir = Constant.UPLOAD_CERT_IMAGE_DIR;
 			break;
 		case "C":
+			uploadImgDir = Constant.UPLOAD_LEASE_CONTRACT_IMAGE_DIR;
+			break;
+		case "Z":
 			uploadImgDir = Constant.UPLOAD_OTHER_IMAGE_DIR;
 			break;
 		default:
