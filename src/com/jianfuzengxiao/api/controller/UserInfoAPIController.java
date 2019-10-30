@@ -36,7 +36,7 @@ public class UserInfoAPIController extends BaseController {
 	 * 首页校验，是否已经上报信息<br>
 	 * 如果已经上报信息，code 1 ，否 code 3002
 	 * </p>
-	 * @param model
+	 * @param userId
 	 * @return    
 	 * String    返回类型 
 	 * @throws 
@@ -68,7 +68,6 @@ public class UserInfoAPIController extends BaseController {
 	   username 姓名, gender 性别(1男2女), birthDate 生日, nationId 民族id, nationName 民族名称, certificatesNumber 证件号码, certificatesStartTime certificatesStopTime 证件时效, certificatesOffice 办证机关<br>
 	   certificatesAddress 办证地址 , telephone 联系电话 , leaseStartTime 居住开始时间
 	 * @return    
-	 * String    返回类型 
 	 * @throws 
 	 * @author 闫子扬 
 	 * @date 2019年10月28日 上午10:20:28

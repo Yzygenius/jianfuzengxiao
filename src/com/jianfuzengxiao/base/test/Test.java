@@ -3,10 +3,13 @@ package com.jianfuzengxiao.base.test;
 import java.util.Arrays;
 import java.util.List;
 
+import com.jianfuzengxiao.base.common.MD5Util;
+
 public class Test {
 
 	public static void main(String[] args) {
-		String str = "data/attach/image/20181215/1c3bd9e6dc71429587979ebc151cc0c3.jpg,data/attach/image/20181215/3f27b4e767484263a0aabbaa86f47b5f.png,data/attach/image/20181215/acecfec833ee4d4185265bf817e36776.png";
+		System.out.println(MD5Util.MD5Encode("123456QBa12a"));
+		/*String str = "data/attach/image/20181215/1c3bd9e6dc71429587979ebc151cc0c3.jpg,data/attach/image/20181215/3f27b4e767484263a0aabbaa86f47b5f.png,data/attach/image/20181215/acecfec833ee4d4185265bf817e36776.png";
 		List<String> sList = Arrays.asList(str.split(","));
 		for(int i=0; i< sList.size(); i++){
 			System.out.println(sList.get(i));

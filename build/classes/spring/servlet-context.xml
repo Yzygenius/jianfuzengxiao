@@ -15,24 +15,17 @@
 
 	
 	
-	<!--<mvc:interceptors>
-		 <mvc:interceptor>
-			<mvc:mapping path="/api/**" />
-			<mvc:exclude-mapping path="/api/wsc/index.html"/>
-			<mvc:exclude-mapping path="/api/wsc/login.html"/>
-			<mvc:exclude-mapping path="/api/thirdpayBack/wxOrderPay.html"/>
-			<mvc:exclude-mapping path="/api/thirdpayBack/wxRechargePay.html"/>
-			<mvc:exclude-mapping path="/api/login.html"/>
-			<bean class="com.weishangcheng.api.security.APIInterceptor" />
-		</mvc:interceptor>
+	<mvc:interceptors>
+		
 		<mvc:interceptor>
 			<mvc:mapping path="/system/**" />
 			<mvc:exclude-mapping path="/system/captcha/**"/>
 			<mvc:exclude-mapping path="/system/login.html"/>
-			<bean class="com.weishangcheng.system.security.SystemInterceptor" />
-		</mvc:interceptor> 
+			<mvc:exclude-mapping path="/system/areainfo/getAreaList.html"/>
+			<bean class="com.jianfuzengxiao.system.security.SystemInterceptor" />
+		</mvc:interceptor>
 		
-	</mvc:interceptors>-->
+	</mvc:interceptors>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
