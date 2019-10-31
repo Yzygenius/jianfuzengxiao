@@ -96,6 +96,7 @@ public class CommunityInfoSysController extends BaseController {
 			//查询新增社区名称是否重复
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
 			communityInfoMVO.setCommunityName(communityInfo.getCommunityName());
+			communityInfoMVO.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(communityInfoMVO);
 			throwAppException(list.size() > 0, RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_EXIST);
 			
@@ -116,6 +117,7 @@ public class CommunityInfoSysController extends BaseController {
 			//查询新增社区名称是否重复
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
 			communityInfoMVO.setCommunityName(communityInfo.getCommunityName());
+			communityInfoMVO.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(communityInfoMVO);
 			throwAppException(list.size() > 1, RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_EXIST);
 			

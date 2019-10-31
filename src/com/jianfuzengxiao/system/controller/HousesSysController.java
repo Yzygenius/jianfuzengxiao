@@ -28,6 +28,48 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	@Autowired
 	private IHousesInfoService housesInfoService;
 	
+	@RequestMapping(value="/toHousesFwPage")
+	public String toHousesFwPage(){
+		return "/system/housesFw-page";
+	}
+	
+	@RequestMapping(value="/toAddHousesFw")
+	public String toAddHousesFw(){
+		return "/system/housesFw-add";
+	}
+	
+	@RequestMapping(value="/toUpdateHousesFw")
+	public String toUpdateHousesFw(){
+		return "/system/housesFw-update";
+	}
+	
+	@RequestMapping(value="/toHousesFwDetail")
+	public String toHousesFwDetail(){
+		return "/system/housesFw-detail";
+	}
+	
+	//店铺
+	@RequestMapping(value="/toHousesDpPage")
+	public String toHousesDpPage(){
+		return "/system/housesDp-page";
+	}
+	
+	@RequestMapping(value="/toAddHousesDp")
+	public String toAddHousesDp(){
+		return "/system/housesDp-add";
+	}
+	
+	@RequestMapping(value="/toUpdateHousesDp")
+	public String toUpdateHousesDp(){
+		return "/system/housesDp-update";
+	}
+	
+	@RequestMapping(value="/toHousesDpDetail")
+	public String toHousesDpDetail(){
+		return "/system/housesDp-detail";
+	}
+	
+	
 	/**
 	 * 
 	 * <p style="color:#36F;">

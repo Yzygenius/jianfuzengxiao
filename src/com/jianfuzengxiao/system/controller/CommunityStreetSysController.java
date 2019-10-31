@@ -91,6 +91,7 @@ public class CommunityStreetSysController extends BaseController {
 			//查询新增社区名称是否重复
 			CommunityStreetInfoMVO communityStreetInfoMVO = new CommunityStreetInfoMVO();
 			communityStreetInfoMVO.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+			communityStreetInfoMVO.setSts("A");
 			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(communityStreetInfoMVO);
 			throwAppException(list.size() > 0, RC.COMMUNITY_STREET_INFO_PARAM_COMMUNITY_STREET_NAME_EXIST);
 			
@@ -112,7 +113,8 @@ public class CommunityStreetSysController extends BaseController {
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getStatus()), RC.COMMON_TYPE_INVALID);
 			//查询新增社区名称是否重复
 			CommunityStreetInfoMVO communityStreetInfoMVO = new CommunityStreetInfoMVO();
-			communityStreetInfoMVO.setCommunityStreetName(communityStreetInfoMVO.getCommunityStreetName());
+			communityStreetInfoMVO.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+			communityStreetInfoMVO.setSts("A");
 			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(communityStreetInfoMVO);
 			throwAppException(list.size() > 1, RC.COMMUNITY_STREET_INFO_PARAM_COMMUNITY_STREET_NAME_EXIST);
 			

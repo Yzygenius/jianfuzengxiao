@@ -23,8 +23,8 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	@Override
 	public CommunityInfoMVO insert(final CommunityInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO COMMUNITY_INFO (community_id,community_name,list_order,create_time,update_time,sts) ");
-		sql.append("VALUES (?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+		sql.append("INSERT INTO COMMUNITY_INFO (community_id,community_name,list_order,create_time,update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name) ");
+		sql.append("VALUES (?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -37,6 +37,12 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getProvCode()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getProvName()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getCityCode()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getCityName()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getAreaCode()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getAreaName()));
 					return ps;
 				}
 			});
@@ -74,6 +80,30 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 				sql.append("sts=?,");
 				params.add(entity.getSts());
 			}
+			if (entity.getProvCode() != null) {
+				sql.append("prov_code=?,");
+				params.add(entity.getProvCode());
+			}
+			if (entity.getProvName() != null) {
+				sql.append("prov_name=?,");
+				params.add(entity.getProvName());
+			}
+			if (entity.getCityCode() != null) {
+				sql.append("city_code=?,");
+				params.add(entity.getCityCode());
+			}
+			if (entity.getCityName() != null) {
+				sql.append("city_name=?,");
+				params.add(entity.getCityName());
+			}
+			if (entity.getAreaCode() != null) {
+				sql.append("area_code=?,");
+				params.add(entity.getAreaCode());
+			}
+			if (entity.getAreaName() != null) {
+				sql.append("area_name=?,");
+				params.add(entity.getAreaName());
+			}
 			sql.deleteCharAt(sql.length() - 1);
 			sql.append(" WHERE community_id=?");
 			params.add(entity.getCommunityId());
@@ -105,7 +135,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	public List<CommunityInfoMVO> queryList(CommunityInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
 		sql.append("FROM  COMMUNITY_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<CommunityInfoMVO> resultList = null;
@@ -136,6 +166,18 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					sql.append(" AND sts=?");
 					params.add(entity.getSts());
 				}
+				if (StringUtils.isNotBlank(entity.getProvCode())) {
+					sql.append(" AND prov_code=?");
+					params.add(entity.getProvCode());
+				}
+				if (StringUtils.isNotBlank(entity.getCityCode())) {
+					sql.append(" AND city_code=?");
+					params.add(entity.getCityCode());
+				}
+				if (StringUtils.isNotBlank(entity.getAreaCode())) {
+					sql.append(" AND area_code=?");
+					params.add(entity.getAreaCode());
+				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
@@ -151,7 +193,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	public CommunityInfoMVO queryBean(CommunityInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
 		sql.append("FROM  COMMUNITY_INFO ");
 		sql.append("WHERE community_id=? ");
 		List<Object> params = new ArrayList<Object>();

@@ -26,24 +26,48 @@
 	<div class="x-body">
 		<form class="layui-form">
 			<div class="layui-form-item">
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-inline">
+					<select id="province" name="province" lay-filter="province" lay-verify="required" lay-search="">
+						<option value="">请选择省</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select id="city" lay-filter="city" lay-verify="required" lay-search="">
+						<option value="">请选择市</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select id="area" lay-filter="area" lay-verify="required" lay-search="">
+						<option value="">请选择县/区</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
-				<span class="x-red">*</span>社区名称
+				<span>社区</span>
 				</label>
 				<div class="layui-input-inline">
 					<input type="text" id="communityName" name="communityName" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label"> 
-				<span class="x-red">*</span>排序
+				<span>排序</span>
 				</label>
 				<div class="layui-input-inline">
 					<input type="text" id="listOrder" name="listOrder" required="" autocomplete="off" class="layui-input">
 					<span class="x-red">展示顺序，填写1-9999，数值越小展示顺序越靠前</span>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
 				</div>
 			</div>
 			
@@ -63,16 +87,115 @@
     	var $ = layui.jquery
         ,form = layui.form
         ,layer = layui.layer
+        
+        
+        var provinceList = "";
+        var cityList = "";
+        var areaList = "";
+        
+        var provCode, provName, cityCode, cityName, areaCode, areaName = '';
+         
+        $.ajax({  
+			url : "/jianfuzengxiao/common/getAreaList.html",  
+			type : 'post',
+			dataType: "json",
+			data: {
+			},
+			success : function(result){
+				console.log(result)
+				if(result.code == 1){
+					var str = '';
+					$.each(result.data, function (index, item) {
+						str += "<option value='" + item.code + "'>" + item.name + "</option>";
+			        });
+			        $("#province").append(str);
+			        //append后必须从新渲染
+			        form.render('select')
+			        provinceList = result.data;
+				}else{
+					layer.alert(result.msg, {icon: 5});
+				}
+				
+			},
+			error : function(result){
+				layer.alert("添加出错，请重新添加")
+			}
+		});
+        
+      	//监听省下拉框
+        form.on('select(province)', function(data){
+        	provName = data.elem[data.elem.selectedIndex].text;
+        	provCode = data.value;
+        	$.each(provinceList, function (index, item) {
+				if(item.code == data.value){
+					cityList = item.childList;
+				}
+	        });
+        	//console.log(cityList)
+	        //移除城市下拉框所有选项
+	        $("#city").empty();
+	        var cityHtml = '<option value="">请选择市</option>';
+	        $("#city").html(cityHtml);
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        //provinceText = $("#province").find("option:selected").text();
+	        //var value = $("#province").val();
+	        var str = '';
+	        $.each(cityList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#city").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+        });
+      	
+     	//监听市下拉框
+        form.on('select(city)', function(data){
+        	cityName = data.elem[data.elem.selectedIndex].text;
+        	cityCode = data.value;
+        	
+        	$.each(cityList, function (index, item) {
+				if(item.code == data.value){
+					areaList = item.childList;
+				}
+	        });
+        	//console.log(dataObj)
+        	//console.log(cityList)
+	        //移除城区下拉框所有选项
+	        $("#area").empty();
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        //provinceText = $("#province").find("option:selected").text();
+	        //var value = $("#province").val();
+	        var str = '';
+	        $.each(areaList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#area").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+        });
+     	//监听区/
+        form.on('select(area)', function(data){
+        	areaName = data.elem[data.elem.selectedIndex].text;
+        	areaCode = data.value;
+        });
        
       //监听提交
       form.on('submit(add)', function(data){
-          $.ajax({  
+       $.ajax({  
 			url : "/jianfuzengxiao/system/community/addCommunity.html",  
 			type : 'post',
 			dataType: "json",
 			data: {
 				'communityName': $('#communityName').val(),
-				'listOrder': $('#listOrder').val()
+				'listOrder': $('#listOrder').val(),
+				'provCode': provCode,
+				'provName': provName,
+				'cityCode': cityCode,
+				'cityName': cityName,
+				'areaCode': areaCode,
+				'areaName': areaName
 			},
 			success : function(result){
 				if(result.code == 1){

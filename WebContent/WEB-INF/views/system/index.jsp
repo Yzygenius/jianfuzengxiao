@@ -82,7 +82,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="/jianfuzengxiao/system/product/toProductPage.html">
+                        <a _href="/jianfuzengxiao/system/houses/toHousesFwPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>住房管理</cite>
                         </a>
