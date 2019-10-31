@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/personnel_y.css">
+    <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
+    <title>身份信息认证上报</title>
+</head>
+<body>
+<div class="personCenter verify">
+    <!--基本信息-->
+    <div class="top_background">
+        <div class="return_text">
+            <div class="goback" onclick="history.go(-1)"><img src="images/yang/left.png" alt=""></div>
+            <p class="text">身份信息认证上报</p>
+        </div>
+        <div class="basic_information">
+            <div class="verify_title">核实信息</div>
+            <div class="box">
+                <div class="head"><img src="images/yang/head.png" alt=""></div>
+                <div class="kind">
+                    <div class="item">
+                        <div class="item-one">人员姓名</div>
+                        <div class="item-two">贾春天</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员性别</div>
+                        <div class="item-two">女</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员年龄</div>
+                        <div class="item-two">39岁（1983-12-12）</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员民族</div>
+                        <div class="item-two">汉族</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">联系电话</div>
+                        <div class="item-two">13832101234</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--身份证信息-->
+    <div class="person_id">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>身份信息</p><span>（证件类型：身份证）</span></div>
+        </div>
+        <div class="id_img">
+            <div class="icon">
+                <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件正面</div>
+            </div>
+            <div class="icon">
+                <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件反面</div>
+            </div>
+        </div>
+        <div class="id_text">
+            <div class="step">
+                <div class="step_w">证件号码：</div>
+                <div class="step_d">110102197810272321</div>
+            </div>
+            <div class="step">
+                <div class="step_w">证件时效：</div>
+                <div class="step_d">2019.12.12 - 2020.12.12</div>
+            </div>
+            <div class="step">
+                <div class="step_w">证件地址：</div>
+                <div class="step_d">河北省石家庄市栾城区也和工业区卓达太阳城青年之都234号</div>
+            </div>
+            <div class="step">
+                <div class="step_w">办证机关：</div>
+                <div class="step_d">石家庄市公安局裕华分局</div>
+            </div>
+        </div>
+    </div>
+    <!--选择门店、房屋按钮-->
+    <div class="select_house">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+        </div>
+        <div class="btnBox">
+            <div class="add-btn">
+                <div class="add_btn0" id="add_btn"></div>
+                <!--<a href="#">-->
+                <img src="images/yang/house3.png" alt="">
+                <span>添加房屋</span>
+                <!--</a>-->
+            </div>
+            <div class="add-btn">
+                <div class="add_btn0" id="add_btn0"></div>
+                <!--<a href="#">-->
+                <img src="images/yang/house4.png" alt="">
+                <span>添加门店</span>
+                <!--</a>-->
+            </div>
+        </div>
+    </div>
+    <!--房产地址_自持-->
+    <div class="select_time">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+            <div class="new_select">重新选择</div>
+        </div>
+        <div class="box-one">
+            <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span><span class="zc">自持</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+        </div>
+        <div class="box-one">
+            <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span><span class="zc">自持</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+            <div class="inputInput">
+                <p>企业名称</p>
+                <input type="text" placeholder="填写企业名称">
+            </div>
+            <!-- <div class="upload_box second"><span>已添加租赁合同</span><input id="file2" type="file"></div> -->
+        </div>
+    </div>
+    <!--租赁地址_未上传合同-->
+    <div class="select_time">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+            <div class="new_select">重新选择</div>
+        </div>
+        <div class="box-one">
+            <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+            <div class="inputBox">
+                <p>居住时间</p>
+                <div class="select_date" id="select_date1">
+                    <!--<input type="text"  id="dateSelectorOne" placeholder="居住开始时间"><span>-</span><input class="input2" type="text"placeholder="居住截止时间">-->
+                    <p class="date1" id="date1">居住开始时间</p><span>-</span><p class="date2" id="date2">居住截止时间</p>
+                    <div class="sj_img"><img src="images/yang/bottom_sj.png" alt=""></div>
+                </div>
+            </div>
+            <div class="upload_box first"><span>上传租赁合同</span><input id="file1" type="file" multiple="multiple" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+        </div>
+        <div class="box-one">
+            <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+            <div class="inputBox">
+                <p>居住时效</p>
+                <div class="select_date" id="select_date2">
+                    <!--<input type="text"  id="dateSelectorOne" placeholder="居住开始时间"><span>-</span><input class="input2" type="text"placeholder="居住截止时间">-->
+                    <p class="date1" id="date3">居住开始时间</p><span>-</span><p class="date2" id="date4">居住截止时间</p>
+                    <div class="sj_img"><img src="images/yang/bottom_sj.png" alt=""></div>
+                </div>
+            </div>
+            <div class="inputInput">
+                <p>企业名称</p>
+                <input type="text" placeholder="填写企业名称">
+            </div>
+            <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" multiple="multiple" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+        </div>
+    </div>
+    <div style="background:#fff;overflow: hidden;">
+        <div class="submit-btn"><a style="display: block" href="idenWait_y.html">提交</a></div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/mobileSelect.min.js"></script>
+<script src="js/selectDate.js"></script>
+<script src="js/data.js"></script>
+<script src="js/verify1_y.js"></script>
+<script>
+</script>
+</html>
