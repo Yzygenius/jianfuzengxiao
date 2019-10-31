@@ -1,0 +1,262 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #fff;-webkit-tap-highlight-color:rgba(0,0,0,.0)
+}
+
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+blockquote,
+p {
+    padding: 0;
+    margin: 0;
+}
+input,
+textarea{
+    border: 0;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+}
+
+select,
+input,
+button,
+img {
+    outline: none;
+    border: none;
+    vertical-align: middle;
+    font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    font-style: normal;
+}
+.identity .title_close{
+    position: relative;
+    width: 100%;
+    height: 50px;
+}
+.identity .title_close .goback{
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 13px;
+}
+.identity .title_close p.txt{
+    text-align: center;
+    font-size:18px;
+    color:rgba(51,51,51,1);
+    line-height:50px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.identity .tu1 img{
+    width: 100%;
+}
+.identity .tips1{
+    font-size:18px;
+    font-weight:800;
+    color:rgba(0,145,255,1);
+    text-align: center;
+    box-sizing: border-box;
+    padding: 25px 0 15px;
+    letter-spacing: 0.5px;
+
+}
+.identity .tips2{
+    text-align: center;
+    font-size:12px;
+    color:rgba(51,51,51,.5);
+    letter-spacing: 0.5px;
+}
+.identity .join{
+    width: 232px;
+    height: 44px;
+    font-size:16px;
+    font-weight:400;
+    line-height:44px;
+    background-color: #0091FF;
+    color: #fff;
+    text-align: center;
+    border-radius: 40px;
+    margin: 40px auto;
+}
+.identity .join a{
+    display: block;
+}
+/*请等待审核页面*/
+.identity.wait .title_close{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    box-shadow:0px 1px 0px 0px rgba(0,0,0,0.1);
+}
+.identity.wait .tu2 img{
+    display: block;
+    margin:60px auto 0px;
+}
+.identity.wait .tips1.back{
+    font-weight: 500;
+    color: rgba(51,51,51,1);
+}
+/*未通过审核页面*/
+.identity .tips1.red{
+    color: #FF7074;
+}
+.tip_btn{
+    margin-top: 40px;
+}
+.tip_btn .edit a{
+    display: block;
+}
+.tip_btn .edit{
+    width: 232px;
+    height: 44px;
+    line-height: 44px;
+    font-size:16px;
+    font-weight:400;
+    color:#fff;
+    text-align: center;
+    background-color:#0091FF;
+    border-radius: 40px;
+    margin: 0 auto;
+}
+.tip_btn .up_frame{
+    width: 232px;
+    height: 44px;
+    line-height: 44px;
+    font-size:16px;
+    border: 2px solid #0091FF;
+    text-align: center;
+    border-radius: 40px;
+    margin: 20px auto;
+    color: #0091FF;
+}
+/*弹框*/
+.thisModal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,.4);
+    z-index: 99;
+}
+.modalCont{
+    display: none;
+    position: fixed;
+    top:25%;
+    width:80%;
+    max-height:301px;
+    left: 50%;
+    margin-left: -40%;
+    background-color: #0091FF;
+    border-radius: 10px;
+    z-index: 999;
+}
+.modalCont .title{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size:16px;
+    font-weight:800;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+.modalCont .cont{
+    height: 190px;
+    background-color: #fff;
+    color: #333;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 10px;
+    line-height: 22px;
+    overflow-y: scroll;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.modalCont .back_white{
+    box-sizing: border-box;
+    padding: 20px 0;
+    background-color: #fff;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px ;
+}
+.modalCont .know{
+    width: 170px;
+    height: 32px;
+    color: #fff;
+    background-color: #0091FF;
+    font-size: 17px;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+/*租户等待审核*/
+.return{
+    width: 232px;
+    height: 44px;
+    font-size:16px;
+    font-weight:400;
+    line-height:44px;
+    background-color: #0091FF;
+    color: #fff;
+    text-align: center;
+    border-radius: 40px;
+    margin: 40px auto;
+}
+.return a{
+    display: block;
+}
+@media screen and (min-width: 750px) {
+    body{
+        width: 750px;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/identity_y.css">
+    <title>身份信息认证上报未通过</title>
+</head>
+<body>
+<div class="identity">
+    <div class="title_close">
+        <div class="goback" onclick="history.go(-1)"><img src="images/yang/nav_back.png" alt=""></div>
+        <p class="txt">身份信息认证上报</p>
+    </div>
+    <div class="tu1"><img src="images/yang/no_pass.png" alt=""></div>
+    <div class="tips1 red">抱歉，您的身份认证审核未通过</div>
+    <div class="tips2">有可能信息填写有误，请查看原因修改后再次提交</div>
+    <div class="tip_btn">
+        <div class="edit"><a href="identity_auth_t.html">修改信息</a></div>
+        <div class="up_frame">未通过原因</div>
+    </div>
+</div>
+<div class="thisModal"></div>
+<div class="modalCont">
+    <p class="title">身份认证审核未通过原因</p>
+    <div class="cont">
+      未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因
+      未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因
+    </div>
+    <div class="back_white"><div class="know">知道了</div></div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script>
+$(function () {
+    $('.up_frame').click(function () {
+        $('.thisModal').fadeIn(0);
+        $('.modalCont').fadeIn(0);
+    })
+    $('.know').click(function () {
+        $('.thisModal').fadeOut(0);
+        $('.modalCont').fadeOut(0);
+    })
+    $('.thisModal').click(function () {
+        $('.thisModal').fadeOut(0);
+        $('.modalCont').fadeOut(0);
+    })
+})
+</script>
+</body>
+</html>

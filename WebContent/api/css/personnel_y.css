@@ -1,0 +1,674 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #fff;-webkit-tap-highlight-color:rgba(0,0,0,.0)
+}
+
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+blockquote,
+p {
+    padding: 0;
+    margin: 0;
+}
+input,
+textarea{
+    border: 0;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #F7FAFD;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+}
+
+select,
+input,
+button,
+img {
+    outline: none;
+    border: none;
+    vertical-align: middle;
+    font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    font-style: normal;
+}
+.personCenter{
+    position: relative;
+    width: 100%;
+}
+.personCenter .top_background{
+    position: relative;
+    width: 100%;
+    height: 190px;
+    background: url("../images/yang/top_img.png") no-repeat;
+    background-size: 100% 100%;
+}
+.personCenter .top_background .return_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+}
+
+.personCenter .top_background .return_text p.text{
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+}
+.personCenter .top_background .return_text .goback{
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 0;
+}
+.personCenter .basic_information{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -45.5%;
+    width: 91%;
+    height: 144px;
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.personCenter .basic_information .head{
+    position: relative;
+    width: 90px;
+}
+.personCenter .basic_information .head img{
+    width: 100%;
+}
+.personCenter .basic_information .head .status{
+    position: absolute;
+    bottom: -1px;
+    left: 0px;
+    width:90px;
+    height: 20px;
+    border-radius:0px 0px 4px 4px;
+    background:rgba(207,245,248,1);
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+.personCenter .basic_information .head .status.green{
+    color: #0091FF;
+}
+/*员工审核中*/
+.personCenter .basic_information .head .status.yellow{
+    color: #FF6C08;
+    background-color: #FEEA67;
+}
+/*租户已过期*/
+.personCenter .basic_information .head .status.hui{
+    color: #FEFFFE;
+    background-color: #CFCFCF;
+}
+.personCenter .basic_information .head .status.red{
+    color: #FEFFFE;
+    background-color: #FF888B;
+}
+.personCenter .basic_information .kind{
+    position: relative;
+    width: 66%;
+}
+.personCenter .basic_information .kind .item{
+    display: flex;
+    margin-bottom: 3px;
+}
+.personCenter .basic_information .kind .item .item-one{
+    color:#333;
+    font-size: 14px;
+}
+.personCenter .basic_information .kind .item .item-two{
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left:5%;
+}
+.personCenter .basic_information .kind .item .item-two{
+    display: flex;
+    align-items: center;
+}
+.personCenter .basic_information .kind .item .item-two img.phone{
+    display: block;
+    margin-left: 3px;
+    width: 15px;
+    height: 15px;
+}
+.personCenter .basic_information .kind .an_btn{
+    position: absolute;
+    right: 0;
+}
+.personCenter .basic_information .kind .item-btn{
+    width: 70px;
+    height: 18px;
+    color: #fff;
+    background-color: #0091FF;
+    text-align: center;
+    line-height: 18px;
+    font-size: 10px;
+    /*margin-left: 16%;*/
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+/*身份证信息*/
+.personCenter .person_id{
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    background-color: #fff;
+    box-sizing:border-box;
+    padding:5%;
+    margin-top: 15px;
+}
+.personCenter .person_id .title{
+    display: flex;
+    align-items: center;
+}
+.personCenter .person_id .title_text{
+    display: flex;
+    align-items: center;
+}
+.personCenter .person_id .title img{
+    display: block;
+    margin-right: 5px;
+}
+.personCenter .person_id .title_text p{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+.personCenter .person_id .title_text span{
+    color:rgb(51,51,51);
+    font-size: 12px;
+}
+.personCenter .person_id .id_img{
+    display: flex;
+    justify-content: space-between;
+    margin: 18px 0;
+    height: 120px;
+}
+.personCenter .person_id .id_img .icon{
+    width: 49%;
+    height: 104px;
+}
+.personCenter .person_id .id_img .icon img{
+    width: 100%;
+    height: 100%;
+}
+.personCenter .person_id .id_img .icon .icon_infor{
+    width: 100%;
+    height: 16px;
+    border-radius: 0px 0px 4px 4px;
+    background:linear-gradient(135deg,rgba(98,177,255,1) 0%,rgba(58,117,255,1) 100%);
+    text-align: center;
+    color: #fff;
+    font-size: 10px;
+    line-height: 16px;
+}
+.personCenter .person_id .step{
+    display: flex;
+    margin-top: 15px;
+}
+.personCenter .person_id .step .step_w{
+    font-size: 14px;
+    color:#333
+}
+.personCenter .person_id .step .step_d{
+    width: 76%;
+    margin-left: 3%;
+    font-size: 14px;
+    color:rgba(51,51,51,1);
+    font-weight: bold;
+}
+/*居住信息*/
+.personCenter .live{
+    width: 100%;
+    border-radius:0px 0px 10px 10px;
+    background-color: #fff;
+    box-sizing:border-box;
+    padding: 5%;
+    margin-top: 10px;
+}
+.personCenter .live .title{
+    display: flex;
+    align-items: center;
+}
+.personCenter .live .title img{
+    display: block;
+    margin-right: 5px;
+}
+.personCenter .live .title_text p{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+.personCenter .live .house{
+    display: flex;
+    align-items: center;
+    margin: 10px 0 5px;
+}
+.personCenter .live .house .house_text{
+    color: #0091FF;
+    font-size: 14px;
+    margin-left: 3px;
+}
+.personCenter .live .house img{
+    display: block;
+}
+.personCenter .live .storeBox .item{
+    display: flex;
+    margin-top: 15px;
+}
+.personCenter .live .storeBox .item .item-one{
+    color:rgb(51,51,51);
+    font-size: 14px;
+}
+.personCenter .live .storeBox .item .item-two{
+    width:66%;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left:3%;
+}
+.personCenter .live .storeBox .item .item-two.address {
+    width: 75%;
+}
+/*上报时间*/
+.personCenter .report_time{
+    position: absolute;
+    bottom:-50px;
+    width: 100%;
+    height: 87px;
+    background:linear-gradient(135deg,rgba(98,177,255,1) 0%,rgba(58,117,255,1) 100%);
+    z-index: -1;
+    box-sizing: border-box;
+    padding-top: 45px;
+
+}
+.personCenter .report_time p.time{
+    font-size:10px;
+    font-weight:800;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 2px;
+    letter-spacing: 0.5px;
+}
+/*核实信息页面*/
+.verify.personCenter .basic_information{
+    height: 170px;
+    display: block;
+}
+.verify.personCenter .basic_information .box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.verify .verify_title{
+    letter-spacing: 1px;
+    font-size:16px;
+    font-weight:800;
+    color:rgba(0,145,255,1);
+    box-sizing: border-box;
+    padding-bottom: 8px;
+}
+.verify.personCenter .top_background {
+    height: 217px;
+}
+.verify.personCenter .basic_information .kind .item {
+    display: flex;
+    margin-bottom: 4px;
+}
+.verify.personCenter .select_house{
+    width: 100%;
+    background-color: #fff;
+    box-sizing:border-box;
+    padding: 15px;
+    margin-top: 10px;
+}
+.verify  .title{
+    display: flex;
+    align-items: center;
+}
+.verify  .title_text{
+    display: flex;
+    align-items: center;
+}
+.verify  .title img{
+    display: block;
+    margin-right: 5px;
+}
+.verify .title_text p{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+.verify .btnBox{
+    display: flex;
+    justify-content: space-between;
+    margin: 25px auto;
+    box-sizing: border-box;
+    padding: 0;
+}
+.verify .btnBox .add-btn{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 159px;
+    height: 42px;
+    border-radius: 40px;
+    font-size: 16px;
+    color: #0091FF;
+    border: 1px solid #0091FF;
+    line-height: 42px;
+}
+.verify .btnBox .add-btn .add_btn0{
+    opacity: 0;
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+}
+.verify .btnBox .add-btn  img{
+    display: block;
+    margin-right: 3px;
+}
+.verify .btnBox .add-btn a{
+    display: block;
+}
+.verify .submit-btn{
+    width: 280px;
+    height: 50px;
+    background:linear-gradient(135deg,rgba(98,177,255,1) 0%,rgba(58,117,255,1) 100%);
+    line-height: 50px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 6px auto 23px;
+    border-radius: 40px
+}
+.verify.personCenter .select_time{
+    width: 100%;
+    background: #fff;
+    box-sizing:border-box;
+    padding: 3%;
+    margin-top: 10px;
+}
+.verify.personCenter .select_time .title{
+    box-sizing: border-box;
+    padding: 0 3%;
+}
+.verify .title .new_select{
+    margin-left: 20px;
+}
+.verify .new_select{
+    width:75px;
+    height:18px;
+    border-radius: 4px;
+    font-size:10px;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    line-height:18px;
+    text-align: center;
+    background-color: #0091FF;
+}
+.verify .select_time .box-one{
+    width: 100%;
+    box-shadow: 0 0 10px rgba(240,244,249,1);
+    background-size: 100% 100%;
+    margin: 5px 0;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 5px;
+}
+.verify .select_time .box-one .box-title{
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin: 2px auto;
+    height: 40px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+.verify .select_time .box-one .box-title span{
+    display: block;
+    margin-left:5px;
+    /* justify-content : space-between; */
+    font-size:16px;
+    font-weight:800;
+    color:rgba(0,145,255,1);
+}
+.verify .select_time .box-one .box-cont{
+    width: 95%;
+    margin: 0 auto;
+    font-size:12px;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+    box-sizing: border-box;
+    padding: 5px 0;
+}
+.verify .select_time .inputBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin: 10px auto;
+}
+.verify .select_time .inputBox p{
+    font-size:14px;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+}
+.verify .select_time .inputBox .select_date{
+    width: 78%;
+    height: 30px;
+    border: 1px solid #0091FF;
+    border-radius: 5px;
+}
+.verify .select_time .inputBox .select_date{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.verify .select_time .inputBox .select_date p{
+    width: 40%;
+    text-align: center;
+    box-sizing: border-box;
+    /*padding-left: 5px;*/
+    font-size: 14px;
+    color:rgba(51,51,51,.7);
+}
+.verify .select_time .inputBox .select_date span{
+    display: block;
+    color:rgba(51,51,51,8);
+}
+.verify .select_time .inputBox .select_date .sj_img{
+    position: absolute;
+    right: 0;
+    top: 4px;
+}
+.verify .select_time .inputInput{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin: 10px auto;
+}
+.verify .select_time .inputInput p{
+    font-size:14px;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+}
+.verify .select_time .inputInput input{
+    width: 78%;
+    height: 30px;
+    border: 1px solid #0091FF;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding-left: 8px;
+    color:rgba(51,51,51,8);
+}
+.verify .select_time .upload_box{
+    position: relative;
+    box-sizing: border-box;
+    width: 100px;
+    height:20px;
+    line-height:20px;
+    background: #0091ff;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 23%;
+    border-radius: 4px;
+}
+.verify .select_time .upload_box.active{
+    background: #F7FAFD;
+    color: #0091FF;
+}
+.verify .select_time .upload_box input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100px;
+    height: 20px;
+}
+.zc{
+    position: absolute;
+    left:83%;
+}
+
+/*提交按钮*/
+.verify .btn-min{
+    width: 280px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin: 10px auto 30px;
+    background:linear-gradient(135deg,rgba(98,177,255,1) 0%,rgba(58,117,255,1) 100%);
+    font-size: 16px;
+    color: #fff;
+    border-radius: 40px;
+}
+.verify .btn-min a{
+    display: block;
+}
+@media screen and (min-width: 750px) {
+    body{
+        width: 750px;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+}
+@media screen and (min-width: 400px) and (max-width:420px){
+    .personCenter .person_id .id_img {
+        height: 125px;
+    }
+    .personCenter .person_id .id_img .icon {
+        height: 110px;
+    }
+
+}
+@media screen and (max-width: 360px) {
+    .personCenter .basic_information .kind .item .item-one {
+        color: rgba(51,51,51,.8);
+        font-size: 12px;
+    }
+    .personCenter .basic_information .kind .item .item-two {
+        color: #333;
+        font-size: 12px;
+        margin-left: 4%;
+    }
+    .personCenter .basic_information .kind {
+        width: 64%;
+    }
+    .personCenter .basic_information .kind .item-btn {
+        margin-left: 12%;
+    }
+    .personCenter .person_id .step .step_d {
+        width: 70%;
+        font-size: 12px;
+    }
+    .personCenter .person_id .step .step_w {
+        font-size: 12px;
+    }
+    .personCenter .live .house .house_text {
+        font-size: 12px;
+    }
+    .personCenter .live .storeBox .item .item-two {
+        width: 60%;
+    }
+    .personCenter .live .storeBox .item .item-two.address {
+        width: 70%;
+        font-size: 12px;
+    }
+    .personCenter .live .storeBox .item .item-one {
+        font-size: 12px;
+    }
+    .personCenter .person_id .id_img .icon {
+        height: 90px;
+    }
+    .personCenter .person_id .id_img {
+        height: 110px;
+    }
+    .personCenter .live .storeBox .item .item-two {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="js/datepicker/foundation-datepicker.css">
+    <link rel="stylesheet" href="css/information_t.css">
+    <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
+    <!-- <script src="js/mobileSelect.js" type="text/javascript"></script> -->
+    <title>员工人员信息上报</title>
+</head>
+
+<body>
+    <div class="title">
+        <div class="timg">
+            <!-- <a href="#"><img src="images/tao/nav_back.png" alt=""></a> -->
+            <div class="goback" onclick="history.go(-1)">
+                    <img src="images/tao/nav_back.png" alt="">
+                </div>
+            <p class="h-title">员工人员信息上报</p>
+        </div>
+        <div class="live-title">
+                <img src="images/tao/shop.png">
+                <p class="live_p0">门店地址字段</p>
+                <p class="live_p">员工录入</p>
+            </div>
+        <div class="live">
+            <p class="live-time">驻店时效</p>
+            <div class="means-input">
+                <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1">
+                <img src="images/tao/down.png">
+            </div>
+            <p class="live-long">- 长期</p>
+        </div>
+        <div class="facell">
+
+            <div class="face">
+                <img src="images/tao/face.png" alt="" id="preview10">
+                <input type="file" name="file" onchange="imgPreview(this,'preview10')" accept="image/*"
+                    capture="camera" />
+                <p class="faceword" id="faceph">点击拍摄人脸照片</p>
+            </div>
+            <div class="allimg">
+                    <div class="a">
+                        <div class="facefront fan">
+                            <img src="images/tao/bag.png" class="face-front" id="preview11">
+                            <input type="file" name="file" onchange="imgPreview(this,'preview11')">
+                            <div class="word">证件正面</div>
+                            <p class="faceword1" id="prev1">点击上传/拍摄证件正面</p>
+                        </div>
+    
+                    </div>
+                    <div class="a" style="margin-top:20px;">
+                        <div class="facefront fan">
+                            <img src="images/tao/bag.png" class="face-front" id="preview12">
+                            <input type="file" name="file" onchange="imgPreview(this,'preview12')">
+                            <div class="word">证件背面</div>
+                            <p class="faceword1" id="prev2">点击上传/拍摄证件背面</p>
+                        </div>
+    
+                    </div>
+                </div>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="means">
+            <div class="meanslist">
+                <div class="means-name">证件类型</div>
+                <div class="means-input">
+                    <input type="text" placeholder="选择证件类型" class="measn" id="trigger1">
+                    <img src="images/tao/down.png">
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
+                <div class="means-input12">
+                    <input type="text" placeholder="录入姓名" class="measn12">
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</div>
+                <div class="means-input">
+                    <input type="text" placeholder="选择性别" class="measn" id="trigger2">
+                    <img src="images/tao/down.png">
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
+
+                <div class="means-input">
+                    <input type="text" placeholder="选择生日" class="measn" id="select_2">
+                    <img src="images/tao/down.png">
+                </div>
+
+            </div>
+            <div class="meanslist">
+                <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
+
+                <div class="means-input">
+                    <input type="text" placeholder="选择民族" class="measn" id="trigger3">
+                    <img src="images/tao/down.png">
+
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">证件号码</div>
+                <div class="means-input12">
+                    <input type="text" placeholder="录入证件号码" class="measn12">
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">证件时效</div>
+
+                <div class="means-input">
+                    <input type="text" placeholder="选择证件有效期" class="measn" id="select_3">
+                    <img src="images/tao/down.png">
+
+                </div>
+            </div>
+            <div class="meanslist">
+                <div class="means-name">办证机关</div>
+                <div class="means-input12">
+                    <input type="text" placeholder="录入办证机关" class="measn12">
+                </div>
+            </div>
+            <div class="meanslist">
+                    <div class="means-name">证件地址</div>
+                    <div class="means-input13">
+                        <textarea rows="5" cols="" placeholder="录入证件地址" class="text"></textarea>
+    
+                    </div>
+                </div>
+            <div class="meanslist">
+                <div class="means-name">联系方式</div>
+                <div class="means-input12">
+                    <input type="text" placeholder="录入姓名" class="measn12">
+                </div>
+            </div>
+        </div>
+        <div class="btn">提交</div>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript" src="js/selectDate.js"></script>
+    <script type="text/javascript" src="lib/mobileSelect.min.js"></script>
+
+    <script>
+        var weekdayArr = ['身份证', '驾驶证'];
+        var weekdayArr1 = ['男', '女'];
+        var weekdayArr2 = ['汉族', '满族', '藏族', '维吾尔族', '蒙古族'];
+        var mobileSelect = new MobileSelect({
+            trigger: '#trigger1',
+            title: '有效证件',
+            wheels: [
+                { data: weekdayArr }
+            ],
+            position: [0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger1').value = data;
+            }
+        });
+        var mobileSelect = new MobileSelect({
+            trigger: '#trigger2',
+            title: '性别',
+            wheels: [
+                { data: weekdayArr1 }
+            ],
+            position: [0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger2').value = data;
+            }
+        });
+        var mobileSelect = new MobileSelect({
+            trigger: '#trigger3',
+            title: '民族',
+            wheels: [
+                { data: weekdayArr2 }
+            ],
+            position: [2], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger3').value = data;
+            }
+        });
+
+        var select1 = $.selectDate("#select_1", {
+            start: 1994,
+            end: 2019,
+            select: [2012, 2, 15],
+            title: '请选择居住开始时间'
+        }, function (data) {
+            console.log(data);
+            document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
+            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
+        });
+
+
+        var select3 = $.selectDate("#select_3", {
+            start: 1994,
+            end: 2019,
+            select: [2012, 2, 15],
+            title: '证件有效日期'
+        }, function (data) {
+            console.log(data);
+            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
+        });
+
+        $.selectDate("#select_2", {}, function (data) {
+            console.log(data);
+            document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
+        });
+
+        function imgPreview(fileDom, id) {
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            //获取文件
+
+            var file = fileDom.files[0];
+            var imageType = /^image\//;
+            //是否是图片
+            if (!imageType.test(file.type)) {
+                layer.msg("请选择图片！");
+                return;
+            }
+            //读取完成
+            reader.onload = function (e) {
+                //获取图片dom
+                var img = document.getElementById(id);
+                //图片路径设置为读取的图片
+                img.src = e.target.result;
+                if (id == 'preview10') {
+                    console.log('12323')
+                    document.getElementById("faceph").style.display = "none";
+                } else if (id == 'preview11') {
+                    document.getElementById("prev1").style.display = "none";
+                } else if (id == 'preview12') {
+                    document.getElementById("prev2").style.display = "none";
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+
+
+</body>
+
+</html>
