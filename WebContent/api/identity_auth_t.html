@@ -93,7 +93,7 @@
                 <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
 
                 <div class="means-input">
-                    <input type="text" placeholder="选择民族" class="measn" id="trigger3" onfocus="this.blur()">
+                    <input type="text" placeholder="选择民族" class="measn" id="trigger3" value="" onfocus="this.blur()">
                     <img src="images/tao/down.png">
 
                 </div>
@@ -137,12 +137,66 @@
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 
     <script type="text/javascript" src="js/selectDate.js"></script>
-    <script type="text/javascript" src="lib/mobileSelect.min.js"></script>
+    <script type="text/javascript" src="js/mobileSelect.js"></script>
 
     <script>
+    var weekdayArr2;
+    $(function(){
+    	   //获取民族
+    		$.ajax({
+    	    	//请求方式
+    	        type:'POST',
+    	        //发送请求的地址
+    	        url:'/jianfuzengxiao/api/common/getNationList.html',
+    	        //服务器返回的数据类型
+    	        dataType:'json',
+    	        //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+    	        data:{},
+    	        success:function(data){
+    	            //console.log(data.data)
+    	           
+    	            	//[{nationId: "1", nationName: "汉族"},{nationId: "1", nationName: "汉族"}]
+    	            weekdayArr2 = data.data//[{key:"1",value:'汉族'}, {key:"2",value:'满族'},{key:"3",value:'藏族'} , {key:"4",value:'维吾尔'}, {key:"5",value:'维11吾尔'}];
+                    for(var i in weekdayArr2){
+                        for(var j in weekdayArr2[i]){
+                            if(j == 'nationName'){
+                                weekdayArr2[i]['value'] = weekdayArr2[i][j]//修改属性名为“value”
+                                delete weekdayArr2[i]['nationName']//删除“nationName”
+                            }
+                            if(j == 'nationId'){
+                                weekdayArr2[i]['id'] = weekdayArr2[i][j]//修改属性id为“id”
+                                delete weekdayArr2[i]['nationId']//删除“nationId”
+                            }
+                        }
+                    }
+        
+                    console.log(weekdayArr2)
+
+    	            var mobileSelect = new MobileSelect({
+    	                trigger: '#trigger3',
+    	                title: '民族',
+    	                wheels: [
+    	                    { data: weekdayArr2 }
+    	                ],
+    	                position: [2], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    	                transitionEnd: function (indexArr, data) {
+    	                    console.log(data);
+    	                },
+    	                callback: function (indexArr, data) {
+    	                    console.log(data);
+    	                    document.getElementById('trigger3').value = data[0].value
+    	                    //$('#trigger3').val(data.value);
+    	                }
+    	            });
+    	        },
+    	        error:function(jqXHR){
+    	        }
+    	    });	
+    })
+	    
         var weekdayArr = ['身份证', '驾驶证'];
         var weekdayArr1 = ['男', '女'];
-        var weekdayArr2 = ['汉族', '满族', '藏族', '维吾尔族', '蒙古族'];
+       //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
         var date=new Date;
         var mobileSelect = new MobileSelect({
             trigger: '#trigger1',
@@ -174,21 +228,7 @@
                 document.getElementById('trigger2').value = data;
             }
         });
-        var mobileSelect = new MobileSelect({
-            trigger: '#trigger3',
-            title: '民族',
-            wheels: [
-                { data: weekdayArr2 }
-            ],
-            position: [2], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger3').value = data;
-            }
-        });
+        
 
         var select1 = $.selectDate("#select_1", {
             start: 1994,
