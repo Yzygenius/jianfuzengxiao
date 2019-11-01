@@ -10,6 +10,8 @@ public class HousesInfo extends Entity {
 	public final static String houses_status_dianpu = "2";
 	
 	protected String housesId;
+	
+	protected String adminId;
 
 	protected String userId;
 
@@ -79,6 +81,14 @@ public class HousesInfo extends Entity {
 
 	public void setHousesId(String housesId) {
 		this.housesId = housesId;
+	}
+
+	public String getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
 
 	public String getUserId() {

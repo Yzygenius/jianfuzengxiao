@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>X-admin v1.0</title>
+<title>admin</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -34,7 +34,7 @@
 			<i class="layui-icon">&#xe640;</i>批量删除
 		</button>
 		<button class="layui-btn"
-			onclick="banner_add('新增','/jianfuzengxiao/system/community/toAddCommunity.html', 480, 280)">
+			onclick="banner_add('新增','/jianfuzengxiao/system/community/toAddCommunity.html', 780, 435)">
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
 		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
@@ -45,8 +45,10 @@
 						onclick="checkAll(this)"></th>
 					<th>排序</th>
 					<th>社区名称</th>
+					<th>省</th>
+					<th>市</th>
+					<th>区/县</th>
 					<th>创建时间</th>
-					<th>更新时间</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -67,15 +69,18 @@
 			<td row="communityName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
+			<td row="provName"></td>
+			<td row="cityName"></td>
+			<td row="areaName"></td>
 			<td row="createTime"></td>
-			<td row="updateTime"></td>
+			
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/community/toCommunityDetail.html')">
 					<i class="layui-icon">&#xe642;</i>查看
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/community/toUpdateCommunity.html', 480, 280)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/community/toUpdateCommunity.html', 780, 435)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
@@ -170,12 +175,11 @@
 									data[i].communityId);
 							tr.find('[row=ids]').text(data[i].communityId);
 							tr.find('[row=listOrder]').text(data[i].listOrder);
-							tr.find('[row=communityName]').text(
-									data[i].communityName);
-							tr.find('[row=createTime]')
-									.text(data[i].createTime);
-							tr.find('[row=updateTime]')
-									.text(data[i].updateTime);
+							tr.find('[row=communityName]').text(data[i].communityName);
+							tr.find('[row=provName]').text(data[i].provName);
+							tr.find('[row=cityName]').text(data[i].cityName);
+							tr.find('[row=areaName]').text(data[i].areaName);
+							tr.find('[row=createTime]').text(data[i].createTime);
 
 							$('#x-img').append(tr);
 						}

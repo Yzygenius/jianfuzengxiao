@@ -21,7 +21,7 @@ public class CommunityInfoMDAO extends CommunityInfoSDAO implements ICommunityIn
 	public PageInfo queryPage(CommunityInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"select community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
 		sql.append("from COMMUNITY_INFO ");
 		sql.append("where 1=1");
 

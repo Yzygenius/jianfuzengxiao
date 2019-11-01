@@ -57,7 +57,7 @@ public class AdminWXController extends BaseController {
 			adminInfo.setWxOpenid(model.getWxOpenid());
 			adminInfo.setSts("A");
 			List<AdminInfoMVO> alist = adminInfoService.queryList(adminInfo);
-			if (alist.size() < 0) {//用户不存在，返回登录页
+			if (alist.size() < 1) {//用户不存在，返回登录页
 				return apiResult(RC.OTHER_TOKEN_TIMEOUT);
 			}else {
 				adminInfo = alist.get(0);

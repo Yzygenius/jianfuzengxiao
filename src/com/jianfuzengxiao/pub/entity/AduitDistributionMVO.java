@@ -12,7 +12,29 @@ public class AduitDistributionMVO extends AduitDistribution {
 	private String unit;
 	private String houseNumber;
 	private String housesAddress;
+	private String housesTypeName;
+	private String houseType;
+	private String propertyCertificatesNumber;
 	
+	
+	public String getHousesTypeName() {
+		return housesTypeName;
+	}
+	public void setHousesTypeName(String housesTypeName) {
+		this.housesTypeName = housesTypeName;
+	}
+	public String getHouseType() {
+		return houseType;
+	}
+	public void setHouseType(String houseType) {
+		this.houseType = houseType;
+	}
+	public String getPropertyCertificatesNumber() {
+		return propertyCertificatesNumber;
+	}
+	public void setPropertyCertificatesNumber(String propertyCertificatesNumber) {
+		this.propertyCertificatesNumber = propertyCertificatesNumber;
+	}
 	public String getHousesStatus() {
 		return housesStatus;
 	}

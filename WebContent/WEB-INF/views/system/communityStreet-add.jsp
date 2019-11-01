@@ -24,20 +24,43 @@
 
 <body>
 	<div class="x-body">
-		<form class="layui-form">
+		<form class="layui-form" lay-filter="example">
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>名称</span>
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-inline">
+					<select id="province" name="province" lay-filter="province" lay-search="">
+						<option value="">请选择省</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select id="city" name="city" lay-filter="city" lay-search="">
+						<option value="">请选择市</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select id="area" name="area" lay-filter="area" lay-search="">
+						<option value="">请选择县/区</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<!-- <span class="x-red">*</span> -->
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">
+					<span>社区</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="communityStreetName" name="communityStreetName" required="" autocomplete="off" class="layui-input">
+					<select id="communitySel" name="communitySel" lay-verify="required" lay-filter="communitySel" lay-search="">
+						
+			        </select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
+				<label class="layui-form-label">
 					<span>类别</span>
 				</label>
 				<div class="layui-input-inline">
@@ -52,20 +75,18 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-					<span>社区</span>
+				<label class="layui-form-label">
+					<span>名称</span>
 				</label>
 				<div class="layui-input-inline">
-					<select id="communitySel" name="communitySel" lay-verify="required" lay-filter="communitySel" lay-search="">
-						
-			        </select>
+					<input type="text" id="communityStreetName" name="communityStreetName" lay-verify="required" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label"> 
+				<label class="layui-form-label"> 
 				<span>排序</span>
 				</label>
 				<div class="layui-input-inline">
@@ -88,33 +109,112 @@
 <script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 <script>
 
-var type, communitySel;	
+var type, communitySel, form, layer;	
+var provCode, provName, cityCode, cityName, areaCode, areaName = '';
     layui.use(['form','layer','upload'], function(){
-    	var $ = layui.jquery
-        ,form = layui.form
-        ,layer = layui.layer
-       
+    	var $ = layui.jquery;
+        form = layui.form
+        layer = layui.layer
+        
+        var provinceList = "";
+        var cityList = "";
+        var areaList = "";
+        
+        
+         
         $.ajax({  
-			url : "/jianfuzengxiao/system/community/getCommunityList.html",  
+			url : "/jianfuzengxiao/common/getAreaList.html",  
 			type : 'post',
 			dataType: "json",
 			data: {
 			},
 			success : function(result){
+				console.log(result)
 				if(result.code == 1){
-					$('#communitySel').html('');
-					var str = '<option value="">请选择</option>';
-					for(var i=0;i<result.data.length;i++){
-						str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
-					}
-					$('#communitySel').append(str);
-					form.render('select');
+					var str = '';
+					$.each(result.data, function (index, item) {
+						str += "<option value='" + item.code + "'>" + item.name + "</option>";
+			        });
+			        $("#province").append(str);
+			        //append后必须从新渲染
+			        form.render('select')
+			        provinceList = result.data;
+				}else{
+					layer.alert(result.msg, {icon: 5});
 				}
+				
 			},
 			error : function(result){
-				layer.alert("数据加载出错，请刷新页面", {icon: 5})
+				layer.alert("添加出错，请重新添加")
 			}
-		})
+		});
+        
+      	//监听省下拉框
+        form.on('select(province)', function(data){
+        	provName = data.elem[data.elem.selectedIndex].text;
+        	provCode = data.value;
+        	$.each(provinceList, function (index, item) {
+				if(item.code == data.value){
+					cityList = item.childList;
+				}
+	        });
+        	//console.log(cityList)
+	        //移除城市下拉框所有选项
+	        $("#city").empty();
+	        var cityHtml = '<option value="">请选择市</option>';
+	        $("#city").html(cityHtml);
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        //provinceText = $("#province").find("option:selected").text();
+	        //var value = $("#province").val();
+	        var str = '';
+	        $.each(cityList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#city").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+	      	
+            serchData();
+        });
+      	
+     	//监听市下拉框
+        form.on('select(city)', function(data){
+        	cityName = data.elem[data.elem.selectedIndex].text;
+        	cityCode = data.value;
+        	
+        	$.each(cityList, function (index, item) {
+				if(item.code == data.value){
+					areaList = item.childList;
+				}
+	        });
+        	//console.log(dataObj)
+        	//console.log(cityList)
+	        //移除城区下拉框所有选项
+	        $("#area").empty();
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        //provinceText = $("#province").find("option:selected").text();
+	        //var value = $("#province").val();
+	        var str = '';
+	        $.each(areaList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#area").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+	      	
+            serchData();
+        });
+     	//监听区/
+        form.on('select(area)', function(data){
+        	areaName = data.elem[data.elem.selectedIndex].text;
+        	areaCode = data.value;
+        	
+        	serchData();
+        });
+       
+        serchData();
 
         
         form.on('select(selectType)', function(data){
@@ -158,6 +258,33 @@ var type, communitySel;
       });
       
     });
+    
+    function serchData(){
+    	$.ajax({  
+			url : "/jianfuzengxiao/system/community/getCommunityList.html",  
+			type : 'post',
+			dataType: "json",
+			data: {
+				'provCode': provCode,
+				'cityCode': cityCode,
+				'areaCode': areaCode
+			},
+			success : function(result){
+				if(result.code == 1){
+					$('#communitySel').html('');
+					var str = '<option value="">请选择</option>';
+					for(var i=0;i<result.data.length;i++){
+						str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
+					}
+					$('#communitySel').append(str);
+					form.render('select');
+				}
+			},
+			error : function(result){
+				layer.alert("数据加载出错，请刷新页面", {icon: 5})
+			}
+		})
+    }
 </script>
 </body>
 
