@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2019-10-28 19:56:34
+Date: 2019-11-01 20:39:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,11 +41,12 @@ CREATE TABLE `admin_info` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_info
 -- ----------------------------
+INSERT INTO `admin_info` VALUES ('1', 'admin', 'ab9ccef13f483b0e36f722a3d7657a3e', 'QBa12a', '管理员', '1', '2019-10-29 10:10:01', '1', '汉族', '13000000000', '1', '系统管理员', '2', 'ooU9c5QrAJx9Bsp91szTbsMi1_nQ', '', '2019-11-01 19:13:56', 'ab9ccef13f483b0e36f722a3d7657a3e', '2019-10-29 10:10:22', '2019-11-01 19:13:56', 'A');
 
 -- ----------------------------
 -- Table structure for aduit_distribution
@@ -60,11 +61,13 @@ CREATE TABLE `aduit_distribution` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of aduit_distribution
 -- ----------------------------
+INSERT INTO `aduit_distribution` VALUES ('1', '1', '1', null, '2019-10-31 15:29:56', null, 'A');
+INSERT INTO `aduit_distribution` VALUES ('2', '1', '2', null, '2019-10-31 15:42:27', null, 'A');
 
 -- ----------------------------
 -- Table structure for area_info
@@ -3657,12 +3660,34 @@ CREATE TABLE `community_info` (
   `create_time` datetime NOT NULL,
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
+  `prov_code` varchar(20) DEFAULT NULL,
+  `prov_name` varchar(20) DEFAULT NULL,
+  `city_code` varchar(20) DEFAULT NULL,
+  `city_name` varchar(20) DEFAULT NULL,
+  `area_code` varchar(20) DEFAULT NULL,
+  `area_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`community_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of community_info
 -- ----------------------------
+INSERT INTO `community_info` VALUES ('1', '社区1', '12', '2019-10-29 09:05:48', '2019-10-31 16:44:35', 'A', '130000', '河北省', '130100', '石家庄市', '130108', '裕华区');
+INSERT INTO `community_info` VALUES ('2', '社区20', '2', '2019-10-29 09:05:58', '2019-10-31 16:44:51', 'A', '130000', '河北省', '130100', '石家庄市', '130109', '藁城区');
+INSERT INTO `community_info` VALUES ('3', '社区3', '1', '2019-10-29 09:06:06', '2019-10-30 18:47:24', 'A', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('5', '社区6', '6', '2019-10-30 17:51:27', '2019-10-30 18:48:30', 'A', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('6', '社区5', '5', '2019-10-30 17:51:54', '2019-10-31 16:44:30', 'A', '130000', '河北省', '130100', '石家庄市', '130102', '长安区');
+INSERT INTO `community_info` VALUES ('7', '社区8', '4', '2019-10-30 17:52:43', '2019-10-31 16:44:24', 'A', '130000', '河北省', '130100', '石家庄市', '130102', '长安区');
+INSERT INTO `community_info` VALUES ('8', '社区11', '1', '2019-10-30 18:02:13', '2019-11-01 14:42:22', 'A', '130000', '河北省', '130100', '石家庄市', '130104', '桥西区');
+INSERT INTO `community_info` VALUES ('9', '11', '1', '2019-10-30 18:02:43', '2019-10-31 09:35:10', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('10', '111', '11', '2019-10-30 18:02:49', '2019-10-31 09:35:39', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('11', '1112', '1', '2019-10-30 18:02:53', '2019-10-31 09:35:07', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('12', '11111', '11', '2019-10-30 18:02:59', '2019-10-31 09:35:41', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('13', '22', '3', '2019-10-30 18:03:03', '2019-10-31 09:35:35', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('14', '和克拉玛依裕华社区', '1', '2019-10-31 09:36:53', '2019-10-31 10:04:41', 'A', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('15', '打发斯蒂芬爱是范德萨发生的发生地方 阿斯顿发生', '2', '2019-10-31 09:37:04', '2019-10-31 09:37:18', 'P', '130000', '河北省', '130100', '石家庄市', '130104', '新华区');
+INSERT INTO `community_info` VALUES ('16', '谈固', '1', '2019-10-31 15:53:23', '2019-10-31 16:43:14', 'A', '130000', '河北省', '130100', '石家庄市', '130102', '长安区');
+INSERT INTO `community_info` VALUES ('17', '1', '1', '2019-10-31 16:43:55', '2019-11-01 14:41:29', 'P', '120000', '天津市', '120100', '天津市', '120102', '河东区');
 
 -- ----------------------------
 -- Table structure for community_street_info
@@ -3678,11 +3703,22 @@ CREATE TABLE `community_street_info` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`community_street_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of community_street_info
 -- ----------------------------
+INSERT INTO `community_street_info` VALUES ('1', '小区1', '1', '1', '1', '2019-10-29 09:37:17', '2019-10-30 19:44:54', 'A');
+INSERT INTO `community_street_info` VALUES ('2', '小区2', '1', '1', '2', '2019-10-29 09:37:32', '2019-10-30 19:44:54', 'A');
+INSERT INTO `community_street_info` VALUES ('3', '街道1', '2', '1', '3', '2019-10-29 09:37:51', '2019-10-31 10:07:29', 'A');
+INSERT INTO `community_street_info` VALUES ('4', '街道3', '2', '3', '4', '2019-10-29 09:39:16', null, 'A');
+INSERT INTO `community_street_info` VALUES ('5', '小区3', '1', '3', '1', '2019-10-29 09:39:41', '2019-10-31 18:12:56', 'A');
+INSERT INTO `community_street_info` VALUES ('6', '小区8', '1', '2', '1', '2019-10-30 20:06:22', '2019-10-31 18:13:19', 'A');
+INSERT INTO `community_street_info` VALUES ('7', '同安小区', '1', '2', '1', '2019-10-31 17:51:38', null, 'A');
+INSERT INTO `community_street_info` VALUES ('8', '瑞成A区', '1', '16', '2', '2019-11-01 09:26:29', null, 'A');
+INSERT INTO `community_street_info` VALUES ('9', '瑞成B区', '1', '16', '3', '2019-11-01 09:26:44', null, 'A');
+INSERT INTO `community_street_info` VALUES ('10', '瑞成C区', '1', '16', '3', '2019-11-01 09:26:57', null, 'A');
+INSERT INTO `community_street_info` VALUES ('11', '金谈固小区', '1', '16', '1', '2019-11-01 09:27:13', null, 'A');
 
 -- ----------------------------
 -- Table structure for contract_file
@@ -3698,11 +3734,14 @@ CREATE TABLE `contract_file` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`file_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of contract_file
 -- ----------------------------
+INSERT INTO `contract_file` VALUES ('1', '4', '2', null, '/jianfuzengxiao/attached/idcard/idcard_zheng.png', '2019-11-01 16:59:33', null, 'A');
+INSERT INTO `contract_file` VALUES ('2', '4', '2', null, '/jianfuzengxiao/attached/idcard/idcard_zheng.png', '2019-11-01 17:00:01', null, 'A');
+INSERT INTO `contract_file` VALUES ('3', '4', '2', null, '/jianfuzengxiao/attached/idcard/idcard_zheng.png', '2019-11-01 17:00:07', null, 'A');
 
 -- ----------------------------
 -- Table structure for func_list
@@ -3733,6 +3772,7 @@ CREATE TABLE `func_list` (
 DROP TABLE IF EXISTS `houses_info`;
 CREATE TABLE `houses_info` (
   `houses_id` int(10) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(10) DEFAULT NULL,
   `user_id` varchar(32) DEFAULT NULL,
   `houses_status` int(4) NOT NULL COMMENT '1 房屋、2 店铺',
   `property_owner_name` varchar(32) DEFAULT NULL COMMENT '房屋（门店）产权人姓名',
@@ -3765,11 +3805,15 @@ CREATE TABLE `houses_info` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`houses_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of houses_info
 -- ----------------------------
+INSERT INTO `houses_info` VALUES ('1', '1', null, '1', '张三', '13000000000', '1300000000000', '1112331112221', '/jianfuzengxiao/data/attach/image/fangchangzheng/20191101/ea96a7f94ad443a4bfe8915b3c66f9b4.jpg', null, '2', '社区20', '7', '同安小区', '两室一厅', '/jianfuzengxiao/data/attach/image/huxingtu/20191101/29634f834ffc42d58bad67e6d1972d81.jpg', null, '10', '2', '2204', '哈哈哈哈哈哈', '1', '自建房', null, '河北省', '130000', '石家庄市', '130100', '藁城区', '130109', '2019-10-31 15:33:06', '2019-11-01 15:36:45', 'A');
+INSERT INTO `houses_info` VALUES ('2', '1', null, '2', '李四', '18000000000', '1500000000000', '1320000000000', '/jianfuzengxiao/data/attach/image/fangchangzheng/20191101/ea96a7f94ad443a4bfe8915b3c66f9b4.jpg', null, '16', '谈固', '10', '瑞成C区', '三室一厅', '/jianfuzengxiao/data/attach/image/huxingtu/20191101/29634f834ffc42d58bad67e6d1972d81.jpg', null, '5', '1', '1102', '呵呵呵呵呵呵', '3', '商铺', null, '河北省', '130000', '石家庄市', '130100', '长安区', '130102', '2019-10-31 15:35:55', '2019-11-01 19:05:27', 'A');
+INSERT INTO `houses_info` VALUES ('3', '1', null, '1', '刘三少', '18332332333', '13018209215825311633', '123145614565616516', '/jianfuzengxiao/data/attach/image/fangchangzheng/20191101/ea96a7f94ad443a4bfe8915b3c66f9b4.jpg', null, '16', '谈固', '9', '瑞成B区', '三室一厅', '/jianfuzengxiao/data/attach/image/huxingtu/20191101/29634f834ffc42d58bad67e6d1972d81.jpg', null, '10', '2', '1001', '中山路与谈固东街北行500米', '2', '商住房', null, '河北省', '130000', '石家庄市', '130100', '长安区', '130102', '2019-11-01 14:08:22', '2019-11-01 16:01:26', 'A');
+INSERT INTO `houses_info` VALUES ('4', '1', null, '1', '郝建', '13131003100', '541566565656633', '15165156156', '/jianfuzengxiao/data/attach/image/fangchangzheng/20191101/361e34a91d63429aadef5618badf0fca.jpg', null, '16', '谈固', '11', '金谈固小区', '三室两厅', '/jianfuzengxiao/data/attach/image/huxingtu/20191101/9eaabe065a9143dc899fd8d53c852ba8.jpg', null, '3', '1', '405', '中山路133号', '2', '商住房', null, '河北省', '130000', '石家庄市', '130100', '长安区', '130102', '2019-11-01 14:12:49', '2019-11-01 16:01:26', 'A');
 
 -- ----------------------------
 -- Table structure for houses_type
@@ -3783,11 +3827,14 @@ CREATE TABLE `houses_type` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`houses_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of houses_type
 -- ----------------------------
+INSERT INTO `houses_type` VALUES ('1', '自建房', null, '2019-10-31 15:32:22', null, 'A');
+INSERT INTO `houses_type` VALUES ('2', '商住房', null, '2019-10-31 15:32:31', null, 'A');
+INSERT INTO `houses_type` VALUES ('3', '商铺', null, '2019-10-31 15:32:39', null, 'A');
 
 -- ----------------------------
 -- Table structure for live_type
@@ -3821,6 +3868,7 @@ DROP TABLE IF EXISTS `msg_info`;
 CREATE TABLE `msg_info` (
   `msg_id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(32) DEFAULT NULL,
+  `personnel_id` int(10) DEFAULT NULL,
   `msg_type_id` int(10) DEFAULT NULL,
   `msg_type_name` varchar(32) NOT NULL,
   `title` varchar(128) NOT NULL DEFAULT '',
@@ -3830,11 +3878,18 @@ CREATE TABLE `msg_info` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`msg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of msg_info
 -- ----------------------------
+INSERT INTO `msg_info` VALUES ('1', '1', '1', '1', '申请已提报', '111', '111111111111111111111', '1', '2019-11-01 19:55:22', null, 'A');
+INSERT INTO `msg_info` VALUES ('2', '1', '1', '1', '申请已提报', '222', '22222222222222222222', '1', '2019-11-01 19:55:54', null, 'A');
+INSERT INTO `msg_info` VALUES ('3', '1', '1', '2', '过期', '333', '3333333333333333333333', '1', '2019-11-01 19:56:08', null, 'A');
+INSERT INTO `msg_info` VALUES ('4', '1', '2', '3', '审核未通过', '444', '44444444444444444444444', '1', '2019-11-01 19:56:20', null, 'A');
+INSERT INTO `msg_info` VALUES ('5', '1', '1', '4', '审核通过', '555', '555555555555555555', '1', '2019-11-01 19:56:33', null, 'A');
+INSERT INTO `msg_info` VALUES ('6', '1', '3', '5', '身份信息更新提报', '666', '666666666666666', '1', '2019-11-01 19:57:04', null, 'A');
+INSERT INTO `msg_info` VALUES ('7', '1', '4', '3', '审核未通过', '777', '77777777777777', '1', '2019-11-01 19:57:11', null, 'A');
 
 -- ----------------------------
 -- Table structure for msg_type
@@ -3969,11 +4024,20 @@ CREATE TABLE `personnel_info` (
   `update_time` datetime DEFAULT NULL,
   `sts` char(1) NOT NULL DEFAULT 'A',
   PRIMARY KEY (`personnel_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of personnel_info
 -- ----------------------------
+INSERT INTO `personnel_info` VALUES ('1', '1', '1', '1', '1', '房主（产权人）', '1', '2019-10-29 11:49:31', '2019-10-29 11:49:33', '张三', '1', '/jianfuzengxiao/attached/idcard/face1.png', null, '2018-10-31 16:31:19', '1', '汉族', '130000000', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '13000000000000', '2019-10-31 16:32:38', '2019-10-31 16:32:41', '河北省石家庄市裕华区', '河北省石家庄市裕华区', null, '1', '', '2019-10-29 11:49:41', null, 'A');
+INSERT INTO `personnel_info` VALUES ('2', '1', '', '2', '5', '租户', '1', '2019-10-31 16:30:42', '2019-10-31 16:30:44', '王五', '1', '/jianfuzengxiao/attached/idcard/face2.png', null, '2010-10-31 16:31:26', '1', '汉族', '150000000', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '11000000000000', '2019-10-31 16:32:43', '2019-10-31 16:32:45', '河北省石家庄市长安区', '河北省石家庄市裕华区', null, '3', '管理员反馈111111', '2019-10-29 11:50:02', '2019-11-01 20:12:08', 'P');
+INSERT INTO `personnel_info` VALUES ('3', '1', '', '2', '7', '家属', '1', '2019-10-31 16:30:48', '2019-10-31 16:30:50', '二狗子', '2', '/jianfuzengxiao/attached/idcard/face3.png', null, '2010-10-31 16:31:30', '1', '汉族', '180000000', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '12000000000000', '2019-10-31 16:32:47', '2019-10-31 16:32:49', '河北省石家庄市藁城区', '河北省石家庄市裕华区', null, '2', '', '2019-10-29 14:09:29', null, 'A');
+INSERT INTO `personnel_info` VALUES ('4', '2', '1', '1', '2', '店主（租赁）', '1', '2019-11-01 09:56:01', '2019-11-01 09:56:02', '张狗蛋', '1', '/jianfuzengxiao/attached/idcard/face1.png', null, '2009-11-01 09:56:18', '1', '汉族', '122000000', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '13000212313223', '2019-11-01 09:56:43', '2019-11-01 09:56:45', '河北省石家庄', '河北省石家庄', null, '3', '管理员反馈222222', '2019-11-01 09:57:11', '2019-11-01 20:12:16', 'P');
+INSERT INTO `personnel_info` VALUES ('5', '1', '', '2', '5', '租户', '2', '2019-11-01 09:58:08', '2019-11-01 09:58:12', '三毛', '1', '/jianfuzengxiao/attached/idcard/face2.png', null, '2019-11-01 09:58:37', '1', '汉族', '133333333', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '13001223315253', '2019-11-01 09:59:02', '2019-11-01 09:59:05', '河北石家庄', '河北省石家庄', null, '1', '', '2019-11-01 09:59:24', null, 'A');
+INSERT INTO `personnel_info` VALUES ('6', '1', '', '2', '7', '家属', '1', '2019-11-01 10:00:41', '2019-11-01 10:00:44', '王二小', '2', '/jianfuzengxiao/attached/idcard/face3.png', null, '2019-11-01 10:01:06', '1', '汉族', '122222233', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '13121541564654', '2019-11-01 10:01:29', '2019-11-01 10:01:32', '河北省邢台市', '河北省邢台市', null, '1', '', '2019-11-01 10:01:58', null, 'A');
+INSERT INTO `personnel_info` VALUES ('7', '2', '', '2', '6', '员工', '2', '2019-11-01 10:02:21', '2019-11-01 10:02:23', '五五开', '1', '/jianfuzengxiao/attached/idcard/face1.png', null, '2019-11-01 10:02:37', '1', '汉族', '155666546', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '15615614651456', '2019-11-01 10:02:53', '2019-11-01 10:02:55', '上海市浦东区', '上海市浦东区', null, '1', '', '2019-11-01 10:02:03', null, 'A');
+INSERT INTO `personnel_info` VALUES ('8', '2', '', '2', '6', '员工', '2', '2019-11-01 10:03:53', '2019-11-01 10:03:55', '马飞', '2', '/jianfuzengxiao/attached/idcard/face2.png', null, '2019-11-01 10:04:05', '1', '汉族', '156564566', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '15616549665466', '2019-11-01 10:04:22', '2019-11-01 10:04:24', '哈哈哈', '哈哈哈', null, '3', '', '2019-11-01 10:04:36', null, 'A');
+INSERT INTO `personnel_info` VALUES ('9', '2', '', '2', '6', '员工', '2', '2019-11-01 10:05:04', '2019-11-01 10:05:06', '亚索', '1', '/jianfuzengxiao/attached/idcard/face3.png', null, '2019-11-01 10:05:46', '1', '汉族', '156561566', '1', '身份证', '/jianfuzengxiao/attached/idcard/idcard_zheng.png', null, '/jianfuzengxiao/attached/idcard/idcard_fan.png', null, '15564654646465', '2019-11-01 10:06:02', '2019-11-01 10:06:04', '哈哈哈哈哈', '呵呵呵呵呵', null, '2', '', '2019-11-01 10:06:15', null, 'A');
 
 -- ----------------------------
 -- Table structure for role_func
@@ -4003,11 +4067,13 @@ CREATE TABLE `role_info` (
   `sts` char(1) NOT NULL,
   `sts_time` datetime DEFAULT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_info
 -- ----------------------------
+INSERT INTO `role_info` VALUES ('1', '系统管理员', '系统后台用户主要是对基础数据维护、房产认证管理、用户管理、数据上报管理、统计分析、首页', 'A', '2019-10-30 17:10:40');
+INSERT INTO `role_info` VALUES ('2', '保户干部', '用户审核和认证', 'A', '2019-10-30 17:10:42');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -4063,7 +4129,7 @@ CREATE TABLE `user_info` (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('12', '12', '1', '12', null, '2001-00-00 00:00:00', '1', '1', '1', '12', '12', '12', '12', '1', '2001-00-00 00:00:00', '2001-00-00 00:00:00', '1', '1', '1', null, '2019-10-28 13:46:28', null, 'A', '2001-00-00 00:00:00');
+INSERT INTO `user_info` VALUES ('1', '12', '1', '12', null, '2001-00-00 00:00:00', '1', '1', '1', '12', '12', '12', '12', '1', '2001-00-00 00:00:00', '2001-00-00 00:00:00', '1', '1', '2', null, '2019-10-28 13:46:28', null, 'A', '2001-00-00 00:00:00');
 INSERT INTO `user_info` VALUES ('123456', '1q23', '2', '123', null, '2019-10-28 12:54:18', '1', '123', '11', '1', '123', '123', '123', '11', '2019-10-28 12:54:53', '2019-10-28 12:55:00', '11', '11', '1', null, '2019-10-28 12:55:17', null, 'A', '2019-10-28 13:05:24');
 INSERT INTO `user_info` VALUES ('1234561', '1q23', '1', '123', null, '2019-10-28 12:54:18', '1', '123', '11', '1', '123', '123', '123', '11', '2019-10-28 12:54:53', '2019-10-28 12:55:00', '11', '11', '1', null, '2019-10-28 13:05:17', null, 'A', '2019-10-28 12:56:43');
 

@@ -209,6 +209,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(model.getUserId());
+		msgInfoMVO.setPersonnelId(model.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
 		msgInfoMVO.setTitle(model.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
@@ -221,9 +222,9 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 
 	@Override
 	public PersonnelInfoMVO addPersonnel(PersonnelInfoMVO model) throws SysException, AppException {
-		
+		String userId = model.getUserId();
 		model.setUserId(null);
-		this.insert(model);
+		model = this.insert(model);
 		
 		PersonnelInfoMVO personnelInfoMVO = new PersonnelInfoMVO();
 		personnelInfoMVO.setHousesId(model.getHousesId());
@@ -247,7 +248,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
 		
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
-		msgInfoMVO.setUserId(model.getUserId());
+		msgInfoMVO.setUserId(userId);
+		msgInfoMVO.setPersonnelId(model.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
 		msgInfoMVO.setTitle(model.getLiveTypeName() + msgTypeMVO.getMsgTypeName());

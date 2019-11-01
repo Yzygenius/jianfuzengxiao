@@ -45,7 +45,7 @@ public class MainWxController extends BaseController {
 	@RequestMapping(value="/getHousesPage")
 	public String getHousesPage(AduitDistributionMVO model){
 		try {
-			System.out.println(model.getAdminId());
+			//System.out.println(model.getAdminId());
 			throwAppException(StringUtils.isBlank(model.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
 			PageInfo pageInfo = getPage();
 			model.setSts("A");
