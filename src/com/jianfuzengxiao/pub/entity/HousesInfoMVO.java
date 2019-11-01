@@ -7,6 +7,17 @@ public class HousesInfoMVO extends HousesInfo {
 	private String adminTelephone;
 	
 	private String leaseCount;
+	
+	private String keyword;
+
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 
 	public String getAdminTelephone() {
 		return adminTelephone;

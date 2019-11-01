@@ -142,7 +142,14 @@
 		//var lPage;
 		var $, form, layer, laydate, lement, laypage;
 		var provinceList, cityList, areaList = "";
-		var provCode, cityCode, areaCode, communityId, communityStreetId, storiedBuildingNumber, unit, houseNumber, keyword  = '';
+		var provCode = ''
+		var cityCode = ''
+		var areaCode = ''
+		var communityId = ''
+		var communityStreetId = ''
+		var storiedBuildingNumber = ''
+		var unit = ''
+		var keyword  = '';
 		var houseNumber = '';
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
@@ -163,12 +170,19 @@
 					});
 
 				});
-					
+				
 				//监听检索
 				form.on('submit(sreach)', function(data){
-					console.log(data)
-					//provCode = 
+					//console.log(data)
+					provCode = data.field.province;
+					cityCode = data.field.city;
+					areaCode = data.field.area;
+					communityId = data.field.communitySel;
+					communityStreetId = data.field.communityStreetSel;
+					storiedBuildingNumber = data.field.storiedBuildingNumber;
+					unit = data.field.unit;
 					houseNumber = data.field.houseNumber;
+					keyword = data.field.keyword;
 					
 					page()
 					//serchData()
@@ -237,15 +251,31 @@
 			      	
 		            serchCommunity();
 		        });
+		     	
+		      	//监听区/县
+		        form.on('select(area)', function(data){
+		        	//areaName = data.elem[data.elem.selectedIndex].text;
+		        	areaCode = data.value;
+		        	
+		        	serchCommunity();
+		        });
+		      	
+		      	//监听社区
+		        form.on('select(communitySel)', function(data){
+		        	//communityName = data.elem[data.elem.selectedIndex].text;
+		        	communityId = data.value;
+		        	
+		        	serchCommunityStreet();
+		        });
+		      
+		      	//监听社区
+		        form.on('select(communityStreetSel)', function(data){
+		        	//communityStreetName = data.elem[data.elem.selectedIndex].text;
+		        	communityStreetId = data.value;
+		        	
+		        });
 			});
 			
-			//监听区/县
-	        form.on('select(area)', function(data){
-	        	//areaName = data.elem[data.elem.selectedIndex].text;
-	        	areaCode = data.value;
-	        	
-	        	serchCommunity();
-	        });
 		});
 		
 		function serchArea(){
@@ -278,7 +308,6 @@
 		
 	    /* 社区加载 */
 	    function serchCommunity(){
-	    	console.log(areaCode)
 	    	$.ajax({  
 				url : "/jianfuzengxiao/system/community/getCommunityList.html",  
 				type : 'post',
@@ -333,10 +362,16 @@
 
 		//分页
 		function page() {
-			
 			var data = {
-				//'communtiyId': communityId,
-				'houseNumber': houseNumber
+				'provCode': provCode,
+				'cityCode': cityCode,
+				'areaCode': areaCode,
+				'communityId': communityId,
+				'communityStreetId': communityStreetId,
+				'storiedBuildingNumber': storiedBuildingNumber,
+				'unit': unit,
+				'houseNumber': houseNumber,
+				'keyword': keyword
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
@@ -364,10 +399,17 @@
 		}
 
 		function serchData(page) {
-			//console.log(communtiyId)
 			var data = {
 				'page' : page,
-				'communityId': communityId
+				'provCode': provCode,
+				'cityCode': cityCode,
+				'areaCode': areaCode,
+				'communityId': communityId,
+				'communityStreetId': communityStreetId,
+				'storiedBuildingNumber': storiedBuildingNumber,
+				'unit': unit,
+				'houseNumber': houseNumber,
+				'keyword': keyword
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",

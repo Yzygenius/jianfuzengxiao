@@ -164,8 +164,16 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 					sql.append(" AND a.sts like ?");
 					params.add("%" + entity.getSts() + "%");
 				}
+				
+				if (StringUtils.isNotBlank(entity.getKeyword())) {
+					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? ) ");
+					params.add("%" + entity.getKeyword() + "%");
+					params.add("%" + entity.getKeyword() + "%");
+					params.add("%" + entity.getKeyword() + "%");
+				}
 			}
 			sql.append(" group by a.houses_id ");
+			logger.info(sql.toString() + "--" + params.toString());
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
 		} catch (DataAccessException e) {
