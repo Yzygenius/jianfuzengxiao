@@ -27,10 +27,10 @@
             <p class="live-long">- 长期</p>
         </div>
         <div class="facell">
-            <div class="face">
+            <div class="face" id="enter1">
                 <img src="images/tao/face.png" alt="" id="preview10">
-                <input type="file" name="file" onchange="imgPreview(this,'preview10')" accept="image/*"
-                    capture="camera" />
+                <!-- <input type="file" name="file" onchange="imgPreview(this,'preview10')" accept="image/*"
+                    capture="camera" /> -->
                 <p class="faceword" id="faceph">点击拍摄人脸照片</p>
             </div>
 
@@ -133,10 +133,11 @@
        <a href="verify1_y.html"><div class="btn">提交</div></a> 
     </div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-
     <script type="text/javascript" src="js/selectDate.js"></script>
     <script type="text/javascript" src="js/mobileSelect.js"></script>
-
+    <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/alrem.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
     <script>
     var weekdayArr2;
     $(function(){
@@ -266,7 +267,7 @@
         });
 
 
-        var select3 = $.selectDate("#select_3", {
+        var select3 = $.selectDate("#select_3", { 
             start: 1994,
             end: 2019,
             select: [2012, 2, 15],
