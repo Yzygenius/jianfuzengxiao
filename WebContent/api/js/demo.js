@@ -55,3 +55,18 @@ document.getElementById('enter1').onclick = function(e) {
 		document.getElementById('enter1').innerHTML = html;
 	});
 }
+document.getElementById('enter4').onclick = function(e) {
+	var data = {
+		'action': 'jsNShowLoading',
+		'needCallBack': '',
+		'message': '',
+		'parameter': {
+			'state': '',
+			'alert': ''
+		}
+	}
+	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+		var list=JSON.parse(resp)
+		document.getElementById("content").innerHTML = list.data.msg;
+	});
+}
