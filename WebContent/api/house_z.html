@@ -16,7 +16,7 @@
             <div class="hetitle">房屋信息</div>
         </div>
         <div class="header_infor">
-            <div class="hinfor_title">
+     <!--        <div class="hinfor_title">
                 <img src="images/list/house.png" alt="">
                 <div class="in_title_text">青年之都</div>
                 <div class="in_title_time">23-02-2304</div>
@@ -33,16 +33,14 @@
                 <div class="haddress">房屋户型</div>
                 <div class="haddress_detail">两室一厅</div>
             </div>
-            <div class="diagram">房屋户型图</div>
+            <div class="diagram">房屋户型图</div> -->
         </div>
     </div>
     <div style="height: 115px;"></div>
     <div class="content">
         <div class="total">
-            <div class="total_num">房屋联系人 <span>(3)</span></div>
+            <div class="total_num">房屋联系人 (<span>3</span>)</div>
           <a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>
-
-
         </div>
         <div class="contacts">
             <a class="address" href="personnel_y.html">
@@ -84,7 +82,7 @@
                 </div>
             </a>
             <a class="address" href="personnel_y.html">
-                <div class="contact">
+             <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture2.png" alt="">
                         <div class="role">家属</div>
@@ -104,10 +102,10 @@
             </a>
             <!--审核中-->
             <a class="address" href="personnel_y.html">
-                <div class="contact in_audit">
+                <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture2.png" alt="">
-                        <div class="role">家属（审核中）</div>
+                        <div class="role in_audit">家属（审核中）</div>
                     </div>
                     <div class="contact_infor">
                         <div class="contact_name">Veerle de Bree</div>
@@ -144,10 +142,10 @@
             </a>
             <!--失败-->
             <a class="address" href="personnel_y.html">
-                <div class="contact fail">
+                <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture1.png" alt="">
-                        <div class="role">审核被拒绝</div>
+                        <div class="role fail">审核被拒绝</div>
                     </div>
                     <div class="contact_infor">
                         <div class="contact_name">Mar Rueda</div>
@@ -193,13 +191,145 @@
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script>
+    //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // 这样调用：housesId即为上个页面传回来的变量名
+    var housesId = getQueryString("housesId");
+    console.log(housesId)
     $(function () {
-        $('.header .diagram').click(function () {
-            $('.popup').fadeIn(200);
-        })
-        $('.popup .pop_close').click(function () {
-            $('.popup').fadeOut(200);
-        })
+        //请求数据
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/personnel/getHousesDetail.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                housesId:housesId
+            },
+            success:function(data){
+              console.log(data.data)
+              var imgUrl = data.data.houses.houseTypePhoto
+              $('.pop_exhibition img').attr('src',imgUrl)
+              $('.total_num span').html(data.data.per.length)
+              if(data.data.houses.housesStatus==1){
+                var img = '<img src="images/list/house.png" alt="">'
+              }else if(data.data.houses.housesStatus==2){
+                var img = '<img src="images/list/store.png" alt="">'
+              }
+              //头部房屋、门店信息数据
+              var html = '<div class="hinfor_title">'+img+
+                            '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
+                            '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">房屋地址</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.housesAddress+'</div>'+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">房屋类型</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.housesTypeName+'</div>'+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">房屋户型</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.houseType+'</div>'+
+                        '</div>'+
+                        '<div class="diagram">房屋户型图</div>'
+              $('.header_infor').html(html);
+              // 每个人员数据
+              var list =''
+              var res = data.data.per
+              for(var i=0;i<data.data.per.length;i++){
+                //判断房屋户型
+                if(res[i].liveTypeId==1 || res[i].liveTypeId ==2 || res[i].liveTypeId==7){
+                    var apartment = '长期'
+                }else{
+                    var apartment = res[i].leaseStartTime+ '-' +res[i].leaseStopTime
+                }
+                // 判断性别
+                if(res[i].gender == 1){
+                	var gender = '男'
+                }else if(res[i].gender == 2){
+                	var gender = '女'
+                }
+                // 判断审核类型
+                if(res[i].status == 1){ //审核中
+                    var examine = '<div class="role in_audit">'+res[i].liveTypeName+'（审核中）</div>'
+                }else if(res[i].status == 2){ //通过
+                    var examine = '<div class="role">'+res[i].liveTypeName+'</div>'
+                }else if(res[i].status == 3){ //失败
+                    var examine = '<div class="role fail">审核被拒绝</div>'
+                }else if(res[i].status == 4){ //过期、注销、 撤销
+                    var examine = '<div class="role end">'+res[i].liveTypeName+'（已过期）</div>'
+                }else if(res[i].status == 5){ 
+                    var examine = '<div class="role end">'+res[i].liveTypeName+'（已注销）</div>'
+                }else if(res[i].status == 6){
+                    var examine = '<div class="role end">'+res[i].liveTypeName+'（已撤销）</div>'
+                }
+                if(res[i].status == 4 || res[i].status == 5 || res[i].status == 6){
+                	list += '<a class="address" href="personnel_y.html?personnelId='+res[i].personnelId+'">'+
+                    '<div class="contact end">'+
+                      '<div class="contact_pic">'+
+                            '<img src="'+res[i].certificatesPositivePhoto+'" alt="">'+examine+
+                        '</div>'+
+                        '<div class="contact_infor">'+
+                            '<div class="contact_name">'+res[i].username+'</div>'+
+                            '<div class="contact_intro">'+
+                                '<div>'+res[i].age+'岁</div>'+
+                                '<div>'+gender+'</div>'+
+                                '<div>'+res[i].nationName+'</div>'+
+                            '</div>'+
+                            '<div class="bordertop"></div>'+
+                            '<div class="contact_apartment">房屋户型：<span>'+apartment+'</span></div>'+
+                            '<div class="contact_apartment">已居住时常：<span>'+res[i].leaseDay+'</span></div>'+
+                        '</div>'+
+                    '</div>'+
+                '</a>'
+                }else{
+                	list += '<a class="address" href="personnel_y.html?personnelId='+res[i].personnelId+'">'+
+                    '<div class="contact">'+
+                      '<div class="contact_pic">'+
+                            '<img src="'+res[i].certificatesPositivePhoto+'" alt="">'+examine+
+                        '</div>'+
+                        '<div class="contact_infor">'+
+                            '<div class="contact_name">'+res[i].username+'</div>'+
+                            '<div class="contact_intro">'+
+                                '<div>'+res[i].age+'岁</div>'+
+                                '<div>'+gender+'</div>'+
+                                '<div>'+res[i].nationName+'</div>'+
+                            '</div>'+
+                            '<div class="bordertop"></div>'+
+                            '<div class="contact_apartment">房屋户型：<span>'+apartment+'</span></div>'+
+                            '<div class="contact_apartment">已居住时常：<span>'+res[i].leaseDay+'</span></div>'+
+                        '</div>'+
+                    '</div>'+
+                '</a>'
+
+                }
+                
+              }
+              $('.contacts').html(list);
+              // 点击户型图弹框
+              $('.header .diagram').click(function () {
+                    $('.popup').fadeIn(200);
+               })
+              $('.popup .pop_close').click(function () {
+                    $('.popup').fadeOut(200);
+               })
+
+            },
+            error:function(jqXHR){
+            }
+        }); 
     })
     function open(){
         $('.popup1').fadeIn(200);

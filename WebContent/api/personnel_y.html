@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="personCenter">
+    <div class="personCenter" id="center">
         <!--基本信息-->
         <div class="top_background">
             <div class="return_text">
@@ -23,40 +23,44 @@
             <div class="basic_information">
                 <div class="head">
                     <img src="images/yang/head.png" alt="">
-                    <!--店主、租户、家属、房东、员工 style-->
-                    <div class="status green">员工</div>
                     <!--员工、租户、家属审核中 style-->
-                    <div class="status yellow" style="display: none;">员工(审核中)</div>
-                    <!--租户已过期-->
-                    <div class="status hui" style="display: none">租户(已过期)</div>
+                    <div class="status yellow" v-show="status == 1">{{list.liveTypeName}}(审核中)</div>
+                    <!--店主、租户、家属、房东、员工 style-->
+                    <div class="status green" v-show="status == 2">{{list.liveTypeName}}</div>
                     <!--审核被拒-->
-                    <div class="status red" style="display: none;">审核被拒</div>
+                    <div class="status red" v-show="status == 3">审核被拒</div>
+                    <!--租户已过期-->
+                    <div class="status hui" v-show="status == 4">{{list.liveTypeName}}(已过期)</div>
+                    <!--注销-->
+                    <div class="status hui" v-show="status == 5">{{list.liveTypeName}}(已注销)</div>
+                    <!--撤销-->
+                    <div class="status hui" v-show="status == 6">{{list.liveTypeName}}(已撤销)</div>
                 </div>
                 <div class="kind">
                     <!--按钮操作-->
                     <div class="an_btn">
-                        <div class="item-btn" style="display: none">移除</div>
+                        <div class="item-btn delete" v-show="status == 3">移除</div>
                         <div class="item-btn"><a href="identity_auth_t.html">更新上报</a></div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员姓名</div>
-                        <div class="item-two">贾春天</div>
+                        <div class="item-two">{{ list.username }}</div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员性别</div>
-                        <div class="item-two">女</div>
+                        <div class="item-two">{{gender}}</div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员年龄</div>
-                        <div class="item-two">39岁（1983-12-12）</div>
+                        <div class="item-two">{{ list.age }}岁（{{ list.birthDate }}）</div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员民族</div>
-                        <div class="item-two">汉族</div>
+                        <div class="item-two">{{list.nationName}}</div>
                     </div>
                     <div class="item">
                         <div class="item-one">联系电话</div>
-                        <div class="item-two">13832101234 <img class="phone" src="images/yang/phone.png" alt=""></div>
+                        <div class="item-two">{{list.telephone}} <img class="phone" src="images/yang/phone.png" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -71,30 +75,30 @@
             </div>
             <div class="id_img">
                 <div class="icon">
-                    <img src="images/yang/tu1.png" alt="">
+                    <img id="positive" src="images/yang/tu1.png" alt="">
                     <div class="icon_infor">证件正面</div>
                 </div>
                 <div class="icon">
-                    <img src="images/yang/tu1.png" alt="">
+                    <img id="silde" src="images/yang/tu1.png" alt="">
                     <div class="icon_infor">证件背面</div>
                 </div>
             </div>
             <div class="id_text">
                 <div class="step">
                     <div class="step_w">证件号码：</div>
-                    <div class="step_d">110102197810272321</div>
+                    <div class="step_d">{{list.certificatesNumber}}</div>
                 </div>
                 <div class="step">
                     <div class="step_w">证件时效：</div>
-                    <div class="step_d">2019.12.12 - 2020.12.12</div>
+                    <div class="step_d">{{list.certificatesStartTime}} - {{list.certificatesStopTime}}</div>
                 </div>
                 <div class="step">
                     <div class="step_w">证件地址：</div>
-                    <div class="step_d">河北省石家庄市栾城区也和工业区卓达太阳城青年之都234号</div>
+                    <div class="step_d">{{list.certificatesAddress}}</div>
                 </div>
                 <div class="step">
                     <div class="step_w">办证机关：</div>
-                    <div class="step_d">石家庄市公安局裕华分局</div>
+                    <div class="step_d">{{list.certificatesOffice}}</div>
                 </div>
             </div>
         </div>
@@ -106,57 +110,143 @@
                     <p>居住信息</p>
                 </div>
             </div>
-            <div class="house">
+            <div class="house" v-show="housesStatus == 2">
                 <img src="images/yang/house4.png" alt="">
-                <div class="house_text">门店地址字段</div>
+                <div class="house_text">{{list.communityStreetName }}</div>
             </div>
             <!--租户-->
-            <div class="house" style="display: none">
+            <div class="house" v-show="housesStatus == 1">
                 <img src="images/yang/house3.png" alt="">
-                <div class="house_text">青年之都 23-02-2304</div>
+                <div class="house_text">{{list.communityStreetName }} {{list.storiedBuildingNumber}}-{{list.unit}}-{{list.houseNumber}}</div>
             </div>
             <div class="storeBox">
                 <div class="item">
                     <div class="item-one">门店地址：</div>
-                    <div class="item-two address">河北省石家庄市栾城区也和工业区卓达太阳城青年之都234号</div>
+                    <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">门店类型：</div>
-                    <div class="item-two">自建房</div>
+                    <div class="item-two">{{list.housesTypeName}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">门店 I D：</div>
-                    <div class="item-two">1231231</div>
+                    <div class="item-two">{{list.housesId}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">门店户型：</div>
-                    <div class="item-two">两室一厅</div>
+                    <div class="item-two">{{list.houseType}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">驻店类型：</div>
-                    <div class="item-two">员工</div>
+                    <div class="item-two">{{list.liveTypeName}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">驻店时效：</div>
-                    <div class="item-two">2018.12.12 - 2019.12.12</div>
+                    <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">驻店开始时间：</div>
-                    <div class="item-two">2020.12.12 12：12</div>
+                    <div class="item-two">{{list.leaseStartTime}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">已驻店时长：</div>
-                    <div class="item-two">5小时23分钟</div>
+                    <div class="item-two">{{list.leaseDay}}</div>
                 </div>
             </div>
         </div>
         <!--上报时间-->
         <div class="report_time">
-            <p class="time">最新上报时间：2019.12.12 14:30</p>
-            <p class="time">首次上报时间：2019.12.12 14:30</p>
+            <p class="time">最新上报时间：{{updateTime}}</p>
+            <p class="time">首次上报时间：{{list.createTime}}</p>
         </div>
     </div>
 </body>
-
-
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script type="text/javascript">
+     //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // 这样调用：housesId即为上个页面传回来的变量名
+    // var arr=[]
+    var personnelId = getQueryString("personnelId");
+    var app = new Vue({
+        el:'#center',
+        data:{
+           list:[], //全部信息
+           status:'',  //审核状态
+           updateTime:'',  //更新时间
+           housesStatus:'',//房屋类型,
+           gender:'', //性别
+        }
+    
+    })
+    console.log(personnelId)
+    $(function(){
+        //请求数据
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/personnel/getPerDetail.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                personnelId:personnelId
+            },
+            success:function(data){
+              var res = data.data
+              console.log(res)
+              if(res.gender == 1){
+                app.gender ="男"
+              }else if(res.gender == 2){
+                app.gender ="女"
+              }
+              if(res.updateTime == ''){
+            	  app.updateTime = res.createTime
+              }else{
+            	  app.updateTime = res.updateTime
+              }
+              $('.head img').attr('src',res.facePhoto)
+              $('#positive').attr('src',res.certificatesPositivePhoto)
+              $('#silde').attr('src',res.certificatesNegativePhoto)
+              app.list = res
+              app.status=res.status
+              app.housesStatus = res.housesStatus
+            },
+            error:function(jqXHR){
+            }
+        }); 
+        $('.delete').click(function(){
+            //请求数据
+            $.ajax({
+                //请求方式
+                type:'POST',
+                //发送请求的地址
+                url:'/jianfuzengxiao/api/personnel/delPersonnel.html',
+                //服务器返回的数据类型
+                dataType:'json',
+                //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                data:{
+                    personnelId:personnelId
+                },
+                success:function(data){
+                	console.log(data)
+                	if(data.code == 1){
+                		history.back(-1)
+                	}
+                },
+                error:function(jqXHR){
+                }
+            }); 
+        })
+    })
+</script>
 </html>

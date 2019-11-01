@@ -133,11 +133,10 @@ h6 {
     bottom: -1px;
     left: 0px;
     width:90px;
-    height: 20px;
     border-radius:0px 0px 4px 4px;
     background:rgba(207,245,248,1);
     font-size: 12px;
-    line-height: 20px;
+    line-height: 17px;
     text-align: center;
 }
 .personCenter .basic_information .head .status.green{

@@ -15,12 +15,12 @@
             <div class="hetitle">社区管家</div>
         </div>
         <div class="header_nav">
-            <div class="header_btn" data-class="administration">管理列表<div class="header_red">6</div></div>
-            <div class="header_btn active" data-class="news">消息中心<div class="header_red">10</div></div>
+            <div class="header_btn active admin_list" data-class="administration">管理列表<div class="header_red">6</div></div>
+            <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red">10</div></div>
         </div>
     </div>
     <div class="content">
-        <div class="cont_list administration" >
+        <div class="cont_list administration" style="display: block;">
             <div class="cont_list0">
                 <a class="address" href="house_z.html">
                 <div class="cont">
@@ -45,7 +45,7 @@
             <!--<div style="height: 110px;"></div>&lt;!&ndash;占位&ndash;&gt;-->
             <div class="cont_add"><span>+</span>添加新房产认证</div>
         </div>
-        <div class="cont_list news" style="display: block;">
+        <div class="cont_list news" >
             <!--审核成功-->
             <div class="result" data-class="success">
                 <div class="result_red" style="display: block"></div>
@@ -333,13 +333,13 @@
               var html='';
               var img='';
               for(var i=0;i<data.data.length;i++){
-                    console.log(data.data[i].housesStatus)
+                    // console.log(data.data[i].housesStatus)
                     if(data.data[i].housesStatus ==1){
                         img = '<img src="images/list/icon_01.png" alt="">'
                     }else if(data.data[i].housesStatus == 2){
                         img = '<img src="images/list/icon_02.png" alt="">'
                     }
-                    html += '<a class="address" href="house_z.html">'+
+                    html += '<a class="address" href="house_z.html?housesId='+data.data[i].housesId+'">'+
                                 '<div class="cont">'+
                                     '<div class="cont_title">'
                                         +img+
@@ -351,7 +351,7 @@
                                 '</a>';
                 }
                  $('.cont_list0').html(html);
-                 $('.header_red').html(data.data.length)
+                 $('.admin_list .header_red').html(data.data.length)
               
             },
             error:function(jqXHR){

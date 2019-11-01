@@ -150,7 +150,7 @@ body{
     font-weight: bold;
     color: rgba(0,0,0,.8);
 }
-.header .header_infor .diagram{
+.header .diagram{
     position: absolute;
     right: 3%;
     bottom: 6px;
@@ -240,7 +240,6 @@ body{
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 20px;
     color: #0091FF;
     font-size: 12px;
     line-height: 20px;
@@ -249,7 +248,7 @@ body{
     background: #CFF5F8;
 }
 /*审核中*/
-.content .contacts .in_audit .contact_pic .role{
+.content .contacts .contact_pic .role.in_audit{
     color: #FF6C08;
     background: #FEEA67;
 }
@@ -257,15 +256,18 @@ body{
 .content .contacts .end .contact_pic img{
     opacity: .3;
 }
+.content .contacts .end .contact_pic img{
+    opacity: .3;
+}
 .content .contacts .end .contact_infor{
     opacity: .3;
 }
-.content .contacts .end .contact_pic .role{
+.content .contacts .contact_pic .role.end{
     color: #fff;
     background: #CFCFCF;
 }
 /*失败*/
-.content .contacts .fail .contact_pic .role{
+.content .contacts .contact_pic .role.fail{
     color: #fff;
     background: #FF888B;
 }
