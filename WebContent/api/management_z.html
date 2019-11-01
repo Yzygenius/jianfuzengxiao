@@ -32,45 +32,7 @@
                     <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
                 </div>
                 </a>
-                <a class="address" href="house_z.html">
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_01.png" alt="">
-                        <div class="title_text">百青年之都</div>
-                        <div class="title_time">23-02-2304</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a>
-                <a class="address" href="house_z.html">
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_01.png" alt="">
-                        <div class="title_text">百青年之都</div>
-                        <div class="title_time">23-02-2304</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a>
-                <a class="address" href="house_z.html">
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_02.png" alt="">
-                        <div class="title_text">门店地址字段</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a>
-                <a class="address" href="house_z.html">
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_02.png" alt="">
-                        <div class="title_text">门店地址字段</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a>
-                <a class="address" href="house_z.html">
+
                 <div class="cont">
                     <div class="cont_title">
                         <img src="images/list/icon_02.png" alt="">
@@ -354,6 +316,47 @@
             $(this).fadeOut(200);
             $('.pop_up').fadeOut(200);
         })
+        //请求数据
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/personnel/getHousesList.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:1
+            },
+            success:function(data){
+              console.log(data.data)
+              var html='';
+              var img='';
+              for(var i=0;i<data.data.length;i++){
+                    console.log(data.data[i].housesStatus)
+                    if(data.data[i].housesStatus ==1){
+                        img = '<img src="images/list/icon_01.png" alt="">'
+                    }else if(data.data[i].housesStatus == 2){
+                        img = '<img src="images/list/icon_02.png" alt="">'
+                    }
+                    html += '<a class="address" href="house_z.html">'+
+                                '<div class="cont">'+
+                                    '<div class="cont_title">'
+                                        +img+
+                                        '<div class="title_text">'+data.data[i].communityName+'</div>'+
+                                        '<div class="title_time">'+data.data[i].storiedBuildingNumber+'-'+data.data[i].unit+'-'+data.data[i].houseNumber+'</div>'+
+                                    '</div>'+
+                                    '<div class="address">'+data.data[i].housesAddress+'</div>'+
+                                '</div>'+
+                                '</a>';
+                }
+                 $('.cont_list0').html(html);
+                 $('.header_red').html(data.data.length)
+              
+            },
+            error:function(jqXHR){
+            }
+        }); 
     })
 </script>
 </html>
