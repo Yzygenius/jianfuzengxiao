@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
+import com.jianfuzengxiao.pub.service.IContractFileService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
@@ -35,6 +37,9 @@ public class PersonnelWXController extends BaseController{
 	
 	@Autowired
 	private IPersonnelInfoService personnelInfoService;
+	
+	@Autowired
+	private IContractFileService contractFileService;
 	
 	/**
 	 * 
@@ -87,6 +92,31 @@ public class PersonnelWXController extends BaseController{
 			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
 			model = personnelInfoService.queryPersonnelBean(model);
 			return apiResult(RC.SUCCESS, model);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询房产列表失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取合同列表
+	 * </p>
+	 * @param personnelId 人员ID, housesId 房产ID
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月1日 下午5:02:39
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getContractList")
+	public String getContractList(ContractFileMVO model){
+		try {
+			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
+			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			model.setSts("A");
+			List<ContractFileMVO> list = contractFileService.queryList(model);
+			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询房产列表失败", e);
 		}

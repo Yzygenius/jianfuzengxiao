@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>X-admin v1.0</title>
+<title>admin</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -34,7 +34,7 @@
 			<i class="layui-icon">&#xe640;</i>批量删除
 		</button>
 		<button class="layui-btn"
-			onclick="banner_add('新增','/jianfuzengxiao/system/communityStreet/toAddCommunityStreet.html', 780, 520)">
+			onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', 820)">
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
 		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
@@ -43,12 +43,14 @@
 				<tr>
 					<th><input type="checkbox" value="" name="" id="checkAll"
 						onclick="checkAll(this)"></th>
-					<th>排序</th>
-					<th>小区街道名称</th>
-					<th>类别</th>
-					<th>社区名称</th>
-					<th>创建时间</th>
-					<th>更新时间</th>
+					<th>社区</th>
+					<th>小区</th>
+					<th>楼号</th>
+					<th>单元</th>
+					<th>门牌号</th>
+					<th>包户干部</th>
+					<th>干部电话</th>
+					<th>居住人数</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -65,21 +67,23 @@
 			<td row="checkBoxId"><input type="checkbox" class="checkId"
 				value="" name=""></td>
 			<td row="ids" style="display: none;"></td>
-			<td row="listOrder"></td>
+			<td row="communityName"></td>
 			<td row="communityStreetName">
-			<td row="status">
-			<td row="communityName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
-			<td row="createTime"></td>
-			<td row="updateTime"></td>
+			<td row="storiedBuildingNumber"></td>
+			<td row="unit"></td>
+			<td row="houseNumber"></td>
+			<td row="username"></td>
+			<td row="adminTelephone"></td>
+			<td row="leaseCount"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/communityStreet/toCommunityStreetDetail.html')">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
 					<i class="layui-icon">&#xe642;</i>查看
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/communityStreet/toUpdateCommunityStreet.html', 780, 520)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
@@ -129,7 +133,7 @@
 		//分页
 		function page() {
 			$.ajax({
-				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
 				type : 'post',
 				dataType : "json",
 				success : function(result) {
@@ -158,7 +162,7 @@
 				'page' : page,
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -170,21 +174,17 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(data[i].communityStreetId);
-							tr.find('[row=ids]').text(data[i].communityStreetId);
-							tr.find('[row=listOrder]').text(data[i].listOrder);
-							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
-							if(data[i].status == 1){
-								tr.find('[row=status]').text('小区');
-							}else if(data[i].status == 2){
-								tr.find('[row=status]').text('街道');
-							}else{
-								tr.find('[row=status]').text('其他');
-							}
-							
+							tr.find('[row=checkBoxId]').children().val(
+									data[i].housesId);
+							tr.find('[row=ids]').text(data[i].housesId);
 							tr.find('[row=communityName]').text(data[i].communityName);
-							tr.find('[row=createTime]').text(data[i].createTime);
-							tr.find('[row=updateTime]').text(data[i].updateTime);
+							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
+							tr.find('[row=storiedBuildingNumber]').text(data[i].storiedBuildingNumber);
+							tr.find('[row=unit]').text(data[i].unit);
+							tr.find('[row=houseNumber]').text(data[i].houseNumber);
+							tr.find('[row=username]').text(data[i].username);
+							tr.find('[row=adminTelephone]').text(data[i].adminTelephone);
+							tr.find('[row=leaseCount]').text(data[i].leaseCount);
 
 							$('#x-img').append(tr);
 						}
@@ -207,11 +207,11 @@
 				})
 				var sel = arr.join(",");
 				$.ajax({
-					url : "/jianfuzengxiao/system/communityStreet/delCommunityStreet.html",
+					url : "/jianfuzengxiao/system/houses/delHouses.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'communityStreetId' : sel
+						'housesId' : sel
 					},
 					success : function(result) {
 						if (result.code == 1) {
@@ -241,12 +241,12 @@
 		}
 		function banner_details(obj, title, url) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityStreetId=' + id);
+			x_admin_show(title, url + '?housesId=' + id);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityStreetId=' + id, w, h);
+			x_admin_show(title, url + '?housesId=' + id, w, h);
 		}
 
 		/*删除*/
@@ -254,11 +254,11 @@
 			layer.confirm('确认要删除吗？', function(index) {
 				var id = $(obj).parent('td').siblings('[row=ids]').text();
 				$.ajax({
-					url : "/jianfuzengxiao/system/communityStreet/delCommunityStreet.html",
+					url : "/jianfuzengxiao/system/houses/delHouses.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'communityStreetId' : id
+						'housesId' : id
 					},
 					success : function(result) {
 						if (result.code == 1) {

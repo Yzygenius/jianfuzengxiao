@@ -96,14 +96,19 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 					sql.append(" AND a.sts = ?");
 					params.add(entity.getSts());
 				}
-				if (StringUtils.isNotBlank(entity.getPropertyOwnerName())) {
+				if (StringUtils.isNotBlank(entity.getKeyword())) {
+					sql.append(" AND (b.property_owner_name like ? or b.property_owner_tel like ? ) ");
+					params.add("%"+entity.getKeyword()+"%");
+					params.add("%"+entity.getKeyword()+"%");
+				}
+				/*if (StringUtils.isNotBlank(entity.getPropertyOwnerName())) {
 					sql.append(" AND b.property_owner_name like ?");
 					params.add("%"+entity.getPropertyOwnerName()+"%");
 				}
 				if (StringUtils.isNotBlank(entity.getPropertyOwnerTel())) {
 					sql.append(" AND b.property_owner_tel like ?");
 					params.add("%"+entity.getPropertyOwnerTel()+"%");
-				}
+				}*/
 			}
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<AduitDistributionMVO>(AduitDistributionMVO.class));

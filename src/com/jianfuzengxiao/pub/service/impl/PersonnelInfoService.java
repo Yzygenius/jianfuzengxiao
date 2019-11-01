@@ -11,6 +11,7 @@ import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
+import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
 import com.jianfuzengxiao.pub.dao.ILiveTypeMDAO;
 import com.jianfuzengxiao.pub.dao.IMsgTypeMDAO;
@@ -30,6 +31,7 @@ import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.UserInfoMVO;
 import com.jianfuzengxiao.pub.service.IMsgInfoService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
+import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 @Service
 public class PersonnelInfoService extends BaseService implements IPersonnelInfoService {
@@ -138,6 +140,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
 		}else {//否则为租赁房产
 			//如果为房屋
+			throwAppException(StringUtils.isBlank(model.getLeaseContract()), RC.HOUSES_INFO_PARAM_CONTRACT_FILE_NULL); 
 			if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_fangwu)) {
 				liveType.setLiveTypeId(LiveType.fangzhu_zulin);
 				liveType = liveTypeMDAO.queryBean(liveType);

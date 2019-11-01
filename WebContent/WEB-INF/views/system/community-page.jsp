@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="x-nav">
-		<span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>关于我们</cite></a>
+		<span class="layui-breadcrumb"><!--  <a><cite>首页</cite></a> <a><cite>关于我们</cite></a> -->
 		</span> <a class="layui-btn layui-btn-small"
 			style="line-height: 1.6em; margin-top: 3px; float: right"
 			href="javascript:location.replace(location.href);" title="刷新"><i

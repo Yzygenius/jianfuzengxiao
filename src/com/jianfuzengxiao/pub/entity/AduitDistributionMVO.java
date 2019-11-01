@@ -16,6 +16,7 @@ public class AduitDistributionMVO extends AduitDistribution {
 	private String houseType;
 	private String propertyCertificatesNumber;
 	
+	private String keyword;
 	
 	public String getHousesTypeName() {
 		return housesTypeName;
@@ -94,6 +95,12 @@ public class AduitDistributionMVO extends AduitDistribution {
 	}
 	public void setHousesAddress(String housesAddress) {
 		this.housesAddress = housesAddress;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 	

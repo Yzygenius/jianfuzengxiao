@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,11 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 
@@ -40,12 +43,24 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	}
 	
 	@RequestMapping(value="/toUpdateHousesFw")
-	public String toUpdateHousesFw(){
+	public String toUpdateHousesFw(Model model, HousesInfoMVO entity){
+		try {
+			entity = housesInfoService.queryBean(entity);
+			model.addAttribute("houses", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
 		return "/system/housesFw-update";
 	}
 	
 	@RequestMapping(value="/toHousesFwDetail")
-	public String toHousesFwDetail(){
+	public String toHousesFwDetail(Model model, HousesInfoMVO entity){
+		try {
+			entity = housesInfoService.queryBean(entity);
+			model.addAttribute("houses", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
 		return "/system/housesFw-detail";
 	}
 	
@@ -61,12 +76,24 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	}
 	
 	@RequestMapping(value="/toUpdateHousesDp")
-	public String toUpdateHousesDp(){
+	public String toUpdateHousesDp(Model model, HousesInfoMVO entity){
+		try {
+			entity = housesInfoService.queryBean(entity);
+			model.addAttribute("houses", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
 		return "/system/housesDp-update";
 	}
 	
 	@RequestMapping(value="/toHousesDpDetail")
-	public String toHousesDpDetail(){
+	public String toHousesDpDetail(Model model, HousesInfoMVO entity){
+		try {
+			entity = housesInfoService.queryBean(entity);
+			model.addAttribute("houses", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
 		return "/system/housesDp-detail";
 	}
 	
@@ -204,6 +231,24 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "修改房屋或门店失败", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delHouses", method=RequestMethod.POST)
+	public String delHouses(HousesInfoMVO model){
+		try {
+			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			List<String> list = Arrays.asList(model.getHousesId().split(","));
+			for(int i=0; i<list.size(); i++){
+				HousesInfoMVO eneity = new HousesInfoMVO();
+				eneity.setHousesId(list.get(i));
+				eneity.setSts("P");
+				housesInfoService.update(eneity);
+			}
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "删除失败", e);
 		}
 	}
 }

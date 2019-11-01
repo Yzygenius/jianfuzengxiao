@@ -88,7 +88,7 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="/jianfuzengxiao/system/productType/toProductTypePage.html">
+                        <a _href="/jianfuzengxiao/system/houses/toHousesDpPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>商铺管理</cite>
                         </a>
@@ -188,7 +188,7 @@
     <!-- 中部结束 -->
     <!-- 底部开始 -->
     <div class="footer">
-        <div class="copyright">© 2019 河北天成和园林工程有限公司  备案号   &nbsp;&nbsp;&nbsp;&nbsp;</div>  
+        <div class="copyright"> 备案号   &nbsp;&nbsp;&nbsp;&nbsp;</div>  
     </div>
     <!-- 底部结束 -->
     
