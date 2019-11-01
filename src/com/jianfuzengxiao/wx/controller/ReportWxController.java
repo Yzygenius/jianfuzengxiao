@@ -134,9 +134,12 @@ public class ReportWxController extends BaseController {
 			map.put("yg", jsonObject4);
 			
 			//处理率
-			int count = fzlist1.size() + zhlist1.size() + jshlist1.size() + yglist1.size();
-			int aduitCount = fzlist2.size() + zhlist2.size() + jshlist2.size() + yglist2.size();
+			double count = fzlist1.size() + zhlist1.size() + jshlist1.size() + yglist1.size();
+			
+			double aduitCount = fzlist2.size() + zhlist2.size() + jshlist2.size() + yglist2.size();
+			
 			double round = BigDouble.getRoundingCount(aduitCount / count);
+			
 			if (count > 0) {
 				map.put("clv", round);
 			}else {

@@ -81,9 +81,7 @@
 					<th><input type="checkbox" value="" name="" id="checkAll"
 						onclick="checkAll(this)"></th>
 					<th>社区</th>
-					<th>小区</th>
-					<th>楼号</th>
-					<th>单元</th>
+					<th>小区/街道</th>
 					<th>门牌号</th>
 					<th>包户干部</th>
 					<th>干部电话</th>
@@ -363,14 +361,12 @@
 		//分页
 		function page() {
 			var data = {
-				'housesStatus': '1',
+				'housesStatus': '2',
 				'provCode': provCode,
 				'cityCode': cityCode,
 				'areaCode': areaCode,
 				'communityId': communityId,
 				'communityStreetId': communityStreetId,
-				'storiedBuildingNumber': storiedBuildingNumber,
-				'unit': unit,
 				'houseNumber': houseNumber,
 				'keyword': keyword
 			};
@@ -402,14 +398,12 @@
 		function serchData(page) {
 			var data = {
 				'page' : page,
-				'housesStatus': '1',
+				'housesStatus': '2',
 				'provCode': provCode,
 				'cityCode': cityCode,
 				'areaCode': areaCode,
 				'communityId': communityId,
 				'communityStreetId': communityStreetId,
-				'storiedBuildingNumber': storiedBuildingNumber,
-				'unit': unit,
 				'houseNumber': houseNumber,
 				'keyword': keyword
 			};
@@ -431,8 +425,6 @@
 							tr.find('[row=ids]').text(data[i].housesId);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
-							tr.find('[row=storiedBuildingNumber]').text(data[i].storiedBuildingNumber);
-							tr.find('[row=unit]').text(data[i].unit);
 							tr.find('[row=houseNumber]').text(data[i].houseNumber);
 							tr.find('[row=username]').text(data[i].username);
 							tr.find('[row=adminTelephone]').text(data[i].adminTelephone);

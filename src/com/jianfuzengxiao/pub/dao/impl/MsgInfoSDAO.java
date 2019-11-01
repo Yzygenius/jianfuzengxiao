@@ -24,8 +24,8 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 	public MsgInfoMVO insert(final MsgInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO MSG_INFO (msg_id,user_id,msg_type_id,msg_type_name,title,content,status,create_time,update_time,sts) ");
-		sql.append("VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+				"INSERT INTO MSG_INFO (msg_id,user_id,personnel_id,msg_type_id,msg_type_name,title,content,status,create_time,update_time,sts) ");
+		sql.append("VALUES (?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -34,6 +34,7 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 					java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString());
 					ps.setString(++i, StringUtils.trimToNull(entity.getMsgId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getPersonnelId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getMsgTypeId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getMsgTypeName()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getTitle()));
@@ -62,6 +63,10 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 			if (entity.getUserId() != null) {
 				sql.append("user_id=?,");
 				params.add(entity.getUserId());
+			}
+			if (entity.getPersonnelId() != null) {
+				sql.append("personnel_id=?,");
+				params.add(entity.getPersonnelId());
 			}
 			if (entity.getMsgTypeId() != null) {
 				sql.append("msg_type_id=?,");
@@ -126,7 +131,7 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 	public List<MsgInfoMVO> queryList(MsgInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT msg_id,user_id,personnel_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("FROM  MSG_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<MsgInfoMVO> resultList = null;
@@ -140,6 +145,10 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND user_id=?");
 					params.add(entity.getUserId());
+				}
+				if (StringUtils.isNotBlank(entity.getPersonnelId())) {
+					sql.append(" AND personnel_id=?");
+					params.add(entity.getPersonnelId());
 				}
 				if (StringUtils.isNotBlank(entity.getMsgTypeId())) {
 					sql.append(" AND msg_type_id=?");
@@ -188,9 +197,11 @@ public class MsgInfoSDAO extends BaseDAO<MsgInfoMVO> implements IMsgInfoSDAO {
 	public MsgInfoMVO queryBean(MsgInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
-		sql.append("FROM  MSG_INFO ");
-		sql.append("WHERE msg_id=? ");
+				"SELECT a.msg_id,a.user_id,a.personnel_id,a.msg_type_id,a.msg_type_name,a.title,a.content,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+		sql.append(",date_format(b.create_time,'%Y-%m-%d %H:%i:%s')per_create_time,ifnull(b.audit_remark,'')audit_remark  ");
+		sql.append("FROM  MSG_INFO a ");
+		sql.append("left join personnel_info b on(a.personnel_id=b.personnel_id) ");
+		sql.append("WHERE a.msg_id=? ");
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
