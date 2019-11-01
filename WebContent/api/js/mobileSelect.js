@@ -221,10 +221,6 @@
 		                '</div>'+
 		            '</div>'+
 		        '</div>';
-			// if(mobileSelect.length == 5){
-			// 	mobileSelect
-			// }
-//        	mobileSelect.remove();
         	var appselet = document.getElementById('appselet')
 		    appselet.appendChild(_this.mobileSelect);
 

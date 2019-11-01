@@ -142,44 +142,11 @@
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
         Positive('身份证','女','1992-01-08','回族');
-        Positive('身份证','男','1998-11-26','汉族');
-        Back('2012-2-14');
+       // Positive('身份证','男','1998-11-26','汉族');
+        // Back('2012-2-14');
         Back('2012-2-8');
-        // $(".measn").bind("change", changes);
-        var num=[];
-        for(var i=0;i<$('.mobileSelect').length; i++){
-            num.push($('.mobileSelect').find('.title').text())
-        }
-   //      $('.measn').click(function(){
-			// var num = [];
-   //          var mobileSelect = $('.mobileSelect').length;
-   //          console.log(mobileSelect);
-   //          for(var i = 0; i< mobileSelect; i++){
-   //               console.log(i)
-   //              if($('.mobileSelect').eq(i)){
-   //                  num.push(i);
-   //                  console.log(num)
-   //              }
 
-   //          }
-   //          for(var j in num){
-   //              if(num[j]<num[num.length-1]){
-   //                  $('#appselet').find('.mobileSelect').eq(num[j]).remove();
-   //              }
-   //          }
-   //          // if(mobileSelect)
-   //          // for(var i=0;i<mobileSelect.length;i++ ){
-                
-   //          // }
-   //      })
     })
-    // function changes(){
-         
-            // if(mobileSelect)
-            // for(var i=0;i<mobileSelect.length;i++ ){
-                
-            // }
-    // }
     function contains(arrays, obj) {
         // var i = arrays.length;
         for(var i = 0;i<arrays.length;i++){
@@ -190,7 +157,7 @@
         return false;
     }
     function Positive(type,Gender,birthday,Nation){
-
+        $('.mobileSelect').remove();
         //获取民族
         var weekdayArr2;
         $.ajax({
@@ -287,6 +254,7 @@
        //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
         var date=new Date;
         var i = contains(weekdayArr1,Gender);
+        console.log(i);
         var mobileSelect2 = new MobileSelect({
             trigger: '#trigger2',
             title: '性别',
@@ -299,7 +267,7 @@
             },
             callback: function (indexArr, data) {
                 console.log(data);
-                document.getElementById('trigger2').value = data;
+                document.getElementById('trigger2').value = data[0].value;
             }
         });
         var birthday0 = birthday.split('-')
@@ -311,7 +279,7 @@
             document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
         });
 
-        num();
+        // num();
     }
 
     function Back(Prescription){
@@ -326,7 +294,7 @@
             document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
-        num();
+        // num();
     }
 
 
