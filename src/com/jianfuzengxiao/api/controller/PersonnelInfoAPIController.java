@@ -261,7 +261,7 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
 			model = personnelInfoService.queryPersonnelBean(model);
-			return apiResult(RC.SUCCESS);
+			return apiResult(RC.SUCCESS, model);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询房产列表失败", e);
 		}
