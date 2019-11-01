@@ -81,6 +81,18 @@ public class CommunityStreetSysController extends BaseController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/getCommunityStreetList")
+	public String getCommunityStreetList(CommunityStreetInfoMVO communityStreetInfo){
+		try {
+			communityStreetInfo.setSts("A");
+			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(communityStreetInfo);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取小区街道列表失败", e);
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/addCommunityStreet")
 	public String addCommunityStreet(CommunityStreetInfoMVO communityStreetInfo){
 		try {

@@ -236,7 +236,7 @@ public class PersonnelInfoAPIController extends BaseController {
 			personnelInfo.setSts("A");
 			List<PersonnelInfoMVO> list = personnelInfoService.queryList(personnelInfo);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("houses", personnelInfo);
+			map.put("houses", housesInfo);
 			map.put("per", list);
 			return apiResult(RC.SUCCESS, map);
 		} catch (Exception e) {

@@ -34,7 +34,7 @@
 			<i class="layui-icon">&#xe640;</i>批量删除
 		</button>
 		<button class="layui-btn"
-			onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHouses.html')">
+			onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', '820')">
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
 		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>

@@ -61,7 +61,7 @@ public class PersonnelWXController extends BaseController{
 			personnelInfo.setSts("A");
 			List<PersonnelInfoMVO> list = personnelInfoService.queryList(personnelInfo);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("houses", personnelInfo);
+			map.put("houses", housesInfo);
 			map.put("per", list);
 			return apiResult(RC.SUCCESS, map);
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class PersonnelWXController extends BaseController{
 		try {
 			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
 			model = personnelInfoService.queryPersonnelBean(model);
-			return apiResult(RC.SUCCESS);
+			return apiResult(RC.SUCCESS, model);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询房产列表失败", e);
 		}

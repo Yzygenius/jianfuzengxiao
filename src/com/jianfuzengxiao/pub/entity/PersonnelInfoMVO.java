@@ -16,10 +16,25 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String unit;
 	private String houseNumber;
 	private String housesAddress;
+	private String houseType;
+	private String housesTypeName;
 	
 	private String adminId;
 	
 	
+	
+	public String getHouseType() {
+		return houseType;
+	}
+	public void setHouseType(String houseType) {
+		this.houseType = houseType;
+	}
+	public String getHousesTypeName() {
+		return housesTypeName;
+	}
+	public void setHousesTypeName(String housesTypeName) {
+		this.housesTypeName = housesTypeName;
+	}
 	public String getLeaseContract() {
 		return leaseContract;
 	}

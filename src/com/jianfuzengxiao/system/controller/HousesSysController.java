@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
@@ -89,6 +90,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	@RequestMapping(value="addHouses", method=RequestMethod.POST)
 	public String addHouses(HousesInfoMVO model){
 		try {
+			model.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
 			housesInfoService.insert(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -116,6 +118,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String getHousesPage(HousesInfoMVO model){
 		try {
 			PageInfo pageInfo = getPage();
+			model.setSts("A");
 			pageInfo = housesInfoService.queryPage(model, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);
 		} catch (Exception e) {
@@ -142,6 +145,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	@RequestMapping(value="/getHousesList", method=RequestMethod.POST)
 	public String getHousesList(HousesInfoMVO model){
 		try {
+			model.setSts("A");
 			List<HousesInfoMVO> list = housesInfoService.queryList(model);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {

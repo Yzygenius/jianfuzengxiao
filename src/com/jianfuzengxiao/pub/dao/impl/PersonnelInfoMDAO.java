@@ -178,7 +178,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	@Override
 	public PageInfo queryHousesPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select a.personnel_id,a.houses_id,a.user_id,a.status,a.live_type_id,a.live_type_name,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
+		sql.append("select a.personnel_id,a.houses_id,a.user_id,a.username,a.status,a.live_type_id,a.live_type_name,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
 		sql.append(",a.gender,a.nation_name,a.certificates_number,str_to_date(a.create_time,'%Y-%m-%d %H:%i:%s')create_time ");
 		sql.append(",b.houses_status,b.prov_name,b.city_name,b.area_name,ifnull(b.community_name,'')community_name,ifnull(b.community_street_name,'')community_street_name ");
 		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
