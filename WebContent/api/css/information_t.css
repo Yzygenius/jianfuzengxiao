@@ -223,11 +223,10 @@ margin-top:40px;
 }
 .faceword1{
     position: relative;
+    z-index:3;
     top:-92px;
     font-size: 10px;
     color:#0091FF;
-
-
 }
 .facell{
     padding-bottom:20px;

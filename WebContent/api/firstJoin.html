@@ -10,73 +10,66 @@
     <title>验证</title>
 </head>
 <body>
-<div id="content">1</div>
+<div id="content"></div>
 <script src="js/alrem.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/demo.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-
     window.onload=function(){
-
-        var data = {
-            'action': 'jsNGetToken',
-            'needCallBack': '',
-            'message': '',
-            "parameter":{
-                "business":"存钱业务"
-                }
-        }
-        window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
-            var list=JSON.parse(resp)
-            if(list.code == 0){
-                localStorage.token = list.data.token;
-                // alert()
-                // console.log(localStorage.token)
-            document.getElementById("content").innerHTML = localStorage.token;
-            }
-
-        });
-    //     // return false;
+        // var data = {
+        //     'action': 'jsNGetToken',
+        //     'needCallBack': '',
+        //     'message': '',
+        //     "parameter":{
+        //         "business":"存钱业务"
+        //         }
+        // }
+        // window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+        // //     var list=JSON.parse(resp)
+        //     console.log(list)
+        //     if(list.code == 0){
+        //         localStorage.token = list.data.token;
+        //         document.getElementById("content").innerHTML = localStorage.token;
+                $.ajax({
+                    //请求方式
+                    type:'POST',
+                    //发送请求的地址
+                    url:'/jianfuzengxiao/api/userInfo/verify.html',
+                    //服务器返回的数据类型
+                    dataType:'json',
+                    //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                    data:{
+                        userId:1
+                    },
+                    success:function(data){
+                      var code = data.code;
+                      if(code == 1){
+                        if(data.data.status == 1){
+                            console.log('米审核')
+                            window.location.href = "idenWait_y.html";
+                            window.close(); 
+                        }else if(data.data.status == 2){
+                            console.log('通过')
+                            window.location.href = "idenSuccess_y.html";
+                            window.close(); 
+                        }else if(data.data.status == 3){
+                             console.log('失败')
+                            window.location.href = "idenNopass_y.html";
+                            window.close(); 
+                        }
+                       
+                      }else if(code == 3002){
+                          window.location.href = "identity_auth_t.html";
+                         window.close(); 
+                      }
+                    },
+                    error:function(jqXHR){
+                    }
+                }); 
+        //     }
+        // });
     }
-    // $(function(){
-    //      $.ajax({
-    //         //请求方式
-    //         type:'POST',
-    //         //发送请求的地址
-    //         url:'/jianfuzengxiao/api/userInfo/verify.html',
-    //         //服务器返回的数据类型
-    //         dataType:'json',
-    //         //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-    //         data:{
-    //             userId:1
-    //         },
-    //         success:function(data){
-    //           var code = data.code;
-    //           // if(code == 1){
-    //           //   if(data.data.status == 1){
-    //           //       console.log('米审核')
-    //           //       window.location.href = "idenWait_y.html";
-    //           //       window.close(); 
-    //           //   }else if(data.data.status == 2){
-    //           //       console.log('通过')
-    //           //       window.location.href = "idenSuccess_y.html";
-    //           //       window.close(); 
-    //           //   }else if(data.data.status == 3){
-    //           //        console.log('失败')
-    //           //       window.location.href = "idenNopass_y.html";
-    //           //       window.close(); 
-    //           //   }
-               
-    //           // }else if(code == 3002){
-    //        	  //    window.location.href = "identity_auth_t.html";
-    //           //    window.close(); 
-    //           // }
-    //         },
-    //         error:function(jqXHR){
-    //         }
-    //     }); 
-    // })
 </script>
 </body>
 
