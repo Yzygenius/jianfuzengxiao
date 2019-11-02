@@ -261,4 +261,85 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO entity) throws SysException {
+		StringBuilder sql = new StringBuilder();
+		sql.append(
+				"SELECT houses_id,houses_status,community_id,community_name,community_street_id,community_street_name,storied_building_number,unit,house_number,store_location,sts ");
+		sql.append("FROM  HOUSES_INFO ");
+		sql.append("WHERE 1=1 ");
+		List<HousesInfoMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesStatus())) {
+					sql.append(" AND houses_status=?");
+					params.add(entity.getHousesStatus());
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND community_id=?");
+					params.add(entity.getCommunityId());
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND community_street_id=?");
+					params.add(entity.getCommunityStreetId());
+				}
+				if (StringUtils.isNotBlank(entity.getHouseType())) {
+					sql.append(" AND house_type=?");
+					params.add(entity.getHouseType());
+				}
+				if (StringUtils.isNotBlank(entity.getStoriedBuildingNumber())) {
+					sql.append(" AND storied_building_number=?");
+					params.add(entity.getStoriedBuildingNumber());
+				}
+				if (StringUtils.isNotBlank(entity.getUnit())) {
+					sql.append(" AND unit=?");
+					params.add(entity.getUnit());
+				}
+				if (StringUtils.isNotBlank(entity.getHouseNumber())) {
+					sql.append(" AND house_number=?");
+					params.add(entity.getHouseNumber());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
+					sql.append(" AND houses_type_id=?");
+					params.add(entity.getHousesTypeId());
+				}
+				if (StringUtils.isNotBlank(entity.getStoreLocation())) {
+					sql.append(" AND store_location=?");
+					params.add(entity.getStoreLocation());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND sts=?");
+					params.add(entity.getSts());
+				}
+				
+				if (StringUtils.isNotBlank(entity.getKeyword())) {
+					if (entity.getKeyword().equals("A")) {//社区
+						sql.append(" group by community_id ");
+					}
+					if (entity.getKeyword().equals("B")) {//小区
+						sql.append(" group by community_street_id ");
+					}
+					if (entity.getKeyword().equals("C")) {//楼号
+						sql.append(" group by storied_building_number ");
+					}
+					if (entity.getKeyword().equals("D")) {//单元
+						sql.append(" group by unit ");
+					}
+					if (entity.getKeyword().equals("E")) {//门牌号
+						sql.append(" group by house_number ");
+					}
+				}
+			}
+			
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询HOUSES_INFO错误：{}", e.getMessage());
+			throw new SysException("查询HOUSES_INFO错误", "10000", e);
+		}
+		return resultList;
+	}
 }
