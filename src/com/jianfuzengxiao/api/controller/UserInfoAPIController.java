@@ -76,6 +76,7 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public String addUser(UserInfoMVO model){
 		try {
+			System.out.println(model.toString());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
