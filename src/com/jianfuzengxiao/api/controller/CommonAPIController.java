@@ -67,50 +67,26 @@ public class CommonAPIController extends BaseController {
 	private IHousesInfoService housesInfoService;
 	
 	
+
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 选择房屋或商品 
+	 * </p>
+	 * @param keyword A 社区,B 小区,C 楼号,D 单元,E 门牌号
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月2日 下午7:47:14
+	 */
 	@ResponseBody
-	@RequestMapping(value="/getHousesFwSelList")
-	public String getHousesFwSelList(){
+	@RequestMapping(value="/getSelHousesList")
+	public String getSelHousesList(HousesInfoMVO model){
 		try {
-			JSONArray jsonArr = new JSONArray();
-			
-			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
-			communityInfo.setSts("A");
-			List<CommunityInfoMVO> lv1List = communityInfoService.queryList(communityInfo);
-			
-			CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
-			communityStreetInfo.setSts("A");
-			communityStreetInfo.setStatus("1");
-	    	List<CommunityStreetInfoMVO> lv2List = communityStreetInfoService.queryList(communityStreetInfo);
-	    	
-	    	HousesInfoMVO housesInfo = new HousesInfoMVO();
-	    	housesInfo.setSts("A");
-	    	housesInfo.setHousesStatus(HousesInfo.houses_status_fangwu);
-	    	List<HousesInfoMVO> lv3List = housesInfoService.queryBuildingUnitNumList(housesInfo);
-	    	//List<HousesInfoMVO> lv4List = housesInfoService.queryBuildingUnitNumList(housesInfo);
-	    	//List<HousesInfoMVO> lv5List = housesInfoService.queryBuildingUnitNumList(housesInfo);
-	    	
-	    	
-	    	// 整理二三级上下级关系
-	    	HashMap<String, JSONObject> map = new HashMap<>();
-	    	for (HousesInfoMVO area2 : lv3List) {
-				JSONObject jsonObj2 = new JSONObject();
-				jsonObj2.put("code", area2.getAreaCode());
-				jsonObj2.put("name", area2.getAreaName());
-	    		
-				JSONArray jsonArr3 = new JSONArray();
-	    		for (HousesInfoMVO area3 : lv3List) {
-					if (StringUtils.equals(area3.getParentCode(), area2.getAreaCode())) {
-						JSONObject jsonObj3 = new JSONObject();
-						jsonObj3.put("code", area3.getAreaCode());
-						jsonObj3.put("name", area3.getAreaName());
-						jsonArr3.add(jsonObj3);
-					}
-				}
-	    		jsonObj2.put("childList", jsonArr3);
-	    		map.put(area2.getAreaCode(), jsonObj2);
-			}
-	    	
-	    	return apiResult(RC.SUCCESS_CODE, "获取地区列表成功", jsonArr);
+			List<HousesInfoMVO> list = housesInfoService.querySelHousesList(model);
+			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "获取房产列表出错", e);
 		}
