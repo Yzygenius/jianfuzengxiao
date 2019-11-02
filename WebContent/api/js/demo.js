@@ -103,11 +103,12 @@ document.getElementById('enter3').onclick = function(e) {
         if(list.data.GetFieldName[0] == '签发机关' && list.data.GetFieldName[0] !== '姓名'){
         	document.getElementById('preview12').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
         	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-			Back(list.data.GetRecogResult[3]);
+			Back(list.data.GetRecogResult[2],list.data.GetRecogResult[3]);
+			document.getElementById('date1').value = list.data.GetRecogResult[2];
 			document.getElementById('select_3').value = list.data.GetRecogResult[3];
 			document.getElementById('measn12').value = list.data.GetRecogResult[0];
         }else if(list.data.GetFieldName[0] !== '签发机关' && list.data.GetFieldName[0] == '姓名'){
-        	var parent = document.getElementById('enter2');
+        	var parent = document.getElementById('enter3');
         	var p = document.createElement("p");
 	 		p.setAttribute("id", "prev2");
 			p.setAttribute("class", "faceword1");

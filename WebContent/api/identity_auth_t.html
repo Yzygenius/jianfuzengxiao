@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <!-- <div id="content" style="width: 90%;min-height: 300px;margin-top:20px;overflow: auto;"></div> -->
-                <div class="a" style="margin-top:20px;" id="enter3">
-                    <div class="facefront fan">
+                <div class="a" style="margin-top:20px;">
+                    <div class="facefront fan" id="enter3">
                         <img src="images/tao/bag.png" class="face-front" id="preview12">
                         <div class="word">证件背面</div>
                         <p class="faceword1" id="prev2">点击上传/拍摄证件背面</p>
@@ -95,10 +95,10 @@
             <div class="meanslist">
                 <div class="means-name">证件时效</div>
 
-                <div class="means-input">
-                    <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()">
+                <div class="means-input" id="select_date1" style="justify-content:space-between; padding: 0 1.5%;box-sizing: border-box;">
+                    <input class="measn" id="date1" onfocus="this.blur()" placeholder="开始时间" style="text-align: center;"><span style="color: #999;">-</span><input class="measn" id="select_3" onfocus="this.blur()" placeholder="结束时间" style="text-align: center;">
+                    <!-- <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()"> -->
                     <img src="images/tao/down.png">
-
                 </div>
             </div>
             <div class="meanslist">
@@ -116,20 +116,22 @@
             <div class="meanslist">
                 <div class="means-name">联系方式</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入手机号码" class="measn12">
+                    <input type="text" placeholder="录入手机号码" class="measn12" id="telephone">
                 </div>
             </div>
         </div>
-       <div class="btn">提交</div>
+       <div class="btn" id="submit">提交</div>
     </div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/selectDate.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
     <script type="text/javascript" src="js/mobileSelect.js"></script>
     <script type="text/javascript" src="js/alrem.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
     <script>
     $(function(){
+        /* 控制第一个选择器显示 */
         var select1 = $.selectDate("#select_1", {
             start: 1994,
             end:2999,
@@ -168,7 +170,6 @@
                         }
                     }
                 }
-                console.log(weekdayArr2)
                 $.ajax({
                     //请求方式
                     type:'POST',
@@ -189,15 +190,11 @@
                                 }
                             }
                         }
-                        console.log(weekdayArr)
-
                         if(weekdayArr !== '' && weekdayArr2 !== ''){
                             sessionStorage.setItem('weekdayArr',JSON.stringify(weekdayArr))
                             sessionStorage.setItem('weekdayArr2',JSON.stringify(weekdayArr2))
                             Positive('身份证','女','1992-01-08','回族');
-                            Back('2012-2-8');
-                            // Positive('身份证','男','1998-01-09','汉族');
-                            // Back('2012-2-10');
+                            Back('2012-2-8','2012-2-8');
                         }
                     },
                     error:function(jqXHR){
@@ -208,6 +205,92 @@
             }
         }); 
 
+        // 点击提交
+        $('#submit').click(function(){
+            var infor = {
+                    'userId' : 2,
+                    'facePhoto' : $('#preview10').attr('src'),
+                    'certificatesPositivePhoto' : $('#preview11').attr('src'),
+                    'certificatesNegativePhoto' : $('#preview12').attr('src'),
+                    'certificatesTypeName' : document.getElementById('trigger1').value,
+                    'username' : document.getElementById('namev').value,
+                    'gender' : document.getElementById('trigger2').value,
+                    'birthDate' : document.getElementById('select_2').value,
+                    'nationName' : document.getElementById('trigger3').value,
+                    'certificatesNumber' : document.getElementById('measnnum').value,
+                    'certificatesStartTime' : document.getElementById('date1').value,
+                    'certificatesStopTime' : document.getElementById('select_3').value,
+                    'certificatesOffice' : document.getElementById('measn12').value,
+                    'certificatesAddress' : document.getElementById('address').value,
+                    'telephone' : document.getElementById('telephone').value,
+                    'leaseStartTime' : document.getElementById('select_1').value,
+                };
+            infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
+            infor.nationId = contain(weekdayArr2,infor.nationName);
+            var base = 'data:image/jpeg;base64';
+            if(!infor.facePhoto.match(base)){
+                infor.facePhoto = ''
+            }
+            if(!infor.certificatesNegativePhoto.match(base)){
+                infor.certificatesNegativePhoto = ''
+            }
+            if(!infor.certificatesPositivePhoto.match(base)){
+                infor.certificatesPositivePhoto = ''
+            }
+            console.log(infor)
+            // if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
+            //     layer.msg('请选择居住开始时间');
+            // }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
+            //     layer.msg('请添加人脸照片');
+            // }else if(infor.certificatesPositivePhoto == undefined || infor.certificatesPositivePhoto == '' || infor.certificatesNegativePhoto == undefined || infor.certificatesNegativePhoto == ''){
+            //     layer.msg('请添加完整的身份证照片');
+            // }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
+            //     layer.msg('请选择证件类型');
+            // }else if(infor.username  == undefined || infor.username == ''){
+            //     layer.msg('请填写姓名');
+            // }else if(infor.gender  == undefined || infor.gender == ''){
+            //     layer.msg('请选择性别');
+            // }else if(infor.birthDate  == undefined || infor.birthDate == ''){
+            //     layer.msg('请选择生日');
+            // }else if(infor.nationName  == undefined || infor.nationName == ''){
+            //     layer.msg('请选择民族');
+            // }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
+            //     layer.msg('请填写证件号码');
+            // }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
+            //     layer.msg('请选择证件有效期');
+            // }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
+            //     layer.msg('请填写办证机关');
+            // }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
+            //     layer.msg('请填写证件地址');
+            // }else if(infor.telephone  == undefined || infor.telephone == ''){
+            //     layer.msg('请填写联系电话');
+            // }else{
+                $.ajax({
+                    //发送请求的地址
+                     url:'/jianfuzengxiao/api/userInfo/addUser.html',
+                    //请求方式
+                    type:'POST',
+                    //服务器返回的数据类型
+                    dataType:'json',
+                    //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                    data: infor,
+                    success:function(data){
+                        if(data.code == 1){
+                            layer.msg('提交成功');
+                            setTimeout(function(){
+                                window.location.href="verify1_y.html"
+                            }, 1500);
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                        
+                    },
+                    error:function(jqXHR){
+                    }
+                }); 
+            // }
+        })
+
     })
     function contains(arrays, obj) {
         // var i = arrays.length;
@@ -217,6 +300,19 @@
             }
         }
         return false;
+    }
+    function contain(arrays, obj) {
+        // var i = arrays.length;
+        for(var i = 0;i<arrays.length;i++){
+            if(arrays[i].value == obj){
+                if(arrays[i].id){
+                    return arrays[i].id;
+                }else if(arrays[i].certificatesTypeId){
+                    return arrays[i].certificatesTypeId;
+                }
+            }
+        }
+        return '';
     }
     function Positive(type,Gender,birthday,Nation){
         var arr = $('.mobileSelect')
@@ -294,24 +390,46 @@
         });
     }
 
-    function Back(Prescription){
+    function Back(Prescription0,Prescription1){
         var arr = $('.mobileSelect')
         for(var i = 0; i< arr.length;i++){
-            if(arr.eq(i).find('.title').html() == "证件有效日期"){
+            if(arr.eq(i).find('.title').html() == "证件有效期开始时间" || arr.eq(i).find('.title').html() == "证件有效期结束时间"){
                 arr.eq(i).remove();
             }
         }
-        var Prescription0 = Prescription.split('-')
-        var select3 = $.selectDate("#select_3", { 
-            start: 1994,
-            end: 2999,
-            select: Prescription0,
-            title: '证件有效日期'
-        }, function (data) {
-            console.log(data);
-            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
-            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
+        var Prescription0 = Prescription0.split('-');
+        var Prescription1 = Prescription1.split('-')
+        var date1 = $.selectDate("#date1",{
+            start:1994,
+            end:2999,
+            select:Prescription0,
+            title:'证件有效期开始时间'
+        },function (data) {
+            // console.log(data);
+            document.getElementById('date1').value = data.year + "-" + data.month + "-" + data.day
+            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
+            $(this).hide()
+            setTimeout(function(){
+                date2.show()
+            }, 300);
         });
+        var date2 = $.selectDate("#select_3",{
+            start:1994,
+            end:2999,
+            select:Prescription1,
+            title:'证件有效期结束时间'
+        },function (data) {
+            // console.log(data);
+            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            date1.hide()
+            $(this).hide()
+        });
+
+        $("#select_date1").click(function () {
+            date1.show();
+            date2.hide();
+        })
     }
         // function goback(){
         //     window.goback(-1)
