@@ -30,6 +30,7 @@ import com.jianfuzengxiao.pub.entity.AreaInfoMVO;
 import com.jianfuzengxiao.pub.entity.CertificatesTypeMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.NationMVO;
 import com.jianfuzengxiao.pub.service.IAreaInfoService;
@@ -64,6 +65,33 @@ public class CommonAPIController extends BaseController {
 	
 	@Autowired
 	private IHousesInfoService housesInfoService;
+	
+	
+
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 选择房屋或商品 
+	 * </p>
+	 * @param keyword A 社区,B 小区,C 楼号,D 单元,E 门牌号
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月2日 下午7:47:14
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getSelHousesList")
+	public String getSelHousesList(HousesInfoMVO model){
+		try {
+			List<HousesInfoMVO> list = housesInfoService.querySelHousesList(model);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取房产列表出错", e);
+		}
+	}
+	
 	
 	/**
 	 * 
