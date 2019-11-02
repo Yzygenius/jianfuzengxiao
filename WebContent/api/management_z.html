@@ -43,11 +43,11 @@
                 </a>
             </div>
             <!--<div style="height: 110px;"></div>&lt;!&ndash;占位&ndash;&gt;-->
-            <div class="cont_add"><span>+</span>添加新房产认证</div>
+            <div class="cont_add"><a href=""></a><span>+</span>添加新房产认证</a></div>
         </div>
         <div class="cont_list news" >
             <!--审核成功-->
-            <div class="result" data-class="success">
+          <div class="result" data-class="success" >
                 <div class="result_red" style="display: block"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -59,8 +59,8 @@
                 <div class="result_cont">
                     您所提交的【青年之都 23-02-2304】租户申请【人员姓名 130102199105210310】已通过审核，请悉知
                 </div>
-            </div>
-            <div class="result" data-class="success">
+            </div> 
+             <div class="result" data-class="success">
                 <div class="result_red" style="display: block"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -72,8 +72,8 @@
                 <div class="result_cont">
                     您所提交的【青年之都 23-02-2304】家属申请【人员姓名130102199105210310】已通过审核，请悉知
                 </div>
-            </div>
-            <div class="result" data-class="success">
+            </div> 
+          <div class="result" data-class="success">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -85,9 +85,9 @@
                 <div class="result_cont">
                     您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】已通过审核，请悉知
                 </div>
-            </div>
+            </div> 
             <!--审核失败-->
-            <div class="result fail" data-class="fail">
+         <div class="result fail" data-class="fail">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -99,8 +99,8 @@
                 <div class="result_cont">
                     您所提交的【青年之都 23-02-2304】租户申请【人员姓名130102199105210310】未能通过审核，请悉知
                 </div>
-            </div>
-            <div class="result fail" data-class="fail">
+            </div> 
+             <div class="result fail" data-class="fail">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -125,9 +125,9 @@
                 <div class="result_cont">
                     您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】未能通过审核，请悉知
                 </div>
-            </div>
+            </div> 
             <!--过期-->
-            <div class="result end" data-class="end">
+           <div class="result end" data-class="end">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -152,9 +152,9 @@
                 <div class="result_cont">
                     您的房屋【青年之都 23-02-2304】 租户【人员姓名130102199105210310】居住时间已过期，请悉知
                 </div>
-            </div>
+            </div> 
             <!--审核中-->
-            <div class="result" data-class="In_audit">
+         <div class="result" data-class="In_audit">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -209,7 +209,7 @@
         </div>
     </div>
     <div class="Mask" style="display: none;"></div>
-    <div class="pop_up In_audit" style="display: none;">
+    <div class="pop_up In_audit" style="display: none;" id="In_audit1">
         <div class="pop_top">
             <img src="images/list/In_audit.png" alt="">
             员工申请已提报
@@ -225,7 +225,8 @@
         </div>
         <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
     </div>
-    <div class="pop_up upload">
+    
+    <div class="pop_up upload" id="upload">
         <div class="pop_top">
             <img src="images/list/In_audit.png" alt="">
             身份信息更新提报
@@ -241,8 +242,8 @@
         </div>
         <div class="pop_btn">查看</div>
     </div>
-    <div class="pop_up success">
-        <div class="pop_top">
+    <div class="pop_up success" id="success">
+         <div class="pop_top">
             <img src="images/list/success.png" alt="">
             家属审核通过
         </div>
@@ -255,11 +256,11 @@
         <div class="poptime">
             首次提报时间：2019.12.12 15:30:22
         </div>
-        <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
+        <div class="pop_btn"><a href="personnel_y.html">查看</a></div> 
     </div>
     <!--审核未通过-->
-    <div class="pop_up fail">
-        <div class="pop_top">
+    <div class="pop_up fail" id="fail">
+      <div class="pop_top">
             <img src="images/list/fail.png" alt="">
             员工审核未通过
         </div>
@@ -280,8 +281,8 @@
         <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
     </div>
     <!--过期-->
-    <div class="pop_up end">
-        <div class="pop_top">
+   <div class="pop_up end" id="end1">
+       <div class="pop_top">
             <img src="images/list/end.png" alt="">
             租户过期
         </div>
@@ -296,9 +297,13 @@
         </div>
         <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
     </div>
+    
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script>
+function abc(){
+    console.log('1232')
+}
     $(function () {
         $('.header .header_btn').click(function () {
             $('.cont_list').fadeOut(0)
@@ -316,6 +321,8 @@
             $(this).fadeOut(200);
             $('.pop_up').fadeOut(200);
         })
+
+        
         //请求数据
         $.ajax({
             //请求方式
@@ -356,7 +363,155 @@
             },
             error:function(jqXHR){
             }
-        }); 
+        });
+        
+        
+        // 消息中心
+        $.ajax({
+             //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/msgInfo/getMsgInfoPage.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:1
+            },
+            success:function(data){
+                console.log(data.data.rows)
+                var pro='';//审核通过
+                for(var i=0;i<data.data.rows.length;i++){
+                    if(data.data.rows[i].msgTypeId=='4')
+                    {
+                    pro +='<div class="result" data-class="success" id="onshow" oonclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                    '<div class="result_red" style="display: block">'+
+                    '</div>'+
+                    '<div class="result_title">'+
+                    '<div class="rtitle_left">'+
+                    '<img src="images/list/success.png" alt="">'+
+                    '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'
+                    +'</div>'+
+                    '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                    '</div>'+
+                    '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                    '</div>'
+                }else if(data.data.rows[i].msgTypeId=='3'){
+                  pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                  '<div class="result_red">'+
+                  '</div>'+'<div class="result_title">'+
+                  '<div class="rtitle_left">'+
+                  '<img src="images/list/fail.png" alt="">'+
+                  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+                  '</div>'+
+                  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+              '</div>'
+                    
+                }else if(data.data.rows[i].msgTypeId=="2"){
+                      pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                      '<div class="result_red">'+
+                      '</div>'+'<div class="result_title">'+
+                      '<div class="rtitle_left">'+
+                      '<img src="images/list/fail.png" alt="">'+
+                      '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+                      '</div>'+
+                      '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                      '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                  '</div>'
+                }else if(data.data.rows[i].msgTypeId=='1'){
+                     pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                  '<div class="result_red">'+
+                  '</div>'+'<div class="result_title">'+
+                  '<div class="rtitle_left">'+
+                  '<img src="images/list/fail.png" alt="">'+
+                  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+                  '</div>'+
+                  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                 '</div>'
+                }else if(data.data.rows[i].msgTypeId=='5'){
+                     pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                      '<div class="result_red">'+
+                      '</div>'+'<div class="result_title">'+
+                      '<div class="rtitle_left">'+
+                      '<img src="images/list/fail.png" alt="">'+
+                      '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+                      '</div>'+
+                      '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                      '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                    '</div>'
+                }
+                }
+                $('.news').html(pro);
+                   <!--过期-->
+                
+            },
+            error:function(jqXHR){
+                
+            }
+            
+        });
     })
+    
+        function showtime(id,personnelId){
+           console.log(id)
+           console.log(personnelId)
+    
+        var msgId=id
+      
+        //请求数据
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/msgInfo/getMsgDetail.html ',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                msgId:msgId
+            },
+            success:function(data){
+              console.log(data.data)
+              var selehtml='';
+              selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.content+'</div>'+
+            '<div class="pop_time">'+data.data.createTime+'</div>'+
+            '<div class="pop_text">'+data.data.msgTypeName+'</div>'+
+            '<div class="poptime">'+data.data.perCreateTime+'</div>'+
+            '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
+            if(data.data.msgTypeId=='4'){
+                 $('#success').html(selehtml)
+                 $('.pop_up').fadeOut(200);
+                 $('.Mask').fadeIn(200);
+                 $('.pop_up.'+'success').fadeIn(200);
+            }else if(data.data.msgTypeId=='3'){
+                 $('#fail').html(selehtml)
+                 $('.pop_up').fadeOut(200);
+                 $('.Mask').fadeIn(200);
+                 $('.pop_up.'+'fail').fadeIn(200);
+            }else if(data.data.msgTypeId=='5'){
+                 $('#upload').html(selehtml)
+                 $('.pop_up').fadeOut(200);
+                 $('.Mask').fadeIn(200);
+                 $('.pop_up.'+'upload').fadeIn(200);
+            }else if(data.data.msgTypeId=='2'){
+                 $('#end1').html(selehtml)
+                 $('.pop_up').fadeOut(200);
+                 $('.Mask').fadeIn(200);
+                 $('.pop_up.'+'end').fadeIn(200);
+            }else if(data.data.msgTypeId=='1'){
+                 $('#In_audit1').html(selehtml)
+                 $('.pop_up').fadeOut(200);
+                 $('.Mask').fadeIn(200);
+                 $('#In_audit1').fadeIn(200);
+            }
+            },
+            error:function(jqXHR){
+            }
+        });
+        
+        
+    };
 </script>
 </html>
