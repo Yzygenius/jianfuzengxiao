@@ -237,6 +237,11 @@
             if(!infor.certificatesPositivePhoto.match(base)){
                 infor.certificatesPositivePhoto = ''
             }
+            if(infor.gender == '男'){
+                infor.gender = 1
+            }else if(infor.gender == '女'){
+                infor.gender = 2
+            }
             console.log(infor)
             // if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
             //     layer.msg('请选择居住开始时间');
