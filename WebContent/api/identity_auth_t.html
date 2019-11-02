@@ -120,9 +120,8 @@
                 </div>
             </div>
         </div>
-       <a href="verify1_y.html"><div class="btn">提交</div></a> 
+       <div class="btn">提交</div>
     </div>
-    <div id="appselet"></div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/selectDate.js"></script>
     <script type="text/javascript" src="js/mobileSelect.js"></script>
@@ -141,25 +140,8 @@
             document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
-        Positive('身份证','女','1992-01-08','回族');
-       // Positive('身份证','男','1998-11-26','汉族');
-        // Back('2012-2-14');
-        Back('2012-2-8');
-
-    })
-    function contains(arrays, obj) {
-        // var i = arrays.length;
-        for(var i = 0;i<arrays.length;i++){
-            if(arrays[i].value == obj){
-                return i;
-            }
-        }
-        return false;
-    }
-    function Positive(type,Gender,birthday,Nation){
-        $('.mobileSelect').remove();
-        //获取民族
         var weekdayArr2;
+        var weekdayArr;
         $.ajax({
             //请求方式
             type:'POST',
@@ -186,75 +168,107 @@
                         }
                     }
                 }
-                var i = contains(weekdayArr2,Nation);
-                var mobileSelect0 = new MobileSelect({
-                    trigger: '#trigger3',
-                    title: '民族',
-                    wheels: [
-                        { data: weekdayArr2 }
-                    ],
-                    position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-                    transitionEnd: function (indexArr, data) {
-                        console.log(data);
-                    },
-                    callback: function (indexArr, data) {
-                        console.log(data);
-                        document.getElementById('trigger3').value = data[0].value
-                        //$('#trigger3').val(data.value);
-                    }
-                });
-            },
-            error:function(jqXHR){
-            }
-        }); 
-        //获取证件
-        var weekdayArr;
-        $.ajax({
-            //请求方式
-            type:'POST',
-            //发送请求的地址
-            url:'/jianfuzengxiao/api/common/getCertTypeList.html',
-            //服务器返回的数据类型
-            dataType:'json',
-            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-            data:{},
-            success:function(data){
-                weekdayArr = data.data
-                // console.log(weekdayArr)
-                for(var i in weekdayArr){
-                    for(var j in weekdayArr[i]){
-                        if(j == 'certificatesTypeName'){
-                            weekdayArr[i]['value'] = weekdayArr[i][j]//修改属性名为“value”
-                            delete weekdayArr[i]['certificatesTypeName']//删 除“nationName”
+                console.log(weekdayArr2)
+                $.ajax({
+                    //请求方式
+                    type:'POST',
+                    //发送请求的地址
+                    url:'/jianfuzengxiao/api/common/getCertTypeList.html',
+                    //服务器返回的数据类型
+                    dataType:'json',
+                    //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                    data:{},
+                    success:function(data){
+                        weekdayArr = data.data
+                        // console.log(weekdayArr)
+                        for(var i in weekdayArr){
+                            for(var j in weekdayArr[i]){
+                                if(j == 'certificatesTypeName'){
+                                    weekdayArr[i]['value'] = weekdayArr[i][j]//修改属性名为“value”
+                                    delete weekdayArr[i]['certificatesTypeName']//删 除“nationName”
+                                }
+                            }
                         }
-                    }
-                }
-                var i = contains(weekdayArr,type);
-                var mobileSelect1 = new MobileSelect({
-                    trigger: '#trigger1',
-                    title: '有效证件',
-                    wheels: [
-                        { data: weekdayArr }
-                    ],
-                   position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-                    transitionEnd: function (indexArr, data) {
-                        console.log(data);
+                        console.log(weekdayArr)
+
+                        if(weekdayArr !== '' && weekdayArr2 !== ''){
+                            sessionStorage.setItem('weekdayArr',JSON.stringify(weekdayArr))
+                            sessionStorage.setItem('weekdayArr2',JSON.stringify(weekdayArr2))
+                            Positive('身份证','女','1992-01-08','回族');
+                            Back('2012-2-8');
+                            // Positive('身份证','男','1998-01-09','汉族');
+                            // Back('2012-2-10');
+                        }
                     },
-                    callback: function (indexArr, data) {
-                        console.log(data);
-                        document.getElementById('trigger1').value = data[0].value;
+                    error:function(jqXHR){
                     }
-                });
+                }); 
             },
             error:function(jqXHR){
             }
         }); 
+
+    })
+    function contains(arrays, obj) {
+        // var i = arrays.length;
+        for(var i = 0;i<arrays.length;i++){
+            if(arrays[i].value == obj){
+                return i;
+            }
+        }
+        return false;
+    }
+    function Positive(type,Gender,birthday,Nation){
+        var arr = $('.mobileSelect')
+        console.log(arr.length)
+        for(var i = 0; i< arr.length;i++){
+            if(arr.eq(i).find('.title').html() === "有效证件" || arr.eq(i).find('.title').html() == "性别" || arr.eq(i).find('.title').html() == "生日" || arr.eq(i).find('.title').html() == "民族" ){
+                arr.eq(i).remove();
+            }
+        }
+        //获取民族
+        var weekdayArr2 = JSON.parse(sessionStorage.getItem('weekdayArr2'))
+        var i = contains(weekdayArr2,Nation);
+        var mobileSelect0 = new MobileSelect({
+            trigger: '#trigger3',
+            title: '民族',
+            wheels: [
+                { data: weekdayArr2 }
+            ],
+            position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger3').value = data[0].value
+                //$('#trigger3').val(data.value);
+            }
+        });
+        //获取证件
+        var weekdayArr = JSON.parse(sessionStorage.getItem('weekdayArr'))
+        var i = contains(weekdayArr,type);
+        var mobileSelect1 = new MobileSelect({
+            trigger: '#trigger1',
+            title: '有效证件',
+            wheels: [
+                { data: weekdayArr }
+            ],
+           position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger1').value = data[0].value;
+            }
+        });
         // var weekdayArr = ['身份证', '驾驶证'];
         var weekdayArr1 = [{id:0,value:'男'},{id:1,value:'女'}];
        //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
         var date=new Date;
         var i = contains(weekdayArr1,Gender);
-        console.log(i);
+        // console.log(i);
         var mobileSelect2 = new MobileSelect({
             trigger: '#trigger2',
             title: '性别',
@@ -278,11 +292,15 @@
             console.log(data);
             document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
         });
-
-        // num();
     }
 
     function Back(Prescription){
+        var arr = $('.mobileSelect')
+        for(var i = 0; i< arr.length;i++){
+            if(arr.eq(i).find('.title').html() == "证件有效日期"){
+                arr.eq(i).remove();
+            }
+        }
         var Prescription0 = Prescription.split('-')
         var select3 = $.selectDate("#select_3", { 
             start: 1994,
@@ -294,58 +312,6 @@
             document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
-        // num();
-    }
-
-
-    function num(){
-        // var mobileSelect = $('.mobileSelect').length;
-        // var num = [];
-        // console.log(mobileSelect);
-        // for(var i = 0; i< mobileSelect; i++){
-        //      console.log(i)
-        //     if($('.mobileSelect').eq(i).find('.title')){
-        //         num.push(i);
-        //         console.log(num)
-        //     }
-
-        // }
-        // for(var j in num){
-        //     if(num[j]<num[num.length-1]){
-        //         $('#appselet').find('.mobileSelect').eq(num[j]).remove();
-        //     }
-        // }
-
-
-        console.log('111')
-        // var arr = ['1', '2', '3', '4', '5', '6', '6', '7', '8', '1', '1', '1'];
-        var list = [];
-        for (var i = 0; i < $('.mobileSelect').length; i++){
-            var hasRead = false;
-            for (var k = 0; k < list.length; k++)
-            {
-                if (i == list[k]){
-                    $('.mobileSelect').eq(list[k]).remove();
-                    hasRead = true;
-                }
-            }
-            if (hasRead) { break;}
-            var _index = i, haveSame = false;
-            for (var j = i + 1; j < $('.mobileSelect').length; j++){
-                if ($('.mobileSelect').eq(i).find('.title').html() == $('.mobileSelect').eq(j).find('.title').html()){
-
-                    list.push(j);
-                    _index += "," + j;
-                    haveSame = true;
-                }
-            }
-            if (haveSame){
-                console.log("数组中值为"+$('.mobileSelect').eq(i).find('.title').html()+"相同元素的下标为"+_index);
-                console.log(list)
-                // $('.mobileSelect').eq(list[])
-                // debugger
-            }
-        }
     }
         // function goback(){
         //     window.goback(-1)

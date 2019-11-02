@@ -221,8 +221,7 @@
 		                '</div>'+
 		            '</div>'+
 		        '</div>';
-        	var appselet = document.getElementById('appselet')
-		    appselet.appendChild(_this.mobileSelect);
+		    document.body.appendChild(_this.mobileSelect);
 
 			//根据数据长度来渲染
 
