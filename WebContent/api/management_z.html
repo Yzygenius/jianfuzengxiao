@@ -328,7 +328,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:1
+                userId:3
             },
             success:function(data){
               console.log(data.data)
@@ -348,7 +348,7 @@
                                         '<div class="title_text">'+data.data[i].communityName+'</div>'+
                                         '<div class="title_time">'+data.data[i].storiedBuildingNumber+'-'+data.data[i].unit+'-'+data.data[i].houseNumber+'</div>'+
                                     '</div>'+
-                                    '<div class="address">'+data.data[i].housesAddress+'</div>'+
+                                    '<div class="address">'+data.data[i].provName+''+data.data[i].cityName+''+data.data[i].areaName+''+data.data[i].communityName+''+data.data[i].communityStreetName+''+data.data[i].housesAddress+'</div>'+
                                 '</div>'+
                                 '</a>';
                 }
@@ -371,7 +371,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:1
+                userId:3
             },
             success:function(data){
             	console.log(data.data)

@@ -40,7 +40,7 @@
                     <!--按钮操作-->
                     <div class="an_btn">
                         <div class="item-btn delete" v-show="status == 3">移除</div>
-                        <div class="item-btn"><a href="identity_auth_t.html">更新上报</a></div>
+                        <!-- <div class="item-btn"><a href="identity_auth_t.html">更新上报</a></div> -->
                     </div>
                     <div class="item">
                         <div class="item-one">人员姓名</div>
@@ -173,8 +173,6 @@
         }
         return null;
     }
-    // 这样调用：housesId即为上个页面传回来的变量名
-    // var arr=[]
     var personnelId = getQueryString("personnelId");
     var app = new Vue({
         el:'#center',
@@ -203,7 +201,6 @@
             },
             success:function(data){
               var res = data.data
-              console.log(res)
               if(res.gender == 1){
                 app.gender ="男"
               }else if(res.gender == 2){
@@ -220,6 +217,8 @@
               app.list = res
               app.status=res.status
               app.housesStatus = res.housesStatus
+              // 跳转页面
+              $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
             },
             error:function(jqXHR){
             }

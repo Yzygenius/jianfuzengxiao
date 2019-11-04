@@ -228,6 +228,7 @@
         $('#submit').click(function(){
             var infor = {
                     'userId' : 2,
+                    'housesId':housesId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),
                     'certificatesNegativePhoto' : $('#preview12').attr('src'),
@@ -243,9 +244,12 @@
                     'certificatesAddress' : document.getElementById('address').value,
                     'telephone' : document.getElementById('telephone').value,
                     'leaseStartTime' : document.getElementById('select_1').value,
+                    'liveTypeId':7,
+                    'liveTypeName':'家属'
                 };
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
+            // console.log(infor)
             var base = 'data:image/jpeg;base64';
             if($('#preview10').attr('name') !== 'success'){
                 infor.facePhoto = ''
@@ -261,7 +265,7 @@
             }else if(infor.gender == '女'){
                 infor.gender = 2
             }
-            console.log(infor)
+            // console.log(infor)
             if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
                 layer.msg('请选择居住开始时间');
             }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
@@ -294,7 +298,7 @@
                 layer.load(1);
                 $.ajax({
                     //发送请求的地址
-                     url:'/jianfuzengxiao/api/userInfo/addUser.html',
+                     url:'/jianfuzengxiao/api/personnel/addUserPersonnel.html',
                     //请求方式
                     type:'POST',
                     //服务器返回的数据类型

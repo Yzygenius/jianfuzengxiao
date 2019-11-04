@@ -21,13 +21,13 @@
             <p class="live_p0">门店地址字段</p>
             <p class="live_p">员工录入</p>
         </div>
-        <div class="live">
+        <div class="live" style="margin: 20px 0;">
             <p class="live-time">居住时效</p>
-            <div class="means-input">
-                <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1" onfocus="this.blur()">
-                <img src="images/tao/down.png">
+            <div class="means-input" id="select_date2" style="width: 90%;justify-content:space-between;box-sizing: border-box;">
+              <input class="measn" id="date3" onfocus="this.blur()" placeholder="开始时间" style="text-align: center;"><span style="color: #999;">-</span><input class="measn" id="date4" onfocus="this.blur()" placeholder="结束时间" style="text-align: center;">
+              <!-- <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()"> -->
+              <img src="images/tao/down.png" style="margin-right: 5px">
             </div>
-            <p class="live-long">- 长期</p>
         </div>
         <div class="facell">
             <div class="face" id="enter1">
@@ -151,17 +151,6 @@
     var housesId = getQueryString("housesId");
     $('.live-title .live_p0').html(address)
     $(function(){
-        /* 控制第一个选择器显示 */
-        var select1 = $.selectDate("#select_1", {
-            start: 1994,
-            end:2999,
-            select: [2012, 2, 15],
-            title: '请选择居住开始时间'
-        }, function (data) {
-            console.log(data);
-            document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
-            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
-        });
         var weekdayArr2;
         var weekdayArr;
         $.ajax({
@@ -228,6 +217,7 @@
         $('#submit').click(function(){
             var infor = {
                     'userId' : 2,
+                    'housesId':housesId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),
                     'certificatesNegativePhoto' : $('#preview12').attr('src'),
@@ -242,7 +232,10 @@
                     'certificatesOffice' : document.getElementById('measn12').value,
                     'certificatesAddress' : document.getElementById('address').value,
                     'telephone' : document.getElementById('telephone').value,
-                    'leaseStartTime' : document.getElementById('select_1').value,
+                    'leaseStartTime' : document.getElementById('date3').value,
+                    'leaseStopTime': document.getElementById('date4').value,
+                    'liveTypeId':6,
+                    'liveTypeName':'员工'
                 };
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
@@ -294,7 +287,7 @@
                 layer.load(1);
                 $.ajax({
                     //发送请求的地址
-                     url:'/jianfuzengxiao/api/userInfo/addUser.html',
+                     url:'/jianfuzengxiao/api/personnel/addUserPersonnel.html',
                     //请求方式
                     type:'POST',
                     //服务器返回的数据类型
@@ -427,6 +420,7 @@
         }
         var Prescription0 = Prescription0.split('-');
         var Prescription1 = Prescription1.split('-')
+        // 证件失效
         var date1 = $.selectDate("#date1",{
             start:1994,
             end:2999,
@@ -457,6 +451,38 @@
         $("#select_date1").click(function () {
             date1.show();
             date2.hide();
+        })
+        // 居住失效
+        var date3 = $.selectDate("#date3",{
+            start:1994,
+            end:2999,
+            select:Prescription0,
+            title:'证件有效期开始时间'
+        },function (data) {
+            // console.log(data);
+            document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
+            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
+            $(this).hide()
+            setTimeout(function(){
+                date4.show()
+            }, 300);
+        });
+        var date4 = $.selectDate("#date4",{
+            start:1994,
+            end:2999,
+            select:Prescription1,
+            title:'证件有效期结束时间'
+        },function (data) {
+            // console.log(data);
+            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+            document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
+            date3.hide()
+            $(this).hide()
+        });
+
+        $("#select_date2").click(function () {
+            date3.show();
+            date4.hide();
         })
     }
     function imgPreview(fileDom, id) {
