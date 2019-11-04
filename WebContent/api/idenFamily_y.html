@@ -18,7 +18,22 @@
     </div>
     <div class="tu2"><img src="images/yang/tu2.png" alt=""></div>
     <div class="tips1 back">您的家属申请已提交，等待审核</div>
-    <div class="return"><a href="house_z.html">返回</a></div>
+    <!-- <div class="return"><a href="house_z.html">返回</a></div> -->
 </div>
 </body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script>
+//获取参数
+function getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+}
+// 这样调用：housesId即为上个页面传回来的变量名
+var housesId = getQueryString("housesId");
+$('.tips1.back').after('<div class="return"><a href="house_z.html?housesId='+housesId+'">返回</a></div>')
+</script>
 </html>

@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,91 +8,71 @@
     <link rel="stylesheet" href="js/datepicker/foundation-datepicker.css">
     <link rel="stylesheet" href="css/information_t.css">
     <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
-    <!-- <script src="js/mobileSelect.js" type="text/javascript"></script> -->
     <title>租户人员信息上报</title>
 </head>
-
 <body>
     <div class="title">
         <div class="timg">
-            <div class="goback" onclick="history.go(-1)">
-                <img src="images/tao/nav_back.png" alt="">
-            </div>
+           <div class="goback" onclick="history.go(-1)"><img src="images/tao/nav_back.png" alt=""></div>
             <p class="h-title">租户人员信息上报</p>
         </div>
         <div class="live-title">
             <img src="images/tao/Combined Shape.png">
-            <p class="live_p0">青年之都</p>
-            <p class="live_p">23-02-2203</p>
-            <p class="live_p">家属上报</p>
+            <p class="live_p0">门店地址字段</p>
+            <p class="live_p">租户上报</p>
         </div>
-
         <div class="live">
             <p class="live-time">居住时效</p>
             <div class="means-input">
-                <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1">
+                <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1" onfocus="this.blur()">
                 <img src="images/tao/down.png">
             </div>
             <p class="live-long">- 长期</p>
         </div>
         <div class="facell">
-
-            <div class="face">
+            <div class="face" id="enter1">
                 <img src="images/tao/face.png" alt="" id="preview10">
-                <input type="file" name="file" onchange="imgPreview(this,'preview10')" accept="image/*"
+                <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
                     capture="camera" />
                 <p class="faceword" id="faceph">点击拍摄人脸照片</p>
             </div>
-            <!-- <div class="facefront">
-                <img src="images/tao/z.png" class="face-front" id="preview11">
-                <input type="file" name="file" onchange="imgPreview(this,'preview11')">
-            </div>
-            <div class="facefront fan">
-                <img src="images/tao/fan.png" class="face-front" id="preview12">
-                <input type="file" name="file" onchange="imgPreview(this,'preview12')">
-            </div> -->
             <div class="allimg">
                 <div class="a">
-                    <div class="facefront fan">
+                    <div class="facefront fan" id="enter2">
                         <img src="images/tao/bag.png" class="face-front" id="preview11">
-                        <input type="file" name="file" onchange="imgPreview(this,'preview11')">
                         <div class="word">证件正面</div>
                         <p class="faceword1" id="prev1">点击上传/拍摄证件正面</p>
                     </div>
-
                 </div>
+                <!-- <div id="content" style="width: 90%;min-height: 300px;margin-top:20px;overflow: auto;"></div> -->
                 <div class="a" style="margin-top:20px;">
-                    <div class="facefront fan">
+                    <div class="facefront fan" id="enter3">
                         <img src="images/tao/bag.png" class="face-front" id="preview12">
-                        <input type="file" name="file" onchange="imgPreview(this,'preview12')">
                         <div class="word">证件背面</div>
                         <p class="faceword1" id="prev2">点击上传/拍摄证件背面</p>
                     </div>
-
                 </div>
             </div>
         </div>
-
         <div class="border"></div>
-
         <div class="means">
             <div class="meanslist">
                 <div class="means-name">证件类型</div>
                 <div class="means-input">
-                    <input type="text" placeholder="选择证件类型" class="measn" id="trigger1">
+                    <input type="text" placeholder="选择证件类型" class="measn" id="trigger1" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入姓名" class="measn12">
+                    <input type="text" placeholder="录入姓名" class="measn12" id="namev">
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</div>
                 <div class="means-input">
-                    <input type="text" placeholder="选择性别" class="measn" id="trigger2">
+                    <input type="text" placeholder="选择性别" class="measn" id="trigger2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
@@ -101,7 +80,7 @@
                 <div class="means-name">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
 
                 <div class="means-input">
-                    <input type="text" placeholder="选择生日" class="measn" id="select_2">
+                    <input type="text" placeholder="选择生日" class="measn" id="select_2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
 
@@ -110,108 +89,72 @@
                 <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
 
                 <div class="means-input">
-                    <input type="text" placeholder="选择民族" class="measn" id="trigger3">
+                    <input type="text" placeholder="选择民族" class="measn" id="trigger3" value="" onfocus="this.blur()">
                     <img src="images/tao/down.png">
-
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">证件号码</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入证件号码" class="measn12">
+                    <input type="text" placeholder="录入证件号码" class="measn12" id="measnnum">
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">证件时效</div>
 
-                <div class="means-input">
-                    <input type="text" placeholder="选择证件有效期" class="measn" id="select_3">
+                <div class="means-input" id="select_date1" style="justify-content:space-between; padding: 0 1.5%;box-sizing: border-box;">
+                    <input class="measn" id="date1" onfocus="this.blur()" placeholder="开始时间" style="text-align: center;"><span style="color: #999;">-</span><input class="measn" id="select_3" onfocus="this.blur()" placeholder="结束时间" style="text-align: center;">
+                    <!-- <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()"> -->
                     <img src="images/tao/down.png">
-
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">办证机关</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入办证机关" class="measn12">
+                    <input type="text" placeholder="录入办证机关" class="measn12" id="measn12">
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">证件地址</div>
                 <div class="means-input13">
-                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text"></textarea>
-
+                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address"></textarea>
                 </div>
             </div>
             <div class="meanslist">
                 <div class="means-name">联系方式</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入联系方式" class="measn12">
+                    <input type="text" placeholder="录入手机号码" class="measn12" id="telephone">
                 </div>
             </div>
         </div>
-        <a href="idenTenant_y.html">
-            <div class="btn">提交</div>
-        </a>
+       <div class="btn" id="submit">提交</div>
     </div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-
     <script type="text/javascript" src="js/selectDate.js"></script>
-    <script type="text/javascript" src="lib/mobileSelect.min.js"></script>
-
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/mobileSelect.js"></script>
+    <script type="text/javascript" src="js/alrem.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
     <script>
-        var weekdayArr = ['身份证', '驾驶证'];
-        var weekdayArr1 = ['男', '女'];
-        var weekdayArr2 = ['汉族', '满族', '藏族', '维吾尔族', '蒙古族'];
-        var mobileSelect = new MobileSelect({
-            trigger: '#trigger1',
-            title: '有效证件',
-            wheels: [
-                { data: weekdayArr }
-            ],
-            position: [0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger1').value = data;
-            }
-        });
-        var mobileSelect = new MobileSelect({
-            trigger: '#trigger2',
-            title: '性别',
-            wheels: [
-                { data: weekdayArr1 }
-            ],
-            position: [0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger2').value = data;
-            }
-        });
-        var mobileSelect = new MobileSelect({
-            trigger: '#trigger3',
-            title: '民族',
-            wheels: [
-                { data: weekdayArr2 }
-            ],
-            position: [2], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger3').value = data;
-            }
-        });
-
+   //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // 这样调用：housesId即为上个页面传回来的变量名
+    var address = getQueryString("address");
+    var housesId = getQueryString("housesId");
+    $('.live-title .live_p0').html(address)
+    $(function(){
+        /* 控制第一个选择器显示 */
         var select1 = $.selectDate("#select_1", {
             start: 1994,
-            end: 2019,
+            end:2999,
             select: [2012, 2, 15],
             title: '请选择居住开始时间'
         }, function (data) {
@@ -219,25 +162,306 @@
             document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
+        var weekdayArr2;
+        var weekdayArr;
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/common/getNationList.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{},
+            success:function(data){
+                //console.log(data.data)
+                    //[{nationId: "1", nationName: "汉族"},{nationId: "1", nationName: "汉族"}]
+                weekdayArr2 = data.data//[{key:"1",value:'汉族'}, {key:"2",value:'满族'},{key:"3",value:'藏族'} , {key:"4",value:'维吾尔'}, {key:"5",value:'维11吾尔'}];
+                for(var i in weekdayArr2){
+                    for(var j in weekdayArr2[i]){
+                        if(j == 'nationName'){
+                            weekdayArr2[i]['value'] = weekdayArr2[i][j]//修改属性名为“value”
+                            delete weekdayArr2[i]['nationName']//删除“nationName”
+                        }
+                        if(j == 'nationId'){
+                            weekdayArr2[i]['id'] = weekdayArr2[i][j]//修改属性id为“id”
+                            delete weekdayArr2[i]['nationId']//删除“nationId”
+                        }
+                    }
+                }
+                $.ajax({
+                    //请求方式
+                    type:'POST',
+                    //发送请求的地址
+                    url:'/jianfuzengxiao/api/common/getCertTypeList.html',
+                    //服务器返回的数据类型
+                    dataType:'json',
+                    //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                    data:{},
+                    success:function(data){
+                        weekdayArr = data.data
+                        // console.log(weekdayArr)
+                        for(var i in weekdayArr){
+                            for(var j in weekdayArr[i]){
+                                if(j == 'certificatesTypeName'){
+                                    weekdayArr[i]['value'] = weekdayArr[i][j]//修改属性名为“value”
+                                    delete weekdayArr[i]['certificatesTypeName']//删 除“nationName”
+                                }
+                            }
+                        }
+                        if(weekdayArr !== '' && weekdayArr2 !== ''){
+                            sessionStorage.setItem('weekdayArr',JSON.stringify(weekdayArr))
+                            sessionStorage.setItem('weekdayArr2',JSON.stringify(weekdayArr2))
+                            Positive('身份证','女','1992-01-08','回族');
+                            Back('2012-2-8','2012-2-8');
+                        }
+                    },
+                    error:function(jqXHR){
+                    }
+                }); 
+            },
+            error:function(jqXHR){
+            }
+        }); 
 
+        // 点击提交
+        $('#submit').click(function(){
+            var infor = {
+                    'userId' : 2,
+                    'facePhoto' : $('#preview10').attr('src'),
+                    'certificatesPositivePhoto' : $('#preview11').attr('src'),
+                    'certificatesNegativePhoto' : $('#preview12').attr('src'),
+                    'certificatesTypeName' : document.getElementById('trigger1').value,
+                    'username' : document.getElementById('namev').value,
+                    'gender' : document.getElementById('trigger2').value,
+                    'birthDate' : document.getElementById('select_2').value,
+                    'nationName' : document.getElementById('trigger3').value,
+                    'certificatesNumber' : document.getElementById('measnnum').value,
+                    'certificatesStartTime' : document.getElementById('date1').value,
+                    'certificatesStopTime' : document.getElementById('select_3').value,
+                    'certificatesOffice' : document.getElementById('measn12').value,
+                    'certificatesAddress' : document.getElementById('address').value,
+                    'telephone' : document.getElementById('telephone').value,
+                    'leaseStartTime' : document.getElementById('select_1').value,
+                };
+            infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
+            infor.nationId = contain(weekdayArr2,infor.nationName);
+            var base = 'data:image/jpeg;base64';
+            if($('#preview10').attr('name') !== 'success'){
+                infor.facePhoto = ''
+            }
+            if(!infor.certificatesNegativePhoto.match(base)){
+                infor.certificatesNegativePhoto = ''
+            }
+            if(!infor.certificatesPositivePhoto.match(base)){
+                infor.certificatesPositivePhoto = ''
+            }
+            if(infor.gender == '男'){
+                infor.gender = 1
+            }else if(infor.gender == '女'){
+                infor.gender = 2
+            }
+            console.log(infor)
+            if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
+                layer.msg('请选择居住开始时间');
+            }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
+                layer.msg('请添加人脸照片');
+            }else if(infor.certificatesPositivePhoto == undefined || infor.certificatesPositivePhoto == '' || infor.certificatesNegativePhoto == undefined || infor.certificatesNegativePhoto == ''){
+                layer.msg('请添加完整的身份证照片');
+            }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
+                layer.msg('请选择证件类型');
+            }else if(infor.username  == undefined || infor.username == ''){
+                layer.msg('请填写姓名');
+            }else if(infor.gender  == undefined || infor.gender == ''){
+                layer.msg('请选择性别');
+            }else if(infor.birthDate  == undefined || infor.birthDate == ''){
+                layer.msg('请选择生日');
+            }else if(infor.nationName  == undefined || infor.nationName == ''){
+                layer.msg('请选择民族');
+            }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
+                layer.msg('请填写证件号码');
+            }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
+                layer.msg('请选择证件有效期');
+            }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
+                layer.msg('请填写办证机关');
+            }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
+                layer.msg('请填写证件地址');
+            }else if(infor.telephone  == undefined || infor.telephone == ''){
+                layer.msg('请填写联系电话');
+            }else if(infor.telephone  == undefined || infor.telephone == ''){
+                layer.msg('请填写联系电话');
+            }else{
+                layer.load(1);
+                $.ajax({
+                    //发送请求的地址
+                     url:'/jianfuzengxiao/api/userInfo/addUser.html',
+                    //请求方式
+                    type:'POST',
+                    //服务器返回的数据类型
+                    dataType:'json',
+                    //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                    data: infor,
+                    success:function(data){
+                        console.log(data)
+                        layer.closeAll('loading');
+                        if(data.code == 1){
+                            layer.msg('提交成功');
+                            setTimeout(function(){
+                                window.location.href="idenTenant_y.html?housesId="+housesId
+                            }, 1500);
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                    },
+                    error:function(jqXHR){
+                    }
+                }); 
+            }
+        })
 
-        var select3 = $.selectDate("#select_3", {
-            start: 1994,
-            end: 2019,
-            select: [2012, 2, 15],
-            title: '证件有效日期'
-        }, function (data) {
-            console.log(data);
-            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
-            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
+    })
+    function contains(arrays, obj) {
+        // var i = arrays.length;
+        for(var i = 0;i<arrays.length;i++){
+            if(arrays[i].value == obj){
+                return i;
+            }
+        }
+        return false;
+    }
+    function contain(arrays, obj) {
+        // var i = arrays.length;
+        for(var i = 0;i<arrays.length;i++){
+            if(arrays[i].value == obj){
+                if(arrays[i].id){
+                    return arrays[i].id;
+                }else if(arrays[i].certificatesTypeId){
+                    return arrays[i].certificatesTypeId;
+                }
+            }
+        }
+        return '';
+    }
+    function Positive(type,Gender,birthday,Nation){
+        var arr = $('.mobileSelect')
+        console.log(arr.length)
+        for(var i = 0; i< arr.length;i++){
+            if(arr.eq(i).find('.title').html() === "有效证件" || arr.eq(i).find('.title').html() == "性别" || arr.eq(i).find('.title').html() == "生日" || arr.eq(i).find('.title').html() == "民族" ){
+                arr.eq(i).remove();
+            }
+        }
+        //获取民族
+        var weekdayArr2 = JSON.parse(sessionStorage.getItem('weekdayArr2'))
+        var i = contains(weekdayArr2,Nation);
+        var mobileSelect0 = new MobileSelect({
+            trigger: '#trigger3',
+            title: '民族',
+            wheels: [
+                { data: weekdayArr2 }
+            ],
+            position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger3').value = data[0].value
+                //$('#trigger3').val(data.value);
+            }
         });
-
-        $.selectDate("#select_2", {}, function (data) {
+        //获取证件
+        var weekdayArr = JSON.parse(sessionStorage.getItem('weekdayArr'))
+        var i = contains(weekdayArr,type);
+        var mobileSelect1 = new MobileSelect({
+            trigger: '#trigger1',
+            title: '有效证件',
+            wheels: [
+                { data: weekdayArr }
+            ],
+           position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger1').value = data[0].value;
+            }
+        });
+        // var weekdayArr = ['身份证', '驾驶证'];
+        var weekdayArr1 = [{id:0,value:'男'},{id:1,value:'女'}];
+       //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
+        var date=new Date;
+        var i = contains(weekdayArr1,Gender);
+        // console.log(i);
+        var mobileSelect2 = new MobileSelect({
+            trigger: '#trigger2',
+            title: '性别',
+            wheels: [
+                { data: weekdayArr1 }
+            ],
+            position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+            transitionEnd: function (indexArr, data) {
+                console.log(data);
+            },
+            callback: function (indexArr, data) {
+                console.log(data);
+                document.getElementById('trigger2').value = data[0].value;
+            }
+        });
+        var birthday0 = birthday.split('-')
+        $.selectDate("#select_2", {
+            select: birthday0,
+            title: '生日'
+        }, function (data) {
             console.log(data);
             document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
         });
+    }
 
-        function imgPreview(fileDom, id) {
+    function Back(Prescription0,Prescription1){
+        var arr = $('.mobileSelect')
+        for(var i = 0; i< arr.length;i++){
+            if(arr.eq(i).find('.title').html() == "证件有效期开始时间" || arr.eq(i).find('.title').html() == "证件有效期结束时间"){
+                arr.eq(i).remove();
+            }
+        }
+        var Prescription0 = Prescription0.split('-');
+        var Prescription1 = Prescription1.split('-')
+        var date1 = $.selectDate("#date1",{
+            start:1994,
+            end:2999,
+            select:Prescription0,
+            title:'证件有效期开始时间'
+        },function (data) {
+            // console.log(data);
+            document.getElementById('date1').value = data.year + "-" + data.month + "-" + data.day
+            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
+            $(this).hide()
+            setTimeout(function(){
+                date2.show()
+            }, 300);
+        });
+        var date2 = $.selectDate("#select_3",{
+            start:1994,
+            end:2999,
+            select:Prescription1,
+            title:'证件有效期结束时间'
+        },function (data) {
+            // console.log(data);
+            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            date1.hide()
+            $(this).hide()
+        });
+
+        $("#select_date1").click(function () {
+            date1.show();
+            date2.hide();
+        })
+    }
+    function imgPreview(fileDom, id) {
+            console.log(id)
+            var id = id
             //判断是否支持FileReader
             if (window.FileReader) {
                 var reader = new FileReader();
@@ -259,20 +483,51 @@
                 var img = document.getElementById(id);
                 //图片路径设置为读取的图片
                 img.src = e.target.result;
+                // if(id=='preview12'){
+                //     document.getElementById("prev2").style.display = "none";
+                // }
                 if (id == 'preview10') {
                     console.log('12323')
                     document.getElementById("faceph").style.display = "none";
-                } else if (id == 'preview11') {
-                    document.getElementById("prev1").style.display = "none";
-                } else if (id == 'preview12') {
-                    document.getElementById("prev2").style.display = "none";
-                }
+                } 
+
             };
-            reader.readAsDataURL(file);
+            layer.load(1);
+            var formData = new FormData();
+            formData.append('file',file);
+            formData.append('picType','A');
+            console.log(formData);
+            $.ajax({
+                //发送请求的地址
+                 url:'/jianfuzengxiao/api/common/uploadFile.html',
+                //请求方式
+                type:'POST',
+                dataType:'json',
+                //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(res){
+                    console.log(res);
+                    if(parseInt(res.code) == 1){
+                        layer.closeAll('loading');
+                        $('#preview10').attr('src',res.data.absolutePath);
+                        layer.msg('上传成功');
+                        $('#preview10').attr('name','success');
+                        $('#faceph').remove();
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                },
+                error:function(jqXHR){
+                }
+            }); 
+            // reader.readAsDataURL(file);
+            // console.log(file)
         }
+        // function goback(){
+        //     window.goback(-1)
+        // }
     </script>
-
-
 </body>
-
 </html>

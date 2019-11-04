@@ -40,7 +40,8 @@
     <div class="content">
         <div class="total">
             <div class="total_num">房屋联系人 (<span>3</span>)</div>
-          <a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>
+<!--             <a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>
+            <a href="identity_yg_t.html"><div class="total_add"><span>+</span>新增关联人</div></a> -->
         </div>
         <div class="contacts">
             <a class="address" href="personnel_y.html">
@@ -179,12 +180,7 @@
             <div class="popcont1">
                 <div class="pop_title1">房屋（租户&家属）录入</div>
                 <div class="pop_close1"><img src="images/list/close.png" alt=""></div>
-                <div class="pop_exhibition1">
-                    <a href="identity_zh_t.html"><div class="lessee">上报租户</div></a>
-                    <a href="identity_family_t.html"><div class="family">上报家属</div></a>
-
-                                       
-                </div>
+                <div class="pop_exhibition1"></div>
             </div>
         </div>
 
@@ -202,7 +198,6 @@
     }
     // 这样调用：housesId即为上个页面传回来的变量名
     var housesId = getQueryString("housesId");
-    console.log(housesId)
     $(function () {
         //请求数据
         $.ajax({
@@ -221,11 +216,19 @@
               var imgUrl = data.data.houses.houseTypePhoto
               $('.pop_exhibition img').attr('src',imgUrl)
               $('.total_num span').html(data.data.per.length)
-              if(data.data.houses.housesStatus==1){
+              // 传到下一页参数
+              var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
+              // 判断是房屋或者门店显示新建联系人
+              if(data.data.houses.housesStatus==1){  //房屋
                 var img = '<img src="images/list/house.png" alt="">'
-              }else if(data.data.houses.housesStatus==2){
+                $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
+              }else if(data.data.houses.housesStatus==2){   //门店
                 var img = '<img src="images/list/store.png" alt="">'
+                $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
               }
+              // 是房屋的时候上报家属或者租户点击跳页
+              $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
+              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
               //头部房屋、门店信息数据
               var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
@@ -233,7 +236,7 @@
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">房屋地址</div>'+
-                            '<div class="haddress_detail">'+data.data.houses.housesAddress+'</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.provName+''+data.data.houses.cityName+''+data.data.houses.areaName+''+data.data.houses.communityName+''+data.data.houses.communityStreetName+''+data.data.houses.housesAddress+'</div>'+
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">房屋类型</div>'+
