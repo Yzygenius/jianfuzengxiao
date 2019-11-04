@@ -12,6 +12,36 @@
         .box-one{
             display: none;
         }
+        .images{
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 23%;
+            width: 100%;
+            margin-top: 10px;
+            /*overflow: hidden;*/
+            box-sizing: border-box;
+        }
+        .images .addimg{
+            position:relative;
+            width: 65px;
+            height: 84px;
+            margin-top: 10px;
+            margin-right: 10px;
+            box-shadow: 0px 0px 2px;
+        }
+        .images .addimg .cloase{
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+        }
+        .images .addimg img{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -160,6 +190,12 @@
                 </div>
             </div>
             <div class="upload_box first"><span>上传租赁合同</span><input id="file1" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="images">
+                <!-- <div class="addimg">
+                    <div class="cloase"><img src="images/list/cloase.png" alt=""></div>
+                    <img src="" alt="">
+                </div> -->
+            </div>
         </div>
         <div class="box-one store">
             <div class="box-title"></div>
@@ -174,9 +210,15 @@
             </div>
             <div class="inputInput">
                 <p>企业名称</p>
-                <input type="text" placeholder="填写企业名称">
+                <input type="text" placeholder="填写企业名称" id="enter_name">
             </div>
             <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="images">
+                <div class="addimg">
+                    <div class="cloase"><img src="images/list/cloase.png" alt=""></div>
+                    <img src="" alt="">
+                </div>
+            </div>
         </div>
     </div>
     <div style="background:#fff;overflow: hidden;">
@@ -196,7 +238,7 @@
     　　type: 'POST', 
           url: '/jianfuzengxiao/api/userInfo/getUserDetail.html',    //规定连同请求发送到服务器的数据；
           data: {
-            userId: 2
+            userId: 3
           },   //映射或字符串值，规定连同请求发送到服务器的数据；
           dataType:'json',
           success: function(data) {
@@ -224,33 +266,75 @@
             $('#telephone').html(infor.telephone);
           },      //请求成功时执行的回调函数；
     })
-    
+    $(document).on("click", ".cloase",function () {
+        console.log('q1')
+        $(this).parents('.addimg').remove();
+    })
     // 提交房产信息
     $('#submit').click(function(){
-        var formData = {
-                'userId' : 2
-                // 'housesId' : ,                
+        var formData = {}
+            formData.userId = 3;
+        var type = $('#submit').attr('data-type');
+        // var userId = $('#submit').attr('data-userId');
+        if(type == 1){//房屋自持
+            var house = $('#support .house');
+        }else if(type == 2){ //房屋租赁
+            var house = $('#lease .house');
+            var num = house.find('.images .addimg');
+            var list = '';
+            for(var i = 0;i<num.length;i++){
+                list+=','+num.eq(i).find('.add_img').attr('src');
             }
-        // if(){ //房主 房屋
-
-        // }else if(){ //租户 房屋
-
-        // }else if(){ //房主 门店
-
-        // }else if(){ //租户 门店
-
-        // }
-        $.ajax({
-        　　type: 'POST', 
-            url: '/jianfuzengxiao/api/personnel/addUserPersonnel.html',    //规定连同请求发送到服务器的数据；
-            data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
-            dataType:'json',
-            success: function(data){
-                if(data.code == 1){
-                    window.location.href="idenWait_y.html"
+            formData.leaseContract = list.substr(1);
+            formData.leaseStartTime = $("#date1").html();
+            formData.leaseStopTime = $("#date2").html();
+        }else if(type == 3){ //门店自持
+            var house = $('#support .store');
+            formData.enterpriseName = document.getElementById('ent_name').value;
+        }else if(type == 4){ //门店租赁
+            var house = $('#lease .store');
+            var num = house.find('.images .addimg');
+            var list = '';
+            for(var i = 0;i<num.length;i++){
+                list+=','+num.eq(i).find('.add_img').attr('src');
+            }
+            formData.leaseContract = list.substr(1);
+            formData.enterpriseName = document.getElementById('enter_name').value;
+            formData.leaseStartTime = $("#date3").html();
+            formData.leaseStopTime = $("#date4").html();
+        }
+        var housesId = house.attr('data-houseId');
+        formData.housesId = housesId,
+        console.log(formData)
+        if(formData.enterpriseName && formData.enterpriseName == ''){
+            layer.msg('请填写企业名称')
+        }else if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
+            layer.msg('请选择居住时效')
+        }else if(formData.leaseStartTime == 'undefined' || formData.leaseStartTime == undefined || formData.leaseStopTime == 'undefined' || formData.leaseStopTime == undefined ){
+            layer.msg('请选择居住时效')
+        }else if(formData.leaseContract == ''){
+            layer.msg('请添加租赁合同')
+        }else{
+            layer.load(1);
+            $.ajax({
+            　　type: 'POST', 
+                url: '/jianfuzengxiao/api/personnel/addUserPersonnel.html',    //规定连同请求发送到服务器的数据；
+                data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
+                dataType:'json',
+                success: function(data){
+                    layer.closeAll('loading');
+                    if(data.code == 1){
+                        window.location.href="idenWait_y.html"
+                    }else{
+                        layer.msg(data.msg)
+                    }
+                }, 
+                error:function(jqXHR){
+                    console.log('fail')
                 }
-            }, 
-        })
+            })
+        }
+        
     })
 </script>
 </html>

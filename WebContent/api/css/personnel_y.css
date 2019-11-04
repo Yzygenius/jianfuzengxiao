@@ -580,6 +580,7 @@ h6 {
 .verify .select_time .upload_box.active{
     background: #F7FAFD;
     color: #0091FF;
+    text-align: left;
 }
 .verify .select_time .upload_box input{
     position: absolute;

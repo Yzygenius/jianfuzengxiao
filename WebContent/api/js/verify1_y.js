@@ -29,7 +29,6 @@
                     {data : uplinkData0}
                 ],
                 transitionEnd:function(indexArr, data){
-                    console.log(data);
                 },
                 callback:function(indexArr, data){
                     document.getElementById('add_btna').value = data[0].value;
@@ -44,7 +43,6 @@
                     {data : uplinkData0}
                 ],
                 transitionEnd:function(indexArr, data){
-                    console.log(data);
                 },
                 callback:function(indexArr, data){
                     document.getElementById('add_btn0').value = data[0].value;
@@ -115,10 +113,8 @@
                                         {data : UplinkData}
                                     ],
                                     transitionEnd:function(indexArr, data){
-                                        console.log(data);
                                     },
                                     callback:function(indexArr, data){
-                                        console.log(data);
                                         document.getElementById('add_btn1').value = data[0].value;
                                         Number(housesStatus,communityId,data[0].communityStreetStatus,data[0].id);
                                     }
@@ -179,10 +175,8 @@
                         {data : uplinkData0}
                     ],
                     transitionEnd:function(indexArr, data){
-                        console.log(data);
                     },
                     callback:function(indexArr, data){
-                        console.log(data);
                         document.getElementById('add_btn2').value = data[0].value;
                         layer.load(1);
                         var housesId = data[0].housesId;
@@ -190,7 +184,7 @@
                         　　type: 'POST', 
                             url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
                             data: {
-                                'userId':2,
+                                'userId':3,
                                 'housesId':housesId
                             },  //映射或字符串值，规定连同请求发送到服务器的数据；
                             dataType:'json',
@@ -200,6 +194,7 @@
                                 if(data.code == 1){
                                     $('.select_house').fadeOut(0);
                                     $('.select_time .box-one').fadeOut(0);
+                                    $('.images').html('');
                                     // layer.msg('添加成功');
                                     if(data.data.housesMode == 1){
                                         $('#support').fadeIn(200);
@@ -207,13 +202,17 @@
                                         $('#support .store').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
                                             infor.communityStreetName+infor.houseNumber+'号'+'</span>'+
                                             '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>'+
-                                            '<div class="inputInput"><p>企业名称</p><input type="text" placeholder="填写企业名称"></div>')
+                                            '<div class="inputInput"><p>企业名称</p><input type="text" placeholder="填写企业名称" id="ent_name"></div>');
+                                        $('#support .store').attr('data-houseId',housesId);
+                                        $('#submit').attr('data-type',3);
                                     }else if(data.data.housesMode == 2){
                                         $('#lease').fadeIn(200);
                                         $('#lease').find('.store').fadeIn(200);
                                         $('#lease .store .box-title').html('<img src="images/yang/house4.png" alt=""><span>'+
                                             infor.communityStreetName+infor.houseNumber+'号'+'</span>');
-                                        $('#lease .store .box-cont').html(infor.housesAddress)
+                                        $('#lease .store .box-cont').html(infor.housesAddress);
+                                        $('#lease .store').attr('data-houseId',housesId);
+                                        $('#submit').attr('data-type',4);
                                     }
                                 }else{
                                     layer.msg(data.msg);
@@ -270,10 +269,8 @@
                         {data : uplinkData0}
                     ],
                     transitionEnd:function(indexArr, data){
-                        console.log(data);
                     },
                     callback:function(indexArr, data){
-                        console.log(data);
                         document.getElementById('add_btnc').value = data[0].value;
                         quartersnum(housesStatus,communityId,communityStreetId,data[0].id);
                     }
@@ -323,10 +320,8 @@
                         {data : uplinkData0}
                     ],
                     transitionEnd:function(indexArr, data){
-                        console.log(data);
                     },
                     callback:function(indexArr, data){
-                        console.log(data);
                         document.getElementById('add_btnd').value = data[0].value;
                         quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].id);
                     }
@@ -364,10 +359,6 @@
                             uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
                             delete uplinkData0[i]['houseNumber']//删除“nationName”
                         }
-                        // if(j == 'communityStreetId'){
-                        //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                        //     delete uplinkData0[i]['communityStreetId']//删除“nationId”
-                        // }
                     }
                 }
                 var mobileSelect4 = new MobileSelect({
@@ -377,10 +368,10 @@
                         {data : uplinkData0}
                     ],
                     transitionEnd:function(indexArr, data){
-                        console.log(data);
+                        // console.log(data);
                     },
                     callback:function(indexArr, data){
-                        console.log(data);
+                        // console.log(data);
                         document.getElementById('add_btne').value = data[0].value;
                         layer.load(1);
                         var housesId = data[0].housesId;
@@ -388,7 +379,7 @@
                         　　type: 'POST', 
                             url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
                             data: {
-                                'userId':2,
+                                'userId':3,
                                 'housesId':housesId
                             },  //映射或字符串值，规定连同请求发送到服务器的数据；
                             dataType:'json',
@@ -398,19 +389,23 @@
                                 if(data.code == 1){
                                     $('.select_house').fadeOut(0);
                                     $('.select_time .box-one').fadeOut(0);
-                                    // layer.msg('添加成功');
+                                    $('.images').html('');
                                     if(data.data.housesMode == 1){
                                         $('#support').fadeIn(200);
                                         $('#support').find('.house').fadeIn(200);
                                         $('#support .house').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
                                             infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>'+
                                             '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>')
+                                        $('#support .house').attr('data-houseId',housesId);
+                                        $('#submit').attr('data-type',1);
                                     }else if(data.data.housesMode == 2){
                                         $('#lease').fadeIn(200);
                                         $('#lease').find('.house').fadeIn(200);
                                         $('#lease .house .box-title').html('<img src="images/yang/house3.png" alt=""><span>'+
                                             infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>');
-                                        $('#lease .house .box-cont').html(infor.housesAddress)
+                                        $('#lease .house .box-cont').html(infor.housesAddress);
+                                        $('#lease .house').attr('data-houseId',housesId);
+                                        $('#submit').attr('data-type',2)
                                     }
                                 }else{
                                     layer.msg(data.msg);
@@ -431,18 +426,79 @@ $(".upload_box.first input[type=file]").change(function() {
     var file1_name = document.getElementById('file1')
     console.log(file1_name.files[0])
     if (file1_name.files[0] == undefined) {
-        $('.upload_box.first span').html("上传租赁合同")
+        var cont = $('.upload_box.first span').html();
+        $('.upload_box.first span').html(cont)
     } else {
-        $('.upload_box.first span').html("已添加租赁合同");
+        layer.load(1);
+        var formData = new FormData();
+        formData.append('file',file1_name.files[0]);
+        formData.append('picType','C');
+        console.log(formData);
+        $.ajax({
+            //发送请求的地址
+             url:'/jianfuzengxiao/api/common/uploadFile.html',
+            //请求方式
+            type:'POST',
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:formData,
+            contentType: false,
+            processData: false,
+            success:function(res){
+                console.log(res);
+                if(parseInt(res.code) == 1){
+                    layer.closeAll('loading');
+                    var add = $('.upload_box.first').parents('.box-one').find('.images')
+                    add.append('<div class="addimg"><div class="cloase"><img src="images/list/cloase.png" alt=""></div><img class="add_img" src="'+res.data.absolutePath+'" alt=""></div>')
+                    layer.msg('上传成功');
+                }else{
+                    layer.msg(res.msg);
+                }
+            },
+            error:function(jqXHR){
+            }
+        }); 
+        $('.upload_box.first span').html("点击继续上传");
         $('.upload_box.first').addClass('active');
     }
 })
 $(".upload_box.second input[type=file]").change(function() {
     var file1_name1 = document.getElementById('file2')
+    console.log(file1_name1.files[0])
     if (file1_name1.files[0] == undefined) {
-        $('.upload_box.second span').html("上传租赁合同")
+        var cont = $('.upload_box.second span').html();
+        $('.upload_box.second span').html(cont)
     } else {
-        $('.upload_box.second span').html("已添加租赁合同")
+        layer.load(1);
+        var formData = new FormData();
+        formData.append('file',file1_name1.files[0]);
+        formData.append('picType','C');
+        console.log(formData);
+        $.ajax({
+            //发送请求的地址
+             url:'/jianfuzengxiao/api/common/uploadFile.html',
+            //请求方式
+            type:'POST',
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:formData,
+            contentType: false,
+            processData: false,
+            success:function(res){
+                console.log(res);
+                if(parseInt(res.code) == 1){
+                    layer.closeAll('loading');
+                    var add = $('.upload_box.second').parents('.box-one').find('.images')
+                    add.append('<div class="addimg"><div class="cloase"><img src="images/list/cloase.png" alt=""></div><img class="add_img" src="'+res.data.absolutePath+'" alt=""></div>')
+                    layer.msg('上传成功');
+                }else{
+                    layer.msg(res.msg);
+                }
+            },
+            error:function(jqXHR){
+            }
+        }); 
+        $('.upload_box.second span').html("点击继续上传");
         $('.upload_box.second').addClass('active');
     }
 })
