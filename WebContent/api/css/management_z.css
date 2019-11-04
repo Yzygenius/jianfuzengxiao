@@ -241,7 +241,10 @@ body{
     margin-right: 8px;
 }
 .cont_list .result .result_title .rtitle_left .result_text{
-    max-width: 130px;
+    max-width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: #0091FF;
 }
 .cont_list .result .result_title .result_time{
@@ -370,7 +373,7 @@ body{
     color: #FF7074;
 }
 .pop_up.fail .pop_btn{
-    margin: 0 auto 23px;
+    margin: 15px auto 23px;
 }
 /*过期*/
 .pop_up.end .pop_top,.pop_up.end .pop_time,.pop_up.end .pop_text,.pop_up.end .poptime{

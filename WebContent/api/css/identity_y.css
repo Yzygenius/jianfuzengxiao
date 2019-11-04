@@ -196,6 +196,7 @@ h6 {
     background-color: #0091FF;
     border-radius: 10px;
     z-index: 999;
+    word-break:break-all;
 }
 .modalCont .title{
     width: 100%;

@@ -40,10 +40,12 @@
                     dataType:'json',
                     //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
                     data:{
-                        userId:1
+                        userId:2
                     },
                     success:function(data){
                       var code = data.code;
+                      console.log(data.data.auditRemark)
+                      var auditRemark = escape(data.data.auditRemark)
                       if(code == 1){
                         if(data.data.status == 1){
                             console.log('米审核')
@@ -55,8 +57,8 @@
                             window.close(); 
                         }else if(data.data.status == 3){
                              console.log('失败')
-                            window.location.href = "idenNopass_y.html";
-                            window.close(); 
+                             window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
+                             window.close(); 
                         }
                        
                       }else if(code == 3002){
