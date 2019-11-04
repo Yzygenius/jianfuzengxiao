@@ -11,8 +11,19 @@ public class HousesInfoMVO extends HousesInfo {
 	private String keyword;
 	
 	private String communityStreetStatus;
+	
+	private String housesMode;
 
 	
+	
+	public String getHousesMode() {
+		return housesMode;
+	}
+
+	public void setHousesMode(String housesMode) {
+		this.housesMode = housesMode;
+	}
+
 	public String getCommunityStreetStatus() {
 		return communityStreetStatus;
 	}

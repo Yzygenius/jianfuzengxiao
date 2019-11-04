@@ -58,6 +58,42 @@ public class PersonnelInfoAPIController extends BaseController {
 	/**
 	 * 
 	 * <p style="color:#36F;">
+	 * 选择房产
+	 * </p>
+	 * @param 下拉选择的参数, userId
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月4日 上午11:09:20
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getHousesDetail")
+	public String getHousesDetail(HousesInfoMVO entity){
+		try {
+			throwAppException(StringUtils.isBlank(entity.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			entity.setSts("A");
+			List<HousesInfoMVO> list = housesInfoService.queryList(entity);
+			throwAppException(list.size() < 1, RC.HOUSES_INFO_REPORT_NULL);
+			entity = list.get(0);
+			
+			UserInfoMVO userInfo = new UserInfoMVO();
+			userInfo.setUserId(entity.getUserId());
+			userInfo = userInfoService.queryBean(userInfo);
+			
+			if (StringUtils.equals(entity.getPropertyOwnerIdcard(), userInfo.getCertificatesNumber())) {
+				entity.setHousesMode(HousesInfo.houses_mode_zichi);
+			}else {
+				entity.setHousesMode(HousesInfo.houses_mode_zulin);
+			}
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取房产信息失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
 	 * 上传房产信息
 	 * </p>
 	 * @param  userId 用户ID, housesId 房产ID , enterpriseName 即app店铺租户所填的企业名称 ,leaseStartTime  leaseStopTime 居住失效 , leaseContract 租赁合同（如果多张转为用逗号隔开的字符串）

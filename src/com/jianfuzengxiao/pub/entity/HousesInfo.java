@@ -9,6 +9,11 @@ public class HousesInfo extends Entity {
 	/** 店铺 */
 	public final static String houses_status_dianpu = "2";
 	
+	/** 房产类型 自持 */
+	public final static String houses_mode_zichi = "1";
+	/** 房产类型 租赁 */
+	public final static String houses_mode_zulin = "2";
+	
 	protected String housesId;
 	
 	protected String adminId;
