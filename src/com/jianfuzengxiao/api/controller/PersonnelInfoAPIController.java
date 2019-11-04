@@ -60,7 +60,7 @@ public class PersonnelInfoAPIController extends BaseController {
 	 * <p style="color:#36F;">
 	 * 选择房产
 	 * </p>
-	 * @param 下拉选择的参数, userId
+	 * @param housesId, userId
 	 * @return    
 	 * @throws 
 	 * @author 闫子扬 
@@ -71,10 +71,8 @@ public class PersonnelInfoAPIController extends BaseController {
 	public String getHousesDetail(HousesInfoMVO entity){
 		try {
 			throwAppException(StringUtils.isBlank(entity.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
-			entity.setSts("A");
-			List<HousesInfoMVO> list = housesInfoService.queryList(entity);
-			throwAppException(list.size() < 1, RC.HOUSES_INFO_REPORT_NULL);
-			entity = list.get(0);
+			throwAppException(StringUtils.isBlank(entity.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			entity = housesInfoService.queryBean(entity);
 			
 			UserInfoMVO userInfo = new UserInfoMVO();
 			userInfo.setUserId(entity.getUserId());

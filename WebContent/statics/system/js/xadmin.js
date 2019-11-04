@@ -197,4 +197,18 @@ function x_admin_close(){
     parent.layer.close(index);
 }
 
+function open_ifram(url, title, index){
+
+    for (var i = 0; i <$('.x-iframe').length; i++) {
+        if($('.x-iframe').eq(i).attr('tab-id')==index+1){
+            tab.tabChange(index+1);
+            event.stopPropagation();
+            return;
+        }
+    };
+    
+    tab.tabAdd(title,url,index+1);
+    tab.tabChange(index+1);
+}
+
 
