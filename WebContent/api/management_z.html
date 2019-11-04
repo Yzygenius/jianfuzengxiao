@@ -16,7 +16,7 @@
         </div>
         <div class="header_nav">
             <div class="header_btn active admin_list" data-class="administration">管理列表<div class="header_red">6</div></div>
-            <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red">10</div></div>
+            <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red" id="number">10</div></div>
         </div>
     </div>
     <div class="content">
@@ -260,7 +260,7 @@
     </div>
     <!--审核未通过-->
     <div class="pop_up fail" id="fail">
-        <!--<div class="pop_top">
+        <div class="pop_top">
             <img src="images/list/fail.png" alt="">
             员工审核未通过
         </div>
@@ -278,7 +278,7 @@
             <div class="feedback">
                 信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息</div>
         </div>
-        <div class="pop_btn"><a href="personnel_y.html">查看</a></div>-->
+        <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
     </div>
     <!--过期-->
    <div class="pop_up end" id="end1">
@@ -374,6 +374,7 @@
                 userId:1
             },
             success:function(data){
+            	console.log(data.data)
             	console.log(data.data.rows)
             	var pro='';//审核通过
             	for(var i=0;i<data.data.rows.length;i++){
@@ -385,11 +386,11 @@
                     '<div class="result_title">'+
                     '<div class="rtitle_left">'+
                     '<img src="images/list/success.png" alt="">'+
-                    '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'
+                    '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'
                     +'</div>'+
-                    '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                    '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
                     '</div>'+
-                    '<div class="result_cont">'+data.data.rows[i].msgTypeName+'</div>'+
+                    '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
                     '</div>'
         		}else if(data.data.rows[i].msgTypeId=='3'){
         		  pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
@@ -397,10 +398,10 @@
         		  '</div>'+'<div class="result_title">'+
         		  '<div class="rtitle_left">'+
         		  '<img src="images/list/fail.png" alt="">'+
-        		  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+        		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
         		  '</div>'+
-        		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-        		  '</div>'+'<div class="result_cont">'+data.data.rows[i].msgTypeName+'</div>'+
+        		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
+        		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
               '</div>'
         			
         		}else if(data.data.rows[i].msgTypeId=="2"){
@@ -409,10 +410,10 @@
             		  '</div>'+'<div class="result_title">'+
             		  '<div class="rtitle_left">'+
             		  '<img src="images/list/fail.png" alt="">'+
-            		  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+            		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
             		  '</div>'+
-            		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-            		  '</div>'+'<div class="result_cont">'+data.data.rows[i].msgTypeName+'</div>'+
+            		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
+            		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
                   '</div>'
         		}else if(data.data.rows[i].msgTypeId=='1'){
         			 pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
@@ -420,10 +421,10 @@
            		  '</div>'+'<div class="result_title">'+
            		  '<div class="rtitle_left">'+
            		  '<img src="images/list/fail.png" alt="">'+
-           		  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+           		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
            		  '</div>'+
-           		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-           		  '</div>'+'<div class="result_cont">'+data.data.rows[i].msgTypeName+'</div>'+
+           		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
+           		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
                  '</div>'
         		}else if(data.data.rows[i].msgTypeId=='5'){
         			 pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
@@ -431,14 +432,15 @@
               		  '</div>'+'<div class="result_title">'+
               		  '<div class="rtitle_left">'+
               		  '<img src="images/list/fail.png" alt="">'+
-              		  '<div class="result_text">'+data.data.rows[i].content+data.data.rows[i].msgTypeName+'</div>'+
+              		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
               		  '</div>'+
-              		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-              		  '</div>'+'<div class="result_cont">'+data.data.rows[i].msgTypeName+'</div>'+
+              		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
+              		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
                     '</div>'
         		}
                 }
             	$('.news').html(pro);
+            	$('#number').html(data.data.rows.length)
             	   <!--过期-->
             	
             },
@@ -470,11 +472,22 @@
             success:function(data){
               console.log(data.data)
               var selehtml='';
-              selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.content+'</div>'+
-            '<div class="pop_time">'+data.data.createTime+'</div>'+
-            '<div class="pop_text">'+data.data.msgTypeName+'</div>'+
-            '<div class="poptime">'+data.data.perCreateTime+'</div>'+
-            '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
+              if(data.data.msgTypeId!='3'){
+            	    selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.msgTypeName+'</div>'+
+                    '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+                    '<div class="pop_text">'+data.data.content+'</div>'+
+                    '<div class="poptime">首次提报时间:&nbsp;&nbsp;'+data.data.perCreateTime+'</div>'+
+                    '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
+              }else{
+            	  selehtml+='<div class="pop_top"><img src="images/list/fail.png" alt="">'+data.data.msgTypeName+'</div>'+
+            	  '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+            	  '<div class="pop_text">'+data.data.content+'</div>'+
+            	  '<div class="poptime">首次提报时间：'+data.data.createTime+'</div>'+
+            	  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
+            	  '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
+              }
+              
+          
             if(data.data.msgTypeId=='4'){
             	 $('#success').html(selehtml)
             	 $('.pop_up').fadeOut(200);
