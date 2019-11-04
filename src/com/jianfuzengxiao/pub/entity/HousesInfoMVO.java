@@ -9,8 +9,18 @@ public class HousesInfoMVO extends HousesInfo {
 	private String leaseCount;
 	
 	private String keyword;
+	
+	private String communityStreetStatus;
 
 	
+	public String getCommunityStreetStatus() {
+		return communityStreetStatus;
+	}
+
+	public void setCommunityStreetStatus(String communityStreetStatus) {
+		this.communityStreetStatus = communityStreetStatus;
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}

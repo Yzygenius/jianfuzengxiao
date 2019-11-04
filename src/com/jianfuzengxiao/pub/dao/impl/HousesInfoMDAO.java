@@ -266,51 +266,53 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT houses_id,houses_status,community_id,community_name,community_street_id,community_street_name,storied_building_number,unit,house_number,store_location,sts ");
-		sql.append("FROM  HOUSES_INFO ");
+				"SELECT a.houses_id,a.houses_status,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.storied_building_number,a.unit,a.house_number,a.store_location,a.sts ");
+		sql.append(",b.status community_street_status ");
+		sql.append("FROM  HOUSES_INFO a ");
+		sql.append("left join community_street_info b on(a.community_street_id=b.community_street_id) ");
 		sql.append("WHERE 1=1 ");
 		List<HousesInfoMVO> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getHousesStatus())) {
-					sql.append(" AND houses_status=?");
+					sql.append(" AND a.houses_status=?");
 					params.add(entity.getHousesStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND community_id=?");
+					sql.append(" AND a.community_id=?");
 					params.add(entity.getCommunityId());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND community_street_id=?");
+					sql.append(" AND a.community_street_id=?");
 					params.add(entity.getCommunityStreetId());
 				}
 				if (StringUtils.isNotBlank(entity.getHouseType())) {
-					sql.append(" AND house_type=?");
+					sql.append(" AND a.house_type=?");
 					params.add(entity.getHouseType());
 				}
 				if (StringUtils.isNotBlank(entity.getStoriedBuildingNumber())) {
-					sql.append(" AND storied_building_number=?");
+					sql.append(" AND a.storied_building_number=?");
 					params.add(entity.getStoriedBuildingNumber());
 				}
 				if (StringUtils.isNotBlank(entity.getUnit())) {
-					sql.append(" AND unit=?");
+					sql.append(" AND a.unit=?");
 					params.add(entity.getUnit());
 				}
 				if (StringUtils.isNotBlank(entity.getHouseNumber())) {
-					sql.append(" AND house_number=?");
+					sql.append(" AND a.house_number=?");
 					params.add(entity.getHouseNumber());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
-					sql.append(" AND houses_type_id=?");
+					sql.append(" AND a.houses_type_id=?");
 					params.add(entity.getHousesTypeId());
 				}
 				if (StringUtils.isNotBlank(entity.getStoreLocation())) {
-					sql.append(" AND store_location=?");
+					sql.append(" AND a.store_location=?");
 					params.add(entity.getStoreLocation());
 				}
 				if (StringUtils.isNotBlank(entity.getSts())) {
-					sql.append(" AND sts=?");
+					sql.append(" AND a.sts=?");
 					params.add(entity.getSts());
 				}
 				
