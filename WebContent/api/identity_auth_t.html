@@ -270,7 +270,10 @@
                 layer.msg('请填写证件地址');
             }else if(infor.telephone  == undefined || infor.telephone == ''){
                 layer.msg('请填写联系电话');
+            }else if(infor.telephone  == undefined || infor.telephone == ''){
+                layer.msg('请填写联系电话');
             }else{
+                layer.load(1);
                 $.ajax({
                     //发送请求的地址
                      url:'/jianfuzengxiao/api/userInfo/addUser.html',
@@ -282,6 +285,7 @@
                     data: infor,
                     success:function(data){
                     	console.log(data)
+                        layer.closeAll('loading');
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
@@ -489,8 +493,8 @@
                     console.log(res);
                     if(parseInt(res.code) == 1){
                         layer.closeAll('loading');
-                        layer.msg('上传成功');
                         $('#preview10').attr('src',res.data.absolutePath);
+                        layer.msg('上传成功');
                         $('#preview10').attr('name','success');
                         $('#faceph').remove();
                     }else{
