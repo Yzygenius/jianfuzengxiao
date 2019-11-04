@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="css/personnel_y.css">
     <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
     <title>身份信息认证上报</title>
+    <style>
+        .box-one{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="personCenter verify">
@@ -103,45 +108,49 @@
                 <!--</a>-->
             </div>
         </div>
-        <div style="display: flex;flex-wrap: wrap;">
-            <div class="add_btn0" id="add_btna" style="display: none;"></div>
+        <div style="display: none;flex-wrap: wrap;">
+            <!-- <div class="add_btn0" id="add_btna" style="display: none;"></div> -->
+            <!-- 房屋id -->
             <div class="add_btn0" id="add_btnb" style="display: none;"></div>
             <div class="add_btn0" id="add_btnc" style="display: none;"></div>
             <div class="add_btn0" id="add_btnd" style="display: none;"></div>
             <div class="add_btn0" id="add_btne" style="display: none;"></div>
+            <!-- 门店id -->
+            <div class="add_btn0" id="add_btn1" style="display: none;"></div>
+            <div class="add_btn0" id="add_btn2" style="display: none;"></div>
         </div>
     </div>
     <!--房产地址_自持-->
-    <div class="select_time" style="display: block;">
+    <div class="select_time" id="support" style="display: none;">
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
             <div class="new_select">重新选择</div>
         </div>
-        <div class="box-one">
-            <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span><span class="zc">自持</span></div>
-            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+        <div class="box-one house">
+            <!-- <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span><span class="zc">自持</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div> -->
         </div>
-        <div class="box-one">
-            <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span><span class="zc">自持</span></div>
+        <div class="box-one store">
+            <!-- <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span><span class="zc">自持</span></div>
             <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
             <div class="inputInput">
                 <p>企业名称</p>
                 <input type="text" placeholder="填写企业名称">
-            </div>
+            </div> -->
             <!-- <div class="upload_box second"><span>已添加租赁合同</span><input id="file2" type="file"></div> -->
         </div>
     </div>
     <!--租赁地址_未上传合同-->
-    <div class="select_time" style="display: block;">
+    <div class="select_time" id="lease" style="display: none;">
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
             <div class="new_select">重新选择</div>
         </div>
-        <div class="box-one">
-            <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span></div>
-            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+        <div class="box-one house">
+            <div class="box-title"></div>
+            <div class="box-cont"></div>
             <div class="inputBox">
                 <p>居住时间</p>
                 <div class="select_date" id="select_date1">
@@ -150,11 +159,11 @@
                     <div class="sj_img"><img src="images/yang/bottom_sj.png" alt=""></div>
                 </div>
             </div>
-            <div class="upload_box first"><span>上传租赁合同</span><input id="file1" type="file" multiple="multiple" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="upload_box first"><span>上传租赁合同</span><input id="file1" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
         </div>
-        <div class="box-one">
-            <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span></div>
-            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+        <div class="box-one store">
+            <div class="box-title"></div>
+            <div class="box-cont"></div>
             <div class="inputBox">
                 <p>居住时效</p>
                 <div class="select_date" id="select_date2">
@@ -167,7 +176,7 @@
                 <p>企业名称</p>
                 <input type="text" placeholder="填写企业名称">
             </div>
-            <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" multiple="multiple" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
         </div>
     </div>
     <div style="background:#fff;overflow: hidden;">
@@ -179,6 +188,7 @@
 <script src="js/mobileSelect.min.js"></script>
 <script src="js/selectDate.js"></script>
 <script src="js/data.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
 <script src="js/verify1_y.js"></script>
 <script>
     // 加载人员信息

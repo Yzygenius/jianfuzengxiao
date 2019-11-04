@@ -22,7 +22,7 @@
     <div class="content">
         <div class="cont_list administration" style="display: block;">
             <div class="cont_list0">
-                <a class="address" href="house_z.html">
+                <!-- <a class="address" href="house_z.html">
                 <div class="cont">
                     <div class="cont_title">
                         <img src="images/list/icon_01.png" alt="">
@@ -40,14 +40,14 @@
                     </div>
                     <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
                 </div>
-                </a>
+                </a> -->
             </div>
             <!--<div style="height: 110px;"></div>&lt;!&ndash;占位&ndash;&gt;-->
             <div class="cont_add"><span>+</span>添加新房产认证</div>
         </div>
         <div class="cont_list news" >
             <!--审核成功-->
-          <div class="result" data-class="success" >
+          <!-- <div class="result" data-class="success" >
                 <div class="result_red" style="display: block"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -72,8 +72,8 @@
                 <div class="result_cont">
                     您所提交的【青年之都 23-02-2304】家属申请【人员姓名130102199105210310】已通过审核，请悉知
                 </div>
-            </div> 
-          <div class="result" data-class="success">
+            </div>  -->
+          <!-- <div class="result" data-class="success">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -85,9 +85,9 @@
                 <div class="result_cont">
                     您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】已通过审核，请悉知
                 </div>
-            </div> 
+            </div>  -->
             <!--审核失败-->
-         <div class="result fail" data-class="fail">
+        <!--  <div class="result fail" data-class="fail">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -125,9 +125,9 @@
                 <div class="result_cont">
                     您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】未能通过审核，请悉知
                 </div>
-            </div> 
+            </div>  -->
             <!--过期-->
-            <div class="result end" data-class="end">
+           <!--  <div class="result end" data-class="end">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -152,9 +152,9 @@
                 <div class="result_cont">
                     您的房屋【青年之都 23-02-2304】 租户【人员姓名130102199105210310】居住时间已过期，请悉知
                 </div>
-            </div> 
+            </div>  -->
             <!--审核中-->
-       <div class="result" data-class="In_audit">
+       <!-- <div class="result" data-class="In_audit">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -192,8 +192,8 @@
                 <div class="result_cont">
                     您所提交的【门店名称字段】员工申请【人员姓名130102199105210310】已进入审核流程，请耐心等待
                 </div>
-            </div>
-            <div class="result" data-class="upload">
+            </div> -->
+           <!--  <div class="result" data-class="upload">
                 <div class="result_red"></div>
                 <div class="result_title">
                     <div class="rtitle_left">
@@ -205,7 +205,7 @@
                 <div class="result_cont">
                     您所提交的【身份信息更新审核】已进入审核流程，请耐心等待
                 </div>
-            </div> 
+            </div>  -->
         </div>
     </div>
     <div class="Mask" style="display: none;"></div>
@@ -328,7 +328,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:2
+                userId:1
             },
             success:function(data){
               console.log(data.data)
