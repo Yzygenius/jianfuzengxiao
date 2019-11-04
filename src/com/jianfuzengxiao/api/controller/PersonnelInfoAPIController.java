@@ -67,8 +67,8 @@ public class PersonnelInfoAPIController extends BaseController {
 	 * @date 2019年11月4日 上午11:09:20
 	 */
 	@ResponseBody
-	@RequestMapping(value="/getHousesDetail")
-	public String getHousesDetail(HousesInfoMVO entity){
+	@RequestMapping(value="/getVerifyHouses")
+	public String getVerifyHouses(HousesInfoMVO entity){
 		try {
 			throwAppException(StringUtils.isBlank(entity.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			throwAppException(StringUtils.isBlank(entity.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
