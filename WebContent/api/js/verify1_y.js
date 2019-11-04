@@ -1,17 +1,17 @@
 //只有trigger 和 wheels 是必要参数  其他都是选填参数
-var mobileSelect = new MobileSelect({
-    trigger: '#add_btn',
-    title: '请选择您的地址',
-    wheels: [
-        {data : UplinkData}
-    ],
-    transitionEnd:function(indexArr, data){
-        console.log(data);
-    },
-    callback:function(indexArr, data){
-        console.log(data);
-    }
-});
+// var mobileSelect = new MobileSelect({
+//     trigger: '#add_btn',
+//     title: '请选择您的地址',
+//     wheels: [
+//         {data : UplinkData}
+//     ],
+//     transitionEnd:function(indexArr, data){
+//         console.log(data);
+//     },
+//     callback:function(indexArr, data){
+//         console.log(data);
+//     }
+// });
 var mobileSelect1 = new MobileSelect({
     trigger: '#add_btn0',
     title: '请选择您的地址',

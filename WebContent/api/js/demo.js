@@ -39,22 +39,6 @@ setupWebViewJavascriptBridge(function(bridge) {
 	});
 
 })
-document.getElementById('enter1').onclick = function(e) {
-	var data = {
-		'action': 'jsNGetPhoto',
-		'needCallBack': '',
-		'message': '',
-		'parameter': {
-			'scale': '0.5,1.0',
-		}
-	}
-	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
-		var list=JSON.parse(resp)
-		document.getElementById('preview10').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
-		var enter = document.getElementById('faceph')
-		enter.remove();
-	});
-}
 document.getElementById('enter2').onclick = function(e) {
 	var data = {
 		'action': 'jsNGetIDCard',

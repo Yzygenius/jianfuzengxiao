@@ -20,27 +20,27 @@
         <div class="basic_information">
             <div class="verify_title">核实信息</div>
             <div class="box">
-                <div class="head"><img src="images/yang/head.png" alt=""></div>
+                <div class="head" id="facephoto"></div>
                 <div class="kind">
                     <div class="item">
                         <div class="item-one">人员姓名</div>
-                        <div class="item-two">贾春天</div>
+                        <div class="item-two" id='username'></div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员性别</div>
-                        <div class="item-two">女</div>
+                        <div class="item-two" id="gender"></div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员年龄</div>
-                        <div class="item-two">39岁（1983-12-12）</div>
+                        <div class="item-two" id='birthDate'></div>
                     </div>
                     <div class="item">
                         <div class="item-one">人员民族</div>
-                        <div class="item-two">汉族</div>
+                        <div class="item-two" id="nationName"></div>
                     </div>
                     <div class="item">
                         <div class="item-one">联系电话</div>
-                        <div class="item-two">13832101234</div>
+                        <div class="item-two" id="telephone"></div>
                     </div>
                 </div>
             </div>
@@ -50,34 +50,34 @@
     <div class="person_id">
         <div class="title">
             <img src="images/yang/line.png" alt="">
-            <div class="title_text"><p>身份信息</p><span>（证件类型：身份证）</span></div>
+            <div class="title_text" id="certificatesType"></div>
         </div>
         <div class="id_img">
-            <div class="icon">
-                <img src="images/yang/tu1.png" alt="">
-                <div class="icon_infor">证件正面</div>
+            <div class="icon" id="Positive">
+                <!-- <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件正面</div> -->
             </div>
-            <div class="icon">
-                <img src="images/yang/tu1.png" alt="">
-                <div class="icon_infor">证件反面</div>
+            <div class="icon" id="Back">
+                <!-- <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件反面</div> -->
             </div>
         </div>
         <div class="id_text">
             <div class="step">
                 <div class="step_w">证件号码：</div>
-                <div class="step_d">110102197810272321</div>
+                <div class="step_d" id="certificatesNumber"></div>
             </div>
             <div class="step">
                 <div class="step_w">证件时效：</div>
-                <div class="step_d">2019.12.12 - 2020.12.12</div>
+                <div class="step_d" id="certificatesTime">2019.12.12 - 2020.12.12</div>
             </div>
             <div class="step">
                 <div class="step_w">证件地址：</div>
-                <div class="step_d">河北省石家庄市栾城区也和工业区卓达太阳城青年之都234号</div>
+                <div class="step_d" id="certificatesAddress"></div>
             </div>
             <div class="step">
                 <div class="step_w">办证机关：</div>
-                <div class="step_d">石家庄市公安局裕华分局</div>
+                <div class="step_d" id="certificatesOffice"></div>
             </div>
         </div>
     </div>
@@ -88,8 +88,7 @@
             <div class="title_text"><p>选择房屋/门店</p></div>
         </div>
         <div class="btnBox">
-            <div class="add-btn">
-                <div class="add_btn0" id="add_btn"></div>
+            <div class="add-btn" id="house">
                 <!--<a href="#">-->
                 <img src="images/yang/house3.png" alt="">
                 <span>添加房屋</span>
@@ -103,9 +102,16 @@
                 <!--</a>-->
             </div>
         </div>
+        <div style="display: flex;flex-wrap: wrap;">
+            <div class="add_btn0" id="add_btna" style="display: none;"></div>
+            <div class="add_btn0" id="add_btnb" style="display: none;"></div>
+            <div class="add_btn0" id="add_btnc" style="display: none;"></div>
+            <div class="add_btn0" id="add_btnd" style="display: none;"></div>
+            <div class="add_btn0" id="add_btne" style="display: none;"></div>
+        </div>
     </div>
     <!--房产地址_自持-->
-    <div class="select_time">
+    <div class="select_time" style="display: block;">
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
@@ -126,7 +132,7 @@
         </div>
     </div>
     <!--租赁地址_未上传合同-->
-    <div class="select_time">
+    <div class="select_time" style="display: block;">
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
@@ -164,7 +170,7 @@
         </div>
     </div>
     <div style="background:#fff;overflow: hidden;">
-        <div class="submit-btn"><a style="display: block" href="idenWait_y.html">提交</a></div>
+        <div class="submit-btn" id="submit"><a style="display: block" href="javascript:void(0);">提交</a></div>
     </div>
 </div>
 </body>
@@ -174,5 +180,289 @@
 <script src="js/data.js"></script>
 <script src="js/verify1_y.js"></script>
 <script>
+    // 加载人员信息
+    $.ajax({
+    　　type: 'POST', 
+          url: '/jianfuzengxiao/api/userInfo/getUserDetail.html',    //规定连同请求发送到服务器的数据；
+          data: {
+            userId: 2
+          },   //映射或字符串值，规定连同请求发送到服务器的数据；
+          dataType:'json',
+          success: function(data) {
+            var infor = data.data;
+            var myDate = new Date();
+                myDate.getFullYear();
+            infor.age = parseInt(myDate.getFullYear()) - parseInt(infor.birthDate.substr(0, 4));
+            if(infor.gender == 1){
+                infor.gender = '男'
+            }else if(infor.gender == 2){
+                infor.gender = '女'
+            }
+            $('#facephoto').html('<img src="'+infor.facePhoto+'" alt="">');
+            $('#Positive').html('<img src="'+infor.certificatesPositivePhoto+'" alt=""><div class="icon_infor">证件正面</div>');
+            $('#Back').html('<img src="'+infor.certificatesNegativePhoto+'" alt=""><div class="icon_infor">证件背面</div>');
+            $('#certificatesType').html('<p>身份信息</p><span>（证件类型：'+ infor.certificatesTypeName +'）</span>');
+            $('#username').html(infor.username);
+            $('#gender').html(infor.gender);
+            $('#birthDate').html(infor.age+'岁（'+infor.birthDate+'）');
+            $('#nationName').html(infor.nationName);
+            $('#certificatesNumber').html(infor.certificatesNumber);
+            $('#certificatesTime').html(infor.certificatesStartTime+'-'+infor.certificatesStopTime);
+            $('#certificatesOffice').html(infor.certificatesOffice);
+            $('#certificatesAddress').html(infor.certificatesAddress);
+            $('#telephone').html(infor.telephone);
+          },      //请求成功时执行的回调函数；
+    })
+    // 加载房屋街道
+    $.ajax({
+    　　type: 'POST', 
+        url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+        data: {
+            'keyword':'A',
+            'housesStatus':1
+        },   //映射或字符串值，规定连同请求发送到服务器的数据；
+        dataType:'json',
+        success: function(data){
+            var uplinkData0 = data.data;
+            for(var i in uplinkData0){
+                for(var j in uplinkData0[i]){
+                    if(j == 'communityName'){
+                        uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                        delete uplinkData0[i]['communityName']//删除“nationName”
+                    }
+                    if(j == 'communityId'){
+                        uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                        delete uplinkData0[i]['communityId']//删除“nationId”
+                    }
+                }
+            }
+            var mobileSelect0 = new MobileSelect({
+                trigger: '#add_btna',
+                title: '请选择社区',
+                wheels: [
+                    {data : uplinkData0}
+                ],
+                transitionEnd:function(indexArr, data){
+                    console.log(data);
+                },
+                callback:function(indexArr, data){
+                    document.getElementById('add_btna').value = data[0].value;
+                    // document.getElementById('add_btna').style.display='block';
+                    quarter(1,data[0].id);
+                    mobileSelect1.show(1500);
+                }
+            });
+            $('#house').click(function(){
+                mobileSelect0.show(1500);
+            })
+        }, 
+    })
+    // 选择小区
+    function quarter(housesStatus,communityId){
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+            data: {
+                'keyword': 'B',
+                'communityId':communityId,
+                'housesStatus':housesStatus
+            },   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityStreetName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityStreetName']//删除“nationName”
+                        }
+                        if(j == 'communityStreetId'){
+                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            delete uplinkData0[i]['communityStreetId']//删除“nationId”
+                        }
+                    }
+                }
+                var mobileSelect1 = new MobileSelect({
+                    trigger: '#add_btnb',
+                    title: '请选择小区',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                        console.log(data);
+                    },
+                    callback:function(indexArr, data){
+                        console.log(data);
+                        document.getElementById('add_btnb').value = data[0].value;
+                        quarters0(housesStatus,communityId,data[0].id);
+                        mobileSelect2.show(1500);
+                    }
+                }); 
+            }, 
+        })
+    }
+    // 选择楼号
+    function quarters0(housesStatus,communityId,communityStreetId){
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+            data: {
+                'keyword': 'C',
+                'communityId':communityId,
+                'housesStatus':housesStatus,
+                'communityStreetId':communityStreetId
+            },   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityStreetName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityStreetName']//删除“nationName”
+                        }
+                        if(j == 'storiedBuildingNumber'){
+                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
+                        }
+                    }
+                }
+                var mobileSelect2 = new MobileSelect({
+                    trigger: '#add_btnc',
+                    title: '请选择楼号',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                        console.log(data);
+                    },
+                    callback:function(indexArr, data){
+                        console.log(data);
+                        document.getElementById('add_btnc').value = data[0].value;
+                        quartersnum(housesStatus,communityId,communityStreetId,data[0].id);
+                        mobileSelect3.show(1500);
+                    }
+                }); 
+            }, 
+        })
+    }
+    // 选择单元
+    function quartersnum(housesStatus,communityId,communityStreetId,storiedBuildingNumber){
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+            data: {
+                'keyword': 'D',
+                'communityId':communityId,
+                'housesStatus':housesStatus,
+                'communityStreetId':communityStreetId,
+                'storiedBuildingNumber':storiedBuildingNumber
+            },   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityStreetName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityStreetName']//删除“nationName”
+                        }
+                        if(j == 'unit'){
+                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            delete uplinkData0[i]['unit']//删除“nationId”
+                        }
+                    }
+                }
+                var mobileSelect3 = new MobileSelect({
+                    trigger: '#add_btnd',
+                    title: '请选择楼号',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                        console.log(data);
+                    },
+                    callback:function(indexArr, data){
+                        console.log(data);
+                        document.getElementById('add_btnd').value = data[0].value;
+                        quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].id);
+                        mobileSelect4.show(1500);
+                    }
+                }); 
+            }, 
+        })
+    }
+    // 选择门牌号
+    function quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,unit){
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+            data: {
+                'keyword': 'E',
+                'communityId':communityId,
+                'housesStatus':housesStatus,
+                'communityStreetId':communityStreetId,
+                'storiedBuildingNumber':storiedBuildingNumber,
+                'unit':unit
+            },   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityStreetName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityStreetName']//删除“nationName”
+                        }
+                        // if(j == 'communityStreetId'){
+                        //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                        //     delete uplinkData0[i]['communityStreetId']//删除“nationId”
+                        // }
+                    }
+                }
+                var mobileSelect4 = new MobileSelect({
+                    trigger: '#add_btne',
+                    title: '请选择楼号',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                        console.log(data);
+                    },
+                    callback:function(indexArr, data){
+                        console.log(data);
+                        document.getElementById('add_btne').value = data[0].value;
+                    }
+                }); 
+            }, 
+        })
+    }
+    // 提交房产信息
+    $('#submit').click(function(){
+        var formData = {
+                'userId' : 2
+                // 'housesId' : ,                
+            }
+        // if(){ //房主 房屋
+
+        // }else if(){ //租户 房屋
+
+        // }else if(){ //房主 门店
+
+        // }else if(){ //租户 门店
+
+        // }
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/personnel/addUserPersonnel.html',    //规定连同请求发送到服务器的数据；
+            data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                if(data.code == 1){
+                    window.location.href="idenWait_y.html"
+                }
+            }, 
+        })
+    })
 </script>
 </html>

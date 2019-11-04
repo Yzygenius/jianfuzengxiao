@@ -27,6 +27,8 @@
         <div class="facell">
             <div class="face" id="enter1">
                 <img src="images/tao/face.png" alt="" id="preview10">
+                <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
+                    capture="camera" />
                 <p class="faceword" id="faceph">点击拍摄人脸照片</p>
             </div>
             <div class="allimg">
@@ -228,7 +230,7 @@
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
             var base = 'data:image/jpeg;base64';
-            if(!infor.facePhoto.match(base)){
+            if($('#preview10').attr('name') !== 'success'){
                 infor.facePhoto = ''
             }
             if(!infor.certificatesNegativePhoto.match(base)){
@@ -243,33 +245,33 @@
                 infor.gender = 2
             }
             console.log(infor)
-            // if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
-            //     layer.msg('请选择居住开始时间');
-            // }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
-            //     layer.msg('请添加人脸照片');
-            // }else if(infor.certificatesPositivePhoto == undefined || infor.certificatesPositivePhoto == '' || infor.certificatesNegativePhoto == undefined || infor.certificatesNegativePhoto == ''){
-            //     layer.msg('请添加完整的身份证照片');
-            // }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
-            //     layer.msg('请选择证件类型');
-            // }else if(infor.username  == undefined || infor.username == ''){
-            //     layer.msg('请填写姓名');
-            // }else if(infor.gender  == undefined || infor.gender == ''){
-            //     layer.msg('请选择性别');
-            // }else if(infor.birthDate  == undefined || infor.birthDate == ''){
-            //     layer.msg('请选择生日');
-            // }else if(infor.nationName  == undefined || infor.nationName == ''){
-            //     layer.msg('请选择民族');
-            // }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
-            //     layer.msg('请填写证件号码');
-            // }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
-            //     layer.msg('请选择证件有效期');
-            // }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
-            //     layer.msg('请填写办证机关');
-            // }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
-            //     layer.msg('请填写证件地址');
-            // }else if(infor.telephone  == undefined || infor.telephone == ''){
-            //     layer.msg('请填写联系电话');
-            // }else{
+            if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
+                layer.msg('请选择居住开始时间');
+            }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
+                layer.msg('请添加人脸照片');
+            }else if(infor.certificatesPositivePhoto == undefined || infor.certificatesPositivePhoto == '' || infor.certificatesNegativePhoto == undefined || infor.certificatesNegativePhoto == ''){
+                layer.msg('请添加完整的身份证照片');
+            }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
+                layer.msg('请选择证件类型');
+            }else if(infor.username  == undefined || infor.username == ''){
+                layer.msg('请填写姓名');
+            }else if(infor.gender  == undefined || infor.gender == ''){
+                layer.msg('请选择性别');
+            }else if(infor.birthDate  == undefined || infor.birthDate == ''){
+                layer.msg('请选择生日');
+            }else if(infor.nationName  == undefined || infor.nationName == ''){
+                layer.msg('请选择民族');
+            }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
+                layer.msg('请填写证件号码');
+            }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
+                layer.msg('请选择证件有效期');
+            }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
+                layer.msg('请填写办证机关');
+            }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
+                layer.msg('请填写证件地址');
+            }else if(infor.telephone  == undefined || infor.telephone == ''){
+                layer.msg('请填写联系电话');
+            }else{
                 $.ajax({
                     //发送请求的地址
                      url:'/jianfuzengxiao/api/userInfo/addUser.html',
@@ -288,12 +290,11 @@
                         }else{
                             layer.msg(data.msg);
                         }
-                        
                     },
                     error:function(jqXHR){
                     }
                 }); 
-            // }
+            }
         })
 
     })
@@ -436,6 +437,72 @@
             date2.hide();
         })
     }
+    function imgPreview(fileDom, id) {
+            console.log(id)
+            var id = id
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            //获取文件
+
+            var file = fileDom.files[0];
+            var imageType = /^image\//;
+            //是否是图片
+            if (!imageType.test(file.type)) {
+                layer.msg("请选择图片！");
+                return;
+            }
+            //读取完成
+            reader.onload = function (e) {
+                //获取图片dom
+                var img = document.getElementById(id);
+                //图片路径设置为读取的图片
+                img.src = e.target.result;
+                // if(id=='preview12'){
+                //     document.getElementById("prev2").style.display = "none";
+                // }
+                if (id == 'preview10') {
+                    console.log('12323')
+                    document.getElementById("faceph").style.display = "none";
+                } 
+
+            };
+            layer.load(1);
+            var formData = new FormData();
+            formData.append('file',file);
+            formData.append('picType','A');
+            console.log(formData);
+            $.ajax({
+                //发送请求的地址
+                 url:'/jianfuzengxiao/api/common/uploadFile.html',
+                //请求方式
+                type:'POST',
+                dataType:'json',
+                //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(res){
+                    console.log(res);
+                    if(parseInt(res.code) == 1){
+                        layer.closeAll('loading');
+                        layer.msg('上传成功');
+                        $('#preview10').attr('src',res.data.absolutePath);
+                        $('#preview10').attr('name','success');
+                        $('#faceph').remove();
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                },
+                error:function(jqXHR){
+                }
+            }); 
+            // reader.readAsDataURL(file);
+            // console.log(file)
+        }
         // function goback(){
         //     window.goback(-1)
         // }
