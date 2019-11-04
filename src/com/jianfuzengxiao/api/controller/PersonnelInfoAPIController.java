@@ -72,10 +72,12 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(entity.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			throwAppException(StringUtils.isBlank(entity.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			String userId = entity.getUserId();
+			
 			entity = housesInfoService.queryBean(entity);
 			
 			UserInfoMVO userInfo = new UserInfoMVO();
-			userInfo.setUserId(entity.getUserId());
+			userInfo.setUserId(userId);
 			userInfo = userInfoService.queryBean(userInfo);
 			
 			if (StringUtils.equals(entity.getPropertyOwnerIdcard(), userInfo.getCertificatesNumber())) {
