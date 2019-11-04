@@ -157,7 +157,6 @@
             data:{},
             success:function(data){
                 //console.log(data.data)
-               
                     //[{nationId: "1", nationName: "汉族"},{nationId: "1", nationName: "汉族"}]
                 weekdayArr2 = data.data//[{key:"1",value:'汉族'}, {key:"2",value:'满族'},{key:"3",value:'藏族'} , {key:"4",value:'维吾尔'}, {key:"5",value:'维11吾尔'}];
                 for(var i in weekdayArr2){
@@ -282,6 +281,7 @@
                     //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
                     data: infor,
                     success:function(data){
+                    	console.log(data)
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
