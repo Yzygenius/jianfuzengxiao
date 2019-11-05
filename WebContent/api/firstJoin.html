@@ -10,7 +10,7 @@
     <title>验证</title>
 </head>
 <body>
-<div id="content"></div>
+<!-- <div id="content">1</div> -->
 <script src="js/alrem.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
@@ -22,15 +22,15 @@
         //     'needCallBack': '',
         //     'message': '',
         //     "parameter":{
-        //         "business":"存钱业务"
+        //         "business":"业务"
         //         }
         // }
         // window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
-        // //     var list=JSON.parse(resp)
-        //     console.log(list)
+        //     var list=JSON.parse(resp)
         //     if(list.code == 0){
-        //         localStorage.token = list.data.token;
-        //         document.getElementById("content").innerHTML = localStorage.token;
+        //         sessionStorage.token = list.data.token;
+        //         sessionStorage.userId = list.data.userid;
+                // document.getElementById("content").innerHTML = resp;
                 $.ajax({
                     //请求方式
                     type:'POST',
@@ -44,27 +44,27 @@
                     },
                     success:function(data){
                       var code = data.code;
-                      console.log(data.data.auditRemark)
-                      var auditRemark = escape(data.data.auditRemark)
-                      if(code == 1){
-                        if(data.data.status == 1){
-                            console.log('米审核')
-                            window.location.href = "idenWait_y.html";
+                      // console.log(data.data.auditRemark)
+                          // window.location.href = "identity_auth_t.html";
+                      // var auditRemark = escape(data.data.auditRemark)
+                      // if(code == 1){
+                      //   if(data.data.status == 1){
+                      //       console.log('审核中')
+                      //       window.location.href = "idenWait_y.html";
+                      //       window.close(); 
+                      //   }else if(data.data.status == 2){
+                            console.log('审核通过')
+                            window.location.href = "management_z.html";
                             window.close(); 
-                        }else if(data.data.status == 2){
-                            console.log('通过')
-                            window.location.href = "idenSuccess_y.html";
-                            window.close(); 
-                        }else if(data.data.status == 3){
-                             console.log('失败')
-                             window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
-                             window.close(); 
-                        }
-                       
-                      }else if(code == 3002){
-                          window.location.href = "identity_auth_t.html";
-                         window.close(); 
-                      }
+                      //   }else if(data.data.status == 3){
+                      //        console.log('审核失败')
+                      //        window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
+                      //        window.close(); 
+                      //   }
+                      // }else if(code == 3002){
+                      //   window.location.href = "identity_auth_t.html";
+                      //    window.close(); 
+                      // }
                     },
                     error:function(jqXHR){
                     }

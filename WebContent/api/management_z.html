@@ -15,248 +15,27 @@
             <div class="hetitle">社区管家</div>
         </div>
         <div class="header_nav">
-            <div class="header_btn active admin_list" data-class="administration">管理列表<div class="header_red">6</div></div>
-            <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red" id="number">10</div></div>
+            <div class="header_btn active admin_list" data-class="administration">管理列表<div class="header_red"></div></div>
+            <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red" id="number"></div></div>
         </div>
     </div>
     <div class="content">
         <div class="cont_list administration" style="display: block;">
             <div class="cont_list0">
-                <!-- <a class="address" href="house_z.html">
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_01.png" alt="">
-                        <div class="title_text">百青年之都</div>
-                        <div class="title_time">23-02-2304</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a>
-
-                <div class="cont">
-                    <div class="cont_title">
-                        <img src="images/list/icon_02.png" alt="">
-                        <div class="title_text">门店地址字段</div>
-                    </div>
-                    <div class="address">河北省石家庄市 栾城区也和工业区 卓达太阳城青年之都 23栋2单元2304室</div>
-                </div>
-                </a> -->
+                
             </div>
             <!--<div style="height: 110px;"></div>&lt;!&ndash;占位&ndash;&gt;-->
-            <div class="cont_add"><span>+</span>添加新房产认证</div>
+            <div class="cont_add" onclick="btnhref();"><span>+</span>添加新房产认证</div>
         </div>
         <div class="cont_list news" >
-            <!--审核成功-->
-          <!-- <div class="result" data-class="success" >
-                <div class="result_red" style="display: block"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/success.png" alt="">
-                        <div class="result_text">租户审核通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【青年之都 23-02-2304】租户申请【人员姓名 130102199105210310】已通过审核，请悉知
-                </div>
-            </div> 
-             <div class="result" data-class="success">
-                <div class="result_red" style="display: block"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/success.png" alt="">
-                        <div class="result_text">家属审核通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【青年之都 23-02-2304】家属申请【人员姓名130102199105210310】已通过审核，请悉知
-                </div>
-            </div>  -->
-          <!-- <div class="result" data-class="success">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/success.png" alt="">
-                        <div class="result_text">员工审核通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】已通过审核，请悉知
-                </div>
-            </div>  -->
-            <!--审核失败-->
-        <!--  <div class="result fail" data-class="fail">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/fail.png" alt="">
-                        <div class="result_text">租户审核未通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【青年之都 23-02-2304】租户申请【人员姓名130102199105210310】未能通过审核，请悉知
-                </div>
-            </div> 
-         <div class="result fail" data-class="fail">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/fail.png" alt="">
-                        <div class="result_text">家属审核未通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【青年之都 23-02-2304】家属申请【人员姓名130102199105210310】未能通过审核，请悉知
-                </div>
-            </div>
-            <div class="result fail" data-class="fail">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/fail.png" alt="">
-                        <div class="result_text">员工审核未通过</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【门店名称字段12312312】员工申请【人员姓名130102199105210310】未能通过审核，请悉知
-                </div>
-            </div>  -->
-            <!--过期-->
-           <!--  <div class="result end" data-class="end">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/end.png" alt="">
-                        <div class="result_text">员工过期</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您的门店【门店名称字段123123112312312】员工【人员姓名130102199105210310】驻店时效已过期，请悉知
-                </div>
-            </div>
-            <div class="result end" data-class="end">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/end.png" alt="">
-                        <div class="result_text">租户过期</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您的房屋【青年之都 23-02-2304】 租户【人员姓名130102199105210310】居住时间已过期，请悉知
-                </div>
-            </div>  -->
-            <!--审核中-->
-       <!-- <div class="result" data-class="In_audit">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/In_audit.png" alt="">
-                        <div class="result_text">租户申请已提报</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【青年之都 23-02-2304】租户申请【人员姓名 130102199105210310】已进入审核流程，请耐心等待
-                </div>
-            </div>
-            <div class="result" data-class="In_audit">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/In_audit.png" alt="">
-                        <div class="result_text">家属申请已提报</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【门店名称字段】员工申请【人员姓名130102199105210310】已进入审核流程，请耐心等待
-                </div>
-            </div>
-            <div class="result" data-class="In_audit">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/In_audit.png" alt="">
-                        <div class="result_text">员工申请已提报</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【门店名称字段】员工申请【人员姓名130102199105210310】已进入审核流程，请耐心等待
-                </div>
-            </div> -->
-           <!--  <div class="result" data-class="upload">
-                <div class="result_red"></div>
-                <div class="result_title">
-                    <div class="rtitle_left">
-                        <img src="images/list/In_audit.png" alt="">
-                        <div class="result_text">身份信息更新提报</div>
-                    </div>
-                    <div class="result_time">2019.12.12  12:12:12</div>
-                </div>
-                <div class="result_cont">
-                    您所提交的【身份信息更新审核】已进入审核流程，请耐心等待
-                </div>
-            </div>  -->
         </div>
     </div>
     <div class="Mask" style="display: none;"></div>
-    <div class="pop_up In_audit" style="display: none;" id="In_audit1">
-        <!--<div class="pop_top">
-            <img src="images/list/In_audit.png" alt="">
-            员工申请已提报
-        </div>
-        <div class="pop_time">
-            2019.12.23 15:30:23
-        </div>
-        <div class="pop_text">
-            您所提交的【门店名称字段】员工申请【人员姓名130102199105210310】已进入审核流程，请耐心等待
-        </div>
-        <div class="poptime">
-            首次提报时间：2019.12.12 15:30:22
-        </div>
-        <div class="pop_btn"><a href="personnel_y.html">查看</a></div>-->
-    </div>
+    <div class="pop_up In_audit" style="display: none;" id="In_audit1"> </div>
     
     <div class="pop_up upload" id="upload">
-        <!--<div class="pop_top">
-            <img src="images/list/In_audit.png" alt="">
-            身份信息更新提报
-        </div>
-        <div class="pop_time">
-            2019.12.23 15:30:23
-        </div>
-        <div class="pop_text">
-            您所提交的【身份信息更新审核】已进入审核流程，请耐心等待
-        </div>
-        <div class="poptime">
-            首次提报时间：2019.12.12 15:30:22
-        </div>
-        <div class="pop_btn">查看</div>-->
     </div>
     <div class="pop_up success" id="success">
-     <!--    <div class="pop_top">
-            <img src="images/list/success.png" alt="">
-            家属审核通过
-        </div>
-        <div class="pop_time">
-            2019.12.23 15:30:23
-        </div>
-        <div class="pop_text">
-            您所提交的【青年之都 23-02-2304】家属申请【人员姓名 130102199105210310】已通过审核，请悉知
-        </div>
-        <div class="poptime">
-            首次提报时间：2019.12.12 15:30:22
-        </div>
-        <div class="pop_btn"><a href="personnel_y.html">查看</a></div> -->
     </div>
     <!--审核未通过-->
     <div class="pop_up fail" id="fail">
@@ -282,20 +61,6 @@
     </div>
     <!--过期-->
    <div class="pop_up end" id="end1">
-         <!--<div class="pop_top">
-            <img src="images/list/end.png" alt="">
-            租户过期
-        </div>
-        <div class="pop_time">
-            2019.12.23 15:30:23
-        </div>
-        <div class="pop_text">
-            您的房屋【青年之都 23-02-2304】租户【人员姓名 130102199105210310】居住时间已过期，请悉知
-        </div>
-        <div class="poptime">
-            首次提报时间：2019.12.12 15:30:22
-        </div>
-        <div class="pop_btn"><a href="personnel_y.html">查看</a></div>-->
     </div>
     
 </body>
@@ -383,68 +148,74 @@
             	for(var i=0;i<data.data.rows.length;i++){
             		if(data.data.rows[i].msgTypeId=='4')
             		{
-                    pro +='<div class="result" data-class="success" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                    '<div class="result_red" style="display: block">'+
-                    '</div>'+
-                    '<div class="result_title">'+
-                    '<div class="rtitle_left">'+
-                    '<img src="images/list/success.png" alt="">'+
-                    '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'
-                    +'</div>'+
-                    '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
-                    '</div>'+
-                    '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                    '</div>'
-        		}else if(data.data.rows[i].msgTypeId=='3'){
-        		  pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-        		  '<div class="result_red">'+
-        		  '</div>'+'<div class="result_title">'+
-        		  '<div class="rtitle_left">'+
-        		  '<img src="images/list/fail.png" alt="">'+
-        		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
-        		  '</div>'+
-        		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
-        		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-              '</div>'
-        			
-        		}else if(data.data.rows[i].msgTypeId=="2"){
-        			  pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                        pro +='<div class="result" data-class="success" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                        '<div class="result_red" style="display: block">'+
+                        '</div>'+
+                        '<div class="result_title">'+
+                        '<div class="rtitle_left">'+
+                        '<img src="images/list/success.png" alt="">'+
+                        '<div class="result_text">'+data.data.rows[i].title+'</div>'
+                        +'</div>'+
+                        '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                        '</div>'+
+                        '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                        '</div>'
+            		}else if(data.data.rows[i].msgTypeId == '3'){
+            		  pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
             		  '<div class="result_red">'+
             		  '</div>'+'<div class="result_title">'+
             		  '<div class="rtitle_left">'+
             		  '<img src="images/list/fail.png" alt="">'+
-            		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
+            		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
             		  '</div>'+
-            		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
+            		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
             		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                  '</div>'
-        		}else if(data.data.rows[i].msgTypeId=='1'){
-        			 pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-           		  '<div class="result_red">'+
-           		  '</div>'+'<div class="result_title">'+
-           		  '<div class="rtitle_left">'+
-           		  '<img src="images/list/fail.png" alt="">'+
-           		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
-           		  '</div>'+
-           		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
-           		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                 '</div>'
-        		}else if(data.data.rows[i].msgTypeId=='5'){
-        			 pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-              		  '<div class="result_red">'+
-              		  '</div>'+'<div class="result_title">'+
-              		  '<div class="rtitle_left">'+
-              		  '<img src="images/list/fail.png" alt="">'+
-              		  '<div class="result_text">'+data.data.rows[i].msgTypeName+'</div>'+
-              		  '</div>'+
-              		  '<div class="result_time">'+data.data.rows[i].updateTime+'</div>'+
-              		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                    '</div>'
-        		}
+                        '</div>'
+            			
+            		}else if(data.data.rows[i].msgTypeId == "2"){
+            			  pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                		  '<div class="result_red">'+
+                		  '</div>'+'<div class="result_title">'+
+                		  '<div class="rtitle_left">'+
+                		  '<img src="images/list/end.png" alt="">'+
+                		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+                		  '</div>'+
+                		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                      '</div>'
+            		}else if(data.data.rows[i].msgTypeId == '1'){
+            			 pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+               		  '<div class="result_red">'+
+               		  '</div>'+'<div class="result_title">'+
+               		  '<div class="rtitle_left">'+
+               		  '<img src="images/list/In_audit.png" alt="">'+
+               		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+               		  '</div>'+
+               		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+               		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                     '</div>'
+            		}else if(data.data.rows[i].msgTypeId == '5'){
+            			 pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                  		  '<div class="result_red">'+
+                  		  '</div>'+'<div class="result_title">'+
+                  		  '<div class="rtitle_left">'+
+                  		  '<img src="images/list/In_audit.png" alt="">'+
+                  		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+                  		  '</div>'+
+                  		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                  		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                        '</div>'
+            		}
                 }
             	$('.news').html(pro);
+                for(var i=0;i<data.data.rows.length;i++){
+                    if(data.data.rows[i].status == 1){
+                        $('.news .result').eq(i).find('.result_red').fadeIn(0);
+                    }else if(data.data.rows[i].status == 2){
+                        $('.news .result').eq(i).find('.result_red').fadeOut(0);
+                    }
+                }
             	$('#number').html(data.data.rows.length)
-            	   <!--过期-->
             	
             },
             error:function(jqXHR){
@@ -477,15 +248,15 @@
               var selehtml='';
               if(data.data.msgTypeId!='3'){
             	    selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.msgTypeName+'</div>'+
-                    '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+                    '<div class="pop_time">'+data.data.createTime+'</div>'+
                     '<div class="pop_text">'+data.data.content+'</div>'+
                     '<div class="poptime">首次提报时间:&nbsp;&nbsp;'+data.data.perCreateTime+'</div>'+
                     '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
               }else{
             	  selehtml+='<div class="pop_top"><img src="images/list/fail.png" alt="">'+data.data.msgTypeName+'</div>'+
-            	  '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+            	  '<div class="pop_time">'+data.data.createTime+'</div>'+
             	  '<div class="pop_text">'+data.data.content+'</div>'+
-            	  '<div class="poptime">首次提报时间：'+data.data.createTime+'</div>'+
+            	  '<div class="poptime">首次提报时间：'+data.data.perCreateTime+'</div>'+
             	  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
             	  '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
               }
@@ -521,8 +292,9 @@
             error:function(jqXHR){
             }
         });
-        
-        
     };
+    function btnhref(){
+        window.location.href = "verify1_y.html?userId=3";
+    }
 </script>
 </html>
