@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="js/datepicker/foundation-datepicker.css">
     <link rel="stylesheet" href="css/information_t.css">
     <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
-    <title>修改上报信息</title>
+    <title>修改身份认证信息</title>
     <style>
         .faceword1{
             display: none;
@@ -21,21 +21,13 @@
            <div class="goback" onclick="history.go(-1)"><img src="images/tao/nav_back.png" alt=""></div>
             <p class="h-title">修改上报信息</p>
         </div>
-        <div class="live only" style="display: none;">
+        <div class="live only">
             <p class="live-time">居住时效</p>
             <div class="means-input">
                 <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1" onfocus="this.blur()">
                 <img src="images/tao/down.png">
             </div>
             <p class="live-long">- 长期</p>
-        </div>
-        <div class="live select" style="margin: 20px 0;display: none">
-            <p class="live-time">居住时效</p>
-            <div class="means-input" id="select_date2" style="width: 90%;justify-content:space-between;box-sizing: border-box;">
-              <input class="measn" id="date3" onfocus="this.blur()" placeholder="开始时间" style="text-align: center;"><span style="color: #999;">-</span><input class="measn" id="date4" onfocus="this.blur()" placeholder="结束时间" style="text-align: center;">
-              <!-- <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()"> -->
-              <img src="images/tao/down.png" style="margin-right: 5px">
-            </div>
         </div>
         <div class="facell">
             <div class="face" id="enter1" style="border: 1px solid #eee;">
@@ -145,29 +137,7 @@
     <script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
     <script>
-   //获取参数
-    function getQueryString(name) {
-        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
-        }
-        return null;
-    }
-    // 这样调用：housesId即为上个页面传回来的变量名
-    var personnelId = getQueryString("personnelId");
-    var liveTypeId = getQueryString("liveTypeId");
-    var liveTypeName = getQueryString("liveTypeName");
-    console.log(personnelId)
-    console.log(liveTypeId)
-    console.log(liveTypeName)
     var live=""
-    if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
-    	$('.only').fadeIn(0);
-       
-    }else{
-    	$('.select').fadeIn(0);
-    }
     $(function(){
         layer.load(1);
         var weekdayArr2;
@@ -237,22 +207,22 @@
             //请求方式
             type:'POST',
             //发送请求的地址
-            url:'/jianfuzengxiao/api/personnel/getPerDetail.html',
+            url:'/jianfuzengxiao/api/userInfo/getUserDetail.html',
             //服务器返回的数据类型
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                personnelId:personnelId
+                userId:3
             },
             success:function(data){
                 var res=data.data
-                if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
-                    var leaseStartTime = res.leaseStartTime
-                    var leaseStopTime = ""
-                }else{
-                    var leaseStartTime = res.leaseStartTime
-                    var leaseStopTime = res.leaseStopTime
-                }
+                // if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
+                //     var leaseStartTime = res.leaseStartTime
+                //     var leaseStopTime = ""
+                // }else{
+                //     var leaseStartTime = res.leaseStartTime
+                //     var leaseStopTime = res.leaseStopTime
+                // }
                 if(res.gender == 1){
                     var gender = '男'
                 }else if(res.gender == 2){
@@ -260,10 +230,9 @@
                 }
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
-                Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
+                Back(res.certificatesStartTime,res.certificatesStopTime,res.leaseStartTime,res.leaseStopTime);
                 document.getElementById('namev').value = res.username
-                document.getElementById('date3').value = leaseStartTime
-                document.getElementById('date4').value = leaseStopTime
+                document.getElementById('select_1').value = res.leaseStartTime
                 document.getElementById('preview10').setAttribute('src',res.facePhoto)
                 document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
                 document.getElementById('preview12').setAttribute('src',res.certificatesNegativePhoto)
@@ -284,18 +253,11 @@
         }); 
         // 点击提交
         $('#submit').click(function(){
-            if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
-                   leaseStartTime = document.getElementById('select_1').value
-                   leaseStopTime = ""
-            }else{
-                   leaseStartTime = document.getElementById('date3').value
-                   leaseStopTime = document.getElementById('date4').value
-            }
             var infor = {
-                    'personnelId':personnelId,
-                    'facePhoto' : $('#preview10').attr('src'),
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),
                     'certificatesNegativePhoto' : $('#preview12').attr('src'),
+                    'userId':3,
+                    'facePhoto' : $('#preview10').attr('src'),
                     'certificatesTypeName' : document.getElementById('trigger1').value,
                     'username' : document.getElementById('namev').value,
                     'gender' : document.getElementById('trigger2').value,
@@ -307,10 +269,7 @@
                     'certificatesOffice' : document.getElementById('measn12').value,
                     'certificatesAddress' : document.getElementById('address').value,
                     'telephone' : document.getElementById('telephone').value,
-                    'leaseStartTime':leaseStartTime,
-                    'leaseStopTime':leaseStopTime,
-                    'liveTypeId':liveTypeId,
-                    'liveTypeName':liveTypeName
+                    'leaseStartTime':document.getElementById('select_1').value
                 };
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
@@ -363,7 +322,7 @@
                 layer.load(1);
                 $.ajax({
                     //发送请求的地址
-                     url:'/jianfuzengxiao/api/personnel/updatePersonnel.html',
+                     url:'/jianfuzengxiao/api/userInfo/updateUser.html',
                     //请求方式
                     type:'POST',
                     //服务器返回的数据类型
@@ -530,7 +489,6 @@
 
         /* 控制第一个选择器显示 */
         var leaseStartTime = leaseStartTime.split('-');
-        var leaseStopTime = leaseStopTime.split('-');
         var select1 = $.selectDate("#select_1", {
             start: 1994,
             end:2999,
@@ -541,38 +499,6 @@
             document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
             // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
         });
-        // 居住时效
-        var date3 = $.selectDate("#date3",{
-            start:1994,
-            end:2999,
-            select:leaseStartTime,
-            title:'开始时间'
-        },function (data) {
-            // console.log(data);
-            document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
-            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
-            $(this).hide()
-            setTimeout(function(){
-                date4.show()
-            }, 300);
-        });
-        var date4 = $.selectDate("#date4",{
-            start:1994,
-            end:2999,
-            select:leaseStopTime,
-            title:'结束时间'
-        },function (data) {
-            // console.log(data);
-            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
-            document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
-            date3.hide()
-            $(this).hide()
-        });
-
-        $("#select_date2").click(function () {
-            date3.show();
-            date4.hide();
-        })
     }
     function imgPreview(fileDom, id) {
             console.log(id)

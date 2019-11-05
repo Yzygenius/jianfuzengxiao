@@ -228,6 +228,7 @@ body{
     align-items: center;
     width: 94%;
     margin: 0 auto;
+    padding-bottom: 5px;
     border-bottom: 1px solid #F2F2F3;
 }
 .cont_list .result .result_title .rtitle_left{
@@ -238,20 +239,18 @@ body{
 .cont_list .result .result_title .rtitle_left img{
     width: 16px;
     height: 16px;
-    margin-right: 8px;
+    margin-right: 3px;
 }
 .cont_list .result .result_title .rtitle_left .result_text{
-    max-width: 150px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     color: #0091FF;
+    font-size:15px;
 }
 .cont_list .result .result_title .result_time{
     margin-right: 4px;
     color: #333;
     font-size: 12px;
-    line-height: 38px;
+    text-align: right;
+    line-height: 16px;
 }
 .cont_list .result .result_cont{
     width: 94%;
@@ -390,5 +389,8 @@ body{
 @media screen and (max-width: 350px) {
     .pop_up.fail{
         margin-top: -70%;
+    }
+    .cont_list .result .result_title .rtitle_left .result_text{
+    	font-size:14px;
     }
 }
