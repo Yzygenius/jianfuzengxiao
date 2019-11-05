@@ -216,9 +216,9 @@ body{
     position: absolute;
     right: 0;
     top: 0;
-    width: 13px;
-    height: 13px;
-    border-radius: 13px;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
     margin: 2px;
     background: #FF3B30;
 }

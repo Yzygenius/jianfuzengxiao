@@ -177,7 +177,7 @@
                 		  '<div class="result_red">'+
                 		  '</div>'+'<div class="result_title">'+
                 		  '<div class="rtitle_left">'+
-                		  '<img src="images/list/fail.png" alt="">'+
+                		  '<img src="images/list/end.png" alt="">'+
                 		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
                 		  '</div>'+
                 		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
@@ -199,7 +199,7 @@
                   		  '<div class="result_red">'+
                   		  '</div>'+'<div class="result_title">'+
                   		  '<div class="rtitle_left">'+
-                  		  '<img src="images/list/fail.png" alt="">'+
+                  		  '<img src="images/list/In_audit.png" alt="">'+
                   		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
                   		  '</div>'+
                   		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
@@ -248,15 +248,15 @@
               var selehtml='';
               if(data.data.msgTypeId!='3'){
             	    selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.msgTypeName+'</div>'+
-                    '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+                    '<div class="pop_time">'+data.data.createTime+'</div>'+
                     '<div class="pop_text">'+data.data.content+'</div>'+
                     '<div class="poptime">首次提报时间:&nbsp;&nbsp;'+data.data.perCreateTime+'</div>'+
                     '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
               }else{
             	  selehtml+='<div class="pop_top"><img src="images/list/fail.png" alt="">'+data.data.msgTypeName+'</div>'+
-            	  '<div class="pop_time">'+data.data.perCreateTime+'</div>'+
+            	  '<div class="pop_time">'+data.data.createTime+'</div>'+
             	  '<div class="pop_text">'+data.data.content+'</div>'+
-            	  '<div class="poptime">首次提报时间：'+data.data.createTime+'</div>'+
+            	  '<div class="poptime">首次提报时间：'+data.data.perCreateTime+'</div>'+
             	  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
             	  '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
               }
@@ -294,7 +294,7 @@
         });
     };
     function btnhref(){
-        window.location.href = "verify1_y.html?userId=" + userId;
+        window.location.href = "verify1_y.html?userId=3";
     }
 </script>
 </html>

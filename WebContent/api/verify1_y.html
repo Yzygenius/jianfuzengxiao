@@ -233,21 +233,21 @@
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script src="js/verify1_y.js"></script>
 <script>
-    var a = GetRequest();
-    console.log(a);
-
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-            }
-        }
-        return theRequest;
-    }
+    // var a = GetRequest();
+    // console.log(a);
+    // function GetRequest() {
+    //     var url = location.search; //获取url中"?"符后的字串
+    //     var theRequest = new Object();
+    //     if (url.indexOf("?") != -1) {
+    //         var str = url.substr(1);
+    //         strs = str.split("&");
+    //         for (var i = 0; i < strs.length; i++) {
+    //             theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+    //         }
+    //     }
+    //     return theRequest;
+    // }
+    layer.load(1);
     // 加载人员信息
     $.ajax({
     　　type: 'POST', 
@@ -279,6 +279,7 @@
             $('#certificatesOffice').html(infor.certificatesOffice);
             $('#certificatesAddress').html(infor.certificatesAddress);
             $('#telephone').html(infor.telephone);
+            layer.closeAll('loading');
           },      //请求成功时执行的回调函数；
     })
     $(document).on("click", ".cloase",function () {
