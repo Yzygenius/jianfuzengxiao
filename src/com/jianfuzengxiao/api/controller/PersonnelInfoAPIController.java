@@ -213,6 +213,9 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			PageInfo pageInfo = getPage();
+			pageInfo.setSortName("createTime");
+			pageInfo.setSortOrder("desc");
+			model.setSts("A");
 			pageInfo = personnelInfoService.queryHousesPage(model, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);
 		} catch (Exception e) {
@@ -240,6 +243,7 @@ public class PersonnelInfoAPIController extends BaseController {
 	public String getHousesList(PersonnelInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			model.setSts("A");
 			List<PersonnelInfoMVO> list = personnelInfoService.queryHousesList(model);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
