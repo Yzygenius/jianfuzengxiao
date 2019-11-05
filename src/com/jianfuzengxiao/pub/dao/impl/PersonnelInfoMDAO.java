@@ -145,7 +145,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add("%" + entity.getEnterpriseName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status=?");
+					sql.append(" AND status in (?)");
 					params.add(entity.getStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getAuditRemark())) {
@@ -165,6 +165,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add("%" + entity.getSts() + "%");
 				}
 			}
+			logger.info(sql.toString() + " -- " + params.toString());
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
 		} catch (DataAccessException e) {
@@ -205,6 +206,10 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					sql.append(" AND a.live_type_id in (?)");
 					params.add(entity.getLiveTypeId());
 				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts=?");
+					params.add(entity.getSts());
+				}
 			}
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
@@ -232,6 +237,10 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND a.user_id=?");
 					params.add(entity.getUserId());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts=?");
+					params.add(entity.getSts());
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
