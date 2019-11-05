@@ -29,26 +29,33 @@
 			class="layui-icon" style="line-height: 30px">&#xe666;</i></a>
 	</div>
 	<div class="x-body">
+		<div class="layui-row">
+			<form class="layui-form layui-col-md12 x-so">
+				<input type="text" name="keyword" style="width: 190px;" placeholder="请输入用户名/姓名/手机号" autocomplete="off" class="layui-input">
+				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+			</form>
+		</div>
+		
 		<xblock>
-		<button class="layui-btn layui-btn-danger" onclick="delAll()">
-			<i class="layui-icon">&#xe640;</i>批量删除
-		</button>
-		<button class="layui-btn"
-			onclick="banner_add('新增','/jianfuzengxiao/system/community/toAddCommunity.html', 780, 435)">
-			<i class="layui-icon">&#xe608;</i>添加
-		</button>
-		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
+			<button class="layui-btn layui-btn-danger" onclick="delAll()">
+				<i class="layui-icon">&#xe640;</i>批量删除
+			</button>
+			<button class="layui-btn"
+				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 370)">
+				<i class="layui-icon">&#xe608;</i>添加
+			</button>
+			<span id="total" class="x-right" style="line-height: 40px"></span>
+		</xblock>
 		<table class="layui-table">
 			<thead>
 				<tr>
 					<th><input type="checkbox" value="" name="" id="checkAll"
 						onclick="checkAll(this)"></th>
-					<th>排序</th>
-					<th>社区名称</th>
-					<th>省</th>
-					<th>市</th>
-					<th>区/县</th>
-					<th>创建时间</th>
+					<th>用户名</th>
+					<th>姓名</th>
+					<th>电话</th>
+					<th>微信</th>
+					<th>管辖房屋</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -65,23 +72,32 @@
 			<td row="checkBoxId"><input type="checkbox" class="checkId"
 				value="" name=""></td>
 			<td row="ids" style="display: none;"></td>
-			<td row="listOrder"></td>
-			<td row="communityName">
+			<td row="loginName"></td>
+			<td row="username">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
-			<td row="provName"></td>
-			<td row="cityName"></td>
-			<td row="areaName"></td>
-			<td row="createTime"></td>
-			
+			<td row="telephone"></td>
+			<td row="wxAccountNumber"></td>
+			<td row="housesCount"></td>
+			<!-- <td row="username"></td>
+			<td row="adminTelephone"></td>
+			<td row="leaseCount"></td> -->
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/community/toCommunityDetail.html')">
-					<i class="layui-icon">&#xe642;</i>查看
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/admin/toAdminDetail.html')">
+					<i class="layui-icon">&#xe615;</i>查看
+				</button>
+				
+				<button class="layui-btn layui-btn layui-btn-xs" onclick="banner_manageHouses(this)">
+					<i class="layui-icon">&#xe615;</i>管辖房屋
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/community/toUpdateCommunity.html', 780, 435)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/admin/toUpdateAdmin.html', 460, 370)">
 					<i class="layui-icon">&#xe642;</i>编辑
+				</button>
+				<button class="layui-btn layui-btn layui-btn-xs"
+					onclick="banner_edit(this,'重置密码','/jianfuzengxiao/system/admin/toResetPwd.html', 460, 370)">
+					<i class="layui-icon">&#xe642;</i>重置密码
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
@@ -91,50 +107,63 @@
 		</tr>
 	</table>
 
-	<script type="text/javascript"
-		src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
-	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js"
-		charset="utf-8"></script>
-	<script src="/jianfuzengxiao/statics/system/js/xadmin.js"
-		charset="utf-8"></script>
+	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
+	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 
 	<script>
 		//var lPage;
-		var $, form, layer, laydate, lement, laypage;
+		var $, form, layer, laydate, element, laypage;
+		var keyword  = '';
 		$(function() {
-			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ],
-					function() {
-						//var total;
-						$ = layui.jquery//jquery
-						, form = layui.form, layer = layui.layer//弹出层
-						, laydate = layui.laydate//日期插件
-						, lement = layui.element//面包导航
-						, laypage = layui.laypage;//分页
-						//lPage = layui.laypage
-						//以上模块根据需要引入
-						//loading
-						layer.load(1)
-						//加载数据
-						page();
+			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
+				//var total;
+				$ = layui.jquery//jquery
+				, form = layui.form, layer = layui.layer//弹出层
+				, laydate = layui.laydate//日期插件
+				, element = layui.element//面包导航
+				, laypage = layui.laypage;//分页
+				//lPage = layui.laypage
+				//以上模块根据需要引入
+				//loading..
+				layer.load(1)
+				layer.ready(function() { //为了layer.ext.js加载完毕再执行
 
-						layer.ready(function() { //为了layer.ext.js加载完毕再执行
-
-							layer.photos({
-								photos : '#x-img'
-							//,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机
-							});
-
-						});
-
+					layer.photos({
+						photos : '#x-img'
+					//,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机
 					});
+
+				});
+				
+				//监听检索
+				form.on('submit(sreach)', function(data){
+					
+					keyword = data.field.keyword;
+					
+					page()
+					//loading..
+					layer.load(1)
+			      	return false;
+			    });
+				
+				/*加载页面数据*/
+				page();
+				
+			});
+			
 		});
 
 		//分页
 		function page() {
+			var data = {
+				'keyword': keyword
+			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/community/getCommunityPage.html",
+				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
 				type : 'post',
 				dataType : "json",
+				data: data,
 				success : function(result) {
 					laypage.render({
 						elem : 'page',
@@ -160,12 +189,12 @@
 		}
 
 		function serchData(page) {
-
 			var data = {
-				'page' : page
+				'page' : page,
+				'keyword': keyword
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/community/getCommunityPage.html",
+				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -177,27 +206,25 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(
-									data[i].communityId);
-							tr.find('[row=ids]').text(data[i].communityId);
-							tr.find('[row=listOrder]').text(data[i].listOrder);
-							tr.find('[row=communityName]').text(data[i].communityName);
-							tr.find('[row=provName]').text(data[i].provName);
-							tr.find('[row=cityName]').text(data[i].cityName);
-							tr.find('[row=areaName]').text(data[i].areaName);
-							tr.find('[row=createTime]').text(data[i].createTime);
+							tr.find('[row=checkBoxId]').children().val(data[i].adminId);
+							tr.find('[row=ids]').text(data[i].adminId);
+							tr.find('[row=loginName]').text(data[i].loginName);
+							tr.find('[row=username]').text(data[i].username);
+							tr.find('[row=telephone]').text(data[i].telephone);
+							tr.find('[row=wxAccountNumber]').text(data[i].wxName);
+							tr.find('[row=housesCount]').text(data[i].manageHousesCount);
 
 							$('#x-img').append(tr);
 							//close loading
 							layer.closeAll('loading');
 						}
 					} else {
-						layer.msg("加载数据出错，请刷新页面后，重新操作", {icon : 2})
+						layer.msg("加载数据出错，请刷新页面", {icon : 7})
 					}
 
 				},
 				error : function(result) {
-					layer.msg("加载数据出错，请刷新页面后，重新操作", {icon : 2})
+					layer.msg("加载数据出错，请刷新页面", {icon : 2})
 				}
 			});
 		}
@@ -210,23 +237,22 @@
 				})
 				var sel = arr.join(",");
 				$.ajax({
-					url : "/jianfuzengxiao/system/community/delCommunity.html",
+					url : "/jianfuzengxiao/system/admin/delAdmin.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'communityId' : sel
+						'adminId' : sel
 					},
 					success : function(result) {
 						if (result.code == 1) {
-							page();
-							serchData();
 							layer.msg('删除成功', {icon : 1});
+							page();
 						} else {
 							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.msg("加载数据出错，请刷新页面后，重新操作", {icon : 2})
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 			});
@@ -238,12 +264,19 @@
 		}
 		function banner_details(obj, title, url) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityId=' + id);
+			x_admin_show(title, url + '?housesId=' + id);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityId=' + id, w, h);
+			x_admin_show(title, url + '?adminId=' + id, w, h);
+		}
+		
+		//管辖房屋
+		function banner_manageHouses(obj){
+			var id = $(obj).parent('td').siblings('[row=ids]').text();
+			var username = $(obj).parent('td').siblings('[row=username]').text();
+			window.parent.x_admin_open_ifram('/jianfuzengxiao/system/auditDistribution/toManageHousesPage.html?adminId='+id, username+'：管辖房屋', 100)
 		}
 
 		/*删除*/
@@ -251,22 +284,22 @@
 			layer.confirm('确认要删除吗？', function(index) {
 				var id = $(obj).parent('td').siblings('[row=ids]').text();
 				$.ajax({
-					url : "/jianfuzengxiao/system/community/delCommunity.html",
+					url : "/jianfuzengxiao/system/admin/delAdmin.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'communityId' : id
+						'adminId' : id
 					},
 					success : function(result) {
 						if (result.code == 1) {
-							page();
 							layer.msg('删除成功', {icon : 1});
+							page();
 						} else {
 							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.msg("加载数据出错，请刷新页面后，重新操作", {icon : 2})
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 

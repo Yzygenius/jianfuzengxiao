@@ -62,7 +62,7 @@
 			</div>
 			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
-				<span>小区</span>
+				<span>小区/街道</span>
 				</label>
 				<div class="layui-input-inline">
 					<select id="communityStreetSel" name="communityStreetSel" lay-verify="required" lay-filter="communityStreetSel" lay-search="">
@@ -74,30 +74,23 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>楼号</span>
+				<label class="layui-form-label">
+					<span>内/外铺</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<select id="storeLocationSel" name="storeLocationSel" lay-filter="storeLocationSel" lay-search="">
+						<option value="">请选择</option>
+						<option value="1">内铺</option>
+						<option value="2">外铺</option>
+			        </select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
+					<span class="x-red"></span>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>单元</span>
-				</label>
-				<div class="layui-input-inline">
-					<input type="text" id="unit" name="unit" lay-verify="required" required="" autocomplete="off" class="layui-input">
-				</div>
-				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>门牌号</span>
+				<label  class="layui-form-label">
+					<span>门牌号</span>
 				</label>
 				<div class="layui-input-inline">
 					<input type="text" id="houseNumber" name="houseNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
@@ -241,11 +234,11 @@
 	var communityName = '';
 	var communityStreetId = '';
 	var communityStreetName = '';
+	var storeLocation = '';
 	var housesTypeId = '';
 	var housesTypeName = '';
 	var propertyCertificatesPhoto = '';
 	var houseTypePhoto = '';
-	
     layui.use(['form','layer','upload'], function(){
     	var $ = layui.jquery
         form = layui.form
@@ -265,7 +258,7 @@
 				type : 'post',
 				dataType: "json",
 				data: {
-					'housesStatus': '1',
+					'housesStatus': '2',
 					'provCode': provCode,
 					'provName': provName,
 					'cityCode': cityCode,
@@ -280,8 +273,7 @@
 					'housesTypeName': housesTypeName,
 					'propertyCertificatesPhoto': propertyCertificatesPhoto,
 					'houseTypePhoto': houseTypePhoto,
-					'storiedBuildingNumber': $('#storiedBuildingNumber').val(),
-					'unit': $('#unit').val(),
+					'storeLocation': storeLocation,
 					'houseNumber': $('#houseNumber').val(),
 					'housesAddress': $('#housesAddress').val(),
 					'houseType': $('#houseType').val(),
@@ -341,12 +333,12 @@
 			        form.render('select')
 			        provinceList = result.data;
 				}else{
-					layer.msg("数据加载出错，请刷新页面", {icon: 2});
+					layer.msg("加载数据出错，请刷新页面", {icon: 2});
 				}
 				
 			},
 			error : function(result){
-				layer.msg("数据加载出错，请刷新页面", {icon: 2})
+				layer.msg("加载数据出错，请刷新页面", {icon: 2})
 			}
 		});
         
@@ -429,6 +421,11 @@
         	housesTypeId = data.value;
         	
         });
+      	
+       	//监听内外铺
+        form.on('select(storeLocationSel)', function(data){
+        	storeLocation = data.value;
+        }); 
       	
         /*上传房产证*/
         upload.render({

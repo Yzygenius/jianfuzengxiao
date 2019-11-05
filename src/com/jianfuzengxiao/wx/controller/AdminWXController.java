@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.bamboo.framework.common.encrypt.MD5;
 import com.bamboo.framework.common.util.DateUtil;
+import com.jianfuzengxiao.base.common.HttpClientUtlis;
 import com.jianfuzengxiao.base.common.MD5Util;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
@@ -43,7 +45,7 @@ public class AdminWXController extends BaseController {
 	
 	/**
 	 *	 小程序登录校验
-	 * @param wxOpenid 
+	 * @param jsCode 
 	 * @return
 	 * 	code 9000 重新登陆， 1 通过	
 	 */
@@ -51,10 +53,12 @@ public class AdminWXController extends BaseController {
 	@RequestMapping(value="/verifyLogin")
 	public String verifyLogin(AdminInfoMVO model){
 		try {
-			throwAppException(StringUtils.isBlank(model.getWxOpenid()), RC.OTHER_TOKEN_TIMEOUT);
+			throwAppException(StringUtils.isBlank(model.getJsCode()), RC.OTHER_TOKEN_TIMEOUT);
+			
+			String openid = getOpenid(model.getJsCode());
 			
 			AdminInfoMVO adminInfo = new AdminInfoMVO();
-			adminInfo.setWxOpenid(model.getWxOpenid());
+			adminInfo.setWxOpenid(openid);
 			adminInfo.setSts("A");
 			List<AdminInfoMVO> alist = adminInfoService.queryList(adminInfo);
 			if (alist.size() < 1) {//用户不存在，返回登录页
@@ -78,7 +82,7 @@ public class AdminWXController extends BaseController {
 	
 	/**
 	 * 	登录
-	 * @param loginName 账号, password 密码 , wxOpenid, wxPhoto 头像 
+	 * @param loginName 账号, password 密码
 	 * @return
 	 */
 	@ResponseBody
@@ -96,11 +100,7 @@ public class AdminWXController extends BaseController {
 			String password = MD5Util.MD5Encode(model.getPassword() + adminInfo.getSatl());
 			throwAppException(!StringUtils.equals(adminInfo.getPassword(), password), RC.LOGIN_USERNAME_PASSWORD_ERROR);
 			
-			adminInfo.setWxOpenid(model.getWxOpenid());
-			adminInfo.setIsWx(AdminInfo.is_wx_yes);
 			adminInfo.setWxPassword(password);
-			adminInfo.setWxPhoto(model.getWxPhoto());
-			adminInfo.setWxTime(DateUtil.nowTime());
 			adminInfoService.update(adminInfo);
 			//管辖房产数量
 			AduitDistributionMVO aduitDistributionMVO = new AduitDistributionMVO();
@@ -115,6 +115,33 @@ public class AdminWXController extends BaseController {
 	}
 	
 	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * wx授权
+	 * </p>
+	 * @param adminId 管理员ID, jsCode , wxName 微信昵称, wxPhoto 头像, 
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月2日 下午4:20:02
+	 */
+	@ResponseBody
+	@RequestMapping(value="/wxAuthorization")
+	public String wxAuthorization(AdminInfoMVO model){
+		try{
+			throwAppException(StringUtils.isBlank(model.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
+			String openid = getOpenid(model.getJsCode());
+			model.setWxOpenid(openid);
+			model.setIsWx(AdminInfo.is_wx_yes);
+			model.setWxTime(DateUtil.nowTime());
+			adminInfoService.update(model);
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "授权失败", e);
+		}
+	}
+	
+	/**
 	 * 	解除微信 
 	 * @param adminId 管理员ID
 	 * @return
@@ -124,13 +151,22 @@ public class AdminWXController extends BaseController {
 	public String releaseWx(AdminInfoMVO model) {
 		try {
 			throwAppException(StringUtils.isBlank(model.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
-			model.setWxOpenid("");
+			model.setWxPassword("");
 			model.setIsWx(AdminInfo.is_wx_no);
 			adminInfoService.update(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "解除微信失败", e);
 		}
+	}
+	
+	public String getOpenid(String jsCode){
+		Map<String, Object> map = HttpClientUtlis.doGet("https://api.weixin.qq.com/sns/jscode2session?appid=wx1cddfa3b39510cc9&secret=9f2cb595b11e6dff024b01ceee21a220&js_code="+jsCode+"&grant_type=authorization_code");
+		/*String openid = "";
+		if (map.get("errcode").equals(0)) {
+			openid = (String) map.get("openid");
+		}*/
+		return (String) map.get("openid");
 	}
 	
 

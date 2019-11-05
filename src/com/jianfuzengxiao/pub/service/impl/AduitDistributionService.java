@@ -10,6 +10,7 @@ import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.pub.dao.IAduitDistributionMDAO;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 
 @Service
@@ -69,6 +70,12 @@ public class AduitDistributionService extends BaseService implements IAduitDistr
 	public List<AduitDistributionMVO> queryHousesList(AduitDistributionMVO aduitDistribution)
 			throws SysException, AppException {
 		return aduitDistributionMDAO.queryHousesList(aduitDistribution);
+	}
+
+	@Override
+	public PageInfo queryPageNotAdminHouses(HousesInfoMVO entity, PageInfo pageInfo) throws SysException {
+		entity.setSts(STS_NORMAL);
+		return aduitDistributionMDAO.queryPageNotAdminHouses(entity, pageInfo);
 	}
 
 }

@@ -27,5 +27,8 @@ public interface IMsgInfoService extends IService {
 
 	/** 分页查询 */
 	public PageInfo queryPage(MsgInfoMVO entity, PageInfo pagInfo) throws SysException, AppException;
+	
+	//用户未读数量
+	public int queryCountNotRead(MsgInfoMVO entity) throws SysException, AppException;
 
 }

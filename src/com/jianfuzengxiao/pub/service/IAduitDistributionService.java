@@ -5,6 +5,8 @@ import com.bamboo.framework.entity.PageInfo;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+
 import javax.jws.WebService;
 import java.util.List;
 
@@ -31,5 +33,7 @@ public interface IAduitDistributionService extends IService {
 	public PageInfo queryHousesPage(AduitDistributionMVO aduitDistribution, PageInfo pageInfo) throws SysException, AppException;
 	
 	public List<AduitDistributionMVO> queryHousesList(AduitDistributionMVO aduitDistribution) throws SysException, AppException;
+	
+	public PageInfo queryPageNotAdminHouses(HousesInfoMVO entity, PageInfo pageInfo) throws SysException;
 
 }

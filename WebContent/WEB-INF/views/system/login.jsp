@@ -20,7 +20,7 @@
 <body class="login-bg">
     
     <div class="login layui-anim layui-anim-up">
-        <div class="message">天成和园林管理登录</div>
+        <div class="message">后台管理登录</div>
         <div id="darkbannerwrap"></div>
         
         <form method="post" class="layui-form" >
@@ -46,16 +46,15 @@
       			data: data.field,
       			success : function(result){
       				if(result.code == 1){
-      					layer.alert("登录成功")
-      					setTimeout(function () { 
+      					layer.msg("登录成功", {icon: 1, time: 1000},function () {
       						location.href = "/jianfuzengxiao/system.html";
-						}, 1500);//1.5秒
+    			        });
       				}else{
-      					layer.alert("用户名密码错误，请重新输入")
+      					layer.msg("用户名密码错误，请重新输入", {icon: 2})
       				}
       			},
       			error : function(result){
-      				layer.alert("用户名密码错误，请重新输入")
+      				layer.msg("服务器繁忙，请稍后再试", {icon: 2})
       			}
       		});
              return false;

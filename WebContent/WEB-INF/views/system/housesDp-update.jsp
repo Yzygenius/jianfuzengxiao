@@ -63,8 +63,8 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>小区</span>
+				<label class="layui-form-label">
+				<span>小区/街道</span>
 				</label>
 				<div class="layui-input-inline">
 					<select id="communityStreetSel" name="communityStreetSel" lay-verify="required" lay-filter="communityStreetSel" lay-search="">
@@ -76,25 +76,18 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>楼号</span>
+				<label class="layui-form-label">
+					<span>内/外铺</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" value="${houses.storiedBuildingNumber }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<select id="storeLocationSel" name="storeLocationSel" lay-filter="storeLocationSel" lay-search="">
+						<option value="">请选择</option>
+						<option value="1">内铺</option>
+						<option value="2">外铺</option>
+			        </select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label for="remark" class="layui-form-label">
-				<span>单元</span>
-				</label>
-				<div class="layui-input-inline">
-					<input type="text" id="unit" name="unit" value="${houses.unit }" lay-verify="required" required="" autocomplete="off" class="layui-input">
-				</div>
-				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
+					<span class="x-red"></span>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -248,6 +241,7 @@ var housesTypeId = '${houses.housesTypeId }';
 var housesTypeName = '${houses.housesTypeName }';
 var propertyCertificatesPhoto = '${houses.propertyCertificatesPhoto }';
 var houseTypePhoto = '${houses.houseTypePhoto }';
+var storeLocation = '${houses.storeLocation }';
 
 var provinceList = "";
 var cityList = "";
@@ -270,7 +264,9 @@ layui.use(['form','layer', 'upload'], function(){
 	/* 房屋类型加载 */
 	serchHousesType();
     
-    
+	form.val('example', {
+	    "storeLocationSel": storeLocation
+	});
     
   	//监听省下拉框
     form.on('select(province)', function(data){
@@ -352,6 +348,11 @@ layui.use(['form','layer', 'upload'], function(){
     	
     });
   	
+  	//监听内外铺
+    form.on('select(storeLocationSel)', function(data){
+    	storeLocation = data.value;
+    }); 
+  	
     /*上传房产证*/
     upload.render({
     	elem: '#uploadPropertyCertificatesPhoto'
@@ -410,8 +411,7 @@ layui.use(['form','layer', 'upload'], function(){
 				'housesTypeName': housesTypeName,
 				'propertyCertificatesPhoto': propertyCertificatesPhoto,
 				'houseTypePhoto': houseTypePhoto,
-				'storiedBuildingNumber': $('#storiedBuildingNumber').val(),
-				'unit': $('#unit').val(),
+				'storeLocation': storeLocation,
 				'houseNumber': $('#houseNumber').val(),
 				'housesAddress': $('#housesAddress').val(),
 				'houseType': $('#houseType').val(),

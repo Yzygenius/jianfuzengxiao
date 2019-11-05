@@ -33,6 +33,10 @@ public class AdminInfo extends Entity {
 	protected String roleName;
 
 	protected String isWx;
+	
+	protected String wxName;
+	
+	protected String wxAccountNumber;
 
 	protected String wxOpenid;
 
@@ -47,6 +51,15 @@ public class AdminInfo extends Entity {
 	protected String updateTime;
 
 	protected String sts;
+
+	
+	public String getWxName() {
+		return wxName;
+	}
+
+	public void setWxName(String wxName) {
+		this.wxName = wxName;
+	}
 
 	public String getAdminId() {
 		return adminId;
@@ -207,4 +220,13 @@ public class AdminInfo extends Entity {
 	public void setSts(String sts) {
 		this.sts = sts;
 	}
+
+	public String getWxAccountNumber() {
+		return wxAccountNumber;
+	}
+
+	public void setWxAccountNumber(String wxAccountNumber) {
+		this.wxAccountNumber = wxAccountNumber;
+	}
+	
 }

@@ -15,7 +15,52 @@ public class AduitDistributionMVO extends AduitDistribution {
 	private String housesTypeName;
 	private String houseType;
 	private String propertyCertificatesNumber;
+	private String storeLocation;
 	
+	private String provCode;
+	private String cityCode;
+	private String areaCode;
+	
+	private String communityId;
+	private String communityStreetId;
+	
+	
+	public String getCommunityId() {
+		return communityId;
+	}
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId;
+	}
+	public String getCommunityStreetId() {
+		return communityStreetId;
+	}
+	public void setCommunityStreetId(String communityStreetId) {
+		this.communityStreetId = communityStreetId;
+	}
+	public String getProvCode() {
+		return provCode;
+	}
+	public void setProvCode(String provCode) {
+		this.provCode = provCode;
+	}
+	public String getCityCode() {
+		return cityCode;
+	}
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+	public String getAreaCode() {
+		return areaCode;
+	}
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+	public String getStoreLocation() {
+		return storeLocation;
+	}
+	public void setStoreLocation(String storeLocation) {
+		this.storeLocation = storeLocation;
+	}
 	private String keyword;
 	
 	public String getHousesTypeName() {

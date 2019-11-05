@@ -14,12 +14,13 @@ public enum RC {
 	LOGIN_MANAGER_USERNAME_ACCOUNT_TYPE("1106", "用户没有权限登录该平台"),
 	
 	//   注册 12
-	REGIST_PARAM_TYPE_INVALID("1201", "账号类型无效"),
+	REGIST_PARAM_TYPE_INVALID("1201", "用户名无效"),
 	REGIST_PARAM_MOBILE_INVALID("1202", "手机号码无效"),
 	REGIST_PARAM_SMSCODE_INVALID("1203", "短信验证码无效"),
 	REGIST_PARAM_PASSWORD_INVALID("1204", "密码格式无效（必须为6-16位字母+数字）"),
 	REGIST_PARAM_MOBILE_OCCUPIED("1205", "该手机号码已注册，请直接登录"),
 	REGIST_PARAM_SMSCODE_TYPE_INVALID("1206", "短信验证码类型无效"),
+	REGIST_PARAM_TYPE_EXIST("1207", "用户名已存在"),
 	
 	// 找回密码 13
 	RETRIEVE_PARAM_MOBILE_INVALID("1301", "手机号码无效"),
@@ -65,9 +66,9 @@ public enum RC {
 	USER_INFO_NOT_EXIST("3002", "用户不存在"),
 	
 	//管理员35
-	ADMIN_INFO_EXIST("3501", "用户已存在"),
-	ADMIN_INFO_NOT_EXIST("3502", "用户不存在"),
-	ADMIN_INFO_PARAM_ADMIN_ID_INVALID("3503", "用户ID无效"),
+	ADMIN_INFO_EXIST("3501", "管理员已存在"),
+	ADMIN_INFO_NOT_EXIST("3502", "管理员不存在"),
+	ADMIN_INFO_PARAM_ADMIN_ID_INVALID("3503", "管理员ID无效"),
 	
 	//  用户住户40
 	PERSONNEL_INFO_EXIST("4001", "人员已存在"),
@@ -75,8 +76,9 @@ public enum RC {
 	
 	//房屋50
 	HOUSES_INFO_PARAM_HOUSES_ID_INVALID("5001", "房产ID无效"),
-	HOUSES_INFO_REPORT_NULL("5002", "暂无房产上报信息"),
+	HOUSES_INFO_REPORT_NULL("5002", "暂无房产信息"),
 	HOUSES_INFO_PARAM_CONTRACT_FILE_NULL("5003", "请上传租赁合同"),
+	HOUSES_INFO_CERT_EXIST("5004", "改房产已认证，如有问题，请联系管理员"),
 	
 	//社区51
 	COMMUNITY_INFO_PARAM_COMMUNITY_NAME_EXIST("5101", "该社区已存在"),

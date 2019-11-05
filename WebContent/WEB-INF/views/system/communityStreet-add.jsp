@@ -140,12 +140,12 @@ var provCode, provName, cityCode, cityName, areaCode, areaName = '';
 			        form.render('select')
 			        provinceList = result.data;
 				}else{
-					layer.alert(result.msg, {icon: 5});
+					layer.msg(result.msg, {icon: 2});
 				}
 				
 			},
 			error : function(result){
-				layer.alert("添加出错，请重新添加")
+				layer.msg("加载数据出错，请刷新页面", {icon : 2})
 			}
 		});
         
@@ -239,7 +239,7 @@ var provCode, provName, cityCode, cityName, areaCode, areaName = '';
 			},
 			success : function(result){
 				if(result.code == 1){
-					layer.alert("添加成功", {icon: 6},function () {
+					layer.msg("添加成功", {icon: 1},function () {
 			            // 获得frame索引
 			            var index = parent.layer.getFrameIndex(window.name);
 			            //关闭当前frame
@@ -247,11 +247,11 @@ var provCode, provName, cityCode, cityName, areaCode, areaName = '';
 			            window.parent.location.reload();
 			        });
 				}else{
-					layer.alert(result.msg, {icon: 5});
+					layer.msg(result.msg, {icon: 7});
 				}
 			},
 			error : function(result){
-				layer.alert("添加出错，请重新添加")
+				layer.msg("添加出错，请重新添加", {icon : 2})
 			}
 		}); 
         return false;
@@ -281,7 +281,7 @@ var provCode, provName, cityCode, cityName, areaCode, areaName = '';
 				}
 			},
 			error : function(result){
-				layer.alert("数据加载出错，请刷新页面", {icon: 5})
+				layer.msg("数据加载出错，请刷新页面", {icon: 2})
 			}
 		})
     }

@@ -57,4 +57,9 @@ public class MsgInfoService extends BaseService implements IMsgInfoService {
 		return msgInfoMDAO.queryPage(msgInfo, pagInfo);
 	}
 
+	@Override
+	public int queryCountNotRead(MsgInfoMVO entity) throws SysException, AppException {
+		return msgInfoMDAO.queryCountNotRead(entity);
+	}
+
 }

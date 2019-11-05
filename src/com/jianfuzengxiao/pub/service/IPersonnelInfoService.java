@@ -39,5 +39,7 @@ public interface IPersonnelInfoService extends IService {
 	public PersonnelInfoMVO addPersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
 	
 	public int updatePersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
+	
+	public int updateAuditPersonnel(PersonnelInfoMVO entity) throws SysException, AppException;
 
 }

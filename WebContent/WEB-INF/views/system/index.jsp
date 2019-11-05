@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>后台管理</title>
+	<title>智慧平安社区社群服务系统</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -20,7 +20,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="/jianfuzengxiao/system.html">后台管理</a></div>
+        <div class="logo"><a href="/jianfuzengxiao/system.html">智慧平安社区社群服务系统</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -103,13 +103,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="/jianfuzengxiao/system/project/toProjectPage.html">
+                        <a _href="/jianfuzengxiao/system/admin/toAdminPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>干部管理</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="/jianfuzengxiao/system/project/toProjectPage.html">
+                        <a _href="/jianfuzengxiao/system/per/toPerPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>社区人员管理</cite>
                         </a>
@@ -123,14 +123,20 @@
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li>
-                        <a _href="/jianfuzengxiao/system/carouselimg/toCarousePage.html">
+                	<li>
+                        <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>业主认证</cite>
+                            <cite>会员认证</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="/jianfuzengxiao/system/carouselimg/toCarousePage.html">
+                        <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>业主审核</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/per/toAuditZuhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>租户审核</cite>
                         </a>
@@ -174,7 +180,7 @@
     <div class="page-content">
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
           <ul class="layui-tab-title">
-            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+            <li class="home layui-this"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
           </ul>
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -191,6 +197,5 @@
         <div class="copyright"> 备案号   &nbsp;&nbsp;&nbsp;&nbsp;</div>  
     </div>
     <!-- 底部结束 -->
-    
 </body>
 </html>

@@ -117,6 +117,14 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		userInfoMVO.setUserId(model.getUserId());
 		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
+		PersonnelInfoMVO per = new PersonnelInfoMVO();
+		per.setHousesId(model.getHousesId());
+		per.setSts(STS_NORMAL);
+//		per.setStatus("");
+		per.setLiveTypeId("1,2,3,4");
+		List<PersonnelInfoMVO> perList = personnelInfoMDAO.queryList(per);
+		throwAppException(perList.size() > 0, RC.HOUSES_INFO_CERT_EXIST); 
+		
 		HousesInfoMVO housesInfo = new HousesInfoMVO();
 		housesInfo.setHousesId(model.getHousesId());
 		housesInfo = housesInfoMDAO.queryBean(housesInfo);
@@ -276,6 +284,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(personnelInfo.getUserId());
+		msgInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
 		msgInfoMVO.setTitle(msgTypeMVO.getMsgTypeName());
@@ -284,6 +293,57 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoService.insert(msgInfoMVO);
 		
 		return this.update(entity);
+	}
+
+	@Override
+	public int updateAuditPersonnel(PersonnelInfoMVO entity) throws SysException, AppException {
+		
+		PersonnelInfoMVO per = personnelInfoMDAO.queryBean(entity);
+		
+		this.update(entity);
+		
+		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
+		housesInfoMVO.setHousesId(per.getHousesId());
+		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);
+		
+		String hname = "";
+		if (StringUtils.equals(HousesInfo.houses_status_fangwu, housesInfoMVO.getHousesStatus())) {
+			hname = housesInfoMVO.getCommunityName()+" "+housesInfoMVO.getStoriedBuildingNumber()+"-"+housesInfoMVO.getUnit()+"-"+housesInfoMVO.getHouseNumber();
+		}
+		if (StringUtils.equals(HousesInfo.houses_status_dianpu, housesInfoMVO.getHousesStatus())) {
+			hname = per.getEnterpriseName();
+		}
+		
+		if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_passed)) {
+			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
+			msgTypeMVO.setMsgTypeId("4");
+			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
+			
+			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
+			msgInfoMVO.setUserId(per.getUserId());
+			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
+			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
+			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
+			msgInfoMVO.setTitle(per.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
+			msgInfoMVO.setContent("您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知");
+			msgInfoMVO.setStatus(MsgInfo.status_not_read);
+			msgInfoService.insert(msgInfoMVO);
+		}else if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_reject)) {
+			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
+			msgTypeMVO.setMsgTypeId("3");
+			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
+			
+			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
+			msgInfoMVO.setUserId(per.getUserId());
+			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
+			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
+			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
+			msgInfoMVO.setTitle(per.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
+			msgInfoMVO.setContent("您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】未能通过审核，请悉知");
+			msgInfoMVO.setStatus(MsgInfo.status_not_read);
+			msgInfoService.insert(msgInfoMVO);
+		}
+		return 1;
 	}
 
 }

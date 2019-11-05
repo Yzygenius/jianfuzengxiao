@@ -67,8 +67,6 @@ public class CommonAPIController extends BaseController {
 	private IHousesInfoService housesInfoService;
 	
 	
-
-	
 	/**
 	 * 
 	 * <p style="color:#36F;">

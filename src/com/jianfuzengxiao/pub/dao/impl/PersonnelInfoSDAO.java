@@ -266,8 +266,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getPersonnelId());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND houses_id in (?)");
-					params.add(entity.getHousesId());
+					sql.append(" AND houses_id in ("+entity.getHousesId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND user_id=?");
@@ -278,8 +277,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getPerSort());
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id in (?)");
-					params.add(entity.getLiveTypeId());
+					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
 					sql.append(" AND live_type_name=?");
@@ -378,8 +376,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					params.add(entity.getEnterpriseName());
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status in (?)");
-					params.add(entity.getStatus());
+					sql.append(" AND status in ("+entity.getStatus()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getAuditRemark())) {
 					sql.append(" AND audit_remark=?");

@@ -31,12 +31,14 @@ import com.jianfuzengxiao.pub.entity.CertificatesTypeMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.LiveTypeMVO;
 import com.jianfuzengxiao.pub.entity.NationMVO;
 import com.jianfuzengxiao.pub.service.IAreaInfoService;
 import com.jianfuzengxiao.pub.service.ICertificatesTypeService;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
+import com.jianfuzengxiao.pub.service.ILiveTypeService;
 import com.jianfuzengxiao.pub.service.INationService;
 
 /**
@@ -64,6 +66,9 @@ public class CommonController extends BaseController {
 	
 	@Autowired
 	private IHousesInfoService housesInfoService;
+	
+	@Autowired
+	private ILiveTypeService liveTypeService;
 	
 	/**
 	 * 
@@ -148,6 +153,28 @@ public class CommonController extends BaseController {
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "获取证件类型列表出错", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 居住类型
+	 * </p>
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月4日 下午7:22:53
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getLiveTypeList")
+	public String getLiveTypeList(){
+		try {
+			List<LiveTypeMVO> list = liveTypeService.queryList(new LiveTypeMVO());
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取居住类型列表出错", e);
 		}
 	}
 	

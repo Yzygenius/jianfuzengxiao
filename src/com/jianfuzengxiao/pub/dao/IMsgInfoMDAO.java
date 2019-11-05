@@ -8,4 +8,5 @@ public interface IMsgInfoMDAO extends IMsgInfoSDAO {
 	/** 分页查询 */
 	public PageInfo queryPage(MsgInfoMVO msgInfo, PageInfo pagInfo) throws SysException;
 
+	public int queryCountNotRead(MsgInfoMVO entity) throws SysException;
 }

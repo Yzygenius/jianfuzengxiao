@@ -111,7 +111,9 @@
 						, laypage = layui.laypage;//分页
 						//lPage = layui.laypage
 						//以上模块根据需要引入
-
+						//loading
+						layer.load(1)
+						//加载数据
 						page();
 
 						layer.ready(function() { //为了layer.ext.js加载完毕再执行
@@ -140,6 +142,10 @@
 							serchData(obj.curr)
 						}
 					})
+					if(result.data.total == 0){
+						//close loading
+						layer.closeAll('loading');
+					}
 				}
 			})
 		}
@@ -187,14 +193,16 @@
 							tr.find('[row=updateTime]').text(data[i].updateTime);
 
 							$('#x-img').append(tr);
+							//close loading
+							layer.closeAll('loading');
 						}
 					} else {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 
 				},
 				error : function(result) {
-					layer.alert("加载数据出错，请刷新页面后，重新操作")
+					layer.msg("加载数据出错，请刷新页面", {icon : 2})
 				}
 			});
 		}
@@ -216,20 +224,13 @@
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
-							layer.msg('删除成功', {
-								icon : 1,
-								time : 1000
-							});
+							layer.msg('删除成功', {icon : 1});
 						} else {
-							layer.msg(result.msg, {
-								icon : 5,
-								time : 1000
-							});
+							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 			});
@@ -264,19 +265,13 @@
 						if (result.code == 1) {
 							page();
 							serchData();
-							layer.msg('删除成功', {
-								icon : 1,
-								time : 1000
-							});
+							layer.msg('删除成功', {icon : 1});
 						} else {
-							layer.msg(result.msg, {
-								icon : 5,
-								time : 1000
-							});
+							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 

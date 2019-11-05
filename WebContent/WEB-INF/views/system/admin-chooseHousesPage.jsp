@@ -57,15 +57,8 @@
 						<option value="">请选择小区</option>
 			        </select>
 				</div>
-				<div class="layui-input-inline">
-					<select id="storeLocationSel" name="storeLocationSel" lay-filter="storeLocationSel" lay-search="">
-						<option value="">请选择内/外铺</option>
-						<option value="1">内铺</option>
-						<option value="2">外铺</option>
-			        </select>
-				</div>
-				<!-- <input type="text" name="storiedBuildingNumber" placeholder="请输入楼号" autocomplete="off" class="layui-input">
-				<input type="text" name="unit" placeholder="请输入单元号" autocomplete="off" class="layui-input"> -->
+				<input type="text" name="storiedBuildingNumber" placeholder="请输入楼号" autocomplete="off" class="layui-input">
+				<input type="text" name="unit" placeholder="请输入单元号" autocomplete="off" class="layui-input">
 				<input type="text" name="houseNumber" placeholder="请输入门牌号" autocomplete="off" class="layui-input">
 				<input type="text" name="keyword" placeholder="姓名/手机号/身份证号" autocomplete="off" class="layui-input">
 				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -73,13 +66,13 @@
 		</div>
 		
 		<xblock>
-			<button class="layui-btn layui-btn-danger" onclick="delAll()">
-				<i class="layui-icon">&#xe640;</i>批量删除
+			<button class="layui-btn" onclick="delAll()">
+				<i class="layui-icon">&#xe608;</i>批量添加
 			</button>
-			<button class="layui-btn"
-				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesDp.html', 820)">
+			<!-- <button class="layui-btn"
+				onclick="banner_add('新增','/jianfuzengxiao/system/auditDistribution/toChooseHousesPage.html')">
 				<i class="layui-icon">&#xe608;</i>添加
-			</button>
+			</button> -->
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">
@@ -88,11 +81,8 @@
 					<th><input type="checkbox" value="" name="" id="checkAll"
 						onclick="checkAll(this)"></th>
 					<th>社区</th>
-					<th>小区/街道</th>
+					<th>小区</th>
 					<th>门牌号</th>
-					<th>包户干部</th>
-					<th>干部电话</th>
-					<th>居住人数</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -113,24 +103,15 @@
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
-			<!-- <td row="storiedBuildingNumber"></td>
-			<td row="unit"></td> -->
 			<td row="houseNumber"></td>
-			<td row="username"></td>
-			<td row="adminTelephone"></td>
-			<td row="leaseCount"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesDpDetail.html')">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
 					<i class="layui-icon">&#xe642;</i>查看
 				</button>
-				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesDp.html', 820)">
-					<i class="layui-icon">&#xe642;</i>编辑
-				</button>
-				<button class="layui-btn-danger layui-btn layui-btn-xs"
+				<button class="layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
-					<i class="layui-icon">&#xe640;</i>删除
+					<i class="layui-icon">&#xe640;</i>添加房屋权限
 				</button>
 			</td>
 		</tr>
@@ -152,11 +133,12 @@
 		var areaCode = ''
 		var communityId = ''
 		var communityStreetId = ''
-		var storeLocation = ''
 		var storiedBuildingNumber = ''
 		var unit = ''
 		var keyword  = '';
 		var houseNumber = '';
+		var adminId = GetQueryString('adminId');
+		console.log(adminId)
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
 				//var total;
@@ -167,7 +149,7 @@
 				, laypage = layui.laypage;//分页
 				//lPage = layui.laypage
 				//以上模块根据需要引入
-				//loading
+				//loading..
 				layer.load(1)
 				layer.ready(function() { //为了layer.ext.js加载完毕再执行
 
@@ -186,12 +168,11 @@
 					areaCode = data.field.area;
 					communityId = data.field.communitySel;
 					communityStreetId = data.field.communityStreetSel;
-					storeLocation = data.field.storeLocationSel;
-					/* storiedBuildingNumber = data.field.storiedBuildingNumber;
-					unit = data.field.unit; */
+					storiedBuildingNumber = data.field.storiedBuildingNumber;
+					unit = data.field.unit;
 					houseNumber = data.field.houseNumber;
 					keyword = data.field.keyword;
-					
+					//加载数据
 					page()
 					//loading
 					layer.load(1)
@@ -305,7 +286,7 @@
 				        form.render('select')
 				        provinceList = result.data;
 					}else{
-						layer.msg("添加出错，请重新添加", {icon: 2});
+						layer.msg(result.msg, {icon: 7});
 					}
 					
 				},
@@ -355,7 +336,7 @@
 				success : function(result){
 					if(result.code == 1){
 						$('#communityStreetSel').html('');
-						var str = '<option value="">请选择小区/街道</option>';
+						var str = '<option value="">请选择小区</option>';
 						for(var i=0;i<result.data.length;i++){
 							str += '<option value="'+result.data[i].communityStreetId+'">'+result.data[i].communityStreetName+'</option>'
 						}
@@ -372,18 +353,18 @@
 		//分页
 		function page() {
 			var data = {
-				'housesStatus': '2',
 				'provCode': provCode,
 				'cityCode': cityCode,
 				'areaCode': areaCode,
 				'communityId': communityId,
 				'communityStreetId': communityStreetId,
-				'storeLocation': storeLocation,
+				'storiedBuildingNumber': storiedBuildingNumber,
+				'unit': unit,
 				'houseNumber': houseNumber,
 				'keyword': keyword
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
+				url : "/jianfuzengxiao/system/auditDistribution/getHousesPage.html",
 				type : 'post',
 				dataType : "json",
 				data: data,
@@ -414,18 +395,18 @@
 		function serchData(page) {
 			var data = {
 				'page' : page,
-				'housesStatus': '2',
 				'provCode': provCode,
 				'cityCode': cityCode,
 				'areaCode': areaCode,
 				'communityId': communityId,
 				'communityStreetId': communityStreetId,
-				'storeLocation': storeLocation,
+				'storiedBuildingNumber': storiedBuildingNumber,
+				'unit': unit,
 				'houseNumber': houseNumber,
 				'keyword': keyword
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
+				url : "/jianfuzengxiao/system/auditDistribution/getHousesPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -437,22 +418,23 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(
-									data[i].housesId);
+							tr.find('[row=checkBoxId]').children().val(data[i].housesId);
 							tr.find('[row=ids]').text(data[i].housesId);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
-							if(data[i].storeLocation == 1){
-								tr.find('[row=houseNumber]').text('内铺'+data[i].houseNumber);
-							}else if(data[i].storeLocation == 2){
-								tr.find('[row=houseNumber]').text('外铺'+data[i].houseNumber);
-							}else{
-								tr.find('[row=houseNumber]').text(data[i].houseNumber);
+							//房屋
+							if(data[i].housesStatus == 1){
+								tr.find('[row=houseNumber]').text(data[i].storiedBuildingNumber + '-' + data[i].unit + '-' + data[i].houseNumber);
+							}else if(data[i].housesStatus == 2){//门店
+								if(data[i].storeLocation == 1){//内铺
+									tr.find('[row=houseNumber]').text('内铺-' + data[i].houseNumber + '号');
+								}else if(data[i].storeLocation == 2){
+									tr.find('[row=houseNumber]').text('外铺-' + data[i].houseNumber + '号');
+								}else{
+									tr.find('[row=houseNumber]').text(data[i].houseNumber + '号');
+								}
+								
 							}
-							tr.find('[row=username]').text(data[i].username);
-							tr.find('[row=adminTelephone]').text(data[i].adminTelephone);
-							tr.find('[row=leaseCount]').text(data[i].leaseCount);
-
 							$('#x-img').append(tr);
 							//close loading
 							layer.closeAll('loading');
@@ -467,32 +449,32 @@
 				}
 			});
 		}
-		//批量删除提交
+		//批量添加
 		function delAll() {
-			layer.confirm('确认要删除吗？', function(index) {
+			layer.confirm('确认要添加吗？', function(index) {
 				var arr = new Array();
 				$('.checkId:checked').each(function(i, obj) {
 					arr[i] = $(obj).val();
 				})
 				var sel = arr.join(",");
 				$.ajax({
-					url : "/jianfuzengxiao/system/houses/delHouses.html",
+					url : "/jianfuzengxiao/system/auditDistribution/addAuditDistribution.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'housesId' : sel
+						'housesId' : sel,
+						'adminId': adminId
 					},
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
-							layer.msg('删除成功', {icon : 1});
+							layer.msg('添加成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.msg("加载数据出错，请刷新页面", {icon: 2})
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 			});
@@ -506,39 +488,35 @@
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
 			x_admin_show(title, url + '?housesId=' + id);
 		}
-		// 编辑
-		function banner_edit(obj, title, url, w, h) {
-			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?housesId=' + id, w, h);
-		}
-
-		/*删除*/
+		
+		/*添加权限*/
 		function banner_del(obj) {
-			layer.confirm('确认要删除吗？', function(index) {
+			layer.confirm('确认要添加吗？', function(index) {
 				var id = $(obj).parent('td').siblings('[row=ids]').text();
 				$.ajax({
-					url : "/jianfuzengxiao/system/houses/delHouses.html",
+					url : "/jianfuzengxiao/system/auditDistribution/addAuditDistribution.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'housesId' : id
+						'housesId' : id,
+						'adminId': adminId
 					},
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
-							layer.msg('删除成功', {icon : 1});
+							layer.msg('添加成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.msg("加载数据出错，请刷新页面", {icon: 2})
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
 					}
 				});
 
 			});
 		}
+		
 	</script>
 </body>
 </html>

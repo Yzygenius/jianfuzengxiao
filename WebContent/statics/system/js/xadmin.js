@@ -1,3 +1,4 @@
+var element
 $(function () {
     //加载弹出层
     layui.use(['form','element'],
@@ -5,9 +6,10 @@ $(function () {
         layer = layui.layer;
         element = layui.element;
     });
+    
 
     //触发事件
-  var tab = {
+    var tab = {
         tabAdd: function(title,url,id){
           //新增一个Tab项
           element.tabAdd('xbs_tab', {
@@ -197,18 +199,21 @@ function x_admin_close(){
     parent.layer.close(index);
 }
 
-function open_ifram(url, title, index){
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
 
-    for (var i = 0; i <$('.x-iframe').length; i++) {
-        if($('.x-iframe').eq(i).attr('tab-id')==index+1){
-            tab.tabChange(index+1);
-            event.stopPropagation();
-            return;
-        }
-    };
-    
-    tab.tabAdd(title,url,index+1);
-    tab.tabChange(index+1);
+var i_id = 0;
+function x_admin_open_ifram(url, title, id){
+	element.tabAdd('xbs_tab', {
+	  	title: title
+	  	,content: '<iframe tab-id="'+id+i_id+'" frameborder="0" src="'+url+'" scrolling="yes" class="x-iframe"></iframe>' //支持传入html
+	  	,id: id+i_id
+	}); 
+	element.tabChange('xbs_tab', id+i_id);
+	i_id += 1;
 }
 
 

@@ -134,7 +134,7 @@ layui.use(['form','layer'], function(){
 		data: {
 		},
 		success : function(result){
-			console.log(result)
+			//console.log(result)
 			if(result.code == 1){
 				var str = '';
 				$.each(result.data, function (index, item) {
@@ -145,12 +145,12 @@ layui.use(['form','layer'], function(){
 		        form.render('select')
 		        provinceList = result.data;
 			}else{
-				layer.alert(result.msg, {icon: 5});
+				layer.msg('加载数据出错，请刷新页面', {icon: 2});
 			}
 			
 		},
 		error : function(result){
-			layer.alert("添加出错，请重新添加")
+			layer.msg("加载数据出错，请刷新页面", {icon : 2})
 		}
 	});
     
@@ -250,7 +250,7 @@ layui.use(['form','layer'], function(){
 		},
 		success : function(result){
 			if(result.code == 1){
-				layer.alert("更新成功", {icon: 6},function () {
+				layer.msg("更新成功", {icon: 1},function () {
 		            // 获得frame索引
 		            var index = parent.layer.getFrameIndex(window.name);
 		            //关闭当前frame
@@ -258,11 +258,11 @@ layui.use(['form','layer'], function(){
 		            window.parent.location.reload();
 		        });
 			}else{
-				layer.alert(result.msg, {icon: 5});
+				layer.msg(result.msg, {icon: 7});
 			}
 		},
 		error : function(result){
-			layer.alert("更新出错，请重新操作")
+			layer.msg("更新出错，请重新操作", {icon: 2})
 		}
 	}); 
     return false;
@@ -296,7 +296,7 @@ function serchData(){
 			})
 		},
 		error : function(result){
-			layer.alert("数据加载出错，请刷新页面", {icon: 5})
+			layer.msg("数据加载出错，请刷新页面", {icon: 2})
 		}
 	})
 }

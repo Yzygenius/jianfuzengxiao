@@ -161,7 +161,8 @@
 				, laypage = layui.laypage;//分页
 				//lPage = layui.laypage
 				//以上模块根据需要引入
-				
+				//loading
+				layer.load(1)
 				layer.ready(function() { //为了layer.ext.js加载完毕再执行
 
 					layer.photos({
@@ -185,7 +186,8 @@
 					keyword = data.field.keyword;
 					
 					page()
-					//serchData()
+					//loading
+					layer.load(1)
 			      	return false;
 			    });
 				
@@ -296,12 +298,12 @@
 				        form.render('select')
 				        provinceList = result.data;
 					}else{
-						layer.alert(result.msg, {icon: 5});
+						layer.msg("数据加载错误，请刷新页面", {icon: 2});
 					}
 					
 				},
 				error : function(result){
-					layer.alert("添加出错，请重新添加")
+					layer.msg("数据加载错误，请刷新页面", {icon: 2})
 				}
 			});
 		}
@@ -320,7 +322,7 @@
 				success : function(result){
 					if(result.code == 1){
 						$('#communitySel').html('');
-						var str = '<option value="">请选择</option>';
+						var str = '<option value="">请选择社区</option>';
 						for(var i=0;i<result.data.length;i++){
 							str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
 						}
@@ -329,7 +331,7 @@
 					}
 				},
 				error : function(result){
-					layer.alert("数据加载出错，请刷新页面", {icon: 5})
+					layer.msg("数据加载出错，请刷新页面", {icon: 2})
 				}
 			})
 	    }
@@ -346,7 +348,7 @@
 				success : function(result){
 					if(result.code == 1){
 						$('#communityStreetSel').html('');
-						var str = '<option value="">请选择</option>';
+						var str = '<option value="">请选择小区</option>';
 						for(var i=0;i<result.data.length;i++){
 							str += '<option value="'+result.data[i].communityStreetId+'">'+result.data[i].communityStreetName+'</option>'
 						}
@@ -355,7 +357,7 @@
 					}
 				},
 				error : function(result){
-					layer.alert("数据加载出错，请刷新页面", {icon: 5})
+					layer.msg("数据加载出错，请刷新页面", {icon: 2})
 				}
 			})
 	    }
@@ -387,6 +389,10 @@
 							serchData(obj.curr)
 						}
 					})
+					if(result.data.total == 0){
+						//close loading
+						layer.closeAll('loading');
+					}
 				}
 			})
 		}
@@ -439,14 +445,16 @@
 							tr.find('[row=leaseCount]').text(data[i].leaseCount);
 
 							$('#x-img').append(tr);
+							//close loading
+							layer.closeAll('loading');
 						}
 					} else {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon: 2})
 					}
 
 				},
 				error : function(result) {
-					layer.alert("加载数据出错，请刷新页面后，重新操作")
+					layer.msg("加载数据出错，请刷新页面", {icon: 2})
 				}
 			});
 		}
@@ -469,19 +477,13 @@
 						if (result.code == 1) {
 							page();
 							serchData();
-							layer.msg('删除成功', {
-								icon : 1,
-								time : 1000
-							});
+							layer.msg('删除成功', {icon : 1});
 						} else {
-							layer.msg(result.msg, {
-								icon : 5,
-								time : 1000
-							});
+							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon: 2})
 					}
 				});
 			});
@@ -516,19 +518,13 @@
 						if (result.code == 1) {
 							page();
 							serchData();
-							layer.msg('删除成功', {
-								icon : 1,
-								time : 1000
-							});
+							layer.msg('删除成功', {icon : 1});
 						} else {
-							layer.msg(result.msg, {
-								icon : 5,
-								time : 1000
-							});
+							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.alert("加载数据出错，请刷新页面后，重新操作")
+						layer.msg("加载数据出错，请刷新页面", {icon: 2})
 					}
 				});
 
