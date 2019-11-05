@@ -10,7 +10,7 @@
     <title>验证</title>
 </head>
 <body>
-<!-- <div id="content">1</div> -->
+<div id="content"></div>
 <script src="js/alrem.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
@@ -44,27 +44,32 @@
                     },
                     success:function(data){
                       var code = data.code;
-                      // console.log(data.data.auditRemark)
-                          // window.location.href = "identity_auth_t.html";
-                      // var auditRemark = escape(data.data.auditRemark)
-                      // if(code == 1){
-                      //   if(data.data.status == 1){
-                      //       console.log('审核中')
-                      //       window.location.href = "idenWait_y.html";
-                      //       window.close(); 
-                      //   }else if(data.data.status == 2){
-                            console.log('审核通过')
-                            window.location.href = "management_z.html";
+                      console.log(data.code)
+                      console.log(data.data.auditRemark)
+                      window.location.href = "identity_auth_t.html";
+                      var auditRemark = escape(data.data.auditRemark)
+                      if(code == 1){
+                        if(data.data.status == 1){
+                            console.log('审核中')
                             window.close(); 
-                      //   }else if(data.data.status == 3){
-                      //        console.log('审核失败')
-                      //        window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
-                      //        window.close(); 
-                      //   }
-                      // }else if(code == 3002){
-                      //   window.location.href = "identity_auth_t.html";
-                      //    window.close(); 
-                      // }
+                            window.location.href = "idenWait_y.html";
+                           
+                        }else if(data.data.status == 2){
+                            console.log('审核通过')
+                            window.close(); 
+                            window.location.href = "management_z.html";
+                        }else if(data.data.status == 3){
+                             console.log('审核失败')
+                             window.close(); 
+                             window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
+  
+                        }
+                      }else if(code == 3002){
+                    	window.close(); 
+                        window.location.href = "identity_auth_t.html";
+                      }
+                      
+
                     },
                     error:function(jqXHR){
                     }
