@@ -44,7 +44,7 @@
             <a href="identity_yg_t.html"><div class="total_add"><span>+</span>新增关联人</div></a> -->
         </div>
         <div class="contacts">
-            <a class="address" href="personnel_y.html">
+<!--             <a class="address" href="personnel_y.html">
                 <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture.png" alt="">
@@ -62,8 +62,8 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
-            <a class="address" href="personnel_y.html">
+            </a> -->
+           <!--  <a class="address" href="personnel_y.html">
                 <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture1.png" alt="">
@@ -81,8 +81,8 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
-            <a class="address" href="personnel_y.html">
+            </a> -->
+            <!-- <a class="address" href="personnel_y.html">
              <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture2.png" alt="">
@@ -100,9 +100,9 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
+            </a> -->
             <!--审核中-->
-            <a class="address" href="personnel_y.html">
+          <!--   <a class="address" href="personnel_y.html">
                 <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture2.png" alt="">
@@ -120,9 +120,9 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
+            </a> -->
             <!--已过期-->
-            <a class="address" href="personnel_y.html">
+           <!--  <a class="address" href="personnel_y.html">
                 <div class="contact end">
                     <div class="contact_pic">
                         <img src="images/list/picture1.png" alt="">
@@ -140,9 +140,9 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
+            </a> -->
             <!--失败-->
-            <a class="address" href="personnel_y.html">
+          <!--   <a class="address" href="personnel_y.html">
                 <div class="contact">
                     <div class="contact_pic">
                         <img src="images/list/picture1.png" alt="">
@@ -160,7 +160,7 @@
                         <div class="contact_apartment">已居住时常：<span>1年234天4小时12分钟</span></div>
                     </div>
                 </div>
-            </a>
+            </a> -->
         </div>
     </div>
     <!--户型图弹框-->
@@ -216,23 +216,28 @@
               var imgUrl = data.data.houses.houseTypePhoto
               $('.pop_exhibition img').attr('src',imgUrl)
               $('.total_num span').html(data.data.per.length)
-              // 传到下一页参数
-              var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
               // 判断是房屋或者门店显示新建联系人
               if(data.data.houses.housesStatus==1){  //房屋
                 var img = '<img src="images/list/house.png" alt="">'
+                // 传到下一页参数
+                var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
+                var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
               }else if(data.data.houses.housesStatus==2){   //门店
                 var img = '<img src="images/list/store.png" alt="">'
+                // 传到下一页参数
+                var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
                 $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
+                var in_title_time = ''
               }
               // 是房屋的时候上报家属或者租户点击跳页
               $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
               $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
+
               //头部房屋、门店信息数据
               var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
-                            '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'+
+                            in_title_time+
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">房屋地址</div>'+
