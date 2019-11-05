@@ -352,7 +352,11 @@
             success: function(data){
                 layer.closeAll('loading');
                 if(data.code == 1){
-                    window.location.href="idenWait_y.html"
+                    layer.msg('已提交');
+                    setTimeout(function(){
+                        window.close();
+                        window.location.href="management_z.html";
+                    },1500)
                 }else{
                     layer.msg(data.msg)
                 }

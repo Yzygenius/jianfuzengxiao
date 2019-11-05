@@ -184,7 +184,7 @@
                         　　type: 'POST', 
                             url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
                             data: {
-                                'userId':3,
+                                'userId':sessionStorage.userId,
                                 'housesId':housesId
                             },  //映射或字符串值，规定连同请求发送到服务器的数据；
                             dataType:'json',
@@ -379,7 +379,7 @@
                         　　type: 'POST', 
                             url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
                             data: {
-                                'userId':3,
+                                'userId':sessionStorage.userId,
                                 'housesId':housesId
                             },  //映射或字符串值，规定连同请求发送到服务器的数据；
                             dataType:'json',

@@ -48,29 +48,19 @@ document.getElementById('enter2').onclick = function(e) {
 	}
 	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
         var list=JSON.parse(resp);
+        document.getElementById('preview11').setAttribute('src','');
+    	document.getElementById('preview11').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
+    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
+		Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
+		document.getElementById('trigger1').value = '身份证';
+		document.getElementById('namev').value = list.data.GetRecogResult[0];
+		document.getElementById('trigger2').value = list.data.GetRecogResult[1];
+		document.getElementById('select_2').value = list.data.GetRecogResult[3];
+		document.getElementById('trigger3').value = list.data.GetRecogResult[2]+'族';
+		document.getElementById('measnnum').value = list.data.GetRecogResult[5];
+		document.getElementById('address').value = list.data.GetRecogResult[4];
 		var enter = document.getElementById('prev1');
 		enter.remove();
-        if(list.data.GetFieldName[0] !== '签发机关' && list.data.GetFieldName[0] == '姓名'){
-        	document.getElementById('preview11').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
-        	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-
-			Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
-			document.getElementById('trigger1').value = '身份证';
-			document.getElementById('namev').value = list.data.GetRecogResult[0];
-			document.getElementById('trigger2').value = list.data.GetRecogResult[1];
-			document.getElementById('select_2').value = list.data.GetRecogResult[3];
-			document.getElementById('trigger3').value = list.data.GetRecogResult[2]+'族';
-			document.getElementById('measnnum').value = list.data.GetRecogResult[5];
-			document.getElementById('address').value = list.data.GetRecogResult[4];
-        }else if(list.data.GetFieldName[0] == '签发机关' && list.data.GetFieldName[0] !== '姓名'){
-        	var parent = document.getElementById('enter2');
-        	var p = document.createElement("p");
-	 		p.setAttribute("id", "prev1");
-			p.setAttribute("class", "faceword1");
-			p.innerHTML = "请识别证件正确的一面";
-			p.style.cssText = "font-size:16px;font-weight:bold";
-			parent.appendChild(p);
-        }
     });
 }
 document.getElementById('enter3').onclick = function(e) {
@@ -82,23 +72,15 @@ document.getElementById('enter3').onclick = function(e) {
 	}
 	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
         var list=JSON.parse(resp);
+        document.getElementById('preview12').setAttribute('src','');
+    	document.getElementById('preview12').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
+    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
+		Back(list.data.GetRecogResult[2],list.data.GetRecogResult[3]);
+		document.getElementById('date1').value = list.data.GetRecogResult[2];
+		document.getElementById('select_3').value = list.data.GetRecogResult[3];
+		document.getElementById('measn12').value = list.data.GetRecogResult[0];
+       
 		var enter = document.getElementById('prev2');
 		enter.remove();
-        if(list.data.GetFieldName[0] == '签发机关' && list.data.GetFieldName[0] !== '姓名'){
-        	document.getElementById('preview12').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
-        	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-			Back(list.data.GetRecogResult[2],list.data.GetRecogResult[3]);
-			document.getElementById('date1').value = list.data.GetRecogResult[2];
-			document.getElementById('select_3').value = list.data.GetRecogResult[3];
-			document.getElementById('measn12').value = list.data.GetRecogResult[0];
-        }else if(list.data.GetFieldName[0] !== '签发机关' && list.data.GetFieldName[0] == '姓名'){
-        	var parent = document.getElementById('enter3');
-        	var p = document.createElement("p");
-	 		p.setAttribute("id", "prev2");
-			p.setAttribute("class", "faceword1");
-			p.innerHTML = "请识别证件正确的一面";
-			p.style.cssText = "font-size:16px;font-weight:bold";
-			parent.appendChild(p);
-        }
     });
 }

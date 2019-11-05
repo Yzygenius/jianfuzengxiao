@@ -78,7 +78,7 @@
         });
     })
     window.onload=function(){
-        if(!sessionStorage.token || sessionStorage.token == undefined){
+        if(sessionStorage.token == undefined || !sessionStorage.token){
             var data = {
                 'action': 'jsNGetToken',
                 'needCallBack': '',
