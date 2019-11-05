@@ -253,7 +253,7 @@
     　　type: 'POST', 
           url: '/jianfuzengxiao/api/userInfo/getUserDetail.html',    //规定连同请求发送到服务器的数据；
           data: {
-            userId: 3
+            userId: sessionStorage.userId
           },   //映射或字符串值，规定连同请求发送到服务器的数据；
           dataType:'json',
           success: function(data) {
@@ -289,7 +289,7 @@
     // 提交房产信息
     $('#submit').click(function(){
         var formData = {}
-            formData.userId = 3;
+            formData.userId = sessionStorage.userId;
         var type = $('#submit').attr('data-type');
         // var userId = $('#submit').attr('data-userId');
         if(type == 1){//房屋自持
@@ -304,9 +304,20 @@
             formData.leaseContract = list.substr(1);
             formData.leaseStartTime = $("#date1").html();
             formData.leaseStopTime = $("#date2").html();
+            if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
+                layer.msg('请选择居住时效')
+                return false
+            }else if(formData.leaseContract && formData.leaseContract == ''){
+                layer.msg('请添加租赁合同')
+                return false
+            }
         }else if(type == 3){ //门店自持
             var house = $('#support .store');
             formData.enterpriseName = document.getElementById('ent_name').value;
+            if(formData.enterpriseName && formData.enterpriseName == ''){
+                layer.msg('请填写企业名称')
+                return false
+            }
         }else if(type == 4){ //门店租赁
             var house = $('#lease .store');
             var num = house.find('.images .addimg');
@@ -318,38 +329,38 @@
             formData.enterpriseName = document.getElementById('enter_name').value;
             formData.leaseStartTime = $("#date3").html();
             formData.leaseStopTime = $("#date4").html();
+            if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
+                layer.msg('请选择居住时效');
+                return false
+            }else if(formData.enterpriseName && formData.enterpriseName == ''){
+                layer.msg('请填写企业名称')
+                return false
+            }else if(formData.leaseContract == ''){
+                layer.msg('请添加租赁合同')
+                return false
+            }
         }
         var housesId = house.attr('data-houseId');
         formData.housesId = housesId,
         console.log(formData)
-        if(formData.enterpriseName && formData.enterpriseName == ''){
-            layer.msg('请填写企业名称')
-        }else if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
-            layer.msg('请选择居住时效')
-        }else if(formData.leaseStartTime == 'undefined' || formData.leaseStartTime == undefined || formData.leaseStopTime == 'undefined' || formData.leaseStopTime == undefined ){
-            layer.msg('请选择居住时效')
-        }else if(formData.leaseContract == ''){
-            layer.msg('请添加租赁合同')
-        }else{
-            layer.load(1);
-            $.ajax({
-            　　type: 'POST', 
-                url: '/jianfuzengxiao/api/personnel/addUserPersonnel.html',    //规定连同请求发送到服务器的数据；
-                data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
-                dataType:'json',
-                success: function(data){
-                    layer.closeAll('loading');
-                    if(data.code == 1){
-                        window.location.href="idenWait_y.html"
-                    }else{
-                        layer.msg(data.msg)
-                    }
-                }, 
-                error:function(jqXHR){
-                    console.log('fail')
+        layer.load(1);
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/personnel/addUserPersonnel.html',    //规定连同请求发送到服务器的数据；
+            data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                layer.closeAll('loading');
+                if(data.code == 1){
+                    window.location.href="idenWait_y.html"
+                }else{
+                    layer.msg(data.msg)
                 }
-            })
-        }
+            }, 
+            error:function(jqXHR){
+                console.log('fail')
+            }
+        })
         
     })
 </script>

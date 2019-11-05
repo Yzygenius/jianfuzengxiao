@@ -163,6 +163,7 @@
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/layer/layer.js"></script>
 <script type="text/javascript">
      //获取参数
     function getQueryString(name) {
@@ -187,6 +188,7 @@
     })
     console.log(personnelId)
     $(function(){
+        layer.load(1);
         //请求数据
         $.ajax({
             //请求方式
@@ -200,6 +202,7 @@
                 personnelId:personnelId
             },
             success:function(data){
+              layer.closeAll('loading')
               var res = data.data
               if(res.gender == 1){
                 app.gender ="男"

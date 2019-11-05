@@ -65,8 +65,11 @@
     
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
 <script>
     $(function () {
+        layer.load(1);
+        // onload();
         $('.header .header_btn').click(function () {
             $('.cont_list').fadeOut(0)
             var tclass = $(this).data('class');
@@ -83,68 +86,76 @@
             $(this).fadeOut(200);
             $('.pop_up').fadeOut(200);
         })
-        //请求数据
         $.ajax({
             //请求方式
             type:'POST',
             //发送请求的地址
-            url:'/jianfuzengxiao/wx/main/getHousesPage.html',
+            url:'/jianfuzengxiao/api/personnel/getHousesPage.html',
             //服务器返回的数据类型
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:3
+                userId:sessionStorage.userId,
+                pageSize:5,
+                page:1
             },
             success:function(data){
+              layer.closeAll('loading')
               console.log(data.data)
               var html='';
               var img='';
-              for(var i=0;i<data.data.length;i++){
+              for(var i=0;i<data.data.rows.length;i++){
                     // console.log(data.data[i].housesStatus)
                     // 1为房屋2为门店
-                    if(data.data[i].housesStatus ==1){
+                    if(data.data.rows[i].housesStatus ==1){
                         img = '<img src="images/list/icon_01.png" alt="">'
-                        var title_time = '<div class="title_time">'+data.data[i].storiedBuildingNumber+'-'+data.data[i].unit+'-'+data.data[i].houseNumber+'</div>'
-                    }else if(data.data[i].housesStatus == 2){
+                        var title_time = '<div class="title_time">'+data.data.rows[i].storiedBuildingNumber+'-'+data.data.rows[i].unit+'-'+data.data.rows[i].houseNumber+'</div>'
+                    }else if(data.data.rows[i].housesStatus == 2){
                         img = '<img src="images/list/icon_02.png" alt="">'
-                        var title_time = '<div class="title_time">'+data.data[i].houseNumber+'号</div>'
+                        var title_time = '<div class="title_time">'+data.data.rows[i].houseNumber+'号</div>'
                     }
-                    html += '<a class="address" href="house_z.html?housesId='+data.data[i].housesId+'">'+
+                    html += '<a class="address" href="house_z.html?housesId='+data.data.rows[i].housesId+'">'+
                                 '<div class="cont">'+
                                     '<div class="cont_title">'
                                     +img+
-                                        '<div class="title_text">'+data.data[i].communityStreetName+'</div>'
+                                        '<div class="title_text">'+data.data.rows[i].communityStreetName+'</div>'
                                         +title_time+
                                     '</div>'+
-                                    '<div class="address">'+data.data[i].provName+''+data.data[i].cityName+''+data.data[i].areaName+''+data.data[i].communityName+''+data.data[i].communityStreetName+''+data.data[i].housesAddress+'</div>'+
+                                    '<div class="address">'+data.data.rows[i].provName+''+data.data.rows[i].cityName+''+data.data.rows[i].areaName+''+data.data.rows[i].communityName+''+data.data.rows[i].communityStreetName+''+data.data.rows[i].housesAddress+'</div>'+
                                 '</div>'+
                                 '</a>';
                 }
                  $('.cont_list0').html(html);
-                 $('.admin_list .header_red').html(data.data.length)
-              
+                 $('.admin_list .header_red').html(data.data.total);
+                 $('.admin_list').attr('data-page',1);
+                 $('.admin_list').attr('data-total',data.data.total);
             },
             error:function(jqXHR){
             }
         });
          var totalHeight = $(document).height();//整个文档高度
          var seeHeight = $(window).height();//浏览器可视窗口高度
-         var thisBodyHeight = $(document.body).height();//浏览器当前窗口文档body的高度
-         var totalBodyHeight = $(document.body).outerHeight(true);//浏览器当前窗口文档body的总高度 包括border padding margin
-         var thisWidth = $(window).width(); //浏览器当前窗口可视区域宽度
-         var thisDocumentWidth = $(document).width();//浏览器当前窗口文档对象宽度
-         var thisBodyWidth = $(document.body).width();//浏览器当前窗口文档body的宽度
-         var totalBodyWidth = $(document.body).outerWidth(true);//浏览器当前窗口文档body的总宽度 包括border padding margin
          var scrollTop = $(window).scrollTop();//浏览器可视窗口顶端距离网页顶端的高度（垂直偏移）
          //添加滚动事件
-         // $(window).scroll(function(){
-         //     scrollTop = $(window).scrollTop();
-         //     totalHeight = $(document).height();         // console.log(scrollTop,seeHeight,totalHeight)
-         //     if(scrollTop+seeHeight+50>totalHeight){
-         //         var htmlText = '';
-         //         $('body').append(htmlText);
-         //     }
-         // })   
+         $(window).scroll(function(){
+             scrollTop = $(window).scrollTop();
+             totalHeight = $(document).height();         // console.log(scrollTop,seeHeight,totalHeight)
+             if(scrollTop+seeHeight+50>totalHeight){
+                if($('.admin_list').hasClass('active')){
+                    if($('.admin_list').attr('data-total')>$('.administration').find('a.address').length){  
+                        onload();
+                    }else{
+                        return false
+                    }
+                }else if($('.newsCenter').hasClass('active')){
+                    if($('.newsCenter').attr('data-total')>$('.news').find('.result').length){  
+                       onnews();
+                    }else{
+                        return false
+                    }
+                }
+             }
+         })   
         
         // 消息中心
         $.ajax({
@@ -156,89 +167,36 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:3
+                userId:sessionStorage.userId,
+                pageSize:6,
+                page:1
             },
             success:function(data){
             	console.log(data.data)
             	console.log(data.data.rows)
-            	var pro='';//审核通过
-            	for(var i=0;i<data.data.rows.length;i++){
-            		if(data.data.rows[i].msgTypeId=='4')
-            		{
-                        pro +='<div class="result" data-class="success" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                        '<div class="result_red" style="display: block">'+
-                        '</div>'+
-                        '<div class="result_title">'+
-                        '<div class="rtitle_left">'+
-                        '<img src="images/list/success.png" alt="">'+
-                        '<div class="result_text">'+data.data.rows[i].title+'</div>'
-                        +'</div>'+
-                        '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-                        '</div>'+
-                        '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                        '</div>'
-            		}else if(data.data.rows[i].msgTypeId == '3'){
-            		  pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-            		  '<div class="result_red">'+
-            		  '</div>'+'<div class="result_title">'+
-            		  '<div class="rtitle_left">'+
-            		  '<img src="images/list/fail.png" alt="">'+
-            		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
-            		  '</div>'+
-            		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-            		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                        '</div>'
-            			
-            		}else if(data.data.rows[i].msgTypeId == "2"){
-            			  pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                		  '<div class="result_red">'+
-                		  '</div>'+'<div class="result_title">'+
-                		  '<div class="rtitle_left">'+
-                		  '<img src="images/list/end.png" alt="">'+
-                		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
-                		  '</div>'+
-                		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-                		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                      '</div>'
-            		}else if(data.data.rows[i].msgTypeId == '1'){
-            			 pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-               		  '<div class="result_red">'+
-               		  '</div>'+'<div class="result_title">'+
-               		  '<div class="rtitle_left">'+
-               		  '<img src="images/list/In_audit.png" alt="">'+
-               		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
-               		  '</div>'+
-               		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-               		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                     '</div>'
-            		}else if(data.data.rows[i].msgTypeId == '5'){
-            			 pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                  		  '<div class="result_red">'+
-                  		  '</div>'+'<div class="result_title">'+
-                  		  '<div class="rtitle_left">'+
-                  		  '<img src="images/list/In_audit.png" alt="">'+
-                  		  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
-                  		  '</div>'+
-                  		  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
-                  		  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
-                        '</div>'
-            		}
-                }
+            	var pro = news(data)
             	$('.news').html(pro);
+                var number = 0;
                 for(var i=0;i<data.data.rows.length;i++){
                     if(data.data.rows[i].status == 1){
+                        number+=1;
                         $('.news .result').eq(i).find('.result_red').fadeIn(0);
                     }else if(data.data.rows[i].status == 2){
                         $('.news .result').eq(i).find('.result_red').fadeOut(0);
                     }
+                    if(number == 0){
+                        $('#number').fadeOut(0);
+                    }else{
+                        $('#number').fadeIn(0);
+                        $('#number').html(number)
+                    }
                 }
-            	$('#number').html(data.data.rows.length)
-            	
+                 $('.newsCenter').attr('data-page',1);
+                 $('.newsCenter').attr('data-total',data.data.total);
             },
             error:function(jqXHR){
             	
             }
-        	
         });
     })
     
@@ -310,8 +268,166 @@
             }
         });
     };
+    // 点击添加房产
     function btnhref(){
-        window.location.href = "verify1_y.html?userId=3";
+        window.location.href = "verify1_y.html?userId="+sessionStorage.userId;
+    }
+    function onload(){
+        //请求数据
+        var page = parseInt($('.admin_list').attr('data-page'))+ 1;
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/personnel/getHousesPage.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:sessionStorage.userId,
+                pageSize:5,
+                page:page
+            },
+            success:function(data){
+              console.log(data.data)
+              var html='';
+              var img='';
+              for(var i=0;i<data.data.rows.length;i++){
+                    // console.log(data.data[i].housesStatus)
+                    // 1为房屋2为门店
+                    if(data.data.rows[i].housesStatus ==1){
+                        img = '<img src="images/list/icon_01.png" alt="">'
+                        var title_time = '<div class="title_time">'+data.data.rows[i].storiedBuildingNumber+'-'+data.data.rows[i].unit+'-'+data.data.rows[i].houseNumber+'</div>'
+                    }else if(data.data.rows[i].housesStatus == 2){
+                        img = '<img src="images/list/icon_02.png" alt="">'
+                        var title_time = '<div class="title_time">'+data.data.rows[i].houseNumber+'号</div>'
+                    }
+                    html += '<a class="address" href="house_z.html?housesId='+data.data.rows[i].housesId+'">'+
+                                '<div class="cont">'+
+                                    '<div class="cont_title">'
+                                    +img+
+                                        '<div class="title_text">'+data.data.rows[i].communityStreetName+'</div>'
+                                        +title_time+
+                                    '</div>'+
+                                    '<div class="address">'+data.data.rows[i].provName+''+data.data.rows[i].cityName+''+data.data.rows[i].areaName+''+data.data.rows[i].communityName+''+data.data.rows[i].communityStreetName+''+data.data.rows[i].housesAddress+'</div>'+
+                                '</div>'+
+                                '</a>';
+                }
+                $('.cont_list0').append(html);
+                $('.admin_list').attr('data-page',page);
+            },
+            error:function(jqXHR){
+            }
+        });
+    }
+    function news(data){
+        var pro='';//审核通过
+        for(var i=0;i<data.data.rows.length;i++){
+            if(data.data.rows[i].msgTypeId=='4')
+            {
+                pro +='<div class="result" data-class="success" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                '<div class="result_red" style="display: block">'+
+                '</div>'+
+                '<div class="result_title">'+
+                '<div class="rtitle_left">'+
+                '<img src="images/list/success.png" alt="">'+
+                '<div class="result_text">'+data.data.rows[i].title+'</div>'
+                +'</div>'+
+                '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                '</div>'+
+                '<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                '</div>'
+            }else if(data.data.rows[i].msgTypeId == '3'){
+              pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+              '<div class="result_red">'+
+              '</div>'+'<div class="result_title">'+
+              '<div class="rtitle_left">'+
+              '<img src="images/list/fail.png" alt="">'+
+              '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+              '</div>'+
+              '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+              '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                '</div>'
+                
+            }else if(data.data.rows[i].msgTypeId == "2"){
+                  pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                  '<div class="result_red">'+
+                  '</div>'+'<div class="result_title">'+
+                  '<div class="rtitle_left">'+
+                  '<img src="images/list/end.png" alt="">'+
+                  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+                  '</div>'+
+                  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+              '</div>'
+            }else if(data.data.rows[i].msgTypeId == '1'){
+                 pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+              '<div class="result_red">'+
+              '</div>'+'<div class="result_title">'+
+              '<div class="rtitle_left">'+
+              '<img src="images/list/In_audit.png" alt="">'+
+              '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+              '</div>'+
+              '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+              '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+             '</div>'
+            }else if(data.data.rows[i].msgTypeId == '5'){
+                 pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
+                  '<div class="result_red">'+
+                  '</div>'+'<div class="result_title">'+
+                  '<div class="rtitle_left">'+
+                  '<img src="images/list/In_audit.png" alt="">'+
+                  '<div class="result_text">'+data.data.rows[i].title+'</div>'+
+                  '</div>'+
+                  '<div class="result_time">'+data.data.rows[i].createTime+'</div>'+
+                  '</div>'+'<div class="result_cont">'+data.data.rows[i].content+'</div>'+
+                '</div>'
+            }
+        }
+        return pro;
+    }
+    function onnews(){
+        var page = parseInt($('.newsCenter').attr('data-page'))+ 1;
+        // 消息中心
+        $.ajax({
+             //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/msgInfo/getMsgInfoPage.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:sessionStorage.userId,
+                pageSize:2,
+                page:page
+            },
+            success:function(data){
+                console.log(data.data)
+                console.log(data.data.rows)
+                var pro = news(data)
+                $('.news').append(pro);
+                var number = 0;
+                for(var i=0;i<data.data.rows.length;i++){
+                    if(data.data.rows[i].status == 1){
+                        number+=1;
+                        $('.news .result').eq(i).find('.result_red').fadeIn(0);
+                    }else if(data.data.rows[i].status == 2){
+                        $('.news .result').eq(i).find('.result_red').fadeOut(0);
+                    }
+                    if(number == 0){
+                        $('#number').fadeOut(0);
+                    }else{
+                        $('#number').fadeIn(0);
+                        $('#number').html(number)
+                    }
+                }
+                $('.newsCenter').attr('data-page',page);
+            },
+            error:function(jqXHR){
+               
+            }
+        });
     }
 </script>
 </html>

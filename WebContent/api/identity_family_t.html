@@ -227,7 +227,7 @@
         // 点击提交
         $('#submit').click(function(){
             var infor = {
-                    'userId' : 2,
+                    'userId' : sessionStorage.userId,
                     'housesId':housesId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),

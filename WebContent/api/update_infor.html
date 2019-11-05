@@ -212,7 +212,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:3
+                userId:sessionStorage.userId
             },
             success:function(data){
                 var res=data.data
@@ -256,7 +256,7 @@
             var infor = {
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),
                     'certificatesNegativePhoto' : $('#preview12').attr('src'),
-                    'userId':3,
+                    'userId':sessionStorage.userId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesTypeName' : document.getElementById('trigger1').value,
                     'username' : document.getElementById('namev').value,

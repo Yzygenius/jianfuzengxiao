@@ -186,6 +186,7 @@
 
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/layer/layer.js"></script>
 <script>
     //获取参数
     function getQueryString(name) {
@@ -199,6 +200,7 @@
     // 这样调用：housesId即为上个页面传回来的变量名
     var housesId = getQueryString("housesId");
     $(function () {
+        layer.load(1);
         //请求数据
         $.ajax({
             //请求方式
@@ -253,6 +255,7 @@
                         '</div>'+
                         '<div class="diagram">房屋户型图</div>'
               $('.header_infor').html(html);
+                layer.closeAll('loading')
               // 每个人员数据
               var list =''
               var res = data.data.per
