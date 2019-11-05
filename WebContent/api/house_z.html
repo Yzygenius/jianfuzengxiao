@@ -216,21 +216,24 @@
               var imgUrl = data.data.houses.houseTypePhoto
               $('.pop_exhibition img').attr('src',imgUrl)
               $('.total_num span').html(data.data.per.length)
-              // 传到下一页参数
-              var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
               // 判断是房屋或者门店显示新建联系人
               if(data.data.houses.housesStatus==1){  //房屋
                 var img = '<img src="images/list/house.png" alt="">'
+                // 传到下一页参数
+                var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
               }else if(data.data.houses.housesStatus==2){   //门店
                 var img = '<img src="images/list/store.png" alt="">'
+                // 传到下一页参数
+                var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
                 $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = ''
               }
               // 是房屋的时候上报家属或者租户点击跳页
               $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
               $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
+
               //头部房屋、门店信息数据
               var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+

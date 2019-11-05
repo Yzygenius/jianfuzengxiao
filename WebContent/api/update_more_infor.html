@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="facell">
-            <div class="face" id="enter1">
+            <div class="face" id="enter1" style="border: 1px solid #eee;">
                 <img src="images/tao/face.png" alt="" id="preview10">
                 <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
                     capture="camera" />
@@ -120,7 +120,7 @@
             <div class="meanslist">
                 <div class="means-name">证件地址</div>
                 <div class="means-input13">
-                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address"></textarea>
+                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address" style="box-sizing: border-box;padding: 0px 10px;"></textarea>
                 </div>
             </div>
             <div class="meanslist">
@@ -165,21 +165,16 @@
     }
     $(function(){
         /* 控制第一个选择器显示 */
-        if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
-            var select1 = $.selectDate("#select_1", {
-                start: 1994,
-                end:2999,
-                select: [2012, 2, 15],
-                title: '请选择居住开始时间'
-            }, function (data) {
-                console.log(data);
-                document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
-                // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
-            });
-
-        }else{
-            
-        }
+        var select1 = $.selectDate("#select_1", {
+            start: 1994,
+            end:2999,
+            select: [2012, 2, 15],
+            title: '请选择居住开始时间'
+        }, function (data) {
+            console.log(data);
+            document.getElementById('select_1').value = data.year + "-" + data.month + "-" + data.day
+            // $("#select_2").value(data.year+"年"+data.month+"月"+data.day+"日");
+        });
 
         var weekdayArr2;
         var weekdayArr;
@@ -197,13 +192,35 @@
             },
             success:function(data){
                 var res=data.data
+                if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
+                    var leaseStartTime = res.leaseStartTime
+                    var leaseStopTime = ""
+                }else{
+                    var leaseStartTime = res.leaseStartTime
+                    var leaseStopTime = res.leaseStopTime
+                }
+                if(res.gender == 1){
+                    var gender = '男'
+                }else if(res.gender == 2){
+                    var gender = '女'
+                }
                 console.log(res)
                 document.getElementById('namev').value = res.username
                 document.getElementById('date3').value = res.leaseStartTime
                 document.getElementById('date4').value = res.leaseStopTime
                 document.getElementById('preview10').setAttribute('src',res.facePhoto)
                 document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
-
+                document.getElementById('preview12').setAttribute('src',res.certificatesNegativePhoto)
+                document.getElementById('trigger1').value = res.certificatesTypeName
+                document.getElementById('trigger2').value = gender           //性别
+                document.getElementById('select_2').value = res.birthDate    //生日
+                document.getElementById('trigger3').value = res.nationName   //民族
+                document.getElementById('measnnum').value = res.certificatesNumber   //证件号码
+                document.getElementById('date1').value = leaseStartTime   //开始时间
+                document.getElementById('select_3').value =leaseStopTime //结束时间
+                document.getElementById('measn12').value = res.certificatesOffice    //机关
+                document.getElementById('address').value = res.certificatesAddress   //证件地址
+                document.getElementById('telephone').value = res.telephone //telephone
             },
             error:function(jqXHR){
             }
