@@ -336,17 +336,20 @@
               var img='';
               for(var i=0;i<data.data.length;i++){
                     // console.log(data.data[i].housesStatus)
+                    // 1为房屋2为门店
                     if(data.data[i].housesStatus ==1){
                         img = '<img src="images/list/icon_01.png" alt="">'
+                        var title_time = '<div class="title_time">'+data.data[i].storiedBuildingNumber+'-'+data.data[i].unit+'-'+data.data[i].houseNumber+'</div>'
                     }else if(data.data[i].housesStatus == 2){
                         img = '<img src="images/list/icon_02.png" alt="">'
+                        var title_time = '<div class="title_time"></div>'
                     }
                     html += '<a class="address" href="house_z.html?housesId='+data.data[i].housesId+'">'+
                                 '<div class="cont">'+
                                     '<div class="cont_title">'
-                                        +img+
-                                        '<div class="title_text">'+data.data[i].communityName+'</div>'+
-                                        '<div class="title_time">'+data.data[i].storiedBuildingNumber+'-'+data.data[i].unit+'-'+data.data[i].houseNumber+'</div>'+
+                                    +img+
+                                        '<div class="title_text">'+data.data[i].communityName+'</div>'
+                                        +title_time+
                                     '</div>'+
                                     '<div class="address">'+data.data[i].provName+''+data.data[i].cityName+''+data.data[i].areaName+''+data.data[i].communityName+''+data.data[i].communityStreetName+''+data.data[i].housesAddress+'</div>'+
                                 '</div>'+

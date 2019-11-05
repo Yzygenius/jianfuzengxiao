@@ -37,7 +37,7 @@
                 <img src="images/tao/face.png" alt="" id="preview10">
                 <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
                     capture="camera" />
-                <p class="faceword" id="faceph">点击拍摄人脸照片</p>
+                <p class="faceword" id="faceph" style="display:none">点击拍摄人脸照片</p>
             </div>
             <div class="allimg">
                 <div class="a">
@@ -199,12 +199,10 @@
                 var res=data.data
                 console.log(res)
                 document.getElementById('namev').value = res.username
-
-                // document.getElementById('data3').value = res.leaseStartTime
-                // document.getElementById('data4').value = res.leaseStopTime
-                document.getElementById('preview10').attr = res.facePhoto
-
-                
+                document.getElementById('date3').value = res.leaseStartTime
+                document.getElementById('date4').value = res.leaseStopTime
+                document.getElementById('preview10').setAttribute('src',res.facePhoto)
+                document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
 
             },
             error:function(jqXHR){
