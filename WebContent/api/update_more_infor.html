@@ -178,53 +178,7 @@
 
         var weekdayArr2;
         var weekdayArr;
-        // 获取人员信息
-        $.ajax({
-            //请求方式
-            type:'POST',
-            //发送请求的地址
-            url:'/jianfuzengxiao/api/personnel/getPerDetail.html',
-            //服务器返回的数据类型
-            dataType:'json',
-            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-            data:{
-                personnelId:personnelId
-            },
-            success:function(data){
-                var res=data.data
-                if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
-                    var leaseStartTime = res.leaseStartTime
-                    var leaseStopTime = ""
-                }else{
-                    var leaseStartTime = res.leaseStartTime
-                    var leaseStopTime = res.leaseStopTime
-                }
-                if(res.gender == 1){
-                    var gender = '男'
-                }else if(res.gender == 2){
-                    var gender = '女'
-                }
-                console.log(res)
-                document.getElementById('namev').value = res.username
-                document.getElementById('date3').value = res.leaseStartTime
-                document.getElementById('date4').value = res.leaseStopTime
-                document.getElementById('preview10').setAttribute('src',res.facePhoto)
-                document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
-                document.getElementById('preview12').setAttribute('src',res.certificatesNegativePhoto)
-                document.getElementById('trigger1').value = res.certificatesTypeName
-                document.getElementById('trigger2').value = gender           //性别
-                document.getElementById('select_2').value = res.birthDate    //生日
-                document.getElementById('trigger3').value = res.nationName   //民族
-                document.getElementById('measnnum').value = res.certificatesNumber   //证件号码
-                document.getElementById('date1').value = leaseStartTime   //开始时间
-                document.getElementById('select_3').value =leaseStopTime //结束时间
-                document.getElementById('measn12').value = res.certificatesOffice    //机关
-                document.getElementById('address').value = res.certificatesAddress   //证件地址
-                document.getElementById('telephone').value = res.telephone //telephone
-            },
-            error:function(jqXHR){
-            }
-        }); 
+
         $.ajax({
             //请求方式
             type:'POST',
@@ -284,7 +238,55 @@
             error:function(jqXHR){
             }
         }); 
-
+        // 获取人员信息
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/personnel/getPerDetail.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                personnelId:personnelId
+            },
+            success:function(data){
+                var res=data.data
+                if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
+                    var leaseStartTime = res.leaseStartTime
+                    var leaseStopTime = ""
+                }else{
+                    var leaseStartTime = res.leaseStartTime
+                    var leaseStopTime = res.leaseStopTime
+                }
+                if(res.gender == 1){
+                    var gender = '男'
+                }else if(res.gender == 2){
+                    var gender = '女'
+                }
+                console.log(res)
+                Positive('身份证',gender,res.birthDate,res.nationName+'族');
+                Back(res.certificatesStartTime,res.certificatesStopTime);
+                document.getElementById('namev').value = res.username
+                document.getElementById('date3').value = leaseStartTime
+                document.getElementById('date4').value = leaseStopTime
+                document.getElementById('preview10').setAttribute('src',res.facePhoto)
+                document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
+                document.getElementById('preview12').setAttribute('src',res.certificatesNegativePhoto)
+                document.getElementById('trigger1').value = res.certificatesTypeName
+                document.getElementById('trigger2').value = gender           //性别
+                document.getElementById('select_2').value = res.birthDate    //生日
+                document.getElementById('trigger3').value = res.nationName   //民族
+                document.getElementById('measnnum').value = res.certificatesNumber   //证件号码
+                document.getElementById('date1').value = res.certificatesStartTime   //开始时间
+                document.getElementById('select_3').value =res.certificatesStopTime //结束时间
+                document.getElementById('measn12').value = res.certificatesOffice    //机关
+                document.getElementById('address').value = res.certificatesAddress   //证件地址
+                document.getElementById('telephone').value = res.telephone //telephone
+            },
+            error:function(jqXHR){
+            }
+        }); 
         // 点击提交
         $('#submit').click(function(){
             if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
