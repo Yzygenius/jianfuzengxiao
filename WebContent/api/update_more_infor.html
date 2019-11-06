@@ -258,6 +258,7 @@
                 }else if(res.gender == 2){
                     var gender = '女'
                 }
+                sessionStorage.housesId = res.housesId
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
                 Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
@@ -376,7 +377,8 @@
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
-                                window.location.href="idenWait_y.html"
+                                location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
+                                window.closeAll(); 
                             }, 1500);
                         }else{
                             layer.msg(data.msg);

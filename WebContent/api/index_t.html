@@ -78,7 +78,7 @@
         });
     })
     window.onload=function(){
-        if(sessionStorage.token == undefined || !sessionStorage.token){
+        //if(sessionStorage.token == undefined || !sessionStorage.token){
             // var data = {
             //     'action': 'jsNGetToken',
             //     'needCallBack': '',
@@ -98,9 +98,9 @@
             //     }
             // });
             sessionStorage.userId = 3
-        }else{
+        //}else{
             load();
-        }
+        //}
         $('.foo-bor').click(function(){
             load();
         })

@@ -225,12 +225,14 @@
                 var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
+                $('.hetitle').html('房屋信息')
               }else if(data.data.houses.housesStatus==2){   //门店
                 var img = '<img src="images/list/store.png" alt="">'
                 // 传到下一页参数
                 var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
                 $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = ''
+                $('.hetitle').html('门店信息')
               }
               // 是房屋的时候上报家属或者租户点击跳页
               $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
@@ -266,6 +268,14 @@
                 }else{
                     var apartment = res[i].leaseStartTime+ '-' +res[i].leaseStopTime
                 }
+                if(data.data.houses.housesStatus==1){  //房屋
+                    // 房屋的话是居住时效
+                    var prescription = '<div class="contact_apartment">居住时效：<span>'+apartment+'</span></div>'
+                
+                }else if(data.data.houses.housesStatus==2){  //门店
+                    // 门店的话是驻店时效
+                    var prescription = '<div class="contact_apartment">驻店时效：<span>'+apartment+'</span></div>'
+                }
                 // 判断性别
                 if(res[i].gender == 1){
                 	var gender = '男'
@@ -300,8 +310,8 @@
                                 '<div>'+res[i].nationName+'</div>'+
                             '</div>'+
                             '<div class="bordertop"></div>'+
-                            '<div class="contact_apartment">房屋户型：<span>'+apartment+'</span></div>'+
-                            '<div class="contact_apartment">已居住时常：<span>'+res[i].leaseDay+'</span></div>'+
+                             prescription+
+                            '<div class="contact_apartment">已居住时长：<span>'+res[i].leaseDay+'天</span></div>'+
                         '</div>'+
                     '</div>'+
                 '</a>'
@@ -319,8 +329,8 @@
                                 '<div>'+res[i].nationName+'</div>'+
                             '</div>'+
                             '<div class="bordertop"></div>'+
-                            '<div class="contact_apartment">房屋户型：<span>'+apartment+'</span></div>'+
-                            '<div class="contact_apartment">已居住时常：<span>'+res[i].leaseDay+'</span></div>'+
+                             prescription+
+                            '<div class="contact_apartment">已居住时长：<span>'+res[i].leaseDay+'天</span></div>'+
                         '</div>'+
                     '</div>'+
                 '</a>'
