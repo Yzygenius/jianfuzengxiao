@@ -435,6 +435,7 @@
 
 		function serchData(page) {
 			var data = {
+				'page': page,
 				'housesStatus': '1',
 				'provCode': provCodeSreach,
 				'cityCode': cityCodeSreach,
