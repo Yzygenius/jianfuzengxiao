@@ -85,7 +85,7 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
 
 	@Override
 	public int queryCountNotRead(MsgInfoMVO entity) throws SysException {
-		String sql = "SELECT count(*)unread_count from msg_info where sts='A' and status=1 where user_id=" + entity.getUserId();
+		String sql = "SELECT count(*)unread_count from msg_info where sts='A' and status=1 and user_id=" + entity.getUserId();
 		logger.info(sql.toString());
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);
 		return count;
