@@ -6,8 +6,34 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=yes"/>
     <link rel="stylesheet" href="css/personnel_y.css">
     <title>人员信息</title>
+    <style>
+        .pop_up{
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .pop_up .mack{
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,1);
+        }
+        .pop_up img{
+            display:block;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,7 +48,7 @@
             </div>
             <div class="basic_information">
                 <div class="head">
-                    <img src="images/yang/head.png" alt="">
+                    <img src="images/yang/head.png" alt="" @click="See(list.facePhoto)">
                     <!--员工、租户、家属审核中 style-->
                     <div class="status yellow" v-show="status == 1">{{list.liveTypeName}}(审核中)</div>
                     <!--店主、租户、家属、房东、员工 style-->
@@ -60,7 +86,7 @@
                     </div>
                     <div class="item">
                         <div class="item-one">联系电话</div>
-                        <div class="item-two">{{list.telephone}} <img class="phone" src="images/yang/phone.png" alt=""></div>
+                        <div class="item-two">{{list.telephone}} <a style="display: block;" :href="'tel:'+list.telephone"><img class="phone" src="images/yang/phone.png" alt=""></a></div>
                     </div>
                 </div>
             </div>
@@ -75,11 +101,11 @@
             </div>
             <div class="id_img">
                 <div class="icon">
-                    <img id="positive" src="images/yang/tu1.png" alt="">
+                    <img id="positive" src="images/yang/tu1.png" alt="" @click="See(list.certificatesPositivePhoto)">
                     <div class="icon_infor">证件正面</div>
                 </div>
                 <div class="icon">
-                    <img id="silde" src="images/yang/tu1.png" alt="">
+                    <img id="silde" src="images/yang/tu1.png" alt="" @click="See(list.certificatesNegativePhoto)">
                     <div class="icon_infor">证件背面</div>
                 </div>
             </div>
@@ -159,6 +185,10 @@
             <p class="time">最新上报时间：{{updateTime}}</p>
             <p class="time">首次上报时间：{{list.createTime}}</p>
         </div>
+        <div class="pop_up" v-if="pop_up">
+            <div class="mack" @click="pop_up=false"></div>
+            <img :src="imgsrc" alt="">
+        </div>
     </div>
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -183,6 +213,21 @@
            updateTime:'',  //更新时间
            housesStatus:'',//房屋类型,
            gender:'', //性别
+           pop_up:false
+        },
+        mounted:function (){
+            
+        },
+        methods:{
+             GetPhone(){
+              if (window.plus) {
+                plus.device.dial(tel, true);
+              }
+            },
+            See:function(src){
+                app.pop_up = true;
+                app.imgsrc = src;
+            }
         }
     
     })
@@ -210,9 +255,9 @@
                 app.gender ="女"
               }
               if(res.updateTime == ''){
-            	  app.updateTime = res.createTime
+                  app.updateTime = res.createTime
               }else{
-            	  app.updateTime = res.updateTime
+                  app.updateTime = res.updateTime
               }
               $('.head img').attr('src',res.facePhoto)
               $('#positive').attr('src',res.certificatesPositivePhoto)
@@ -225,7 +270,7 @@
             },
             error:function(jqXHR){
             }
-        }); 
+        });
         $('.delete').click(function(){
             //请求数据
             $.ajax({
