@@ -48,19 +48,35 @@ document.getElementById('enter2').onclick = function(e) {
 	}
 	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
         var list=JSON.parse(resp);
-        document.getElementById('preview11').setAttribute('src','');
-    	document.getElementById('preview11').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
-    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-		Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
-		document.getElementById('trigger1').value = '身份证';
-		document.getElementById('namev').value = list.data.GetRecogResult[0];
-		document.getElementById('trigger2').value = list.data.GetRecogResult[1];
-		document.getElementById('select_2').value = list.data.GetRecogResult[3];
-		document.getElementById('trigger3').value = list.data.GetRecogResult[2]+'族';
-		document.getElementById('measnnum').value = list.data.GetRecogResult[5];
-		document.getElementById('address').value = list.data.GetRecogResult[4];
-		var enter = document.getElementById('prev1');
-		enter.remove();
+        for(var i in list.data.GetFieldName){
+        	if(list.data.GetFieldName[i] == '姓名' || list.data.GetFieldName[i] == '性别' || list.data.GetFieldName[i] == '民族'){
+		        document.getElementById('preview11').setAttribute('src','');
+		    	document.getElementById('preview11').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
+		    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
+				Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
+				document.getElementById('trigger1').value = '身份证';
+				document.getElementById('namev').value = list.data.GetRecogResult[0];
+				document.getElementById('trigger2').value = list.data.GetRecogResult[1];
+				document.getElementById('select_2').value = list.data.GetRecogResult[3];
+				document.getElementById('trigger3').value = list.data.GetRecogResult[2]+'族';
+				document.getElementById('measnnum').value = list.data.GetRecogResult[5];
+				document.getElementById('address').value = list.data.GetRecogResult[4];
+				var enter = document.getElementById('prev1');
+				enter.remove();
+        	}else if(list.data.GetFieldName[i] == '签发机关' || list.data.GetFieldName[i] == '签发日期'){
+        		if(document.getElementById('prev1')){
+        			var enter = document.getElementById('prev1');
+        			enter.innerText = '请识别身份证指定的一面'
+        			enter.setAttribute('style','display:block!important;font-size:18px;font-weight:blod;');
+        		}else{
+        			var enter0 = document.getElementById('enter2');
+        			var p=document.createElement('p');
+        			p.setAttribute('class','faceword1');
+        			p.setAttribute('id','prev1');
+        			enter0.appendChild(p);
+        		}
+        	}
+        }
     });
 }
 document.getElementById('enter3').onclick = function(e) {
@@ -72,15 +88,30 @@ document.getElementById('enter3').onclick = function(e) {
 	}
 	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
         var list=JSON.parse(resp);
-        document.getElementById('preview12').setAttribute('src','');
-    	document.getElementById('preview12').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
-    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-		Back(list.data.GetRecogResult[2],list.data.GetRecogResult[3]);
-		document.getElementById('date1').value = list.data.GetRecogResult[2];
-		document.getElementById('select_3').value = list.data.GetRecogResult[3];
-		document.getElementById('measn12').value = list.data.GetRecogResult[0];
-       
-		var enter = document.getElementById('prev2');
-		enter.remove();
+        for(var i in list.data.GetFieldName){
+        	if(list.data.GetFieldName[i] == '签发机关' || list.data.GetFieldName[i] == '签发日期'){
+		        document.getElementById('preview12').setAttribute('src','');
+		    	document.getElementById('preview12').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
+		    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
+				Back(list.data.GetRecogResult[2],list.data.GetRecogResult[3]);
+				document.getElementById('date1').value = list.data.GetRecogResult[2];
+				document.getElementById('select_3').value = list.data.GetRecogResult[3];
+				document.getElementById('measn12').value = list.data.GetRecogResult[0];
+				var enter = document.getElementById('prev2');
+				enter.remove();
+			}else if(list.data.GetFieldName[i] == '姓名' || list.data.GetFieldName[i] == '性别' || list.data.GetFieldName[i] == '民族'){
+				if(document.getElementById('prev2')){
+        			var enter = document.getElementById('prev2');
+        			enter.innerText = '请识别身份证指定的一面'
+        			enter.setAttribute('style','display:block!important;font-size:18px;font-weight:blod;');
+        		}else{
+        			var enter0 = document.getElementById('enter3');
+        			var p=document.createElement('p');
+        			p.setAttribute('class','faceword1');
+        			p.setAttribute('id','prev2');
+        			enter0.appendChild(p);
+        		}
+			}
+		}
     });
 }

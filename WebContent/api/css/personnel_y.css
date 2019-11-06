@@ -124,8 +124,13 @@ h6 {
 .personCenter .basic_information .head{
     position: relative;
     width: 90px;
+    height: 0;
+    padding-bottom: 34%;
+    border-radius: 4px;
+    overflow: hidden;
 }
 .personCenter .basic_information .head img{
+	display:block;
     width: 100%;
 }
 .personCenter .basic_information .head .status{

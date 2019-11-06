@@ -11,12 +11,12 @@
 </head>
 <body>
     <div class="title">
-        <div class="timg">
+<!--         <div class="timg">
             <div class="goback">
                 <img src="images/yang/nav_back.png" alt="">
             </div>
             <p class="h-title">社区档案</p>
-        </div>
+        </div> -->
     </div>
     <div class="main">
         <div class="main-all">
@@ -97,6 +97,7 @@
                 // document.getElementById("content").innerHTML = resp;
                 }
             });
+            // sessionStorage.userId = 3
         }else{
             load();
         }
@@ -123,17 +124,14 @@
               if(code == 1){
                 if(data.data.status == 1){
                     console.log('审核中')
-                    window.close(); 
                     window.location.href = "idenWait_y.html";
                    
                 }else if(data.data.status == 2){
                     console.log('审核通过')
-                    window.close(); 
                     window.location.href = "management_z.html";
                 }else if(data.data.status == 3){
                      console.log('审核失败')
                      var auditRemark = escape(data.data.auditRemark)
-                     window.close(); 
                      window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
                 }
               }else{

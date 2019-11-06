@@ -17,10 +17,10 @@
 </head>
 <body>
     <div class="title">
-        <div class="timg">
-           <div class="goback" onclick="history.go(-1)"><img src="images/tao/nav_back.png" alt=""></div>
-            <p class="h-title">修改上报信息</p>
-        </div>
+        <!-- <div class="timg"> -->
+           <!-- <div class="goback" onclick="history.go(-1)"><img src="images/tao/nav_back.png" alt=""></div> -->
+            <!-- <p class="h-title">修改上报信息</p> -->
+        <!-- </div> -->
         <div class="live only" style="display: none;">
             <p class="live-time">居住时效</p>
             <div class="means-input">
@@ -258,6 +258,7 @@
                 }else if(res.gender == 2){
                     var gender = '女'
                 }
+                sessionStorage.housesId = res.housesId
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
                 Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
@@ -265,6 +266,7 @@
                 document.getElementById('date3').value = leaseStartTime
                 document.getElementById('date4').value = leaseStopTime
                 document.getElementById('preview10').setAttribute('src',res.facePhoto)
+                document.getElementById('preview10').setAttribute('name','success')
                 document.getElementById('preview11').setAttribute('src',res.certificatesPositivePhoto)
                 document.getElementById('preview12').setAttribute('src',res.certificatesNegativePhoto)
                 document.getElementById('trigger1').value = res.certificatesTypeName
@@ -376,7 +378,8 @@
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
-                                window.location.href="idenWait_y.html"
+                                location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
+                                window.closeAll(); 
                             }, 1500);
                         }else{
                             layer.msg(data.msg);

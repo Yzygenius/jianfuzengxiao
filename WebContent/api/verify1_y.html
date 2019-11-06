@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/personnel_y.css">
     <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
-    <title>身份信息认证上报</title>
+    <title>添加房产认证</title>
     <style>
         .box-one{
             display: none;
@@ -48,12 +48,12 @@
 <div class="personCenter verify">
     <!--基本信息-->
     <div class="top_background">
-        <div class="return_text">
+   <!--      <div class="return_text">
             <div class="goback" onclick="history.go(-1)"><img src="images/yang/left.png" alt=""></div>
             <p class="text">身份信息认证上报</p>
-        </div>
+        </div> -->
         <div class="basic_information">
-            <div class="verify_title">核实信息</div>
+            <div class="verify_title">核对信息</div>
             <div class="box">
                 <div class="head" id="facephoto"></div>
                 <div class="kind">
@@ -354,8 +354,7 @@
                 if(data.code == 1){
                     layer.msg('已提交');
                     setTimeout(function(){
-                        window.close();
-                        window.location.href="management_z.html";
+                       location.replace("management_z.html")
                     },1500)
                 }else{
                     layer.msg(data.msg)

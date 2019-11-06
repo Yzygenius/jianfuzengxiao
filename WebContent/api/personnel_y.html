@@ -6,8 +6,34 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=yes"/>
     <link rel="stylesheet" href="css/personnel_y.css">
     <title>人员信息</title>
+    <style>
+        .pop_up{
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .pop_up .mack{
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,1);
+        }
+        .pop_up img{
+            display:block;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,14 +41,14 @@
         <!--基本信息-->
         <div class="top_background">
             <div class="return_text">
-                <div class="goback" onclick="history.go(-1)">
+           <!--      <div class="goback" onclick="history.go(-1)">
                     <img src="images/yang/left.png" alt="">
-                </div>
+                </div> -->
                 <p class="text">人员信息</p>
             </div>
             <div class="basic_information">
                 <div class="head">
-                    <img src="images/yang/head.png" alt="">
+                    <img src="images/yang/head.png" alt="" @click="See(list.facePhoto)">
                     <!--员工、租户、家属审核中 style-->
                     <div class="status yellow" v-show="status == 1">{{list.liveTypeName}}(审核中)</div>
                     <!--店主、租户、家属、房东、员工 style-->
@@ -60,7 +86,7 @@
                     </div>
                     <div class="item">
                         <div class="item-one">联系电话</div>
-                        <div class="item-two">{{list.telephone}} <img class="phone" src="images/yang/phone.png" alt=""></div>
+                        <div class="item-two">{{list.telephone}} <a style="display: block;" :href="'tel:'+list.telephone"><img class="phone" src="images/yang/phone.png" alt=""></a></div>
                     </div>
                 </div>
             </div>
@@ -75,11 +101,11 @@
             </div>
             <div class="id_img">
                 <div class="icon">
-                    <img id="positive" src="images/yang/tu1.png" alt="">
+                    <img id="positive" src="images/yang/tu1.png" alt="" @click="See(list.certificatesPositivePhoto)">
                     <div class="icon_infor">证件正面</div>
                 </div>
                 <div class="icon">
-                    <img id="silde" src="images/yang/tu1.png" alt="">
+                    <img id="silde" src="images/yang/tu1.png" alt="" @click="See(list.certificatesNegativePhoto)">
                     <div class="icon_infor">证件背面</div>
                 </div>
             </div>
@@ -110,16 +136,18 @@
                     <p>居住信息</p>
                 </div>
             </div>
+            <!-- 门店 -->
             <div class="house" v-show="housesStatus == 2">
                 <img src="images/yang/house4.png" alt="">
                 <div class="house_text">{{list.communityStreetName }}</div>
             </div>
-            <!--租户-->
+            <!--房屋-->
             <div class="house" v-show="housesStatus == 1">
                 <img src="images/yang/house3.png" alt="">
                 <div class="house_text">{{list.communityStreetName }} {{list.storiedBuildingNumber}}-{{list.unit}}-{{list.houseNumber}}</div>
             </div>
-            <div class="storeBox">
+            <!-- 门店信息 -->
+            <div class="storeBox" v-show="housesStatus == 2">
                 <div class="item">
                     <div class="item-one">门店地址：</div>
                     <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
@@ -140,7 +168,11 @@
                     <div class="item-one">驻店类型：</div>
                     <div class="item-two">{{list.liveTypeName}}</div>
                 </div>
-                <div class="item">
+                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                    <div class="item-one">驻店时效：</div>
+                    <div class="item-two">长期</div>
+                </div>
+                <div class="item" v-else>
                     <div class="item-one">驻店时效：</div>
                     <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
                 </div>
@@ -150,7 +182,46 @@
                 </div>
                 <div class="item">
                     <div class="item-one">已驻店时长：</div>
-                    <div class="item-two">{{list.leaseDay}}</div>
+                    <div class="item-two">{{list.leaseDay}}天</div>
+                </div>
+            </div>
+            <!-- 房屋信息 -->
+            <div class="storeBox" v-show="housesStatus == 1">
+                <div class="item">
+                    <div class="item-one">房屋地址：</div>
+                    <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋类型：</div>
+                    <div class="item-two">{{list.housesTypeName}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋 I D：</div>
+                    <div class="item-two">{{list.housesId}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋户型：</div>
+                    <div class="item-two">{{list.houseType}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">居住类型：</div>
+                    <div class="item-two">{{list.liveTypeName}}</div>
+                </div>
+                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                    <div class="item-one">房屋时效：</div>
+                    <div class="item-two">长期</div>
+                </div>
+                <div class="item" v-else>
+                    <div class="item-one">房屋时效：</div>
+                    <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">居住开始时间：</div>
+                    <div class="item-two">{{list.leaseStartTime}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">已居住时长：</div>
+                    <div class="item-two">{{list.leaseDay}}天</div>
                 </div>
             </div>
         </div>
@@ -158,6 +229,10 @@
         <div class="report_time">
             <p class="time">最新上报时间：{{updateTime}}</p>
             <p class="time">首次上报时间：{{list.createTime}}</p>
+        </div>
+        <div class="pop_up" v-if="pop_up">
+            <div class="mack" @click="pop_up=false"></div>
+            <img :src="imgsrc" alt="">
         </div>
     </div>
 </body>
@@ -183,6 +258,22 @@
            updateTime:'',  //更新时间
            housesStatus:'',//房屋类型,
            gender:'', //性别
+           pop_up:false,
+           liveTypeId:''
+        },
+        mounted:function (){
+            
+        },
+        methods:{
+             GetPhone(){
+              if (window.plus) {
+                plus.device.dial(tel, true);
+              }
+            },
+            See:function(src){
+                app.pop_up = true;
+                app.imgsrc = src;
+            }
         }
     
     })
@@ -204,15 +295,16 @@
             success:function(data){
               layer.closeAll('loading')
               var res = data.data
+              console.log(res)
               if(res.gender == 1){
                 app.gender ="男"
               }else if(res.gender == 2){
                 app.gender ="女"
               }
               if(res.updateTime == ''){
-            	  app.updateTime = res.createTime
+                  app.updateTime = res.createTime
               }else{
-            	  app.updateTime = res.updateTime
+                  app.updateTime = res.updateTime
               }
               $('.head img').attr('src',res.facePhoto)
               $('#positive').attr('src',res.certificatesPositivePhoto)
@@ -220,12 +312,13 @@
               app.list = res
               app.status=res.status
               app.housesStatus = res.housesStatus
+              app.liveTypeId = res.liveTypeId
               // 跳转页面
               $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
             },
             error:function(jqXHR){
             }
-        }); 
+        });
         $('.delete').click(function(){
             //请求数据
             $.ajax({

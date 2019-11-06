@@ -13,10 +13,6 @@
 <body>
     <div id="titleaaa"></div>
     <div class="title">
-        <div class="timg">
-           <div class="goback" onclick="history.go(-1)"><img src="images/tao/nav_back.png" alt=""></div>
-            <p class="h-title">身份信息认证上报</p>
-        </div>
         <div class="live">
             <p class="live-time">居住时效</p>
             <div class="means-input">
@@ -291,7 +287,7 @@
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
-                                window.location.href="management_z.html"
+                                location.replace("idenWait_y.html")
                             }, 1500);
                         }else{
                             layer.msg(data.msg);
