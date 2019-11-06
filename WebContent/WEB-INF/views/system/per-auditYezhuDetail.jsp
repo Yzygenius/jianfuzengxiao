@@ -54,6 +54,12 @@
 		    	<td>民族：${per.nationName }</td>
 		  	</tr>
 		  	<tr>
+		    	<td style="height: 120px;">人脸照片：<img onclick="opneimg(this)" src="${per.facePhoto }"/></td>
+		  	</tr>
+		  	<tr>
+		    	<td style="height: 120px;">联系电话：${per.telephone }</td>
+		  	</tr>
+		  	<tr>
 		    	<td>证件正面：<img onclick="opneimg(this)" src="${per.certificatesPositivePhoto }"/></td>
 		  	</tr>
 		  	<tr>
@@ -70,12 +76,6 @@
 		  	</tr>
 		  	<tr>
 		    	<td>办证机关：${per.certificatesOffice }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>联系电话：${per.telephone }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
 		    	<td class="title">居住信息</td>
@@ -186,7 +186,7 @@
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var personnelId = ${per.personnelId }
+		var personnelId = '${per.personnelId }'
 		var $, form, layer;
 		layui.use(['form', 'layer' ], function() {
 			$ = layui.jquery//jquery
@@ -241,7 +241,7 @@
 		})
 		
 		function opneimg(obj){
-        	console.log(obj)
+        	//console.log(obj)
         	layer.photos({
                photos: '#x-img'
               //,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机

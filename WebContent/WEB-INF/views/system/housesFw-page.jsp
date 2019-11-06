@@ -118,8 +118,8 @@
 			<td row="leaseCount"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
-					<i class="layui-icon">&#xe642;</i>查看
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html', 1000, 620)">
+					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
@@ -527,9 +527,9 @@
 
 			x_admin_show(title, url, w, h);
 		}
-		function banner_details(obj, title, url) {
+		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?housesId=' + id);
+			x_admin_show(title, url + '?housesId=' + id, w, h);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {

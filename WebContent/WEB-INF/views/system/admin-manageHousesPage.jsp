@@ -99,6 +99,7 @@
 			<td row="checkBoxId"><input type="checkbox" class="checkId"
 				value="" name=""></td>
 			<td row="ids" style="display: none;"></td>
+			<td row="ids2" style="display: none;"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
@@ -106,8 +107,8 @@
 			<td row="houseNumber"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
-					<i class="layui-icon">&#xe642;</i>查看
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html',1000,620)">
+					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
@@ -422,6 +423,7 @@
 							tr.find('[row=checkBoxId]').children().val(
 									data[i].id);
 							tr.find('[row=ids]').text(data[i].id);
+							tr.find('[row=ids2]').text(data[i].housesId);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
 							//房屋
@@ -484,9 +486,9 @@
 		function banner_add(title, url, w, h) {
 			x_admin_show(title, url+'?adminId='+adminId, w, h);
 		}
-		function banner_details(obj, title, url) {
-			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?housesId=' + id);
+		function banner_details(obj, title, url, w, h) {
+			var id = $(obj).parent('td').siblings('[row=ids2]').text();
+			x_admin_show(title, url + '?housesId=' + id, w, h);
 		}
 		
 		/*删除*/

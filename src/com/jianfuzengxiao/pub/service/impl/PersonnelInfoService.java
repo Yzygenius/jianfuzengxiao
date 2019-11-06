@@ -293,7 +293,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(personnelInfo.getUserId());
-		msgInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
+		msgInfoMVO.setPersonnelId(personnelInfoMVO.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
 		msgInfoMVO.setTitle(msgTypeMVO.getMsgTypeName());
@@ -301,6 +301,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
 		
+		entity.setStatus(PersonnelInfo.status_waiting);
 		return this.update(entity);
 	}
 

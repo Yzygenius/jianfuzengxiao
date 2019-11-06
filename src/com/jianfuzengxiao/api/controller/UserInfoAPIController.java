@@ -81,6 +81,7 @@ public class UserInfoAPIController extends BaseController {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
+			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
 			model.setStatus(UserInfo.status_waiting);
@@ -111,6 +112,7 @@ public class UserInfoAPIController extends BaseController {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
+			userInfoMVO.setSts("A");
 			List<UserInfoMVO> list = userInfoService.queryList(userInfoMVO);
 			throwAppException(list.size() < 1, RC.USER_INFO_NOT_EXIST);
 			model = list.get(0);
@@ -138,6 +140,7 @@ public class UserInfoAPIController extends BaseController {
 	public String updateUser(UserInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			model.setStatus(UserInfo.status_waiting);
 			userInfoService.update(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

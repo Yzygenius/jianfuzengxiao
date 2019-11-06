@@ -107,11 +107,11 @@
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
-					<i class="layui-icon">&#xe642;</i>查看
+					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<button class="layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
-					<i class="layui-icon">&#xe640;</i>添加房屋权限
+					<i class="layui-icon">&#xe608;</i>添加房屋权限
 				</button>
 			</td>
 		</tr>
@@ -468,6 +468,7 @@
 					success : function(result) {
 						if (result.code == 1) {
 							page();
+							window.parent.page();
 							layer.msg('添加成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});
@@ -504,6 +505,7 @@
 					success : function(result) {
 						if (result.code == 1) {
 							page();
+							window.parent.page();
 							layer.msg('添加成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});

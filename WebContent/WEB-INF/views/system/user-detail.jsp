@@ -66,6 +66,12 @@
 		    	<td>民族：${user.nationName }</td>
 		  	</tr>
 		  	<tr>
+		    	<td style="height: 120px;">人脸照片：<img onclick="opneimg(this)" src="${user.facePhoto }"/></td>
+		  	</tr>
+		  	<tr>
+		    	<td style="height: 120px;">联系电话：${user.telephone }</td>
+		  	</tr>
+		  	<tr>
 		    	<td>证件正面：<img onclick="opneimg(this)" src="${user.certificatesPositivePhoto }"/></td>
 		  	</tr>
 		  	<tr>
@@ -82,12 +88,6 @@
 		  	</tr>
 		  	<tr>
 		    	<td>办证机关：${user.certificatesOffice }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>联系电话：${user.telephone }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
 		    	<td>上报时间：${user.createTime }</td>
@@ -148,7 +148,7 @@
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var userId = ${user.userId }
+		var userId = '${user.userId }'
 		var $, form, layer;
 		layui.use(['form', 'layer' ], function() {
 			$ = layui.jquery//jquery
@@ -203,7 +203,7 @@
 		})
 		
 		function opneimg(obj){
-        	console.log(obj)
+        	//console.log(obj)
         	layer.photos({
                photos: '#x-img'
               //,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机

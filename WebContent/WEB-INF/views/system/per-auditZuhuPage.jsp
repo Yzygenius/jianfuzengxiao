@@ -105,7 +105,7 @@
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
-					<i class="layui-icon">&#xe642;</i>查看
+					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">

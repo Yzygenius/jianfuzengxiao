@@ -94,7 +94,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 		} catch (Exception e) {
 			return "/system/error";
 		}
-		return "/system/housesDp-detail";
+		return "/system/housesFw-detail";
 	}
 	
 	

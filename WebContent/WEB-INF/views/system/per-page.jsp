@@ -102,8 +102,8 @@
 			<td row="leaseTime"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toPerDetail.html')">
-					<i class="layui-icon">&#xe642;</i>查看
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
+					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
@@ -315,9 +315,9 @@
 
 			x_admin_show(title, url, w, h);
 		}
-		function banner_details(obj, title, url) {
+		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?personnelId=' + id);
+			x_admin_show(title, url + '?personnelId=' + id, w, h);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {

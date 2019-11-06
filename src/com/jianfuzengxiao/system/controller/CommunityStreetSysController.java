@@ -58,6 +58,13 @@ public class CommunityStreetSysController extends BaseController {
 	public String toCommunityStreetDetail(CommunityStreetInfoMVO communityStreetInfo, Model model){
 		try {
 			communityStreetInfo = communityStreetInfoService.queryBean(communityStreetInfo);
+			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
+			communityInfo.setCommunityId(communityStreetInfo.getCommunityId());
+			communityInfo = communityInfoService.queryBean(communityInfo);
+			communityStreetInfo.setCommunityName(communityInfo.getCommunityName());
+			communityStreetInfo.setProvName(communityInfo.getProvName());
+			communityStreetInfo.setCityName(communityInfo.getCityName());
+			communityStreetInfo.setAreaName(communityInfo.getAreaName());
 			model.addAttribute("communityStreet", communityStreetInfo);
 		} catch (Exception e) {
 			return "/system/error";
