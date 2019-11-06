@@ -136,16 +136,18 @@
                     <p>居住信息</p>
                 </div>
             </div>
+            <!-- 门店 -->
             <div class="house" v-show="housesStatus == 2">
                 <img src="images/yang/house4.png" alt="">
                 <div class="house_text">{{list.communityStreetName }}</div>
             </div>
-            <!--租户-->
+            <!--房屋-->
             <div class="house" v-show="housesStatus == 1">
                 <img src="images/yang/house3.png" alt="">
                 <div class="house_text">{{list.communityStreetName }} {{list.storiedBuildingNumber}}-{{list.unit}}-{{list.houseNumber}}</div>
             </div>
-            <div class="storeBox">
+            <!-- 门店信息 -->
+            <div class="storeBox" v-show="housesStatus == 2">
                 <div class="item">
                     <div class="item-one">门店地址：</div>
                     <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
@@ -166,7 +168,11 @@
                     <div class="item-one">驻店类型：</div>
                     <div class="item-two">{{list.liveTypeName}}</div>
                 </div>
-                <div class="item">
+                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                    <div class="item-one">驻店时效：</div>
+                    <div class="item-two">长期</div>
+                </div>
+                <div class="item" v-else>
                     <div class="item-one">驻店时效：</div>
                     <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
                 </div>
@@ -176,7 +182,46 @@
                 </div>
                 <div class="item">
                     <div class="item-one">已驻店时长：</div>
-                    <div class="item-two">{{list.leaseDay}}</div>
+                    <div class="item-two">{{list.leaseDay}}天</div>
+                </div>
+            </div>
+            <!-- 房屋信息 -->
+            <div class="storeBox" v-show="housesStatus == 1">
+                <div class="item">
+                    <div class="item-one">房屋地址：</div>
+                    <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋类型：</div>
+                    <div class="item-two">{{list.housesTypeName}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋 I D：</div>
+                    <div class="item-two">{{list.housesId}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">房屋户型：</div>
+                    <div class="item-two">{{list.houseType}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">居住类型：</div>
+                    <div class="item-two">{{list.liveTypeName}}</div>
+                </div>
+                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                    <div class="item-one">房屋时效：</div>
+                    <div class="item-two">长期</div>
+                </div>
+                <div class="item" v-else>
+                    <div class="item-one">房屋时效：</div>
+                    <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">居住开始时间：</div>
+                    <div class="item-two">{{list.leaseStartTime}}</div>
+                </div>
+                <div class="item">
+                    <div class="item-one">已居住时长：</div>
+                    <div class="item-two">{{list.leaseDay}}天</div>
                 </div>
             </div>
         </div>
@@ -213,7 +258,8 @@
            updateTime:'',  //更新时间
            housesStatus:'',//房屋类型,
            gender:'', //性别
-           pop_up:false
+           pop_up:false,
+           liveTypeId:''
         },
         mounted:function (){
             
@@ -249,6 +295,7 @@
             success:function(data){
               layer.closeAll('loading')
               var res = data.data
+              console.log(res)
               if(res.gender == 1){
                 app.gender ="男"
               }else if(res.gender == 2){
@@ -265,6 +312,7 @@
               app.list = res
               app.status=res.status
               app.housesStatus = res.housesStatus
+              app.liveTypeId = res.liveTypeId
               // 跳转页面
               $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
             },
