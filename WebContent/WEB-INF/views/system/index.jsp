@@ -124,7 +124,7 @@
                 </a>
                 <ul class="sub-menu">
                 	<li>
-                        <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
+                        <a _href="/jianfuzengxiao/system/user/toUserPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>会员认证</cite>
                         </a>

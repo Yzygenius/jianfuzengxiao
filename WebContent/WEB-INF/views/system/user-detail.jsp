@@ -42,124 +42,73 @@
 		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>姓名：</span>${per.username }</td>
+		    	<td><span>姓名：</span>${user.username }</td>
 		  	</tr>
-		  	<tr>
-		    	<td>性别：${per.gender }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>年龄：${per.age }岁（${per.birthDate }）</td>
-		  	</tr>
-		  	<tr>
-		    	<td>民族：${per.nationName }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>证件正面：<img onclick="opneimg(this)" src="${per.certificatesPositivePhoto }"/></td>
-		  	</tr>
-		  	<tr>
-		    	<td>证件反面：<img onclick="opneimg(this)" src="${per.certificatesNegativePhoto }"/></td>
-		  	</tr>
-		  	<tr>
-		    	<td>证件号码：${per.certificatesNumber }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>证件时效：${per.certificatesStartTime } - ${per.certificatesStopTime }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>证件地址：${per.certificatesAddress }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>办证机关：${per.certificatesOffice }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>联系电话：${per.telephone }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
-		  	</tr>
-		  	<tr>
-		    	<td class="title">居住信息</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
-		  	</tr>
-		  	<tr>
-		    	<td>居住地址：${per.communityName }&nbsp;${per.communityStreetName }&nbsp;${per.storiedBuildingNumber }-${per.unit }-${per.houseNumber }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
-		  	</tr>
-		  	<tr>
-		    	<td>详细地址：${per.housesAddress }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>&nbsp;</td>
-		  	</tr>
-		  	<tr>
-		    	<td>房屋ID：${per.housesId }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>房屋类型：${per.housesTypeName }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>房屋户型：${per.houseType }</td>
-		  	</tr>
-		  	<tr>
-		    	<td>居住类型：${per.liveTypeName }</td>
-		  	</tr>
-		  	<c:if test="${per.liveTypeId==1 || per.liveTypeId==2 || per.liveTypeId==7 }">
+		  	<c:if test="${user.gender == 1}">
 			  	<tr>
-			    	<td>居住时效：长期</td>
+			    	<td>性别：男</td>
 			  	</tr>
 		  	</c:if>
-		  	<c:if test="${per.liveTypeId==3 || per.liveTypeId==4 || per.liveTypeId==5 || per.liveTypeId==6 }">
+		  	<c:if test="${user.gender == 2}">
 			  	<tr>
-			    	<td>居住时效：${per.leaseStartTime }&nbsp;-&nbsp;${per.leaseStopTime }</td>
+			    	<td>性别：女</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${user.gender == '' || user.gender == null}">
+			  	<tr>
+			    	<td>性别：</td>
 			  	</tr>
 		  	</c:if>
 		  	<tr>
-		    	<td>居住开始时间：${per.leaseStartTime }</td>
+		    	<td>年龄：${user.age }岁（${user.birthDate }）</td>
 		  	</tr>
 		  	<tr>
-		    	<td>已居住时长：${per.leaseDay }天</td>
+		    	<td>民族：${user.nationName }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>证件正面：<img onclick="opneimg(this)" src="${user.certificatesPositivePhoto }"/></td>
+		  	</tr>
+		  	<tr>
+		    	<td>证件反面：<img onclick="opneimg(this)" src="${user.certificatesNegativePhoto }"/></td>
+		  	</tr>
+		  	<tr>
+		    	<td>证件号码：${user.certificatesNumber }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>证件时效：${user.certificatesStartTime } - ${user.certificatesStopTime }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>证件地址：${user.certificatesAddress }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>办证机关：${user.certificatesOffice }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>联系电话：${user.telephone }</td>
 		  	</tr>
 		  	<tr>
 		    	<td>&nbsp;</td>
 		  	</tr>
-		  	<tr>
-		    	<td>首次上报时间：${per.createTime }</td>
-		  	</tr>
-		  	<c:if test="${per.updateTime == null || per.updateTime == '' }">
-			  	<tr>
-			    	<td>最新上报时间：${per.createTime }</td>
-			  	</tr>
-		  	</c:if>
-		  	<c:if test="${per.updateTime != null && per.updateTime != '' }">
-			  	<tr>
-			    	<td>最新上报时间：${per.updateTime }</td>
-			  	</tr>
-		  	</c:if>
-		  	
 		</tbody>
 	</table>
 
 	
-	<c:if test="${per.status == 1 ||  per.status == 3}">
+	<c:if test="${user.status == 1 ||  user.status == 3}">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
 				<label class="layui-form-label">审核</label>
 				<div class="layui-input-block">
-					<c:if test="${per.status == 1}">
+					<c:if test="${user.status == 1}">
 						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" checked>
 						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回">
 					</c:if>
-					<c:if test="${per.status == 3}">
+					<c:if test="${user.status == 3}">
 						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过">
 						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" checked>
 					</c:if>
 				</div>
 			</div>
-			<c:if test="${per.status == 1}">
+			<c:if test="${user.status == 1}">
 				<div id="desc" class="layui-form-item layui-form-text" style="display: none;">
 				    <label class="layui-form-label">驳回原因</label>
 				    <div class="layui-input-block">
@@ -167,11 +116,11 @@
 				    </div>
 				</div>
 			</c:if>
-			<c:if test="${per.status == 3}">
+			<c:if test="${user.status == 3}">
 				<div id="desc" class="layui-form-item layui-form-text">
 				    <label class="layui-form-label">驳回原因</label>
 				    <div class="layui-input-block">
-				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea">${per.auditRemark }</textarea>
+				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea">${user.auditRemark }</textarea>
 				    </div>
 				</div>
 			</c:if>
@@ -186,7 +135,7 @@
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var personnelId = ${per.personnelId }
+		var userId = ${user.userId }
 		var $, form, layer;
 		layui.use(['form', 'layer' ], function() {
 			$ = layui.jquery//jquery
@@ -211,12 +160,12 @@
 					return false;
 				}
 				var data = {
-					'personnelId': personnelId,
+					'userId': userId,
 					'status': data.field.audit,
 					'auditRemark': data.field.desc
 				};
 				$.ajax({
-					url : "/jianfuzengxiao/system/per/auditPer.html",
+					url : "/jianfuzengxiao/system/user/auditUser.html",
 					type : 'post',
 					dataType : "json",
 					data: data,

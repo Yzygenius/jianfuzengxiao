@@ -46,7 +46,7 @@
 				</div>
 				<div class="layui-input-inline">
 					<select id="liveTypeSel" name="liveTypeSel" lay-filter="liveTypeSel" lay-search="">
-						<option value="">请选择类型</option>
+						<option value="1,2,3,4">请选择类型</option>
 			        </select>
 				</div>
 				<div class="layui-input-inline">
@@ -112,7 +112,7 @@
 			<td row="status"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html')">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe642;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
@@ -137,7 +137,8 @@
 	<script>
 		//var lPage;
 		var $, form, layer, laydate, lement, laypage;
-		var username,  gender, nationId, liveTypeId, certificatesNumber, telephone = '';
+		var username,  gender, nationId, certificatesNumber, telephone = '';
+		var liveTypeId = '1,2,3,4';
 		var keyword  = '';
 		var status = '';
 		$(function() {
@@ -334,9 +335,9 @@
 
 			x_admin_show(title, url, w, h);
 		}
-		function banner_details(obj, title, url) {
+		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?personnelId=' + id);
+			x_admin_show(title, url + '?personnelId=' + id, w, h);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {
@@ -383,6 +384,9 @@
 						var str = '';
 						$.each(result.data, function (index, item) {
 							str += "<option value='" + item.liveTypeId + "'>" + item.liveTypeName + "</option>";
+							if(index==3){
+								return false;
+							}
 				        });
 				        $("#liveTypeSel").append(str);
 				        //append后必须从新渲染

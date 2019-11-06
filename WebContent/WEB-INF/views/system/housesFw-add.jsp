@@ -436,7 +436,7 @@
             ,url: '/jianfuzengxiao/system/common/uploadFile.html' //上传接口
             ,data: {'picType': 'D'}
             ,done: function(res){ //上传成功后的回调
-            	if(res.code){
+            	if(res.code==1){
             		$('#propertyCertificatesPhoto').attr('src', res.data.absolutePath);
                 	propertyCertificatesPhoto = res.data.absolutePath;
             	}else{
@@ -454,7 +454,7 @@
             ,url: '/jianfuzengxiao/system/common/uploadFile.html' //上传接口
             ,data: {'picType': 'E'}
             ,done: function(res){ //上传成功后的回调
-            	if(res.code){
+            	if(res.code==1){
             		$('#houseTypePhoto').attr('src', res.data.absolutePath);
             		houseTypePhoto = res.data.absolutePath;
             	}else{

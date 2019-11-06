@@ -73,6 +73,8 @@
 				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', 820)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
+			<button type="button" class="layui-btn" id="uploadExcel"><i class="layui-icon">&#xe608;</i>excel导入</button>
+			<button type="button" class="layui-btn" onclick="banner_download()"><i class="layui-icon">&#xe608;</i>excel导入</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">
@@ -140,7 +142,7 @@
 
 	<script>
 		//var lPage;
-		var $, form, layer, laydate, lement, laypage;
+		var $, form, layer, laydate, lement, laypage, upload;
 		var provinceList, cityList, areaList = "";
 		var provCode = ''
 		var cityCode = ''
@@ -151,13 +153,16 @@
 		var unit = ''
 		var keyword  = '';
 		var houseNumber = '';
+		var provCodeSreach, cityCodeSreach, areaCodeSreach, communityIdSreach, communityStreetIdSreach, storiedBuildingNumberSreach, unitSreach, houseNumberSreach, keywordSreach = '';
 		$(function() {
-			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
+			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ,'upload'], function() {
 				//var total;
 				$ = layui.jquery//jquery
-				, form = layui.form, layer = layui.layer//弹出层
+				, form = layui.form
+				, layer = layui.layer//弹出层
 				, laydate = layui.laydate//日期插件
 				, lement = layui.element//面包导航
+				, upload = layui.upload
 				, laypage = layui.laypage;//分页
 				//lPage = layui.laypage
 				//以上模块根据需要引入
@@ -172,18 +177,41 @@
 
 				});
 				
+				//导入excel
+				upload.render({
+		        	elem: '#uploadExcel',
+		            url: '/jianfuzengxiao/system/common/uploadExcel.html', //上传接口
+		            accept: 'file', //普通文件
+		            data: {},
+		            before: function(obj){
+		                //loading
+		                layer.load(1)
+		            },
+		            done: function(res){ //上传成功后的回调
+		            	if(res.code==1){
+		            		layer.msg('导入成功', {icon: 1})
+							page();
+		            	}else{
+		            		layer.msg('导入失败，请重新操作', {icon: 2})
+		            	}
+		            }
+		            ,error: function(){
+		            	layer.msg('导入失败，请重新操作', {icon: 2});
+		            }
+		        });
+				
 				//监听检索
 				form.on('submit(sreach)', function(data){
 					//console.log(data)
-					provCode = data.field.province;
-					cityCode = data.field.city;
-					areaCode = data.field.area;
-					communityId = data.field.communitySel;
-					communityStreetId = data.field.communityStreetSel;
-					storiedBuildingNumber = data.field.storiedBuildingNumber;
-					unit = data.field.unit;
-					houseNumber = data.field.houseNumber;
-					keyword = data.field.keyword;
+					provCodeSreach = data.field.province;
+					cityCodeSreach = data.field.city;
+					areaCodeSreach = data.field.area;
+					communityIdSreach = data.field.communitySel;
+					communityStreetIdSreach = data.field.communityStreetSel;
+					storiedBuildingNumberSreach = data.field.storiedBuildingNumber;
+					unitSreach = data.field.unit;
+					houseNumberSreach = data.field.houseNumber;
+					keywordSreach = data.field.keyword;
 					
 					page()
 					//loading
@@ -361,20 +389,20 @@
 				}
 			})
 	    }
-
+	   
 		//分页
 		function page() {
 			var data = {
 				'housesStatus': '1',
-				'provCode': provCode,
-				'cityCode': cityCode,
-				'areaCode': areaCode,
-				'communityId': communityId,
-				'communityStreetId': communityStreetId,
-				'storiedBuildingNumber': storiedBuildingNumber,
-				'unit': unit,
-				'houseNumber': houseNumber,
-				'keyword': keyword
+				'provCode': provCodeSreach,
+				'cityCode': cityCodeSreach,
+				'areaCode': areaCodeSreach,
+				'communityId': communityIdSreach,
+				'communityStreetId': communityStreetIdSreach,
+				'storiedBuildingNumber': storiedBuildingNumberSreach,
+				'unit': unitSreach,
+				'houseNumber': houseNumberSreach,
+				'keyword': keywordSreach
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
@@ -407,17 +435,16 @@
 
 		function serchData(page) {
 			var data = {
-				'page' : page,
 				'housesStatus': '1',
-				'provCode': provCode,
-				'cityCode': cityCode,
-				'areaCode': areaCode,
-				'communityId': communityId,
-				'communityStreetId': communityStreetId,
-				'storiedBuildingNumber': storiedBuildingNumber,
-				'unit': unit,
-				'houseNumber': houseNumber,
-				'keyword': keyword
+				'provCode': provCodeSreach,
+				'cityCode': cityCodeSreach,
+				'areaCode': areaCodeSreach,
+				'communityId': communityIdSreach,
+				'communityStreetId': communityStreetIdSreach,
+				'storiedBuildingNumber': storiedBuildingNumberSreach,
+				'unit': unitSreach,
+				'houseNumber': houseNumberSreach,
+				'keyword': keywordSreach
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
@@ -476,7 +503,6 @@
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
 							layer.msg('删除成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});
@@ -487,6 +513,13 @@
 					}
 				});
 			});
+		}
+		/*导出excel*/
+		function banner_download() {
+			var param = "?housesStatus=1&provCode="+provCodeSreach+"&cityCode="+cityCodeSreach+"&areaCode="+areaCodeSreach+"&communityId="+communityIdSreach
+				+ "&communityStreetId="+communityStreetIdSreach+"&storiedBuildingNumberSreach="+storiedBuildingNumber+"&unit="+unitSreach
+				+ "&houseNumber="+houseNumberSreach+"&keyword="+keywordSreach;
+			location.href = "/jianfuzengxiao/system/common/downloadExcel.html" + param; 
 		}
 		/*添加*/
 		function banner_add(title, url, w, h) {
@@ -517,7 +550,6 @@
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
 							layer.msg('删除成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});

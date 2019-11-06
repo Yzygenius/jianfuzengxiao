@@ -27,5 +27,7 @@ public interface IUserInfoService extends IService {
 
 	/** 分页查询 */
 	public PageInfo queryPage(UserInfoMVO entity, PageInfo pagInfo) throws SysException, AppException;
+	
+	public int updateAuditUser(UserInfoMVO entity) throws SysException, AppException;
 
 }

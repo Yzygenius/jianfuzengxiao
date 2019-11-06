@@ -22,6 +22,7 @@ public class DataFileUtil {
 	public final static String DATA_DIR = "data/";
 	public final static String ATTACH_IMAGE_DIR = "data/attach/images/";
 	public final static String ATTACH_FILE_DIR = "data/attach/files/";
+	public final static String ATTACH_EXCEL_DIR = "data/attach/excel/";
 	
 	/**
 	 * 保存上传图片到目标文件夹
@@ -31,7 +32,7 @@ public class DataFileUtil {
 	 */
 	public static AttachFileMVO saveDBImage(CommonsMultipartFile imgFile) {
 		// 保存路径
-		String relativePath = ATTACH_IMAGE_DIR + DateUtil.now("yyyyMMdd");
+		String relativePath = ATTACH_EXCEL_DIR + DateUtil.now("yyyyMMdd");
 		String path = getWebappRoot() + "/" + relativePath;
 		File imgDir = new File(path);
 		if (!imgDir.exists()) {
@@ -70,7 +71,7 @@ public class DataFileUtil {
 	}
 	
 	public static String getWebappRoot() {
-		return System.getProperty("weishangcheng.root");
+		return System.getProperty("jianfuzengxiao.root");
 	}
 
 }

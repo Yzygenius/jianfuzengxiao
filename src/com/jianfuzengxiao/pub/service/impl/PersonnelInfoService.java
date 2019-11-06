@@ -232,6 +232,15 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	public PersonnelInfoMVO addPersonnel(PersonnelInfoMVO model) throws SysException, AppException {
 		String userId = model.getUserId();
 		model.setUserId(null);
+		model.setStatus(PersonnelInfo.status_waiting);
+		model.setPerSort(PersonnelInfo.per_sort_not_app);
+		if (model.getLiveTypeId().equals("7")) {
+			model.setLeaseMode(PersonnelInfo.lease_mode_changqi);
+		}else{
+			model.setLeaseMode(PersonnelInfo.lease_mode_youxiaoqi);
+		}
+		
+		model.setAuditRemark(" ");
 		model = this.insert(model);
 		
 		PersonnelInfoMVO personnelInfoMVO = new PersonnelInfoMVO();

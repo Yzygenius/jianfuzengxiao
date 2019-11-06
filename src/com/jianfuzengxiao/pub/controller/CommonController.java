@@ -1,12 +1,17 @@
 package com.jianfuzengxiao.pub.controller;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +21,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bamboo.framework.common.util.DateUtil;
+import com.bamboo.framework.exception.AppException;
+import com.bamboo.framework.exception.SysException;
 import com.jianfuzengxiao.base.common.Constant;
+import com.jianfuzengxiao.base.common.DataFileUtil;
 import com.jianfuzengxiao.base.common.FileUtil;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.RandomUtil;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
+import com.jianfuzengxiao.base.utils.ExcelUtil;
+import com.jianfuzengxiao.base.utils.Upxml;
 import com.jianfuzengxiao.pub.entity.AreaInfoMVO;
+import com.jianfuzengxiao.pub.entity.AttachFileMVO;
 import com.jianfuzengxiao.pub.entity.CertificatesTypeMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
@@ -40,6 +53,8 @@ import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.ILiveTypeService;
 import com.jianfuzengxiao.pub.service.INationService;
+import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
+
 
 /**
  * 公共接口
@@ -69,6 +84,65 @@ public class CommonController extends BaseController {
 	
 	@Autowired
 	private ILiveTypeService liveTypeService;
+	
+	@ResponseBody
+	@RequestMapping(value="/uploadEx")
+	public String uploadEx(@RequestParam("file") CommonsMultipartFile file){
+		try {
+			throwAppException(file == null, RC.COMMON_IMAGE_FILE_INVALID);
+			AttachFileMVO attachFile = DataFileUtil.saveDBImage(file);
+		
+			String qrcode = request.getSession().getServletContext().getRealPath(attachFile.getSaveName());
+			List<HousesInfoMVO> housesList = Upxml.getDataFromExcel(qrcode);
+			for(int i=0; i<housesList.size(); i++) {
+				housesInfoService.insert(housesList.get(i));
+			}
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "导入excel错误", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/ex")
+	public String ex(RedirectAttributes redirectAttributes){
+		String fileName = "房产信息.xls";
+		String[] title = {"房产ID", "产权类型", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "社区", "小区", "户型", "楼号", "单元", "门牌号", "详细地址", "房产类型", "内/外铺", "省", "市", "区", "创建时间", "最新更新时间", "房产证照片", "户型图"};
+		
+		try {
+			HousesInfoMVO housesInfo = new HousesInfoMVO();
+			housesInfo.setSts("A");
+			List<HousesInfoMVO> list = housesInfoService.queryList(housesInfo);
+			HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(fileName, title, list, null);
+			
+			this.setResponseHeader(response, fileName);
+			OutputStream os = response.getOutputStream();
+			wb.write(os);
+			os.flush();
+			os.close();
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "导出excel错误", e);
+		}
+	}
+	
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception e) {
+        	logger.info("导出excel错误：", e);
+        }
+
+    }
 	
 	/**
 	 * 

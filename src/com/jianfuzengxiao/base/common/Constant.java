@@ -56,6 +56,8 @@ public class Constant {
 	public final static String UPLOAD_HOUSE_TYPE_IMAGE_DIR = "data/attach/image/huxingtu/";
 	/** 上传其他图片文件目录 */
 	public final static String UPLOAD_OTHER_IMAGE_DIR = "data/attach/image/other/";
+	/** excel导入的 */
+	public final static String UPLOAD_IMPROT_IMAGE_DIR = "data/attach/image/improt/";
 	
 	// 允许的图片文件扩展名
 	public final static String[] ALLOWED_IMAGE_FILE_TYPES = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};

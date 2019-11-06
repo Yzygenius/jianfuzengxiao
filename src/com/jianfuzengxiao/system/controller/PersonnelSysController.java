@@ -19,6 +19,7 @@ import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
@@ -56,7 +57,12 @@ public class PersonnelSysController extends BaseController {
 	@RequestMapping(value="/toAuditYezhuDetail")
 	public String toAuditYezhuDetail(PersonnelInfoMVO entity, Model model){
 		try {
-			entity = personnelInfoService.queryBean(entity);
+			entity = personnelInfoService.queryPersonnelBean(entity);
+			if (entity.getGender().equals("1")) {
+				entity.setGender("男");
+			}else if (entity.getGender().equals("2")) {
+				entity.setGender("女");
+			}
 			model.addAttribute("per", entity);
 		} catch (Exception e) {
 			return "/system/error";
@@ -65,9 +71,25 @@ public class PersonnelSysController extends BaseController {
 	}
 	
 	//房屋成员审核
-	@RequestMapping(value="/toAuditZhuhuPage")
-	public String toAuditZhuhuPage(){
+	@RequestMapping(value="/toAuditZuhuPage")
+	public String toAuditZuhuPage(){
 		return "/system/per-auditZuhuPage";
+	}
+	
+	@RequestMapping(value="/toAuditZuhuDetail")
+	public String toAuditZuhuDetail(PersonnelInfoMVO entity, Model model){
+		try {
+			entity = personnelInfoService.queryPersonnelBean(entity);
+			if (entity.getGender().equals("1")) {
+				entity.setGender("男");
+			}else if (entity.getGender().equals("2")) {
+				entity.setGender("女");
+			}
+			model.addAttribute("per", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
+		return "/system/per-auditZuhuDetail";
 	}
 	
 	@ResponseBody

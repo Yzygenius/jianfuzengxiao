@@ -33,8 +33,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add(entity.getPersonnelId());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND houses_id=?");
-					params.add(entity.getHousesId());
+					sql.append(" AND houses_id in("+entity.getHousesId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND user_id like ?");
@@ -45,8 +44,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add(entity.getPerSort());
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id=?");
-					params.add(entity.getLiveTypeId());
+					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
 					sql.append(" AND live_type_name like ?");
@@ -145,8 +143,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add("%" + entity.getEnterpriseName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status in (?)");
-					params.add(entity.getStatus());
+					sql.append(" AND status in ("+entity.getStatus()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getAuditRemark())) {
 					sql.append(" AND audit_remark like ?");

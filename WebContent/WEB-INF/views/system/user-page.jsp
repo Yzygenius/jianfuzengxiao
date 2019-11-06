@@ -45,8 +45,11 @@
 			        </select>
 				</div>
 				<div class="layui-input-inline">
-					<select id="liveTypeSel" name="liveTypeSel" lay-filter="liveTypeSel" lay-search="">
-						<option value="5,6,7">请选择类型</option>
+					<select id="statusSel" name="statusSel" lay-filter="statusSel" lay-search="">
+						<option value="">请选择状态</option>
+						<option value="1">待审核</option>
+						<option value="1">已通过</option>
+						<option value="3">未通过</option>
 			        </select>
 				</div>
 				<input type="text" name="idcard" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
@@ -74,8 +77,7 @@
 					<th>性别</th>
 					<th>民族</th>
 					<th>联系电话</th>
-					<th>类型</th>
-					<th>居住时间</th>
+					<th>证件号码</th>
 					<th>状态</th>
 					<th>操作</th>
 				</tr>
@@ -99,12 +101,11 @@
 			</td>
 			<td row="nationName"></td>
 			<td row="telephone"></td>
-			<td row="liveTypeName"></td>
-			<td row="leaseTime"></td>
+			<td row=certificatesNumber></td>
 			<td row="status"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/user/toUserDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe642;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
@@ -129,10 +130,9 @@
 	<script>
 		//var lPage;
 		var $, form, layer, laydate, lement, laypage;
-		var username,  gender, nationId, certificatesNumber, telephone = '';
+		var username,  gender, nationId, liveTypeId, certificatesNumber, telephone = '';
 		var keyword  = '';
 		var status = '';
-		var liveTypeId = '5,6,7';
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
 				//var total;
@@ -144,6 +144,8 @@
 				//lPage = layui.laypage
 				//以上模块根据需要引入
 				
+				layer.load(1);
+				
 				layer.ready(function() { //为了layer.ext.js加载完毕再执行
 
 					layer.photos({
@@ -153,11 +155,11 @@
 
 				});
 				
+				/*加载页面数据*/
+				page();
+				
 				//加载民族
 				getNationList();
-				
-				//加载类型
-				getLiveTypeList();
 				
 				//监听检索
 				form.on('submit(sreach)', function(data){
@@ -168,20 +170,26 @@
 					liveTypeId = data.field.liveTypeSel;
 					certificatesNumber = data.field.idcard;
 					telephone = data.field.telephone;
-					
+					status = data.field.statusSel
+					//加载数据
 					page()
+					//loading
+					layer.load(1)
 			      	return false;
 			    });
-				
-				/*加载页面数据*/
-				page();
-				
 				
 				
 			});
 			
 		});
 		
+		function checkAll(obj) {
+			if ($(obj).prop('checked')) {
+				$('.checkId').prop('checked', true)
+			} else {
+				$('.checkId').prop('checked', false)
+			}
+		}
 		
 		//分页
 		function page() {
@@ -191,12 +199,11 @@
 				'username': username,
 				'gender': gender,
 				'nationId': nationId,
-				'liveTypeId': liveTypeId,
 				'certificatesNumber': certificatesNumber,
 				'telephone': telephone
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/per/getPerPage.html",
+				url : "/jianfuzengxiao/system/user/getUserPage.html",
 				type : 'post',
 				dataType : "json",
 				data: data,
@@ -208,16 +215,12 @@
 							serchData(obj.curr)
 						}
 					})
+					if(result.data.total == 0){
+						//close loading
+						layer.closeAll('loading');
+					}
 				}
 			})
-		}
-
-		function checkAll(obj) {
-			if ($(obj).prop('checked')) {
-				$('.checkId').prop('checked', true)
-			} else {
-				$('.checkId').prop('checked', false)
-			}
 		}
 
 		function serchData(page) {
@@ -227,12 +230,11 @@
 				'username': username,
 				'gender': gender,
 				'nationId': nationId,
-				'liveTypeId': liveTypeId,
 				'certificatesNumber': certificatesNumber,
 				'telephone': telephone
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/per/getPerPage.html",
+				url : "/jianfuzengxiao/system/user/getUserPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -244,8 +246,8 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(data[i].personnelId);
-							tr.find('[row=ids]').text(data[i].personnelId);
+							tr.find('[row=checkBoxId]').children().val(data[i].userId);
+							tr.find('[row=ids]').text(data[i].userId);
 							tr.find('[row=username]').text(data[i].username);
 							if(data[i].gender == 1){
 								tr.find('[row=gender]').text('男');
@@ -256,12 +258,8 @@
 							}
 							tr.find('[row=nationName]').text(data[i].nationName);
 							tr.find('[row=telephone]').text(data[i].telephone);
-							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
-							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
-								tr.find('[row=leaseTime]').text('长期');
-							}else{
-								tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
-							}
+							tr.find('[row=certificatesNumber]').text(data[i].certificatesNumber);
+							
 							if(data[i].status == 1){
 								tr.find('[row=status]').text('待审核');
 							}else if(data[i].status == 2){
@@ -271,6 +269,8 @@
 							}
 
 							$('#x-img').append(tr);
+							//close loading
+							layer.closeAll('loading');
 						}
 					} else {
 						layer.msg("加载数据出错，请刷新页面", {icon: 2})
@@ -292,11 +292,11 @@
 				})
 				var sel = arr.join(",");
 				$.ajax({
-					url : "/jianfuzengxiao/system/per/delPer.html",
+					url : "/jianfuzengxiao/system/user/delUser.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'personnelId' : sel
+						'userId' : sel
 					},
 					success : function(result) {
 						if (result.code == 1) {
@@ -319,7 +319,7 @@
 		}
 		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?personnelId=' + id, w, h);
+			x_admin_show(title, url + '?userId=' + id, w, h);
 		}
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {
@@ -332,11 +332,11 @@
 			layer.confirm('确认要删除吗？', function(index) {
 				var id = $(obj).parent('td').siblings('[row=ids]').text();
 				$.ajax({
-					url : "/jianfuzengxiao/system/per/delPer.html",
+					url : "/jianfuzengxiao/system/user/delUser.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'personnelId' : id
+						'userId' : id
 					},
 					success : function(result) {
 						if (result.code == 1) {
@@ -365,16 +365,13 @@
 					if (result.code == 1) {
 						var str = '';
 						$.each(result.data, function (index, item) {
-							if(index <= 3){
-								return true;
-							}
 							str += "<option value='" + item.liveTypeId + "'>" + item.liveTypeName + "</option>";
 				        });
 				        $("#liveTypeSel").append(str);
 				        //append后必须从新渲染
 				        form.render('select')
 					} else {
-						layer.msg("加载数据出错，请刷新页面", {icon :2});
+						layer.msg("加载数据出错，请刷新页面", {icon : 2});
 					}
 				},
 				error : function(result) {
