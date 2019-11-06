@@ -73,7 +73,6 @@ document.getElementById('enter2').onclick = function(e) {
         			var p=document.createElement('p');
         			p.setAttribute('class','faceword1');
         			p.setAttribute('id','prev1');
-        			p.setAttribute('style','color:#fff;');
         			enter0.appendChild(p);
         		}
         	}
@@ -110,7 +109,6 @@ document.getElementById('enter3').onclick = function(e) {
         			var p=document.createElement('p');
         			p.setAttribute('class','faceword1');
         			p.setAttribute('id','prev2');
-        			p.setAttribute('style','color:#fff;');
         			enter0.appendChild(p);
         		}
 			}
