@@ -89,6 +89,19 @@
 		  	<tr>
 		    	<td>&nbsp;</td>
 		  	</tr>
+		  	<tr>
+		    	<td>上报时间：${user.createTime }</td>
+		  	</tr>
+		  	<c:if test="${user.updateTime == null || user.updateTime == '' }">
+			  	<tr>
+			    	<td>最新上报时间：${user.createTime }</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${user.updateTime != null && user.updateTime != '' }">
+			  	<tr>
+			    	<td>最新上报时间：${user.updateTime }</td>
+			  	</tr>
+		  	</c:if>
 		</tbody>
 	</table>
 

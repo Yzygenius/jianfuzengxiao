@@ -52,6 +52,8 @@ public class UserInfoSysController extends BaseController {
 	public String getUserPage(UserInfoMVO entity){
 		try {
 			PageInfo pageInfo = getPage();
+			pageInfo.setSortName("createTime");
+			pageInfo.setSortOrder("desc");
 			entity.setSts("A");
 			pageInfo = userInfoService.queryPage(entity, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);

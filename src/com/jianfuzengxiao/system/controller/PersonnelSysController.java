@@ -97,6 +97,8 @@ public class PersonnelSysController extends BaseController {
 	public String getPerPage(PersonnelInfoMVO entity){
 		try{
 			PageInfo pageInfo = getPage();
+			pageInfo.setSortName("createTime");
+			pageInfo.setSortOrder("desc");
 			entity.setSts("A");
 			pageInfo = personnelInfoService.queryPage(entity, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);

@@ -50,6 +50,7 @@ public class UserInfoAPIController extends BaseController {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
+			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() < 1, RC.USER_INFO_NOT_EXIST);
 			userInfoMVO = uList.get(0);
