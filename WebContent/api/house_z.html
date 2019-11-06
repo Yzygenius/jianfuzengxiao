@@ -297,19 +297,26 @@
                 }else if(res[i].gender == 2){
                 	var gender = '女'
                 }
+
                 // 判断审核类型
                 if(res[i].status == 1){ //审核中
                     var examine = '<div class="role in_audit">'+res[i].liveTypeName+'（审核中）</div>'
+                     console.log(res[i].liveTypeName)
                 }else if(res[i].status == 2){ //通过
                     var examine = '<div class="role">'+res[i].liveTypeName+'</div>'
+                     console.log(res[i].liveTypeName)
                 }else if(res[i].status == 3){ //失败
                     var examine = '<div class="role fail">审核被拒绝</div>'
+                     console.log(res[i].liveTypeName)
                 }else if(res[i].status == 4){ //过期、注销、 撤销
                     var examine = '<div class="role end">'+res[i].liveTypeName+'（已过期）</div>'
+                     console.log(res[i].liveTypeName)
                 }else if(res[i].status == 5){ 
                     var examine = '<div class="role end">'+res[i].liveTypeName+'（已注销）</div>'
+                     console.log(res[i].liveTypeName)
                 }else if(res[i].status == 6){
                     var examine = '<div class="role end">'+res[i].liveTypeName+'（已撤销）</div>'
+                     console.log(res[i].liveTypeName)
                 }
                 if(res[i].status == 4 || res[i].status == 5 || res[i].status == 6){
                 	list += '<a class="address" href="personnel_y.html?personnelId='+res[i].personnelId+'">'+

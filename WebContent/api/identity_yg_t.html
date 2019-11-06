@@ -287,7 +287,7 @@
                 layer.load(1);
                 $.ajax({
                     //发送请求的地址
-                     url:'/jianfuzengxiao/api/personnel/addUserPersonnel.html',
+                     url:'/jianfuzengxiao/api/personnel/addPersonnel.html',
                     //请求方式
                     type:'POST',
                     //服务器返回的数据类型
@@ -300,7 +300,7 @@
                         if(data.code == 1){
                             layer.msg('提交成功');
                             setTimeout(function(){
-                                window.location.href="idenStaff_y.html?housesId="+housesId
+                            	location.replace("idenStaff_y.html?housesId="+housesId)
                             }, 1500);
                         }else{
                             layer.msg(data.msg);

@@ -42,6 +42,30 @@
             width: 100%;
             height: 100%;
         }
+        .pop_up{
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .pop_up .mack{
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,1);
+        }
+        .pop_up img{
+            display:block;
+            width: 100%;
+            max-height: 350px;
+        }
     </style>
 </head>
 <body>
@@ -224,6 +248,10 @@
     <div style="background:#fff;overflow: hidden;">
         <div class="submit-btn" id="submit"><a style="display: block" href="javascript:void(0);">提交</a></div>
     </div>
+      <div class="pop_up" style="display: none">
+        <div class="mack"></div>
+        <img src="" alt="">
+    </div>
 </div>
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -279,6 +307,22 @@
             $('#certificatesOffice').html(infor.certificatesOffice);
             $('#certificatesAddress').html(infor.certificatesAddress);
             $('#telephone').html(infor.telephone);
+            $('#Positive').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.certificatesPositivePhoto)
+            })
+            $('#Back').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.certificatesNegativePhoto)
+            })
+            $('#facephoto').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.facePhoto)
+            })
+            $('.mack').click(function(){
+                $('.pop_up').fadeOut(0);
+            })
+            
             layer.closeAll('loading');
           },      //请求成功时执行的回调函数；
     })

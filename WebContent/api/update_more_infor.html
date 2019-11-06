@@ -262,6 +262,7 @@
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
                 Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
+                document.getElementById('select_1').value = leaseStartTime
                 document.getElementById('namev').value = res.username
                 document.getElementById('date3').value = leaseStartTime
                 document.getElementById('date4').value = leaseStopTime

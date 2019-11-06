@@ -14,7 +14,7 @@
     <div class="identity wait">
         <div class="tu2"><img src="images/yang/tu2.png" alt=""></div>
         <div class="tips1 back">您的租户申请已提交，等待审核</div>
-        <!-- <div class="return"><a href="house_z.html">返回</a></div> -->
+        <div class="return">返回</div>
     </div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
@@ -30,6 +30,9 @@ function getQueryString(name) {
 }
 // 这样调用：housesId即为上个页面传回来的变量名
 var housesId = getQueryString("housesId");
-$('.tips1.back').after('<div class="return"><a href="house_z.html?housesId='+housesId+'">返回</a></div>')
+$('.return').click(function(){
+	location.replace("house_z.html?housesId="+housesId)
+})
+//$('.tips1.back').after('<div class="return"><a href="house_z.html?housesId='+housesId+'">返回</a></div>')
 </script>
 </html>
