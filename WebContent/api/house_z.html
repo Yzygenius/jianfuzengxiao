@@ -6,15 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/house_z.css">
-    <title>房屋信息</title>
+    <title></title>
 </head>
 <body>
-
     <div class="header">
-        <div class="head_title">
-            <div class="return" onclick="history.go(-1)"><img src="images/list/on_left.png" alt=""></div>
-            <div class="hetitle">房屋信息</div>
-        </div>
+        <div class="hetitle" style="text-align: center;color: #fff;font-size: 18px"></div>
         <div class="header_infor">
      <!--        <div class="hinfor_title">
                 <img src="images/list/house.png" alt="">
@@ -39,7 +35,7 @@
     <div style="height: 115px;"></div>
     <div class="content">
         <div class="total">
-            <div class="total_num">房屋联系人 (<span>3</span>)</div>
+            <div class="total_num"><span class="lxr">房屋联系人</span> (<span class="num">3</span>)</div>
 <!--             <a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>
             <a href="identity_yg_t.html"><div class="total_add"><span>+</span>新增关联人</div></a> -->
         </div>
@@ -169,7 +165,7 @@
             <div class="pop_title">房产户型图</div>
             <div class="pop_close"><img src="images/list/close.png" alt=""></div>
             <div class="pop_exhibition">
-                <img src="images/list/diagram.png" alt="">
+                <img src="" alt="">
             </div>
         </div>
     </div>
@@ -217,29 +213,16 @@
               console.log(data.data)
               var imgUrl = data.data.houses.houseTypePhoto
               $('.pop_exhibition img').attr('src',imgUrl)
-              $('.total_num span').html(data.data.per.length)
+              $('.total_num .num').html(data.data.per.length)
               // 判断是房屋或者门店显示新建联系人
               if(data.data.houses.housesStatus==1){  //房屋
+                $('.total_num .lxr').html("房屋联系人")
                 var img = '<img src="images/list/house.png" alt="">'
                 // 传到下一页参数
                 var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
-                $('.hetitle').html('房屋信息')
-              }else if(data.data.houses.housesStatus==2){   //门店
-                var img = '<img src="images/list/store.png" alt="">'
-                // 传到下一页参数
-                var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
-                $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
-                var in_title_time = ''
-                $('.hetitle').html('门店信息')
-              }
-              // 是房屋的时候上报家属或者租户点击跳页
-              $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
-              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
-
-              //头部房屋、门店信息数据
-              var html = '<div class="hinfor_title">'+img+
+                var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
                             in_title_time+
                         '</div>'+
@@ -256,6 +239,38 @@
                             '<div class="haddress_detail">'+data.data.houses.houseType+'</div>'+
                         '</div>'+
                         '<div class="diagram">房屋户型图</div>'
+                $('.hetitle').html('房屋信息')
+              }else if(data.data.houses.housesStatus==2){   //门店
+                $('.total_num .lxr').html("门店联系人")
+                var img = '<img src="images/list/store.png" alt="">'
+                // 传到下一页参数
+                var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
+                $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
+                var in_title_time = ''
+                var html = '<div class="hinfor_title">'+img+
+                            '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
+                            in_title_time+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">门店地址</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.provName+''+data.data.houses.cityName+''+data.data.houses.areaName+''+data.data.houses.communityName+''+data.data.houses.communityStreetName+''+data.data.houses.housesAddress+'</div>'+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">门店类型</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.housesTypeName+'</div>'+
+                        '</div>'+
+                        '<div class="hinfor_address">'+
+                            '<div class="haddress">门店户型</div>'+
+                            '<div class="haddress_detail">'+data.data.houses.houseType+'</div>'+
+                        '</div>'+
+                        '<div class="diagram">门店户型图</div>'
+                $('.hetitle').html('门店信息')
+              }
+              // 是房屋的时候上报家属或者租户点击跳页
+              $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
+              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
+
+              //头部房屋、门店信息数据
               $('.header_infor').html(html);
                 layer.closeAll('loading')
               // 每个人员数据

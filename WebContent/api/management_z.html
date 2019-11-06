@@ -11,7 +11,7 @@
 <body>
     <div class="header">
         <div class="head_title">
-            <div class="return" onclick="history.go(-1)"><img src="images/list/on_left.png" alt=""></div>
+            <!-- <div class="return" onclick="history.go(-1)"><img src="images/list/on_left.png" alt=""></div> -->
             <div class="hetitle">社区管家</div>
         </div>
         <div class="header_nav">
@@ -96,7 +96,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
-                pageSize:5,
+                pageSize:10,
                 page:1
             },
             success:function(data){
@@ -126,7 +126,13 @@
                                 '</a>';
                 }
                  $('.cont_list0').html(html);
-                 $('.admin_list .header_red').html(data.data.total);
+                 if(data.data.total == 0){
+                     $('.admin_list .header_red').fadeOut(0);
+                 }else{
+                     $('.admin_list .header_red').fadeIn(0);
+                     $('.admin_list .header_red').html(data.data.total);
+                 }
+                
                  $('.admin_list').attr('data-page',1);
                  $('.admin_list').attr('data-total',data.data.total);
             },
@@ -168,7 +174,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
-                pageSize:6,
+                pageSize:10,
                 page:1
             },
             success:function(data){
@@ -284,8 +290,8 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:3,
-                pageSize:5,
+                userId:sessionStorage.userId,
+                pageSize:10,
                 page:page
             },
             success:function(data){
@@ -399,7 +405,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
-                pageSize:2,
+                pageSize:10,
                 page:page
             },
             success:function(data){
