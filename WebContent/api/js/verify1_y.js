@@ -155,6 +155,10 @@
             data: infor,  //映射或字符串值，规定连同请求发送到服务器的数据；
             dataType:'json',
             success: function(data){
+                if(data.data == [] || data.data == ''){
+                    layer.msg('暂无信息')
+                    return false
+                }
                 var uplinkData0 = data.data;
                 for(var i in uplinkData0){
                     for(var j in uplinkData0[i]){

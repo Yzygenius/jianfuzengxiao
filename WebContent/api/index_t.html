@@ -93,20 +93,20 @@
                     sessionStorage.token = list.data.token;
                     sessionStorage.userId = list.data.userid;
                     // $('#h-title').html(sessionStorage.userId)
-                    load();
+                    load(1);
                 // document.getElementById("content").innerHTML = resp;
                 }
             });
-            // sessionStorage.userId = 3
+            // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
         }else{
-            load();
+            load(1);
         }
         $('.foo-bor').click(function(){
-            load();
+            load(2);
         })
     }
     
-    function load() {
+    function load(idcar) {
         $.ajax({
             //请求方式
             type:'POST',
@@ -135,8 +135,9 @@
                      window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
                 }
               }else{
-                window.close(); 
-                window.location.href = "identity_auth_t.html";
+                if(idcar == 2){
+                    window.location.href = "identity_auth_t.html";
+                }
               }
             },
             error:function(jqXHR){
