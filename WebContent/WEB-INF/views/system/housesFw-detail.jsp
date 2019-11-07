@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css" media="all">
 <style>
 	.td-width{width: 200px;}
-	.layui-table tr{
+	.table-detail tr{
 		float:left;
 		width:50%;
 		color: #000;
@@ -24,11 +24,12 @@
 	.title{
 		font-weight: bold;
 		font-size: 16px !important;
+		line-height: 40px;
 	}
 </style>
 </head>
 <body>
-	<table class="layui-table" lay-size="lg" lay-skin="nob">
+	<table class="layui-table table-detail" lay-size="lg" lay-skin="nob">
 		<colgroup>
 		  	<col width="150">
 		  	<col width="200">
@@ -126,27 +127,35 @@
 		</tbody>
 	</table>
 	
-	<table class="layui-table">
-		<thead>
-			<tr>
-				<!-- <th><input type="checkbox" value="" name="" id="checkAll"
-					onclick="checkAll(this)"></th> -->
-				<th>姓名</th>
-				<th>性别</th>
-				<th>民族</th>
-				<th>联系电话</th>
-				<th>类型</th>
-				<th>居住时间</th>
-				<th>状态</th>
-				<th>操作</th>
-			</tr>
-		</thead>
-		<tbody id="x-img">
-			
-		</tbody>
-	</table>
-
-	<div id="page"></div>
+	<div class="x-body">
+		<div class="layui-row">
+			<xblock>
+				<span class="title">人员列表</span>
+				<span id="total" class="x-right" style="line-height: 40px"></span>
+			</xblock>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<!-- <th><input type="checkbox" value="" name="" id="checkAll"
+							onclick="checkAll(this)"></th> -->
+						<th>姓名</th>
+						<th>性别</th>
+						<th>民族</th>
+						<th>联系电话</th>
+						<th>类型</th>
+						<th>居住时间</th>
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="data-list">
+					
+				</tbody>
+			</table>
+		
+			<div id="page"></div>
+		</div>
+	</div>
 	
 	
 	
@@ -154,49 +163,119 @@
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var $, form, layer;
+		var $, form, layer, laypage;
 		var housesId = '${houses.housesId}';
 		$(function(){
-			layui.use(['form', 'layer' ], function() {
+			layui.use(['form', 'layer', 'laypage'], function() {
 				$ = layui.jquery//jquery
 				, form = layui.form
-				, layer = layui.layer;//弹出层
+				, layer = layui.layer//弹出层
+				, laypage = layui.laypage
 				
 			})
 			
-			personnelList()
+			//加载人员列表
+			page()
 		})
 		
 		//居住人员列表
-		function personnelList(){
-			$.ajax({  
-				url : "/jianfuzengxiao/system/houses/getPerPage.html",  
+		//分页
+		function page() {
+			var data = {
+				'housesId': housesId
+			};
+			$.ajax({
+				url : "/jianfuzengxiao/system/per/getPerPage.html",
 				type : 'post',
-				dataType: "json",
-				data: {
-					'housesId': housesId
-				},
-				success : function(result){
-					if(result.code == 1){
-						var str = '';
-						$.each(result.data, function (index, item) {
-							str += "<option value='" + item.code + "'>" + item.name + "</option>";
-				        });
-				        $("#province").append(str);
-				        //append后必须从新渲染
-				        form.render('select')
-				        provinceList = result.data;
-					}else{
-						layer.msg("数据加载错误，请刷新页面", {icon: 2});
+				dataType : "json",
+				data: data,
+				success : function(result) {
+					laypage.render({
+						elem : 'page',
+						count : result.data.total,
+						jump : function(obj) {
+							serchData(obj.curr)
+						}
+					})
+					if(result.data.total == 0){
+						//close loading
+						layer.closeAll('loading');
+						$('#page').hide();
 					}
-					
+				}
+			})
+		}
+
+		function serchData(page) {
+			var data = {
+				'page': page,
+				'housesId': housesId
+			};
+			$.ajax({
+				url : "/jianfuzengxiao/system/per/getPerPage.html",
+				type : 'post',
+				dataType : "json",
+				data : data,
+				success : function(result) {
+					if (result.code == 1) {
+						$('#total').text('共有数据：' + result.data.total + '条');
+
+						$('#data-list').html('');
+						var data = result.data.rows;
+						for (var i = 0; i < data.length; i++) {
+							var tr = $('#clone-tr').find('tr').clone();
+							//tr.find('[row=checkBoxId]').children().val(data[i].personnelId);
+							tr.find('[row=ids]').text(data[i].personnelId);
+							tr.find('[row=username]').text(data[i].username);
+							if(data[i].gender == 1){
+								tr.find('[row=gender]').text('男');
+							}else if(data[i].gender == 2) {
+								tr.find('[row=gender]').text('女');
+							}else{
+								tr.find('[row=gender]').text('');
+							}
+							tr.find('[row=nationName]').text(data[i].nationName);
+							tr.find('[row=telephone]').text(data[i].telephone);
+							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
+							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
+								tr.find('[row=leaseTime]').text('长期');
+							}else{
+								tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
+							}
+							if(data[i].status == 1){
+								tr.find('[row=status]').text('待审核');
+							}else if(data[i].status == 2){
+								tr.find('[row=status]').text('已通过审核');
+							}else if(data[i].status == 3){
+								tr.find('[row=status]').text('未通过审核');
+							}
+							$('#data-list').append(tr);
+							//close loading
+							layer.closeAll('loading');
+						}
+					} else {
+						layer.msg("加载数据出错，请刷新页面", {icon: 2})
+					}
+
 				},
-				error : function(result){
-					layer.msg("数据加载错误，请刷新页面", {icon: 2})
+				error : function(result) {
+					layer.msg("加载数据出错，请刷新页面", {icon: 2})
 				}
 			});
 		}
 		
+		function banner_details(obj, title, url, w, h) {
+			var id = $(obj).parent('td').siblings('[row=ids]').text();
+			x_admin_show(title, url + '?personnelId=' + id, w, h);
+		}
+		
+		function checkAll(obj) {
+			if ($(obj).prop('checked')) {
+				$('.checkId').prop('checked', true)
+			} else {
+				$('.checkId').prop('checked', false)
+			}
+		}
 		//查看图片
 		function opneimg(obj){
         	//console.log(obj)

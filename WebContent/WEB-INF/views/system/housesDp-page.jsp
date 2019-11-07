@@ -121,7 +121,7 @@
 			<td row="leaseCount"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesDpDetail.html', 1000, 620)">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesDpDetail.html')">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"

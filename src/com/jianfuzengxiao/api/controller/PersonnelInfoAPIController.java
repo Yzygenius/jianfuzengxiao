@@ -278,8 +278,10 @@ public class PersonnelInfoAPIController extends BaseController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			if (list.size() > 0) {
 				housesInfo.setEnterpriseName(list.get(0).getEnterpriseName());
+				housesInfo.sethStatus(list.get(0).getStatus());
 			}else {
 				housesInfo.setEnterpriseName("");
+				housesInfo.sethStatus(PersonnelInfo.status_waiting);
 			}
 			
 			map.put("houses", housesInfo);
