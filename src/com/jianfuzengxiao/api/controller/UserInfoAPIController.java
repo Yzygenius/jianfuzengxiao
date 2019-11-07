@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfo;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
@@ -151,25 +152,30 @@ public class UserInfoAPIController extends BaseController {
 					housesInfo.setHousesId(model.getHousesId());
 					housesInfo = housesInfoService.queryBean(housesInfo);
 				
-						userInfoMVO.setHousesId(housesInfo.getHousesId());
-						userInfoMVO.setCommunityId(housesInfo.getCommunityId());
-						userInfoMVO.setCommunityName(housesInfo.getCommunityName());
-						userInfoMVO.setCommunityStreetId(housesInfo.getCommunityStreetId());
-						userInfoMVO.setCommunityStreetName(housesInfo.getCommunityStreetName());
-						userInfoMVO.setStoriedBuildingNumber(housesInfo.getStoriedBuildingNumber());
-						userInfoMVO.setUnit(housesInfo.getUnit());
-						userInfoMVO.setHouseNumber(housesInfo.getHouseNumber());
-						userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
-						userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
-						userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
-						userInfoMVO.setHousesStatus(housesInfo.getHousesStatus());
-						ContractFileMVO contract = new ContractFileMVO();
-						contract.setPersonnelId(personnelInfo.getPersonnelId());
-						contract.setHousesId(personnelInfo.getHousesId());
-						contract.setSts("A");
-						List<ContractFileMVO> contractList = contractFileService.queryList(contract);
-						userInfoMVO.setContractList(contractList);
+					userInfoMVO.setHousesId(housesInfo.getHousesId());
+					userInfoMVO.setCommunityId(housesInfo.getCommunityId());
+					userInfoMVO.setCommunityName(housesInfo.getCommunityName());
+					userInfoMVO.setCommunityStreetId(housesInfo.getCommunityStreetId());
+					userInfoMVO.setCommunityStreetName(housesInfo.getCommunityStreetName());
+					userInfoMVO.setStoriedBuildingNumber(housesInfo.getStoriedBuildingNumber());
+					userInfoMVO.setUnit(housesInfo.getUnit());
+					userInfoMVO.setHouseNumber(housesInfo.getHouseNumber());
+					userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
+					userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
+					userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
+					userInfoMVO.setHousesStatus(housesInfo.getHousesStatus());
+					ContractFileMVO contract = new ContractFileMVO();
+					contract.setPersonnelId(personnelInfo.getPersonnelId());
+					contract.setHousesId(personnelInfo.getHousesId());
+					contract.setSts("A");
+					List<ContractFileMVO> contractList = contractFileService.queryList(contract);
+					userInfoMVO.setContractList(contractList);
 					
+					if (StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), personnelInfo.getCertificatesNumber())) {
+						userInfoMVO.setHousesMode(HousesInfo.houses_mode_zichi);
+					}else {
+						userInfoMVO.setHousesMode(HousesInfo.houses_mode_zulin);
+					}
 				}
 			}
 			return apiResult(RC.SUCCESS, userInfoMVO);

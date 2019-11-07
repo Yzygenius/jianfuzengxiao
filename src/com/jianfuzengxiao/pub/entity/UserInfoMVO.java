@@ -24,8 +24,17 @@ public class UserInfoMVO extends UserInfo {
 	private String houseNumber;
 	private String housesAddress;
 	private String storeLocation;
+	private String housesMode;
 	
 	
+	public String getHousesMode() {
+		return housesMode;
+	}
+
+	public void setHousesMode(String housesMode) {
+		this.housesMode = housesMode;
+	}
+
 	public String getHousesStatus() {
 		return housesStatus;
 	}

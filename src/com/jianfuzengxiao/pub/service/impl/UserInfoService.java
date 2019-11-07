@@ -117,6 +117,8 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 	public int updateUserPer(UserInfoMVO entity) throws SysException, AppException {
 		PersonnelInfoMVO per = new PersonnelInfoMVO();
 		per.setPersonnelId(entity.getPersonnelId());
+		per.setLeaseStartTime(entity.getLeaseStartTime());
+		per.setLeaseStopTime(entity.getLeaseStopTime());
 		
 		return 0;
 	}
