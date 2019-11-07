@@ -361,4 +361,10 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		return personnelInfoMDAO.queryPerList(entity);
 	}
 
+	@Override
+	public int updateUserPersonnel(PersonnelInfoMVO entity) throws SysException, AppException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

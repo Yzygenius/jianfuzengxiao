@@ -130,7 +130,12 @@
 	<div class="x-body">
 		<div class="layui-row">
 			<xblock>
-				<span class="title">人员列表</span>
+				<c:if test="${houses.housesStatus == 1}">
+					<span class="title">房屋联系人</span>
+				</c:if>
+				<c:if test="${houses.housesStatus == 2}">
+					<span class="title">门店联系人</span>
+				</c:if>
 				<span id="total" class="x-right" style="line-height: 40px"></span>
 			</xblock>
 			<table class="layui-table">

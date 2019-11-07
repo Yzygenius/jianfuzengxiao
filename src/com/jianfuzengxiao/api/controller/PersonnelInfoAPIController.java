@@ -120,6 +120,32 @@ public class PersonnelInfoAPIController extends BaseController {
 	/**
 	 * 
 	 * <p style="color:#36F;">
+	 * 上传房产信息
+	 * </p>
+	 * @param  userId 用户ID, housesId 房产ID , enterpriseName 即app店铺租户所填的企业名称 ,leaseStartTime  leaseStopTime 居住失效 , leaseContract 租赁合同（如果多张转为用逗号隔开的字符串）
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月28日 上午10:40:35
+	 */
+	@ResponseBody
+	@RequestMapping(value="/updateUserPersonnel", method=RequestMethod.POST)
+	public String updateUserPersonnel(PersonnelInfoMVO model){
+		try {
+			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			
+			personnelInfoService.addUserPersonnel(model);
+			
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "身份证信息认证上报失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
 	 * 身份证信息认证上报(人员上报)
 	 * </p>
 	 * @param leaseMode 居住是否为长期（1长期、2有时长）, facePhoto 人脸照片地址, certificatesPositivePhoto 证件正面照片, certificatesNegativePhoto 证件反面照片, certificatesTypeId 证件类型id, certificatesTypeName 证件类型名称</br>
