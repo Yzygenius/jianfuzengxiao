@@ -263,7 +263,7 @@
            liveTypeId:''
         },
         mounted:function (){
-            
+
         },
         methods:{
              GetPhone(){
@@ -281,7 +281,38 @@
     console.log(personnelId)
     $(function(){
         layer.load(1);
-        //请求数据
+        if(personnelId == 0 || personnelId == '0'){
+            zero();
+        }else{
+            nonzero();
+        }
+        $('.delete').click(function(){
+            //请求数据
+            $.ajax({
+                //请求方式
+                type:'POST',
+                //发送请求的地址
+                url:'/jianfuzengxiao/api/personnel/delPersonnel.html',
+                //服务器返回的数据类型
+                dataType:'json',
+                //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+                data:{
+                    personnelId:personnelId
+                },
+                success:function(data){
+                	console.log(data)
+                	if(data.code == 1){
+                		history.back(-1)
+                	}
+                },
+                error:function(jqXHR){
+                }
+            }); 
+        })
+    })
+
+    //请求数据
+    function nonzero(){
         $.ajax({
             //请求方式
             type:'POST',
@@ -316,34 +347,56 @@
               app.liveTypeId = res.liveTypeId
               console.log(res.liveTypeId)
               // 跳转页面
-              $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
+              if(res.liveTypeId == '1' || res.liveTypeId == '2' || res.liveTypeId == '3' || res.liveTypeId == '4'){
+                $('.an_btn').append('<div class="item-btn"><a href="update_infor.html?personnelId='+personnelId+'">更新上报</a></div>')
+              }else{
+                $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
+              }
             },
             error:function(jqXHR){
             }
         });
-        $('.delete').click(function(){
-            //请求数据
-            $.ajax({
-                //请求方式
-                type:'POST',
-                //发送请求的地址
-                url:'/jianfuzengxiao/api/personnel/delPersonnel.html',
-                //服务器返回的数据类型
-                dataType:'json',
-                //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-                data:{
-                    personnelId:personnelId
-                },
-                success:function(data){
-                	console.log(data)
-                	if(data.code == 1){
-                		history.back(-1)
-                	}
-                },
-                error:function(jqXHR){
-                }
-            }); 
-        })
-    })
+    }
+    function zero(){
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/userInfo/getUserDetail.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:sessionStorage.userId
+            },
+            success:function(data){
+              layer.closeAll('loading')
+              var res = data.data
+              console.log(res)
+              if(res.gender == 1){
+                app.gender ="男"
+              }else if(res.gender == 2){
+                app.gender ="女"
+              }
+              if(res.updateTime == ''){
+                  app.updateTime = res.createTime
+              }else{
+                  app.updateTime = res.updateTime
+              }
+              $('.head img').attr('src',res.facePhoto)
+              $('#positive').attr('src',res.certificatesPositivePhoto)
+              $('#silde').attr('src',res.certificatesNegativePhoto)
+              app.list = res
+              app.status=res.status
+              app.liveTypeId = res.liveTypeId
+              console.log(res.liveTypeId)
+              // 跳转页面
+              $('.an_btn').append('<div class="item-btn"><a href="update_infor.html">更新上报</a></div>')
+              $('.live').fadeOut(0);
+            },
+            error:function(jqXHR){
+            }
+        });
+    }
 </script>
 </html>

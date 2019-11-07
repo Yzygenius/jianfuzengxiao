@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/personnel_y.css">
+    <link rel="stylesheet" type="text/css" href="css/mobileSelect.css">
+    <title>添加房产认证</title>
+    <style>
+        .box-one{
+            display: none;
+        }
+        .images{
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 23%;
+            width: 100%;
+            margin-top: 10px;
+            /*overflow: hidden;*/
+            box-sizing: border-box;
+        }
+        .images .addimg{
+            position:relative;
+            width: 65px;
+            height: 84px;
+            margin-top: 10px;
+            margin-right: 10px;
+            box-shadow: 0px 0px 2px;
+        }
+        .images .addimg .cloase{
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+        }
+        .images .addimg img{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .pop_up{
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .pop_up .mack{
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,1);
+        }
+        .pop_up img{
+            display:block;
+            width: 100%;
+            max-height: 350px;
+        }
+    </style>
+</head>
+<body>
+<div class="personCenter verify">
+    <!--基本信息-->
+    <div class="top_background">
+   <!--      <div class="return_text">
+            <div class="goback" onclick="history.go(-1)"><img src="images/yang/left.png" alt=""></div>
+            <p class="text">身份信息认证上报</p>
+        </div> -->
+        <div class="basic_information">
+            <div class="verify_title">核对信息</div>
+            <div class="box">
+                <div class="head" id="facephoto"></div>
+                <div class="kind">
+                    <div class="item">
+                        <div class="item-one">人员姓名</div>
+                        <div class="item-two" id='username'></div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员性别</div>
+                        <div class="item-two" id="gender"></div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员年龄</div>
+                        <div class="item-two" id='birthDate'></div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">人员民族</div>
+                        <div class="item-two" id="nationName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="item-one">联系电话</div>
+                        <div class="item-two" id="telephone"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--身份证信息-->
+    <div class="person_id">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text" id="certificatesType"></div>
+        </div>
+        <div class="id_img">
+            <div class="icon" id="Positive">
+                <!-- <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件正面</div> -->
+            </div>
+            <div class="icon" id="Back">
+                <!-- <img src="images/yang/tu1.png" alt="">
+                <div class="icon_infor">证件反面</div> -->
+            </div>
+        </div>
+        <div class="id_text">
+            <div class="step">
+                <div class="step_w">证件号码：</div>
+                <div class="step_d" id="certificatesNumber"></div>
+            </div>
+            <div class="step">
+                <div class="step_w">证件时效：</div>
+                <div class="step_d" id="certificatesTime">2019.12.12 - 2020.12.12</div>
+            </div>
+            <div class="step">
+                <div class="step_w">证件地址：</div>
+                <div class="step_d" id="certificatesAddress"></div>
+            </div>
+            <div class="step">
+                <div class="step_w">办证机关：</div>
+                <div class="step_d" id="certificatesOffice"></div>
+            </div>
+        </div>
+    </div>
+    <!--选择门店、房屋按钮-->
+    <div class="select_house">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+        </div>
+        <div class="btnBox">
+            <div class="add-btn">
+                <div class="add_btn0" id="add_btna"></div>
+                <!--<a href="#">-->
+                <img src="images/yang/house3.png" alt="">
+                <span>添加房屋</span>
+                <!--</a>-->
+            </div>
+            <div class="add-btn">
+                <div class="add_btn0" id="add_btn0"></div>
+                <!--<a href="#">-->
+                <img src="images/yang/house4.png" alt="">
+                <span>添加门店</span>
+                <!--</a>-->
+            </div>
+        </div>
+        <div style="display: none;flex-wrap: wrap;">
+            <!-- <div class="add_btn0" id="add_btna" style="display: none;"></div> -->
+            <!-- 房屋id -->
+            <div class="add_btn0" id="add_btnb" style="display: none;"></div>
+            <div class="add_btn0" id="add_btnc" style="display: none;"></div>
+            <div class="add_btn0" id="add_btnd" style="display: none;"></div>
+            <div class="add_btn0" id="add_btne" style="display: none;"></div>
+            <!-- 门店id -->
+            <div class="add_btn0" id="add_btn1" style="display: none;"></div>
+            <div class="add_btn0" id="add_btn2" style="display: none;"></div>
+        </div>
+    </div>
+    <!--房产地址_自持-->
+    <div class="select_time" id="support" style="display: none;">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+            <div class="new_select">重新选择</div>
+        </div>
+        <div class="box-one house">
+            <!-- <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span><span class="zc">自持</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div> -->
+        </div>
+        <div class="box-one store">
+            <!-- <div class="box-title"><img src="images/yang/house4.png" alt=""><span>太行街 233号</span><span class="zc">自持</span></div>
+            <div class="box-cont">详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段详细地址字段</div>
+            <div class="inputInput">
+                <p>企业名称</p>
+                <input type="text" placeholder="填写企业名称">
+            </div> -->
+            <!-- <div class="upload_box second"><span>已添加租赁合同</span><input id="file2" type="file"></div> -->
+        </div>
+    </div>
+    <!--租赁地址_未上传合同-->
+    <div class="select_time" id="lease" style="display: none;">
+        <div class="title">
+            <img src="images/yang/line.png" alt="">
+            <div class="title_text"><p>选择房屋/门店</p></div>
+            <div class="new_select">重新选择</div>
+        </div>
+        <div class="box-one house">
+            <div class="box-title"></div>
+            <div class="box-cont"></div>
+            <div class="inputBox">
+                <p>居住时间</p>
+                <div class="select_date" id="select_date1">
+                    <!--<input type="text"  id="dateSelectorOne" placeholder="居住开始时间"><span>-</span><input class="input2" type="text"placeholder="居住截止时间">-->
+                    <p class="date1" id="date1">居住开始时间</p><span>-</span><p class="date2" id="date2">居住截止时间</p>
+                    <div class="sj_img"><img src="images/yang/bottom_sj.png" alt=""></div>
+                </div>
+            </div>
+            <div class="upload_box first"><span>上传租赁合同</span><input id="file1" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="images">
+                <!-- <div class="addimg">
+                    <div class="cloase"><img src="images/list/cloase.png" alt=""></div>
+                    <img src="" alt="">
+                </div> -->
+            </div>
+        </div>
+        <div class="box-one store">
+            <div class="box-title"></div>
+            <div class="box-cont"></div>
+            <div class="inputBox">
+                <p>居住时效</p>
+                <div class="select_date" id="select_date2">
+                    <!--<input type="text"  id="dateSelectorOne" placeholder="居住开始时间"><span>-</span><input class="input2" type="text"placeholder="居住截止时间">-->
+                    <p class="date1" id="date3">居住开始时间</p><span>-</span><p class="date2" id="date4">居住截止时间</p>
+                    <div class="sj_img"><img src="images/yang/bottom_sj.png" alt=""></div>
+                </div>
+            </div>
+            <div class="inputInput">
+                <p>企业名称</p>
+                <input type="text" placeholder="填写企业名称" id="enter_name">
+            </div>
+            <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
+            <div class="images">
+                <div class="addimg">
+                    <div class="cloase"><img src="images/list/cloase.png" alt=""></div>
+                    <img src="" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="background:#fff;overflow: hidden;">
+        <div class="submit-btn" id="submit"><a style="display: block" href="javascript:void(0);">提交</a></div>
+    </div>
+      <div class="pop_up" style="display: none">
+        <div class="mack"></div>
+        <img src="" alt="">
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/mobileSelect.min.js"></script>
+<script src="js/selectDate.js"></script>
+<script src="js/data.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script src="js/verify1_y.js"></script>
+<script>
+    layer.load(1);
+    //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    var housesId = getQueryString("housesId");
+    var personnelId0 = '';
+    // 加载人员信息
+    $.ajax({
+    　　type: 'POST', 
+          url: '/jianfuzengxiao/api/userInfo/getUserDetail.html',    //规定连同请求发送到服务器的数据；
+          data: {
+            userId: sessionStorage.userId,
+            housesId:housesId
+          },   //映射或字符串值，规定连同请求发送到服务器的数据；
+          dataType:'json',
+          success: function(data) {
+            if(data.code == 1){
+                personnelId0 = data.data.personnelId
+                var infor = data.data;
+                var myDate = new Date();
+                    myDate.getFullYear();
+                infor.age = parseInt(myDate.getFullYear()) - parseInt(infor.birthDate.substr(0, 4));
+                if(infor.gender == 1){
+                    infor.gender = '男'
+                }else if(infor.gender == 2){
+                    infor.gender = '女'
+                }
+                $('#facephoto').html('<img src="'+infor.facePhoto+'" alt="">');
+                $('#Positive').html('<img src="'+infor.certificatesPositivePhoto+'" alt=""><div class="icon_infor">证件正面</div>');
+                $('#Back').html('<img src="'+infor.certificatesNegativePhoto+'" alt=""><div class="icon_infor">证件背面</div>');
+                $('#certificatesType').html('<p>身份信息</p><span>（证件类型：'+ infor.certificatesTypeName +'）</span>');
+                $('#username').html(infor.username);
+                $('#gender').html(infor.gender);
+                $('#birthDate').html(infor.age+'岁（'+infor.birthDate+'）');
+                $('#nationName').html(infor.nationName);
+                $('#certificatesNumber').html(infor.certificatesNumber);
+                $('#certificatesTime').html(infor.certificatesStartTime+'-'+infor.certificatesStopTime);
+                $('#certificatesOffice').html(infor.certificatesOffice);
+                $('#certificatesAddress').html(infor.certificatesAddress);
+                $('#telephone').html(infor.telephone);
+                $('.select_house').fadeOut(0);
+                console.log(data.data.housesStatus)
+                console.log(data.data.housesMode)
+                var infor = data.data
+                if(infor.housesStatus == '1' && infor.housesMode == '1'){ //房屋自持
+                    $('#support').fadeIn(0);
+                    $('#support .house').fadeIn(0);
+                    $('#support .house').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
+                        infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>'+
+                        '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>')
+                    $('#support .house').attr('data-houseId',housesId);
+                    $('#submit').attr('data-type',1);
+                }else if(infor.housesStatus == '1' && infor.housesMode == '2'){ //房屋租赁
+                    $('#lease').fadeIn(0);
+                    $('#lease .house').fadeIn(0);
+                    $('#lease .house .box-title').html('<img src="images/yang/house3.png" alt=""><span>'+
+                        infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>');
+                    $('#lease .house .box-cont').html(infor.housesAddress);
+                    $('#lease .house').attr('data-houseId',housesId);
+                    $('#submit').attr('data-type',2)
+                    var add = $('.upload_box.first').parents('.box-one').find('.images')
+                    for(var i = 0;i<infor.contractList.length;i++){
+                        add.append('<div class="addimg"><div class="cloase"><img src="images/list/cloase.png" alt=""></div><img class="add_img" src="'+infor.contractList[i].fileThumb+'" alt=""></div>')
+                    }
+                    $('#date1').html(infor.leaseStartTime);
+                    $('#date2').html(infor.leaseStartTime);
+                }else if(infor.housesStatus == '2' && infor.housesMode == '1'){ //门店自持
+                    $('#support').fadeIn(0);
+                    $('#support .store').fadeIn(0);
+                    $('#support .store').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
+                        infor.communityStreetName+infor.houseNumber+'号'+'</span>'+
+                        '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>'+
+                        '<div class="inputInput"><p>企业名称</p><input type="text" placeholder="填写企业名称" id="ent_name">'+infor.enterpriseName+'</div>');
+                    $('#support .store').attr('data-houseId',housesId);
+                    $('#submit').attr('data-type',3);
+                }else if(infor.housesStatus == '2' && infor.housesMode == '2'){ //门店租赁
+                    $('#lease').fadeIn(0);
+                    $('#lease .store').fadeIn(0);
+                    $('#lease .store .box-title').html('<img src="images/yang/house4.png" alt=""><span>'+
+                        infor.communityStreetName+infor.houseNumber+'号'+'</span>');
+                    $('#lease .store .box-cont').html(infor.housesAddress);
+                    $('#lease .store').attr('data-houseId',housesId);
+                    $('#submit').attr('data-type',4);
+                    var add = $('.upload_box.second').parents('.box-one').find('.images')
+                    for(var i = 0;i<infor.contractList.length;i++){
+                        add.append('<div class="addimg"><div class="cloase"><img src="images/list/cloase.png" alt=""></div><img class="add_img" src="'+infor.contractList[i].fileThumb+'" alt=""></div>')
+                    }
+                    $('#date3').html(infor.leaseStartTime);
+                    $('#date4').html(infor.leaseStartTime);
+                    $('#enter_name').value(infor.enterpriseName)
+                }
+            }else{
+                layer.msg(data.msg);
+                setTimeout(function(){
+                    window.location.href = "management_z.html";
+                },1500)
+                
+            }
+            
+            $('#Positive').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.certificatesPositivePhoto)
+            })
+            $('#Back').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.certificatesNegativePhoto)
+            })
+            $('#facephoto').click(function(){
+                $('.pop_up').css('display','flex');
+                $('.pop_up img').attr('src',infor.facePhoto)
+            })
+            $('.mack').click(function(){
+                $('.pop_up').fadeOut(0);
+            })
+            
+            layer.closeAll('loading');
+          },      //请求成功时执行的回调函数；
+    })
+    $(document).on("click", ".cloase",function () {
+        console.log('q1')
+        $(this).parents('.addimg').remove();
+    })
+    // 提交房产信息
+    $('#submit').click(function(){
+        var formData = {}
+            formData.userId = sessionStorage.userId;
+        var type = $('#submit').attr('data-type');
+        // var userId = $('#submit').attr('data-userId');
+        if(type == 1){//房屋自持
+            var house = $('#support .house');
+        }else if(type == 2){ //房屋租赁
+            var house = $('#lease .house');
+            var num = house.find('.images .addimg');
+            var list = '';
+            for(var i = 0;i<num.length;i++){
+                list+=','+num.eq(i).find('.add_img').attr('src');
+            }
+            formData.leaseContract = list.substr(1);
+            formData.leaseStartTime = $("#date1").html();
+            formData.leaseStopTime = $("#date2").html();
+            if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
+                layer.msg('请选择居住时效')
+                return false
+            }else if(formData.leaseContract && formData.leaseContract == ''){
+                layer.msg('请添加租赁合同')
+                return false
+            }
+        }else if(type == 3){ //门店自持
+            var house = $('#support .store');
+            formData.enterpriseName = document.getElementById('ent_name').value;
+            if(formData.enterpriseName && formData.enterpriseName == ''){
+                layer.msg('请填写企业名称')
+                return false
+            }
+        }else if(type == 4){ //门店租赁
+            var house = $('#lease .store');
+            var num = house.find('.images .addimg');
+            var list = '';
+            for(var i = 0;i<num.length;i++){
+                list+=','+num.eq(i).find('.add_img').attr('src');
+            }
+            formData.leaseContract = list.substr(1);
+            formData.enterpriseName = document.getElementById('enter_name').value;
+            formData.leaseStartTime = $("#date3").html();
+            formData.leaseStopTime = $("#date4").html();
+            if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
+                layer.msg('请选择居住时效');
+                return false
+            }else if(formData.enterpriseName && formData.enterpriseName == ''){
+                layer.msg('请填写企业名称')
+                return false
+            }else if(formData.leaseContract == ''){
+                layer.msg('请添加租赁合同')
+                return false
+            }
+        }
+        var housesId = house.attr('data-houseId');
+        formData.housesId = housesId,
+        formData.personnelId = personnelId0
+        console.log(formData)
+        layer.load(1);
+        $.ajax({
+        　　type: 'POST', 
+            url: '/jianfuzengxiao/api/personnel/updatePersonnel.html',    //规定连同请求发送到服务器的数据；
+            data: formData,   //映射或字符串值，规定连同请求发送到服务器的数据；
+            dataType:'json',
+            success: function(data){
+                layer.closeAll('loading');
+                if(data.code == 1){
+                    layer.msg('已提交');
+                    setTimeout(function(){
+                       location.replace("management_z.html")
+                    },1500)
+                }else{
+                    layer.msg(data.msg)
+                }
+            }, 
+            error:function(jqXHR){
+                console.log('fail')
+            }
+        })
+        
+    })
+</script>
+</html>

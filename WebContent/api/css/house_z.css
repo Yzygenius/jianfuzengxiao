@@ -115,6 +115,7 @@ body{
     overflow: hidden;
 }
 .header .header_infor .hinfor_title{
+	position:relative;
     display: flex;
     align-items: center;
     width: 94%;
@@ -122,6 +123,18 @@ body{
     color: #0091FF;
     font-size: 12px;
     line-height: 17px;
+    font-weight: bold;
+}
+.header .header_infor .hinfor_title .upload_btn{
+    position: absolute;
+    right: 0px;
+    top: 12px;
+    color: #fff;
+    background: #0091FF;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border:1px solid #0091FF;
+    font-size: 12px;
     font-weight: bold;
 }
 .header .header_infor .hinfor_title img{

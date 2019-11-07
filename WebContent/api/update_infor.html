@@ -137,12 +137,21 @@
     <script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
     <script>
+     //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    var personnelId = getQueryString("personnelId");
     var live=""
     $(function(){
         layer.load(1);
         var weekdayArr2;
         var weekdayArr;
-
         $.ajax({
             //请求方式
             type:'POST',
@@ -255,8 +264,8 @@
         // 点击提交
         $('#submit').click(function(){
             var infor = {
-                    'certificatesPositivePhoto' : $('#preview11').attr('src'),
-                    'certificatesNegativePhoto' : $('#preview12').attr('src'),
+                    // 'certificatesPositivePhoto' : $('#preview11').attr('src'),
+                    // 'certificatesNegativePhoto' : $('#preview12').attr('src'),
                     'userId':sessionStorage.userId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesTypeName' : document.getElementById('trigger1').value,
@@ -274,6 +283,10 @@
                 };
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
+            if(personnelId !== undefined && personnelId !== null){
+                infor.personnelId = personnelId
+            }
+            console.log(personnelId)
             console.log(infor)
             var base = 'data:image/jpeg;base64';
             if($('#preview10').attr('name') !== 'success'){

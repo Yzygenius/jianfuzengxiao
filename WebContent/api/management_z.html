@@ -230,6 +230,9 @@
             }
         });
     }
+    $(document).on("click", ".result",function () {
+        $(this).find('.result_red').fadeOut(0);
+    })
     function showtime(id,personnelId){
 	    console.log(id)
 	    console.log(personnelId)
