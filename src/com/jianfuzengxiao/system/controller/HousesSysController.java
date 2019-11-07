@@ -22,7 +22,9 @@ import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
+import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
 @Controller
 @RequestMapping(value="/system/houses")
@@ -31,6 +33,9 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	
 	@Autowired
 	private IHousesInfoService housesInfoService;
+	
+	@Autowired
+	private IPersonnelInfoService personnelInfoService;
 	
 	@RequestMapping(value="/toHousesFwPage")
 	public String toHousesFwPage(){
@@ -97,6 +102,30 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 		return "/system/housesFw-detail";
 	}
 	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 房产下居住人列表
+	 * </p>
+	 * @param entity
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月7日 下午4:30:34
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPerPage", method=RequestMethod.POST)
+	public String getPerPage(PersonnelInfoMVO entity){
+		try{
+			PageInfo pageInfo = getPage();
+			entity.setSts("A");
+			pageInfo = personnelInfoService.queryPage(entity, pageInfo);
+			return apiResult(RC.SUCCESS, pageInfo);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取人员列表失败", e);
+		}
+	}
 	
 	/**
 	 * 

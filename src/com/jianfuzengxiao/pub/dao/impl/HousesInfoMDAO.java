@@ -25,8 +25,9 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		sql.append(",b.username,b.telephone admin_telephone ");
 		sql.append(",count(c.personnel_id)lease_count ");
 		sql.append("from HOUSES_INFO a ");
-		sql.append("left join admin_info b on(a.admin_id=b.admin_id) ");
-		sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.status in(2) ) ");
+		sql.append("left join admin_info b on(a.admin_id=b.admin_id and b.sts='A') ");
+		//sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.status in(2) ) ");
+		sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.sts='A' ) ");
 		sql.append("where 1=1 ");
 
 		List<Object> params = new ArrayList<Object>();

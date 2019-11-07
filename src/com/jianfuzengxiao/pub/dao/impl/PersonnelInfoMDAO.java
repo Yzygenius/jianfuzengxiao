@@ -275,4 +275,144 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 		}
 		return entity;
 	}
+
+	@Override
+	public List<PersonnelInfoMVO> queryPerList(PersonnelInfoMVO entity) throws SysException {
+		StringBuilder sql = new StringBuilder();
+		sql.append(
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age  ");
+		sql.append("FROM  PERSONNEL_INFO ");
+		sql.append("WHERE 1=1 ");
+		List<PersonnelInfoMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getPersonnelId())) {
+					sql.append(" AND personnel_id=?");
+					params.add(entity.getPersonnelId());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND houses_id in ("+entity.getHousesId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getUserId())) {
+					sql.append(" AND user_id=?");
+					params.add(entity.getUserId());
+				}
+				if (StringUtils.isNotBlank(entity.getPerSort())) {
+					sql.append(" AND per_sort=?");
+					params.add(entity.getPerSort());
+				}
+				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
+					sql.append(" AND live_type_name=?");
+					params.add(entity.getLiveTypeName());
+				}
+				if (StringUtils.isNotBlank(entity.getLeaseMode())) {
+					sql.append(" AND lease_mode=?");
+					params.add(entity.getLeaseMode());
+				}
+				if (StringUtils.isNotBlank(entity.getLeaseStartTime())) {
+					sql.append("  AND lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getLeaseStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getLeaseStopTime())) {
+					sql.append("  AND lease_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getLeaseStopTime());
+				}
+				if (StringUtils.isNotBlank(entity.getUsername())) {
+					sql.append(" AND username=?");
+					params.add(entity.getUsername());
+				}
+				if (StringUtils.isNotBlank(entity.getGender())) {
+					sql.append(" AND gender=?");
+					params.add(entity.getGender());
+				}
+				if (StringUtils.isNotBlank(entity.getFacePhoto())) {
+					sql.append(" AND face_photo=?");
+					params.add(entity.getFacePhoto());
+				}
+				if (StringUtils.isNotBlank(entity.getFaceFile())) {
+					sql.append(" AND face_file=?");
+					params.add(entity.getFaceFile());
+				}
+				if (StringUtils.isNotBlank(entity.getBirthDate())) {
+					sql.append("  AND birth_date=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getBirthDate());
+				}
+				if (StringUtils.isNotBlank(entity.getNationId())) {
+					sql.append(" AND nation_id=?");
+					params.add(entity.getNationId());
+				}
+				if (StringUtils.isNotBlank(entity.getNationName())) {
+					sql.append(" AND nation_name=?");
+					params.add(entity.getNationName());
+				}
+				if (StringUtils.isNotBlank(entity.getTelephone())) {
+					sql.append(" AND telephone=?");
+					params.add(entity.getTelephone());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesTypeId())) {
+					sql.append(" AND certificates_type_id=?");
+					params.add(entity.getCertificatesTypeId());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesTypeName())) {
+					sql.append(" AND certificates_type_name=?");
+					params.add(entity.getCertificatesTypeName());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesNumber())) {
+					sql.append(" AND certificates_number=?");
+					params.add(entity.getCertificatesNumber());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesStartTime())) {
+					sql.append("  AND certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getCertificatesStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesStopTime())) {
+					sql.append("  AND certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getCertificatesStopTime());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesAddress())) {
+					sql.append(" AND certificates_address=?");
+					params.add(entity.getCertificatesAddress());
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesOffice())) {
+					sql.append(" AND certificates_office=?");
+					params.add(entity.getCertificatesOffice());
+				}
+				if (StringUtils.isNotBlank(entity.getEnterpriseName())) {
+					sql.append(" AND enterprise_name=?");
+					params.add(entity.getEnterpriseName());
+				}
+				if (StringUtils.isNotBlank(entity.getStatus())) {
+					sql.append(" AND status in ("+entity.getStatus()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getAuditRemark())) {
+					sql.append(" AND audit_remark=?");
+					params.add(entity.getAuditRemark());
+				}
+				if (StringUtils.isNotBlank(entity.getCreateTime())) {
+					sql.append("  AND create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getCreateTime());
+				}
+				if (StringUtils.isNotBlank(entity.getUpdateTime())) {
+					sql.append("  AND update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getUpdateTime());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND sts=?");
+					params.add(entity.getSts());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询PERSONNEL_INFO错误：{}", e.getMessage());
+			throw new SysException("查询PERSONNEL_INFO错误", "10000", e);
+		}
+		return resultList;
+	}
 }
