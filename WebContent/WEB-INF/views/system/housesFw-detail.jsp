@@ -321,10 +321,10 @@
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button> -->
-				<button class="layui-btn-danger layui-btn layui-btn-xs"
+				<!-- <button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
-				</button>
+				</button> -->
 			</td>
 		</tr>
 	</table>

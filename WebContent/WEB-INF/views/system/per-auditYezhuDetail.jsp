@@ -192,11 +192,14 @@
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		var personnelId = '${per.personnelId }'
+		var housesId = '${per.housesId }'
 		var $, form, layer;
 		layui.use(['form', 'layer' ], function() {
 			$ = layui.jquery//jquery
 			, form = layui.form
 			, layer = layui.layer;//弹出层
+			
+			getContractList();
 			
 			form.on('radio(ra)', function(data){
 				if(data.value == 3){
@@ -253,14 +256,16 @@
 				dataType : "json",
 				data: data,
 				success : function(result) {
+					console.log(result)
 					if (result.code == 1) {
-						layer.msg('审核成功', {icon : 1}, function () {
-				            // 获得frame索引
-				            var index = parent.layer.getFrameIndex(window.name);
-				            //关闭当前frame
-				            parent.layer.close(index);
-				            window.parent.location.reload();
-						});
+						var str = '';
+						var j = 1;
+						for(var i=0; i<result.data.length; i++){
+							j += i;
+							str += '<tr><td>租赁合同'+j
+							str += '<img onclick="opneimg(this)" src="'+result.data.fileThumb+'"/></td></tr>'
+						}
+						$('#x-img').append(str)
 					} else {
 						layer.msg(result.msg, {
 							icon : 2
