@@ -123,7 +123,7 @@
             <div class="meanslist">
                 <div class="means-name">联系方式</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入手机号码" class="measn12" id="telephone">
+                    <input type="number" placeholder="录入手机号码" class="measn12" id="telephone">
                 </div>
             </div>
         </div>
@@ -516,9 +516,12 @@
                     if(parseInt(res.code) == 1){
                         layer.closeAll('loading');
                         $('#preview10').attr('src',res.data.absolutePath);
-                        layer.msg('上传成功');
                         $('#preview10').attr('name','success');
                         $('#faceph').remove();
+                        layer.msg('上传成功',{time:1000});
+                        setTimeout(function(){
+                            layer.closeAll();
+                        },1000)
                     }else{
                         layer.msg(res.msg);
                     }

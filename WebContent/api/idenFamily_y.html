@@ -29,7 +29,8 @@ function getQueryString(name) {
 // 这样调用：housesId即为上个页面传回来的变量名
 var housesId = getQueryString("housesId");
 $('.return').click(function(){
-	location.replace("house_z.html?housesId="+housesId)
+    window.history.go(-1);
+	// location.replace("house_z.html?housesId="+housesId)
 })
 //$('.tips1.back').after('<div class="return"><a href="house_z.html?housesId='+housesId+'">返回</a></div>')
 </script>

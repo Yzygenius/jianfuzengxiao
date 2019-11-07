@@ -285,28 +285,37 @@
           },   //映射或字符串值，规定连同请求发送到服务器的数据；
           dataType:'json',
           success: function(data) {
-            var infor = data.data;
-            var myDate = new Date();
-                myDate.getFullYear();
-            infor.age = parseInt(myDate.getFullYear()) - parseInt(infor.birthDate.substr(0, 4));
-            if(infor.gender == 1){
-                infor.gender = '男'
-            }else if(infor.gender == 2){
-                infor.gender = '女'
+            if(data.code == 1){
+                var infor = data.data;
+                var myDate = new Date();
+                    myDate.getFullYear();
+                infor.age = parseInt(myDate.getFullYear()) - parseInt(infor.birthDate.substr(0, 4));
+                if(infor.gender == 1){
+                    infor.gender = '男'
+                }else if(infor.gender == 2){
+                    infor.gender = '女'
+                }
+                $('#facephoto').html('<img src="'+infor.facePhoto+'" alt="">');
+                $('#Positive').html('<img src="'+infor.certificatesPositivePhoto+'" alt=""><div class="icon_infor">证件正面</div>');
+                $('#Back').html('<img src="'+infor.certificatesNegativePhoto+'" alt=""><div class="icon_infor">证件背面</div>');
+                $('#certificatesType').html('<p>身份信息</p><span>（证件类型：'+ infor.certificatesTypeName +'）</span>');
+                $('#username').html(infor.username);
+                $('#gender').html(infor.gender);
+                $('#birthDate').html(infor.age+'岁（'+infor.birthDate+'）');
+                $('#nationName').html(infor.nationName);
+                $('#certificatesNumber').html(infor.certificatesNumber);
+                $('#certificatesTime').html(infor.certificatesStartTime+'-'+infor.certificatesStopTime);
+                $('#certificatesOffice').html(infor.certificatesOffice);
+                $('#certificatesAddress').html(infor.certificatesAddress);
+                $('#telephone').html(infor.telephone);
+            }else{
+                layer.msg(data.msg);
+                setTimeout(function(){
+                    window.location.href = "management_z.html";
+                },1500)
+                
             }
-            $('#facephoto').html('<img src="'+infor.facePhoto+'" alt="">');
-            $('#Positive').html('<img src="'+infor.certificatesPositivePhoto+'" alt=""><div class="icon_infor">证件正面</div>');
-            $('#Back').html('<img src="'+infor.certificatesNegativePhoto+'" alt=""><div class="icon_infor">证件背面</div>');
-            $('#certificatesType').html('<p>身份信息</p><span>（证件类型：'+ infor.certificatesTypeName +'）</span>');
-            $('#username').html(infor.username);
-            $('#gender').html(infor.gender);
-            $('#birthDate').html(infor.age+'岁（'+infor.birthDate+'）');
-            $('#nationName').html(infor.nationName);
-            $('#certificatesNumber').html(infor.certificatesNumber);
-            $('#certificatesTime').html(infor.certificatesStartTime+'-'+infor.certificatesStopTime);
-            $('#certificatesOffice').html(infor.certificatesOffice);
-            $('#certificatesAddress').html(infor.certificatesAddress);
-            $('#telephone').html(infor.telephone);
+            
             $('#Positive').click(function(){
                 $('.pop_up').css('display','flex');
                 $('.pop_up img').attr('src',infor.certificatesPositivePhoto)

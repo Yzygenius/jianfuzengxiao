@@ -180,21 +180,15 @@
             success:function(data){
             	console.log(data.data)
             	console.log(data.data.rows)
+                onlad();
             	var pro = news(data)
             	$('.news').html(pro);
-                var number = 0;
-                for(var i=0;i<data.data.rows.length;i++){
-                    if(data.data.rows[i].status == 1){
-                        number+=1;
-                        $('.news .result').eq(i).find('.result_red').fadeIn(0);
-                    }else if(data.data.rows[i].status == 2){
+                var rows = $('.news .result')
+                for(var i=0;i<rows.length;i++){
+                    if(rows.eq(i).find('.result_red').attr('data-status') == 1){
+                        rows.eq(i).find('.result_red').fadeIn(0);
+                    }else if(rows.eq(i).find('.result_red').attr('data-status') == 2){
                         $('.news .result').eq(i).find('.result_red').fadeOut(0);
-                    }
-                    if(number == 0){
-                        $('#number').fadeOut(0);
-                    }else{
-                        $('#number').fadeIn(0);
-                        $('#number').html(number)
                     }
                 }
                  $('.newsCenter').attr('data-page',1);
@@ -205,13 +199,41 @@
             }
         });
     })
-    
-        function showtime(id,personnelId){
-    	   console.log(id)
-    	   console.log(personnelId)
-    
+    function onlad(){
+        // 消息中心新消息数量
+        $.ajax({
+             //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/api/msgInfo/getUnreadCount.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                userId:sessionStorage.userId
+            },
+            success:function(data){
+                if(data.code == 1){
+                    if(data.data.unreadCount >0){
+                        $('.newsCenter #number').fadeIn(0);
+                        $('.newsCenter #number').html(data.data.unreadCount);
+                    }else{
+                        $('.newsCenter #number').fadeOut(0);
+                    }
+                }else{
+                    $('.newsCenter #number').fadeOut(0);
+                    layer.msg(data.msg)
+                }
+            },
+            error:function(jqXHR){
+                
+            }
+        });
+    }
+    function showtime(id,personnelId){
+	    console.log(id)
+	    console.log(personnelId)
         var msgId=id
-      
         //请求数据
         $.ajax({
             //请求方式
@@ -225,53 +247,56 @@
                 msgId:msgId
             },
             success:function(data){
-              console.log(data.data)
-              var selehtml='';
-              if(data.data.msgTypeId!='3'){
-            	    selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.msgTypeName+'</div>'+
+                console.log(data.data)
+                onlad();
+                var selehtml='';
+                if(data.data.personnelId == 0){
+                    var time = data.data.createTime
+                }else if(data.data.personnelId !== 0){
+                    var time = data.data.perCreateTime
+                }
+                if(data.data.msgTypeId!='3'){
+                    selehtml+='<div class="pop_top"><img src="images/list/success.png" alt="">'+data.data.msgTypeName+'</div>'+
                     '<div class="pop_time">'+data.data.createTime+'</div>'+
                     '<div class="pop_text">'+data.data.content+'</div>'+
-                    '<div class="poptime">首次提报时间:&nbsp;&nbsp;'+data.data.perCreateTime+'</div>'+
+                    '<div class="poptime">首次提报时间:&nbsp;&nbsp;'+time+'</div>'+
                     '<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
-              }else{
-            	  selehtml+='<div class="pop_top"><img src="images/list/fail.png" alt="">'+data.data.msgTypeName+'</div>'+
-            	  '<div class="pop_time">'+data.data.createTime+'</div>'+
-            	  '<div class="pop_text">'+data.data.content+'</div>'+
-            	  '<div class="poptime">首次提报时间：'+data.data.perCreateTime+'</div>'+
-            	  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
-            	  '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
-              }
-              
-          
-            if(data.data.msgTypeId=='4'){
-            	 $('#success').html(selehtml)
-            	 $('.pop_up').fadeOut(200);
-                 $('.Mask').fadeIn(200);
-                 $('.pop_up.'+'success').fadeIn(200);
-            }else if(data.data.msgTypeId=='3'){
-           	     $('#fail').html(selehtml)
-          	     $('.pop_up').fadeOut(200);
-                 $('.Mask').fadeIn(200);
-                 $('.pop_up.'+'fail').fadeIn(200);
-            }else if(data.data.msgTypeId=='5'){
-	           	 $('#upload').html(selehtml)
-	        	 $('.pop_up').fadeOut(200);
-	             $('.Mask').fadeIn(200);
-	             $('.pop_up.'+'upload').fadeIn(200);
-            }else if(data.data.msgTypeId=='2'){
-	             $('#end1').html(selehtml)
-	         	 $('.pop_up').fadeOut(200);
-	             $('.Mask').fadeIn(200);
-	             $('.pop_up.'+'end').fadeIn(200);
-            }else if(data.data.msgTypeId=='1'){
-             	 $('#In_audit1').html(selehtml)
-            	 $('.pop_up').fadeOut(200);
-                 $('.Mask').fadeIn(200);
-                 $('#In_audit1').fadeIn(200);
-            }
+                }else{
+                  selehtml+='<div class="pop_top"><img src="images/list/fail.png" alt="">'+data.data.msgTypeName+'</div>'+
+                  '<div class="pop_time">'+data.data.createTime+'</div>'+
+                  '<div class="pop_text">'+data.data.content+'</div>'+
+                  '<div class="poptime">首次提报时间：'+time+'</div>'+
+                  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
+                  '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
+                }
+                if(data.data.msgTypeId=='4'){
+                	 $('#success').html(selehtml)
+                	 $('.pop_up').fadeOut(200);
+                     $('.Mask').fadeIn(200);
+                     $('.pop_up.'+'success').fadeIn(200);
+                }else if(data.data.msgTypeId=='3'){
+               	     $('#fail').html(selehtml)
+              	     $('.pop_up').fadeOut(200);
+                     $('.Mask').fadeIn(200);
+                     $('.pop_up.'+'fail').fadeIn(200);
+                }else if(data.data.msgTypeId=='5'){
+    	           	 $('#upload').html(selehtml)
+    	        	 $('.pop_up').fadeOut(200);
+    	             $('.Mask').fadeIn(200);
+    	             $('.pop_up.'+'upload').fadeIn(200);
+                }else if(data.data.msgTypeId=='2'){
+    	             $('#end1').html(selehtml)
+    	         	 $('.pop_up').fadeOut(200);
+    	             $('.Mask').fadeIn(200);
+    	             $('.pop_up.'+'end').fadeIn(200);
+                }else if(data.data.msgTypeId=='1'){
+                 	 $('#In_audit1').html(selehtml)
+                	 $('.pop_up').fadeOut(200);
+                     $('.Mask').fadeIn(200);
+                     $('#In_audit1').fadeIn(200);
+                }
             },
-            error:function(jqXHR){
-            }
+            error:function(jqXHR){}
         });
     };
     // 点击添加房产
@@ -332,7 +357,7 @@
             if(data.data.rows[i].msgTypeId=='4')
             {
                 pro +='<div class="result" data-class="success" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                '<div class="result_red" style="display: block">'+
+                '<div class="result_red" data-status="'+data.data.rows[i].status+'">'+
                 '</div>'+
                 '<div class="result_title">'+
                 '<div class="rtitle_left">'+
@@ -345,7 +370,7 @@
                 '</div>'
             }else if(data.data.rows[i].msgTypeId == '3'){
               pro+= '<div class="result fail" data-class="fail" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-              '<div class="result_red">'+
+              '<div class="result_red" data-status="'+data.data.rows[i].status+'">'+
               '</div>'+'<div class="result_title">'+
               '<div class="rtitle_left">'+
               '<img src="images/list/fail.png" alt="">'+
@@ -357,7 +382,7 @@
                 
             }else if(data.data.rows[i].msgTypeId == "2"){
                   pro+= '<div class="result end" data-class="end" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                  '<div class="result_red">'+
+                  '<div class="result_red" data-status="'+data.data.rows[i].status+'">'+
                   '</div>'+'<div class="result_title">'+
                   '<div class="rtitle_left">'+
                   '<img src="images/list/end.png" alt="">'+
@@ -368,7 +393,7 @@
               '</div>'
             }else if(data.data.rows[i].msgTypeId == '1'){
                  pro+= '<div class="result" data-class="In_audit" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-              '<div class="result_red">'+
+              '<div class="result_red" data-status="'+data.data.rows[i].status+'">'+
               '</div>'+'<div class="result_title">'+
               '<div class="rtitle_left">'+
               '<img src="images/list/In_audit.png" alt="">'+
@@ -379,7 +404,7 @@
              '</div>'
             }else if(data.data.rows[i].msgTypeId == '5'){
                  pro+= '<div class="result" data-class="upload" onclick="showtime('+data.data.rows[i].msgId+','+data.data.rows[i].personnelId+')">'+
-                  '<div class="result_red">'+
+                  '<div class="result_red" data-status="'+data.data.rows[i].status+'">'+
                   '</div>'+'<div class="result_title">'+
                   '<div class="rtitle_left">'+
                   '<img src="images/list/In_audit.png" alt="">'+
@@ -411,24 +436,18 @@
             success:function(data){
                 console.log(data.data)
                 console.log(data.data.rows)
+                onlad();
                 var pro = news(data)
                 $('.news').append(pro);
-                var number = 0;
-                for(var i=0;i<data.data.rows.length;i++){
-                    if(data.data.rows[i].status == 1){
-                        number+=1;
-                        $('.news .result').eq(i).find('.result_red').fadeIn(0);
-                    }else if(data.data.rows[i].status == 2){
+                $('.newsCenter').attr('data-page',page);
+                var rows = $('.news .result')
+                for(var i=0;i<rows.length;i++){
+                    if(rows.eq(i).find('.result_red').attr('data-status') == 1){
+                        rows.eq(i).find('.result_red').fadeIn(0);
+                    }else if(rows.eq(i).find('.result_red').attr('data-status') == 2){
                         $('.news .result').eq(i).find('.result_red').fadeOut(0);
                     }
-                    if(number == 0){
-                        $('#number').fadeOut(0);
-                    }else{
-                        $('#number').fadeIn(0);
-                        $('#number').html(number)
-                    }
                 }
-                $('.newsCenter').attr('data-page',page);
             },
             error:function(jqXHR){
                

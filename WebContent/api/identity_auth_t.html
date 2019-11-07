@@ -491,8 +491,8 @@
                     console.log(res);
                     if(parseInt(res.code) == 1){
                         layer.closeAll('loading');
+                        layer.msg('上传成功',{time:1000});
                         $('#preview10').attr('src',res.data.absolutePath);
-                        layer.msg('上传成功');
                         $('#preview10').attr('name','success');
                         $('#faceph').remove();
                     }else{
