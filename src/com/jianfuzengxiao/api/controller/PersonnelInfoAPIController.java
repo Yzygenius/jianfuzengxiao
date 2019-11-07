@@ -276,6 +276,12 @@ public class PersonnelInfoAPIController extends BaseController {
 			personnelInfo.setSts("A");
 			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
 			Map<String, Object> map = new HashMap<String, Object>();
+			if (list.size() > 0) {
+				housesInfo.setEnterpriseName(list.get(0).getEnterpriseName());
+			}else {
+				housesInfo.setEnterpriseName("");
+			}
+			
 			map.put("houses", housesInfo);
 			map.put("per", list);
 			return apiResult(RC.SUCCESS, map);

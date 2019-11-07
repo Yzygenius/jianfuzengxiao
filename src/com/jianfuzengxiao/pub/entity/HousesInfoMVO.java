@@ -13,9 +13,19 @@ public class HousesInfoMVO extends HousesInfo {
 	private String communityStreetStatus;
 	
 	private String housesMode;
+	
+	private String enterpriseName;
 
 	
 	
+	public String getEnterpriseName() {
+		return enterpriseName;
+	}
+
+	public void setEnterpriseName(String enterpriseName) {
+		this.enterpriseName = enterpriseName;
+	}
+
 	public String getHousesMode() {
 		return housesMode;
 	}
