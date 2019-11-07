@@ -80,6 +80,14 @@ public class PersonnelInfoAPIController extends BaseController {
 			userInfo.setUserId(userId);
 			userInfo = userInfoService.queryBean(userInfo);
 			
+			PersonnelInfoMVO per = new PersonnelInfoMVO();
+			per.setHousesId(entity.getHousesId());
+			per.setSts("A");
+//			per.setStatus("");
+			per.setLiveTypeId("1,2,3,4");
+			List<PersonnelInfoMVO> perList = personnelInfoService.queryPerList(per);
+			throwAppException(perList.size() > 0, RC.HOUSES_INFO_CERT_EXIST); 
+			
 			if (StringUtils.equals(entity.getPropertyOwnerIdcard(), userInfo.getCertificatesNumber())) {
 				entity.setHousesMode(HousesInfo.houses_mode_zichi);
 			}else {

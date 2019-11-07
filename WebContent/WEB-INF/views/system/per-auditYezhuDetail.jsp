@@ -87,7 +87,12 @@
 		    	<td>居住地址：${per.communityName }&nbsp;${per.communityStreetName }&nbsp;${per.storiedBuildingNumber }-${per.unit }-${per.houseNumber }</td>
 		  	</tr>
 		  	<tr>
-		    	<td>&nbsp;</td>
+		    	<td>
+		    		<c:if test="${per.enterpriseName != null && per.enterpriseName != ''}">
+		    			店铺名称： ${per.enterpriseName }
+		    		</c:if>
+		    		&nbsp;
+		    	</td>
 		  	</tr>
 		  	<tr>
 		    	<td>详细地址：${per.housesAddress }</td>
@@ -239,6 +244,31 @@
 				return false;
 			})
 		})
+		
+		function getContractList(){
+			var data = {'personnelId': personnelId, 'housesId': housesId}
+			$.ajax({
+				url : "/jianfuzengxiao/system/per/getContractList.html",
+				type : 'post',
+				dataType : "json",
+				data: data,
+				success : function(result) {
+					if (result.code == 1) {
+						layer.msg('审核成功', {icon : 1}, function () {
+				            // 获得frame索引
+				            var index = parent.layer.getFrameIndex(window.name);
+				            //关闭当前frame
+				            parent.layer.close(index);
+				            window.parent.location.reload();
+						});
+					} else {
+						layer.msg(result.msg, {
+							icon : 2
+						});
+					}
+				}
+			})
+		}
 		
 		function opneimg(obj){
         	//console.log(obj)

@@ -20,11 +20,16 @@ import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
+import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
+import com.jianfuzengxiao.pub.service.IAdminInfoService;
+import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
+import com.jianfuzengxiao.pub.service.IUserInfoService;
 
 @Controller
 @RequestMapping(value="/system/houses")
@@ -36,6 +41,12 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	
 	@Autowired
 	private IPersonnelInfoService personnelInfoService;
+	
+	@Autowired
+	private IAduitDistributionService aduitDistributionService;
+	
+	@Autowired
+	private IAdminInfoService adminInfoService;
 	
 	@RequestMapping(value="/toHousesFwPage")
 	public String toHousesFwPage(){
@@ -62,6 +73,19 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String toHousesFwDetail(Model model, HousesInfoMVO entity){
 		try {
 			entity = housesInfoService.queryBean(entity);
+			AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+			aduitDistribution.setHousesId(entity.getHousesId());
+			aduitDistribution.setSts("A");
+			List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+			
+			if (list.size() > 0) {
+				aduitDistribution = list.get(0);
+				AdminInfoMVO adminInfo = new AdminInfoMVO();
+				adminInfo.setAdminId(aduitDistribution.getAdminId());
+				adminInfo = adminInfoService.queryBean(adminInfo);
+				entity.setAdminTelephone(adminInfo.getTelephone());
+				entity.setUsername(adminInfo.getUsername());
+			}
 			model.addAttribute("houses", entity);
 		} catch (Exception e) {
 			return "/system/error";

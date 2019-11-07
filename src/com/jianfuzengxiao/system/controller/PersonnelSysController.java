@@ -19,8 +19,10 @@ import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
+import com.jianfuzengxiao.pub.service.IContractFileService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
 @Controller
@@ -30,6 +32,9 @@ public class PersonnelSysController extends BaseController {
 	
 	@Autowired
 	private IPersonnelInfoService personnelInfoService;
+	
+	@Autowired
+	private IContractFileService contractFileService;
 	
 	//社区人员管理
 	@RequestMapping(value="/toPerPage")
@@ -134,6 +139,19 @@ public class PersonnelSysController extends BaseController {
 			
 			personnelInfoService.updateAuditPersonnel(entity);
 			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "审核人员失败", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getContractList")
+	public String getContractList(ContractFileMVO entity){
+		try{
+			throwAppException(StringUtils.isBlank(entity.getPersonnelId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			entity.setSts("A");
+			List<ContractFileMVO> list = contractFileService.queryList(entity);
+			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "审核人员失败", e);
 		}

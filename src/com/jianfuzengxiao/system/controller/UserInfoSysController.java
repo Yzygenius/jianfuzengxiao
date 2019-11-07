@@ -21,6 +21,7 @@ import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.UserInfoMVO;
+import com.jianfuzengxiao.pub.service.IContractFileService;
 import com.jianfuzengxiao.pub.service.IUserInfoService;
 
 @Controller
@@ -30,6 +31,9 @@ public class UserInfoSysController extends BaseController {
 	
 	@Autowired
 	private IUserInfoService userInfoService;
+	
+	@Autowired
+	private IContractFileService contractFileService;
 	
 	@RequestMapping(value="/toUserPage")
 	public String toUserPage(){

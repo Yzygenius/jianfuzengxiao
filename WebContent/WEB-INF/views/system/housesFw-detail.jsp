@@ -111,6 +111,12 @@
 		    	<td style="height: 120px;"><span>户型图：</span><img onclick="opneimg(this)" src="${houses.houseTypePhoto }" alt="户型图" /></td>
 		  	</tr>
 		  	<tr>
+		    	<td><span>干部姓名：</span>${houses.username }</td>
+		  	</tr>
+		  	<tr>
+		    	<td><span>干部电话：</span>${houses.adminTelephone }</td>
+		  	</tr>
+		  	<tr>
 		    	<td>首次上报时间：${houses.createTime }</td>
 		  	</tr>
 		  	<c:if test="${houses.updateTime == null || houses.updateTime == '' }">
