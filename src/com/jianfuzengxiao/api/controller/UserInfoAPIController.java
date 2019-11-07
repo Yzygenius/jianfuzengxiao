@@ -165,6 +165,8 @@ public class UserInfoAPIController extends BaseController {
 					userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
 					userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
 					userInfoMVO.setHousesStatus(housesInfo.getHousesStatus());
+					userInfoMVO.setLeaseStartTime(personnelInfo.getLeaseStartTime());
+					userInfoMVO.setLeaseStopTime(personnelInfo.getLeaseStopTime());
 					ContractFileMVO contract = new ContractFileMVO();
 					contract.setPersonnelId(personnelInfo.getPersonnelId());
 					contract.setHousesId(personnelInfo.getHousesId());
