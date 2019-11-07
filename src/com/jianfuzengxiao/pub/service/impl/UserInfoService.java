@@ -120,28 +120,29 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 
 	@Override
 	public int updateUserPer(UserInfoMVO entity) throws SysException, AppException {
-		PersonnelInfoMVO per = new PersonnelInfoMVO();
-		per.setPersonnelId(entity.getPersonnelId());
-		per.setLeaseStartTime(entity.getLeaseStartTime());
-		per.setLeaseStopTime(entity.getLeaseStopTime());
-		per.setUsername(entity.getUsername());
-		per.setGender(entity.getGender());
-		per.setFacePhoto(entity.getFacePhoto());
-		per.setBirthDate(entity.getBirthDate());
-		per.setNationId(entity.getNationId());
-		per.setNationName(entity.getNationName());
-		per.setTelephone(entity.getTelephone());
-		per.setCertificatesTypeId(entity.getCertificatesTypeId());
-		per.setCertificatesTypeName(entity.getCertificatesTypeName());
-		per.setCertificatesPositivePhoto(entity.getCertificatesPositivePhoto());
-		per.setCertificatesNegativePhoto(entity.getCertificatesNegativePhoto());
-		per.setCertificatesNumber(entity.getCertificatesNumber());
-		per.setCertificatesStartTime(entity.getCertificatesStartTime());
-		per.setCertificatesStopTime(entity.getCertificatesStopTime());
-		per.setCertificatesAddress(entity.getCertificatesAddress());
-		per.setCertificatesOffice(entity.getCertificatesOffice());
-		personnelInfoService.update(per);
-		
+		if(StringUtils.isNotBlank(entity.getPersonnelId())){
+			PersonnelInfoMVO per = new PersonnelInfoMVO();
+			per.setPersonnelId(entity.getPersonnelId());
+			per.setLeaseStartTime(entity.getLeaseStartTime());
+			per.setLeaseStopTime(entity.getLeaseStopTime());
+			per.setUsername(entity.getUsername());
+			per.setGender(entity.getGender());
+			per.setFacePhoto(entity.getFacePhoto());
+			per.setBirthDate(entity.getBirthDate());
+			per.setNationId(entity.getNationId());
+			per.setNationName(entity.getNationName());
+			per.setTelephone(entity.getTelephone());
+			per.setCertificatesTypeId(entity.getCertificatesTypeId());
+			per.setCertificatesTypeName(entity.getCertificatesTypeName());
+			per.setCertificatesPositivePhoto(entity.getCertificatesPositivePhoto());
+			per.setCertificatesNegativePhoto(entity.getCertificatesNegativePhoto());
+			per.setCertificatesNumber(entity.getCertificatesNumber());
+			per.setCertificatesStartTime(entity.getCertificatesStartTime());
+			per.setCertificatesStopTime(entity.getCertificatesStopTime());
+			per.setCertificatesAddress(entity.getCertificatesAddress());
+			per.setCertificatesOffice(entity.getCertificatesOffice());
+			personnelInfoService.update(per);
+		}
 		entity.setStatus(UserInfo.status_waiting);
 		return this.update(entity);
 	}

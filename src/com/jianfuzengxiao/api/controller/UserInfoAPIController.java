@@ -205,8 +205,8 @@ public class UserInfoAPIController extends BaseController {
 	public String updateUser(UserInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
-			model.setStatus(UserInfo.status_waiting);
-			userInfoService.update(model);
+			//model.setStatus(UserInfo.status_waiting);
+			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "更新身份信息失败", e);
@@ -229,7 +229,6 @@ public class UserInfoAPIController extends BaseController {
 	public String updateUserPer(UserInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
-			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
 			//model.setStatus(UserInfo.status_waiting);
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
