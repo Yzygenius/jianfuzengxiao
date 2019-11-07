@@ -136,39 +136,41 @@ public class UserInfoAPIController extends BaseController {
 			userInfoMVO = list.get(0);
 			userInfoMVO.setLiveTypeId("1");
 			
-			
-			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
-			personnelInfo.setUserId(userInfoMVO.getUserId());
-			personnelInfo.setPerSort(PersonnelInfo.per_sort_app);
-			personnelInfo.setHousesId(model.getHousesId());
-			personnelInfo.setSts("A");
-			List<PersonnelInfoMVO> list2 = personnelInfoService.queryPerList(personnelInfo);
-			if (list2.size() > 0) {
-				personnelInfo = list2.get(0);
+			if (StringUtils.isNotBlank(model.getHousesId())) {
 				
-				HousesInfoMVO housesInfo = new HousesInfoMVO();
-				housesInfo.setHousesId(model.getHousesId());
-				housesInfo = housesInfoService.queryBean(housesInfo);
-			
-					userInfoMVO.setHousesId(housesInfo.getHousesId());
-					userInfoMVO.setCommunityId(housesInfo.getCommunityId());
-					userInfoMVO.setCommunityName(housesInfo.getCommunityName());
-					userInfoMVO.setCommunityStreetId(housesInfo.getCommunityStreetId());
-					userInfoMVO.setCommunityStreetName(housesInfo.getCommunityStreetName());
-					userInfoMVO.setStoriedBuildingNumber(housesInfo.getStoriedBuildingNumber());
-					userInfoMVO.setUnit(housesInfo.getUnit());
-					userInfoMVO.setHouseNumber(housesInfo.getHouseNumber());
-					userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
-					userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
-					userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
+				PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+				personnelInfo.setUserId(userInfoMVO.getUserId());
+				personnelInfo.setPerSort(PersonnelInfo.per_sort_app);
+				personnelInfo.setHousesId(model.getHousesId());
+				personnelInfo.setSts("A");
+				List<PersonnelInfoMVO> list2 = personnelInfoService.queryPerList(personnelInfo);
+				if (list2.size() > 0) {
+					personnelInfo = list2.get(0);
 					
-					ContractFileMVO contract = new ContractFileMVO();
-					contract.setPersonnelId(personnelInfo.getPersonnelId());
-					contract.setHousesId(personnelInfo.getHousesId());
-					contract.setSts("A");
-					List<ContractFileMVO> contractList = contractFileService.queryList(contract);
-					userInfoMVO.setContractList(contractList);
+					HousesInfoMVO housesInfo = new HousesInfoMVO();
+					housesInfo.setHousesId(model.getHousesId());
+					housesInfo = housesInfoService.queryBean(housesInfo);
 				
+						userInfoMVO.setHousesId(housesInfo.getHousesId());
+						userInfoMVO.setCommunityId(housesInfo.getCommunityId());
+						userInfoMVO.setCommunityName(housesInfo.getCommunityName());
+						userInfoMVO.setCommunityStreetId(housesInfo.getCommunityStreetId());
+						userInfoMVO.setCommunityStreetName(housesInfo.getCommunityStreetName());
+						userInfoMVO.setStoriedBuildingNumber(housesInfo.getStoriedBuildingNumber());
+						userInfoMVO.setUnit(housesInfo.getUnit());
+						userInfoMVO.setHouseNumber(housesInfo.getHouseNumber());
+						userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
+						userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
+						userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
+						
+						ContractFileMVO contract = new ContractFileMVO();
+						contract.setPersonnelId(personnelInfo.getPersonnelId());
+						contract.setHousesId(personnelInfo.getHousesId());
+						contract.setSts("A");
+						List<ContractFileMVO> contractList = contractFileService.queryList(contract);
+						userInfoMVO.setContractList(contractList);
+					
+				}
 			}
 			return apiResult(RC.SUCCESS, userInfoMVO);
 		} catch (Exception e) {
