@@ -113,4 +113,12 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 		return 1;
 	}
 
+	@Override
+	public int updateUserPer(UserInfoMVO entity) throws SysException, AppException {
+		PersonnelInfoMVO per = new PersonnelInfoMVO();
+		per.setPersonnelId(entity.getPersonnelId());
+		
+		return 0;
+	}
+
 }

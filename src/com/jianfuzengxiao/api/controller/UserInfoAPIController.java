@@ -162,7 +162,7 @@ public class UserInfoAPIController extends BaseController {
 						userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
 						userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
 						userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
-						
+						userInfoMVO.setHousesStatus(housesInfo.getHousesStatus());
 						ContractFileMVO contract = new ContractFileMVO();
 						contract.setPersonnelId(personnelInfo.getPersonnelId());
 						contract.setHousesId(personnelInfo.getHousesId());
@@ -194,6 +194,31 @@ public class UserInfoAPIController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="updateUser", method=RequestMethod.POST)
 	public String updateUser(UserInfoMVO model){
+		try {
+			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			model.setStatus(UserInfo.status_waiting);
+			userInfoService.update(model);
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "更新身份信息失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 添加房产后更新上报
+	 * </p>
+	 * @param model
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月7日 下午6:57:08
+	 */
+	@ResponseBody
+	@RequestMapping(value="updateUserPer", method=RequestMethod.POST)
+	public String updateUserPer(UserInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			model.setStatus(UserInfo.status_waiting);

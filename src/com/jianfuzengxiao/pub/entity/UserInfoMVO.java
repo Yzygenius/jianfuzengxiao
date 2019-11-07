@@ -14,6 +14,7 @@ public class UserInfoMVO extends UserInfo {
 	private String personnelId;
 	private List<ContractFileMVO> contractList;
 
+	private String housesStatus;
 	private String communityId;
 	private String communityName;
 	private String communityStreetId;
@@ -25,6 +26,14 @@ public class UserInfoMVO extends UserInfo {
 	private String storeLocation;
 	
 	
+	public String getHousesStatus() {
+		return housesStatus;
+	}
+
+	public void setHousesStatus(String housesStatus) {
+		this.housesStatus = housesStatus;
+	}
+
 	public List<ContractFileMVO> getContractList() {
 		return contractList;
 	}

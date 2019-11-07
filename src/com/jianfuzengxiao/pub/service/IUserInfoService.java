@@ -29,5 +29,7 @@ public interface IUserInfoService extends IService {
 	public PageInfo queryPage(UserInfoMVO entity, PageInfo pagInfo) throws SysException, AppException;
 	
 	public int updateAuditUser(UserInfoMVO entity) throws SysException, AppException;
+	
+	public int updateUserPer(UserInfoMVO entity) throws SysException, AppException;
 
 }
