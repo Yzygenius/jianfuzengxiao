@@ -161,6 +161,7 @@ public class UserInfoAPIController extends BaseController {
 					userInfoMVO.setUnit(housesInfo.getUnit());
 					userInfoMVO.setHouseNumber(housesInfo.getHouseNumber());
 					userInfoMVO.setStoreLocation(housesInfo.getStoreLocation());
+					userInfoMVO.setHousesAddress(housesInfo.getHousesAddress());
 					userInfoMVO.setEnterpriseName(personnelInfo.getEnterpriseName());
 					userInfoMVO.setPersonnelId(personnelInfo.getPersonnelId());
 					userInfoMVO.setHousesStatus(housesInfo.getHousesStatus());
@@ -215,9 +216,8 @@ public class UserInfoAPIController extends BaseController {
 	 * <p style="color:#36F;">
 	 * 添加房产后更新上报
 	 * </p>
-	 * @param model
+	 * @param userId, personnelId
 	 * @return    
-	 * String    返回类型 
 	 * @throws 
 	 * @author 闫子扬 
 	 * @date 2019年11月7日 下午6:57:08
@@ -227,8 +227,9 @@ public class UserInfoAPIController extends BaseController {
 	public String updateUserPer(UserInfoMVO model){
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
-			model.setStatus(UserInfo.status_waiting);
-			userInfoService.update(model);
+			throwAppException(StringUtils.isBlank(model.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
+			//model.setStatus(UserInfo.status_waiting);
+			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "更新身份信息失败", e);

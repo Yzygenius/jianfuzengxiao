@@ -20,8 +20,10 @@ import com.jianfuzengxiao.pub.entity.MsgInfoMVO;
 import com.jianfuzengxiao.pub.entity.MsgTypeMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfo;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
+import com.jianfuzengxiao.pub.entity.UserInfo;
 import com.jianfuzengxiao.pub.entity.UserInfoMVO;
 import com.jianfuzengxiao.pub.service.IMsgInfoService;
+import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 import com.jianfuzengxiao.pub.service.IUserInfoService;
 
 @Service
@@ -35,6 +37,9 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 	
 	@Autowired
 	private IMsgTypeMDAO msgTypeMDAO;
+	
+	@Autowired
+	private IPersonnelInfoService personnelInfoService;
 
 	/** 插入 */
 	@Override
@@ -119,8 +124,26 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 		per.setPersonnelId(entity.getPersonnelId());
 		per.setLeaseStartTime(entity.getLeaseStartTime());
 		per.setLeaseStopTime(entity.getLeaseStopTime());
+		per.setUsername(entity.getUsername());
+		per.setGender(entity.getGender());
+		per.setFacePhoto(entity.getFacePhoto());
+		per.setBirthDate(entity.getBirthDate());
+		per.setNationId(entity.getNationId());
+		per.setNationName(entity.getNationName());
+		per.setTelephone(entity.getTelephone());
+		per.setCertificatesTypeId(entity.getCertificatesTypeId());
+		per.setCertificatesTypeName(entity.getCertificatesTypeName());
+		per.setCertificatesPositivePhoto(entity.getCertificatesPositivePhoto());
+		per.setCertificatesNegativePhoto(entity.getCertificatesNegativePhoto());
+		per.setCertificatesNumber(entity.getCertificatesNumber());
+		per.setCertificatesStartTime(entity.getCertificatesStartTime());
+		per.setCertificatesStopTime(entity.getCertificatesStopTime());
+		per.setCertificatesAddress(entity.getCertificatesAddress());
+		per.setCertificatesOffice(entity.getCertificatesOffice());
+		personnelInfoService.update(per);
 		
-		return 0;
+		entity.setStatus(UserInfo.status_waiting);
+		return this.update(entity);
 	}
 
 }
