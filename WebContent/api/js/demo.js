@@ -53,7 +53,6 @@ document.getElementById('enter2').onclick = function(e) {
 		        document.getElementById('preview11').setAttribute('src','');
 		    	document.getElementById('preview11').setAttribute('src','data:image/jpeg;base64,'+list.data.img);
 		    	// document.getElementById("content").innerHTML =list.data.GetRecogResult;
-				Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
 				document.getElementById('trigger1').value = '身份证';
 				document.getElementById('namev').value = list.data.GetRecogResult[0];
 				document.getElementById('trigger2').value = list.data.GetRecogResult[1];
@@ -63,6 +62,7 @@ document.getElementById('enter2').onclick = function(e) {
 				document.getElementById('address').value = list.data.GetRecogResult[4];
 				var enter = document.getElementById('prev1');
 				enter.remove();
+				Positive('身份证',list.data.GetRecogResult[1],list.data.GetRecogResult[3],list.data.GetRecogResult[2]+'族');
         	}else if(list.data.GetFieldName[i] == '签发机关' || list.data.GetFieldName[i] == '签发日期'){
         		if(document.getElementById('prev1')){
         			var enter = document.getElementById('prev1');

@@ -66,7 +66,7 @@
                 <div class="kind">
                     <!--按钮操作-->
                     <div class="an_btn">
-                        <div class="item-btn delete" v-show="status == 3">移除</div>
+                        <div class="item-btn delete" v-show="liveTypeId !== '1' && liveTypeId !== '2' && liveTypeId !== '3' && liveTypeId !== '4'">移除</div>
                         <!-- <div class="item-btn"><a href="identity_auth_t.html">更新上报</a></div> -->
                     </div>
                     <div class="item">
@@ -314,6 +314,7 @@
               app.status=res.status
               app.housesStatus = res.housesStatus
               app.liveTypeId = res.liveTypeId
+              console.log(res.liveTypeId)
               // 跳转页面
               $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
             },
