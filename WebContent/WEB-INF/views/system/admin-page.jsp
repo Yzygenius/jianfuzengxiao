@@ -83,10 +83,10 @@
 			<td row="adminTelephone"></td>
 			<td row="leaseCount"></td> -->
 			<td class="td-manage">
-				<button class="layui-btn layui-btn layui-btn-xs"
+				<!-- <button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/admin/toAdminDetail.html')">
 					<i class="layui-icon">&#xe615;</i>查看
-				</button>
+				</button> -->
 				
 				<button class="layui-btn layui-btn layui-btn-xs" onclick="banner_manageHouses(this)">
 					<i class="layui-icon">&#xe615;</i>管辖房屋

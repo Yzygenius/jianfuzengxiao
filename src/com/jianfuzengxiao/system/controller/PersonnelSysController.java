@@ -2,6 +2,7 @@ package com.jianfuzengxiao.system.controller;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
+import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.IContractFileService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
@@ -35,6 +38,9 @@ public class PersonnelSysController extends BaseController {
 	
 	@Autowired
 	private IContractFileService contractFileService;
+	
+	@Autowired
+	private IAduitDistributionService aduitDistributionService;
 	
 	//社区人员管理
 	@RequestMapping(value="/toPerPage")
@@ -101,6 +107,22 @@ public class PersonnelSysController extends BaseController {
 	@RequestMapping(value="/getPerPage", method=RequestMethod.POST)
 	public String getPerPage(PersonnelInfoMVO entity){
 		try{
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			PageInfo pageInfo = getPage();
 			pageInfo.setSortName("createTime");
 			pageInfo.setSortOrder("desc");

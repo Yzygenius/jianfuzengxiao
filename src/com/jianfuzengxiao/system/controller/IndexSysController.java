@@ -15,6 +15,7 @@ import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
+import com.jianfuzengxiao.pub.service.IAdminInfoService;
 import com.jianfuzengxiao.system.service.IMainSysService;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
@@ -27,16 +28,23 @@ public class IndexSysController extends BaseController {
 	@Autowired
 	private IMainSysService mainSysService;
 	
+	@Autowired
+	private IAdminInfoService adminInfoService;
+	
 	@RequestMapping
     public String index(Model model) {
-    	
-    	if (!SessionAdmin.isLogined()) {
-			return "/system/login";
+    	try {
+    		if (!SessionAdmin.isLogined()) {
+    			return "/system/login";
+    		}
+        	AdminInfoMVO admin = new AdminInfoMVO();
+        	admin.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+        	admin = adminInfoService.queryBean(admin);
+        	model.addAttribute("admin", admin);
+            return "/system/index"; 
+		} catch (Exception e) {
+			return "/system/error";
 		}
-    	
-    	model.addAttribute("username", SessionAdmin.get(SessionAdmin.USERNAME));
-        return "/system/index"; 
-    	
     }
 	
 	@ResponseBody

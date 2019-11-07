@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
         </ul> -->
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">${username }</a>
+            <a href="javascript:;">${admin.username }</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <!-- <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
               <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd> -->
@@ -52,6 +53,7 @@
      <!-- 左侧菜单开始 -->
     <div class="left-nav">
       <div id="side-nav">
+      	<c:if test="${admin.roleId == 1}">
         <ul id="nav">
             <li>
                 <a href="javascript:;">
@@ -170,8 +172,61 @@
                     </li >
                 </ul>
             </li>
-            
         </ul>
+        </c:if>
+        
+        <c:if test="${admin.roleId == 2}">
+        <ul id="nav">
+        	<li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>房屋管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="/jianfuzengxiao/system/houses/toHousesFwPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>住房管理</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/houses/toHousesDpPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>商铺管理</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        	<li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>人员审核</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                	<li>
+                        <a _href="/jianfuzengxiao/system/user/toUserPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>会员认证</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>业主审核</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/per/toAuditZuhuPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>租户审核</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+        </ul>
+        </c:if>
       </div>
     </div>
     <!-- <div class="x-slide_left"></div> -->

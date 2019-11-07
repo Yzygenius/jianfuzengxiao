@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -197,6 +198,9 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	@RequestMapping(value="/getHousesPage", method=RequestMethod.POST)
 	public String getHousesPage(HousesInfoMVO model){
 		try {
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				model.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+			}
 			PageInfo pageInfo = getPage();
 			model.setSts("A");
 			pageInfo = housesInfoService.queryPage(model, pageInfo);
