@@ -15,7 +15,9 @@
     <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
     <script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/xadmin.js"></script>
-
+	<script>
+	if(window != top){top.location.href = location.href;}
+	</script>
 </head>
 <body class="login-bg">
     

@@ -40,6 +40,45 @@
 						</bean>
 					</property>
 				</bean>
+				<!-- nation表查ID的缓存，ID-VALUE  -->
+				<bean class="com.bamboo.framework.entity.TableCacheConfig">
+					<property name="cacheName" value="table.cache.idvalue.nationid"/>
+					<property name="cacheType" value="ID_VALUE"/>
+					<property name="sql" value="select nation_name as value, nation_id as label from nation" />
+					<property name="configuration">
+						<bean class="net.sf.ehcache.config.CacheConfiguration">
+							<property name="maxElementsInMemory" value="10000"/>
+							<property name="eternal" value="false"/>
+							<property name="overflowToDisk" value="false"/>
+						</bean>
+					</property>
+				</bean>
+				<!-- nation表查name的缓存，ID-VALUE  -->
+				<bean class="com.bamboo.framework.entity.TableCacheConfig">
+					<property name="cacheName" value="table.cache.idvalue.nationname"/>
+					<property name="cacheType" value="ID_VALUE"/>
+					<property name="sql" value="select nation_id as value, nation_name as label from nation" />
+					<property name="configuration">
+						<bean class="net.sf.ehcache.config.CacheConfiguration">
+							<property name="maxElementsInMemory" value="10000"/>
+							<property name="eternal" value="false"/>
+							<property name="overflowToDisk" value="false"/>
+						</bean>
+					</property>
+				</bean>
+				<!-- liveType表查id的缓存，ID-VALUE  -->
+				<bean class="com.bamboo.framework.entity.TableCacheConfig">
+					<property name="cacheName" value="table.cache.idvalue.livetypeid"/>
+					<property name="cacheType" value="ID_VALUE"/>
+					<property name="sql" value="select live_type_name as value, live_type_id as label from live_type" />
+					<property name="configuration">
+						<bean class="net.sf.ehcache.config.CacheConfiguration">
+							<property name="maxElementsInMemory" value="10000"/>
+							<property name="eternal" value="false"/>
+							<property name="overflowToDisk" value="false"/>
+						</bean>
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>

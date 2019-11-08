@@ -37,6 +37,7 @@ import com.jianfuzengxiao.base.utils.Upxml;
 import com.jianfuzengxiao.pub.entity.AttachFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesTypeMVO;
+import com.jianfuzengxiao.pub.service.IExcelImportService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IHousesTypeService;
 
@@ -51,6 +52,9 @@ public class CommonSysContoller extends BaseController {
 	@Autowired
 	private IHousesInfoService housesInfoService;
 	
+	@Autowired
+	private IExcelImportService excelImportService;
+	
 	@ResponseBody
 	@RequestMapping(value="/uploadExcel")
 	public String uploadExcel(@RequestParam("file") CommonsMultipartFile file){
@@ -58,11 +62,12 @@ public class CommonSysContoller extends BaseController {
 			throwAppException(file == null, RC.COMMON_IMAGE_FILE_INVALID);
 			AttachFileMVO attachFile = DataFileUtil.saveDBImage(file);
 		
-			String qrcode = request.getSession().getServletContext().getRealPath(attachFile.getSaveName());
-			List<HousesInfoMVO> housesList = Upxml.getDataFromExcel(qrcode);
+			String fileName = request.getSession().getServletContext().getRealPath(attachFile.getSaveName());
+			/*List<HousesInfoMVO> housesList = Upxml.getDataFromExcel(fileName);
 			for(int i=0; i<housesList.size(); i++) {
 				housesInfoService.insert(housesList.get(i));
-			}
+			}*/
+			excelImportService.addPersonnelExcel(fileName);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "导入excel错误", e);

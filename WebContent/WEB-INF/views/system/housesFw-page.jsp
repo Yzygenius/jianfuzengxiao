@@ -153,7 +153,10 @@
 		var unit = ''
 		var keyword  = '';
 		var houseNumber = '';
-		var provCodeSreach, cityCodeSreach, areaCodeSreach, communityIdSreach, communityStreetIdSreach, storiedBuildingNumberSreach, unitSreach, houseNumberSreach, keywordSreach = '';
+		
+		var provCodeSreach ='', cityCodeSreach = '', areaCodeSreach = ''
+		, communityIdSreach = '', communityStreetIdSreach = '', storiedBuildingNumberSreach = ''
+		, unitSreach = '', houseNumberSreach = '', keywordSreach = '';
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ,'upload'], function() {
 				//var total;
@@ -520,6 +523,7 @@
 			var param = "?housesStatus=1&provCode="+provCodeSreach+"&cityCode="+cityCodeSreach+"&areaCode="+areaCodeSreach+"&communityId="+communityIdSreach
 				+ "&communityStreetId="+communityStreetIdSreach+"&storiedBuildingNumberSreach="+storiedBuildingNumber+"&unit="+unitSreach
 				+ "&houseNumber="+houseNumberSreach+"&keyword="+keywordSreach;
+
 			location.href = "/jianfuzengxiao/system/common/downloadExcel.html" + param; 
 		}
 		/*添加*/
