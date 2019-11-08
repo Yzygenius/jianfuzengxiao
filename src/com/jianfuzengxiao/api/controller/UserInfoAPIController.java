@@ -3,6 +3,7 @@ package com.jianfuzengxiao.api.controller;
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.base.utils.Base64ToFile;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
@@ -94,7 +96,7 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public String addUser(UserInfoMVO model){
 		try {
-			System.out.println(model.toString());
+		//	System.out.println(model.toString());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
@@ -102,6 +104,11 @@ public class UserInfoAPIController extends BaseController {
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
 			model.setStatus(UserInfo.status_waiting);
+			//base64转file
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			userInfoService.insert(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -206,6 +213,11 @@ public class UserInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			//model.setStatus(UserInfo.status_waiting);
+			//base64转file
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -230,6 +242,11 @@ public class UserInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			//model.setStatus(UserInfo.status_waiting);
+			//base64转file
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

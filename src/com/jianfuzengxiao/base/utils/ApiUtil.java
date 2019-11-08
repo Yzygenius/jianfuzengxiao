@@ -61,7 +61,7 @@ public class ApiUtil {
 		return uuid();
 	}
 
-	public static String uuid() {
+	public static synchronized String uuid() {
 		return UUID.randomUUID().toString().replaceAll("\\-", "");
 	}
 	

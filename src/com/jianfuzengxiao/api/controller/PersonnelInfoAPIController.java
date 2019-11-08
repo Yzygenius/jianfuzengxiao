@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.base.utils.Base64ToFile;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.MsgInfo;
@@ -128,7 +129,7 @@ public class PersonnelInfoAPIController extends BaseController {
 	/**
 	 * 
 	 * <p style="color:#36F;">
-	 * 上传房产信息
+	 * 更新房产信息
 	 * </p>
 	 * @param  userId 用户ID, housesId 房产ID , enterpriseName 即app店铺租户所填的企业名称 ,leaseStartTime  leaseStopTime 居住失效 , leaseContract 租赁合同（如果多张转为用逗号隔开的字符串）
 	 * @return    
@@ -143,7 +144,7 @@ public class PersonnelInfoAPIController extends BaseController {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
 			
-			personnelInfoService.addUserPersonnel(model);
+			personnelInfoService.updatePersonnel(model);
 			
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -170,6 +171,10 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			personnelInfoService.addPersonnel(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -194,6 +199,10 @@ public class PersonnelInfoAPIController extends BaseController {
 	@RequestMapping(value="/updatePersonnel", method=RequestMethod.POST)
 	public String updatePersonnel(PersonnelInfoMVO model){
 		try {
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			personnelInfoService.updatePersonnel(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
