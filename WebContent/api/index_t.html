@@ -102,7 +102,29 @@
             load(1);
         }
         $('.foo-bor').click(function(){
-            load(2);
+            if(sessionStorage.token == undefined || !sessionStorage.token){
+                var data = {
+                    'action': 'jsNGetToken',
+                    'needCallBack': '',
+                    'message': '',
+                    "parameter":{
+                        "business":"业务"
+                        }
+                }
+                window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                    var list=JSON.parse(resp)
+                    if(list.code == 0){
+                        sessionStorage.token = list.data.token;
+                        sessionStorage.userId = list.data.userid;
+                        // $('#h-title').html(sessionStorage.userId)
+                        load(2);
+                    // document.getElementById("content").innerHTML = resp;
+                    }
+                });
+                // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
+            }else{
+                load(2);
+            }
         })
     }
     
