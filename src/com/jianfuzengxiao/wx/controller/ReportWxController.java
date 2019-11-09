@@ -75,11 +75,11 @@ public class ReportWxController extends BaseController {
 			per1.setSts("A");
 			per1.setHousesId(housesId);
 			per1.setLiveTypeId(LiveType.fangzhu_chanquanren + "," + LiveType.dianzhu_chanquanren + "," + LiveType.fangzhu_zulin + "," + LiveType.dianzhu_zulin);
-			List<PersonnelInfoMVO> fzlist1 = personnelInfoService.queryList(per1);//房主、店主总数量
+			List<PersonnelInfoMVO> fzlist1 = personnelInfoService.queryPerList(per1);//房主、店主总数量
 			per1.setStatus(PersonnelInfo.status_passed + "," + PersonnelInfo.status_reject);
-			List<PersonnelInfoMVO> fzlist2 = personnelInfoService.queryList(per1);//房主、店主已审核数量
+			List<PersonnelInfoMVO> fzlist2 = personnelInfoService.queryPerList(per1);//房主、店主已审核数量
 			per1.setStatus(PersonnelInfo.status_waiting);
-			List<PersonnelInfoMVO> fzlist3 = personnelInfoService.queryList(per1);//房主、店主待审核数量
+			List<PersonnelInfoMVO> fzlist3 = personnelInfoService.queryPerList(per1);//房主、店主待审核数量
 			jsonObject1.put("count", fzlist1.size());
 			jsonObject1.put("auditCount", fzlist2.size());
 			jsonObject1.put("waitAuditCount", fzlist3.size());
@@ -91,11 +91,11 @@ public class ReportWxController extends BaseController {
 			per2.setSts("A");
 			per2.setHousesId(housesId);
 			per2.setLiveTypeId(LiveType.zuhu);
-			List<PersonnelInfoMVO> zhlist1 = personnelInfoService.queryList(per2);//租户总数量
+			List<PersonnelInfoMVO> zhlist1 = personnelInfoService.queryPerList(per2);//租户总数量
 			per2.setStatus(PersonnelInfo.status_passed + "," + PersonnelInfo.status_reject);
-			List<PersonnelInfoMVO> zhlist2 = personnelInfoService.queryList(per2);//租户已审核数量
+			List<PersonnelInfoMVO> zhlist2 = personnelInfoService.queryPerList(per2);//租户已审核数量
 			per2.setStatus(PersonnelInfo.status_waiting);
-			List<PersonnelInfoMVO> zhlist3 = personnelInfoService.queryList(per2);//租户待审核数量
+			List<PersonnelInfoMVO> zhlist3 = personnelInfoService.queryPerList(per2);//租户待审核数量
 			jsonObject2.put("count", zhlist1.size());
 			jsonObject2.put("auditCount", zhlist2.size());
 			jsonObject2.put("waitAuditCount", zhlist3.size());
@@ -107,11 +107,11 @@ public class ReportWxController extends BaseController {
 			per3.setSts("A");
 			per3.setHousesId(housesId);
 			per3.setLiveTypeId(LiveType.jiashu);
-			List<PersonnelInfoMVO> jshlist1 = personnelInfoService.queryList(per3);//家属总数量
+			List<PersonnelInfoMVO> jshlist1 = personnelInfoService.queryPerList(per3);//家属总数量
 			per3.setStatus(PersonnelInfo.status_passed + "," + PersonnelInfo.status_reject);
-			List<PersonnelInfoMVO> jshlist2 = personnelInfoService.queryList(per3);//家属已审核数量
+			List<PersonnelInfoMVO> jshlist2 = personnelInfoService.queryPerList(per3);//家属已审核数量
 			per3.setStatus(PersonnelInfo.status_waiting);
-			List<PersonnelInfoMVO> jshlist3 = personnelInfoService.queryList(per3);//家属待审核数量
+			List<PersonnelInfoMVO> jshlist3 = personnelInfoService.queryPerList(per3);//家属待审核数量
 			jsonObject3.put("count", jshlist1.size());
 			jsonObject3.put("auditCount", jshlist2.size());
 			jsonObject3.put("waitAuditCount", jshlist3.size());
@@ -123,11 +123,11 @@ public class ReportWxController extends BaseController {
 			per4.setSts("A");
 			per4.setHousesId(housesId);
 			per4.setLiveTypeId(LiveType.yuangong);
-			List<PersonnelInfoMVO> yglist1 = personnelInfoService.queryList(per4);//员工总数量
+			List<PersonnelInfoMVO> yglist1 = personnelInfoService.queryPerList(per4);//员工总数量
 			per4.setStatus(PersonnelInfo.status_passed + "," + PersonnelInfo.status_reject);
-			List<PersonnelInfoMVO> yglist2 = personnelInfoService.queryList(per4);//员工已审核数量
+			List<PersonnelInfoMVO> yglist2 = personnelInfoService.queryPerList(per4);//员工已审核数量
 			per4.setStatus(PersonnelInfo.status_waiting);
-			List<PersonnelInfoMVO> yglist3 = personnelInfoService.queryList(per4);//员工待审核数量
+			List<PersonnelInfoMVO> yglist3 = personnelInfoService.queryPerList(per4);//员工待审核数量
 			jsonObject4.put("count", yglist1.size());
 			jsonObject4.put("auditCount", yglist2.size());
 			jsonObject4.put("waitAuditCount", yglist3.size());

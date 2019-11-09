@@ -8,6 +8,19 @@ public class Statistics extends Entity {
 	  *  
 	  */
 	private static final long serialVersionUID = 2795120938829256560L;
+	
+	//首页
+	protected String audit;
+	protected String waitaudit;
+	protected String auditratio;
+	protected String housescount;
+	protected String used; //已用
+	protected String idle;  //闲置
+	protected String percount;
+	
+	protected String startTime;
+	protected String stopTime;
+	
 
 	protected String communityId;
 	protected String communityStreetId;
@@ -46,6 +59,61 @@ public class Statistics extends Entity {
 	protected String count;
 	
 	
+	
+	public String getHousescount() {
+		return housescount;
+	}
+	public void setHousescount(String housescount) {
+		this.housescount = housescount;
+	}
+	public String getUsed() {
+		return used;
+	}
+	public void setUsed(String used) {
+		this.used = used;
+	}
+	public String getIdle() {
+		return idle;
+	}
+	public void setIdle(String idle) {
+		this.idle = idle;
+	}
+	public String getPercount() {
+		return percount;
+	}
+	public void setPercount(String percount) {
+		this.percount = percount;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getStopTime() {
+		return stopTime;
+	}
+	public void setStopTime(String stopTime) {
+		this.stopTime = stopTime;
+	}
+	public String getAudit() {
+		return audit;
+	}
+	public void setAudit(String audit) {
+		this.audit = audit;
+	}
+	public String getWaitaudit() {
+		return waitaudit;
+	}
+	public void setWaitaudit(String waitaudit) {
+		this.waitaudit = waitaudit;
+	}
+	public String getAuditratio() {
+		return auditratio;
+	}
+	public void setAuditratio(String auditratio) {
+		this.auditratio = auditratio;
+	}
 	public String getRentratio() {
 		return rentratio;
 	}

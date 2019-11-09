@@ -192,22 +192,20 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					params.add(entity.getUserId());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND a.houses_id in (?)");
-					params.add(entity.getHousesId());
+					sql.append(" AND a.houses_id in ("+entity.getHousesId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND a.status in (?)");
-					params.add(entity.getStatus());
+					sql.append(" AND a.status in ("+entity.getStatus()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND a.live_type_id in (?)");
-					params.add(entity.getLiveTypeId());
+					sql.append(" AND a.live_type_id in ("+entity.getLiveTypeId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getSts())) {
 					sql.append(" AND a.sts=?");
 					params.add(entity.getSts());
 				}
 			}
+			logger.info(sql.toString() + " -- " + params.toString());
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
 		} catch (DataAccessException e) {

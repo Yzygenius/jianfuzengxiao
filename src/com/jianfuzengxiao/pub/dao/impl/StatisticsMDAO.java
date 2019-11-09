@@ -197,7 +197,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			logger.error("查询统计错误：{}", e.getMessage());
 			throw new SysException("查询统计错误", "10000", e);
 		}
-		return null;
+		return entity;
 	}
 
 	@Override
@@ -239,6 +239,116 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			throw new SysException("查询统计错误", "10000", e);
 		}
 		return resultList;
+	}
+
+	@Override
+	public Statistics queryTodayReportPer(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select sum(case when status !='1' then 1 else 0 end) as audit, ");
+		sql.append("sum(case when status='1' then 1 else 0 end) as waitaudit, ");
+		sql.append("count(personnel_id) as total,");
+		sql.append("cast((sum(case when status !='1' then 1 else 0 end)/COUNT(personnel_id)) as decimal(18,2))*100 as auditratio  ");
+		sql.append("from personnel_info ");
+		sql.append("WHERE sts='A' and date(create_time) = curdate() ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			}else{
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
+	@Override
+	public Statistics queryHousesCount(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select COUNT(*) as housescount, ");
+		sql.append("sum(case when houses_type_id ='1' then 1 else 0 end) as zjf, ");
+		sql.append("sum(case when houses_type_id ='2' then 1 else 0 end) as szf, ");
+		sql.append("sum(case when houses_type_id ='3' then 1 else 0 end) as sp, ");
+		sql.append("(select COUNT(*) ");
+		sql.append("from houses_info a where sts ='A' and a.houses_id  in (SELECT houses_id from personnel_info WHERE sts='A'))as used, ");
+		sql.append("(select COUNT(*) ");
+		sql.append("from houses_info a where sts ='A' and a.houses_id not in (SELECT houses_id from personnel_info WHERE sts='A'))as idle ");
+		sql.append("from houses_info b where sts ='A' ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND b.create_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND b.create_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			}else{
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
+	@Override
+	public Statistics queryPersonnelCount(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select COUNT(*) as percount, ");
+		sql.append("sum(case when live_type_id in ('1','3')   then 1 else 0 end) as fangzhunum, ");
+		sql.append("sum(case when live_type_id in ('2','4')   then 1 else 0 end) as dianzhunum, ");
+		sql.append("sum(case when live_type_id in ('5')   then 1 else 0 end) as zuhunum, ");
+		sql.append("sum(case when live_type_id in ('7')   then 1 else 0 end) as jiashunum, ");
+		sql.append("sum(case when live_type_id in ('6')   then 1 else 0 end) as yuangongnum  ");
+		sql.append("from personnel_info where sts ='A' ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND create_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND create_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			}else{
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
 	}
 	
 	
