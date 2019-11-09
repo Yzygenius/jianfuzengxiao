@@ -32,6 +32,14 @@ public class BigDouble {
 	}
 	
 	/**
+	 * 除法
+	 */
+	public static double getDivisionCount(double price, double number) {
+		double price_count = ((price * 100) / (number * 100));
+		return price_count;
+	}
+	
+	/**
 	 * 相加。
 	 * 计算，两个数都扩大10000倍。计算后还原，防止精度丢失。
 	 */
