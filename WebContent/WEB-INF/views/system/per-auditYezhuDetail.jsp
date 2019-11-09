@@ -77,6 +77,29 @@
 		  	<tr>
 		    	<td>办证机关：${per.certificatesOffice }</td>
 		  	</tr>
+		  	<c:if test="${per.status == 1 }">
+			  	<tr>
+			    	<td>状态：待审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${per.status == 2 }">
+			  	<tr>
+			    	<td>状态：已通过审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${per.status == 3 }">
+			  	<tr>
+			    	<td>状态：未通过审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${per.status == '' ||  per.status == null}">
+			  	<tr>
+			    	<td>状态： </td>
+			  	</tr>
+		  	</c:if>
+		  	<tr>
+		    	<td>&nbsp;</td>
+		  	</tr>
 		  	<tr>
 		    	<td class="title">居住信息</td>
 		  	</tr>

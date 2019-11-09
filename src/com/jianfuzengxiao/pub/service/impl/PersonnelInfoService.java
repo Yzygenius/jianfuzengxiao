@@ -249,6 +249,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		List<PersonnelInfoMVO> list = this.queryList(personnelInfoMVO);
 		personnelInfoMVO = list.get(0);
 		
+		throwAppException(!StringUtils.equals(personnelInfoMVO.getStatus(), PersonnelInfo.status_passed), RC.PERSONNEL_INFO_REPORT_STATUS_NOT_PASS);
+		
 		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
 		housesInfoMVO.setHousesId(model.getHousesId());
 		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);

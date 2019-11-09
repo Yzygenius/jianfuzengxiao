@@ -1,8 +1,13 @@
 package com.jianfuzengxiao.api.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,6 +36,9 @@ import com.jianfuzengxiao.pub.service.IMsgTypeService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 import com.jianfuzengxiao.pub.service.IUserInfoService;
 import com.jianfuzengxiao.pub.service.impl.PersonnelInfoService;
+
+import sun.misc.BASE64Decoder;
+
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 /**
@@ -171,6 +179,14 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			throwAppException(StringUtils.isBlank(model.getHousesId()), RC.HOUSES_INFO_PARAM_HOUSES_ID_INVALID);
+			//不能重复上传人员信息
+			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+			personnelInfo.setCertificatesNumber(model.getCertificatesNumber());
+			personnelInfo.setHousesId(model.getHousesId());
+			personnelInfo.setSts("A");
+			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
+			throwAppException(list.size() > 0, RC.PERSONNEL_INFO_REPORT_EXIST);
+			
 			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
 			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
 			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
@@ -199,10 +215,22 @@ public class PersonnelInfoAPIController extends BaseController {
 	@RequestMapping(value="/updatePersonnel", method=RequestMethod.POST)
 	public String updatePersonnel(PersonnelInfoMVO model){
 		try {
-			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
-			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
-			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
-			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
+			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+			personnelInfo.setCertificatesNumber(model.getCertificatesNumber());
+			personnelInfo.setHousesId(model.getHousesId());
+			personnelInfo.setSts("A");
+			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
+			throwAppException(list.size() > 1, RC.PERSONNEL_INFO_REPORT_EXIST);
+			
+			if (StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {
+				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+				model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
+			}
+			if (StringUtils.substringBefore(model.getCertificatesNegativePhoto(), ",").equals("data:image/jpeg;base64")) {
+				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+				model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
+			}
+			
 			personnelInfoService.updatePersonnel(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
