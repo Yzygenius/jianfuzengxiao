@@ -161,7 +161,7 @@ public class AdminWXController extends BaseController {
 	}
 	
 	public String getOpenid(String jsCode){
-		Map<String, Object> map = HttpClientUtlis.doGet("https://api.weixin.qq.com/sns/jscode2session?appid=wx1cddfa3b39510cc9&secret=9f2cb595b11e6dff024b01ceee21a220&js_code="+jsCode+"&grant_type=authorization_code");
+		Map<String, Object> map = HttpClientUtlis.doGet("https://api.weixin.qq.com/sns/jscode2session?appid=wxe5f125ef95b24fb6&secret=47635568b0640d4e69632eb2677e2157&js_code="+jsCode+"&grant_type=authorization_code");
 		/*String openid = "";
 		if (map.get("errcode").equals(0)) {
 			openid = (String) map.get("openid");
