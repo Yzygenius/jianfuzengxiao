@@ -15,7 +15,7 @@
 		<div class="nav">
 			<div class="Community Community0">
 				<div class="nav_title">社区</div>
-				<ul class="nav_list">
+				<ul class="nav_list nation" style="width: 90%">
 					<li class="active">全部</li>
 					<li>场所一</li>
 					<li>场所二</li>
@@ -26,7 +26,7 @@
 			</div>
 			<div class="Community place">
 				<div class="nav_title">场所</div>
-				<ul class="nav_list">
+				<ul class="nav_list quarters">
 					<li class="active">全部</li>
 					<li>小区一</li>
 					<li>小区二</li>
@@ -57,13 +57,13 @@
 									<div class="circle"></div>
 									房主
 								</div>
-								<span>3432424</span> 人
+								<span id="num1">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="percent1">25%</span>
 									</div>
 								</div>
 							</div>
@@ -74,13 +74,13 @@
 									<div class="circle" style="background: rgb(255, 97, 96);"></div>
 									店主
 								</div>
-								<span>3432424</span> 人
+								<span id="num2">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="percent2">25%</span>
 									</div>
 								</div>
 							</div>
@@ -91,13 +91,13 @@
 									<div class="circle" style="background: rgb(255, 211, 80);"></div>
 									租户
 								</div>
-								<span>3432424</span> 人
+								<span id="num3">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="percent3">25%</span>
 									</div>
 								</div>
 							</div>
@@ -105,16 +105,16 @@
 						<div class="house_infor">
 							<div class="owner">
 								<div class="owner_title">
-									<div class="circle" style="background: rgb(255, 211, 80);"></div>
+									<div class="circle" style="background: #cea5e8;"></div>
 									员工
 								</div>
-								<span>3432424</span> 人
+								<span id="num4">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="percent4">25%</span>
 									</div>
 								</div>
 							</div>
@@ -122,16 +122,16 @@
 						<div class="house_infor">
 							<div class="owner">
 								<div class="owner_title">
-									<div class="circle" style="background: rgb(255, 211, 80);"></div>
+									<div class="circle" style="background:#de9f83;"></div>
 									家属
 								</div>
-								<span>3432424</span> 人
+								<span id="num5">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="percent5">25%</span>
 									</div>
 								</div>
 							</div>
@@ -147,12 +147,12 @@
 					<img src="images/Path_2.png" alt="">人员性别分布
 				</div>
 				<div class="statime">
-					<div class="so_far active">全部</div>
-					<div class="so_far">房主</div>
-					<div class="so_far">店主</div>
-					<div class="so_far">租户</div>
-					<div class="so_far">家属</div>
-					<div class="so_far">员工</div>
+					<div class="so_far active" data-liveTypeId ="" data-type ="person">全部</div>
+					<div class="so_far" data-liveTypeId ="1,3" data-type ="person">房主</div>
+					<div class="so_far" data-liveTypeId ="2,4" data-type ="person">店主</div>
+					<div class="so_far" data-liveTypeId ="5" data-type ="person">租户</div>
+					<div class="so_far" data-liveTypeId ="7" data-type ="person">家属</div>
+					<div class="so_far" data-liveTypeId ="6" data-type ="person">员工</div>
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;">
@@ -163,13 +163,13 @@
 									<div class="circle"></div>
 									男性
 								</div>
-								<span>3432424</span> 人
+								<span id="boyNum">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="boyPer">25%</span>
 									</div>
 								</div>
 							</div>
@@ -180,13 +180,13 @@
 									<div class="circle" style="background: rgb(255, 97, 96);"></div>
 									女性
 								</div>
-								<span>3432424</span> 人
+								<span id="girlNum">3432424</span> 人
 							</div>
 							<div class="rate">
 								<div class="Proportion">
 									<div>占比</div>
 									<div>
-										<span>25%</span>
+										<span id="girlPer">25%</span>
 									</div>
 								</div>
 							</div>
@@ -274,16 +274,16 @@
 					<img src="images/Path_2.png" alt="">人员年龄段分布
 				</div>
 				<div class="statime">
-					<div class="so_far active">全部</div>
-					<div class="so_far">房主</div>
-					<div class="so_far">店主</div>
-					<div class="so_far">租户</div>
-					<div class="so_far">家属</div>
-					<div class="so_far">员工</div>
+					<div class="so_far active" data-liveTypeId ="" data-type="age">全部</div>
+					<div class="so_far" data-liveTypeId ="1,3" data-type="age">房主</div>
+					<div class="so_far" data-liveTypeId ="2,4" data-type="age">店主</div>
+					<div class="so_far" data-liveTypeId ="5" data-type="age">租户</div>
+					<div class="so_far" data-liveTypeId ="7" data-type="age">家属</div>
+					<div class="so_far" data-liveTypeId ="6" data-type="age">员工</div>
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;">
-					<div class="house_detail"
+					<div class="house_detail ageList"
 						style="display: flex; flex-wrap: wrap; max-width: 460px;">
 						<div class="house_infor">
 							<div class="owner">
@@ -395,17 +395,88 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="/jianfuzengxiao/statics/system/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/echarts.min.js"></script>
 	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/chart.js"></script>
 	<script>
         $(function () {
-            $('.Community li').click(function () {
-                $(this).addClass('active').siblings('li').removeClass('active')
-            })
+        	var communityStreetId=""  //小区id
+	        var communityId=""        //社区id
+	        var housesTypeId=""       //房屋分类id
+	        var liveTypeId =""        //人员类型是房主之类的
+	        window.sessionStorage.clear();   //清除缓存
+	        //性别
             $('.statime .so_far').click(function () {
                 $(this).addClass('active').siblings('.so_far').removeClass('active')
+        	 	sessionStorage.liveTypeId = $(this).attr('data-liveTypeId')
+                if($(this).attr('data-type') == "person"){
+                	 gender();
+                }else if($(this).attr("data-type") == "age"){
+                	age();
+                }
+               
             })
+            call()     //调用房屋分类
+            gender()   //调用性别
+            age()      //调用年龄
+            // 社区
+            $.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/common/getCommunityList.html',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{},
+	            success:function(data){
+	            	var list1=""
+	            	// console.log(data.data)
+	            	for(var i=0; i<data.data.length;i++){
+	            		list1 += '<li data-communityId = '+data.data[i].communityId+'>'+data.data[i].communityName+'</li>'
+	            	}
+	            	$('.nation').html(list1)
+	            	$('.nation').prepend('<li data-communityId ="" class="active">全部</li>')
+			        $('.nation li').click(function(){
+			    		$(this).addClass('active').siblings('li').removeClass('active');
+			    		 sessionStorage.communityId = $(this).attr("data-communityId")
+		 	         	 call()     //调用房屋分类
+		 	         	 gender()   //调用性别
+		 	         	 age()      //年龄
+			    	})
+	            },
+	            error:function(jqXHR){}
+	        });
+	        // 小区
+	         $.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/common/getCommunityStreetList.html ',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{},
+	            success:function(data){
+	            	// console.log(data.data);
+	            	var list2=""
+	            	for(var i=0; i<data.data.length;i++){
+	            		list2 += '<li data-communityStreetId = '+data.data[i].communityStreetId+'>'+data.data[i].communityStreetName+'</li>'
+	            	}
+	            	$('.quarters').html(list2)
+	            	$('.quarters').prepend('<li data-communityStreetId="" class="active">全部</li>')
+	            	$('.nav_num span').html(data.data.length)
+		            $('.quarters li').click(function(){
+				    	$(this).addClass('active').siblings('li').removeClass('active')
+				        sessionStorage.communityStreetId = $(this).attr("data-communityStreetId")
+		 	         	call()    //调用房屋分类
+		 	         	gender()  //调用性别
+		 	         	age()     //年龄
+				    })
+			     
+	            },
+	            error:function(jqXHR){}
+	        });
             var num = $('.house').length;
             for(var i=0;i<num;i++){
                 if($('.house').eq(i).find('.house_infor').length > 3){
@@ -416,6 +487,278 @@
                 }
             }
         })
+        // 人员分类情况
+        function call(){
+            $.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/statistics/getPersonnelType.html',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{
+	            	communityId:sessionStorage.communityId,
+	            	communityStreetId:sessionStorage.communityStreetId
+	            },
+	            success:function(data){
+	            	// console.log(data.data)
+	            	$('#num1').html(data.data.fangzhunum)
+	            	$('#percent1').html(data.data.fangzhuratio+'%')
+	            	$('#num2').html(data.data.dianzhunum)
+	            	$('#percent2').html(data.data.dianzhuratio+'%')
+	            	$('#num3').html(data.data.zuhunum)
+	            	$('#percent3').html(data.data.zuhuratio+'%')
+	            	$('#num4').html(data.data.yuangongnum)
+	            	$('#percent4').html(data.data.yuangongratio+'%')
+	            	$('#num5').html(data.data.jiashunum)
+	            	$('#percent6').html(data.data.jiashuratio+'%')
+	            	var dom = document.getElementById("house");
+					var myChart = echarts.init(dom);
+					var app = {};
+					option = null;
+					app.title = '环形图';
+					option = {
+					    tooltip: {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b}: {c} ({d}%)"
+					    },
+					    series: [
+					        {
+					            name:'访问来源',
+					            type:'pie',
+					            radius: ['40%', '80%'],
+					            avoidLabelOverlap: false,
+					            color:['#14e8ec','#ff6160','#ffd350','#cea5e8','#de9f83'],
+					            label: {
+					                normal: {
+					                    show: false,
+					                    position: 'center'
+					                },
+					                emphasis: {
+					                    show: true,
+					                    textStyle: {
+					                        fontSize: '16',
+					                        fontWeight: 'bold'
+					                    }
+					                }
+					            },
+					            labelLine: {
+					                normal: {
+					                    show: false
+					                }
+					            },
+					            data:[
+					                {value:(data.data.fangzhuratio)*10, name:'房主'},
+					                {value:(data.data.dianzhuratio)*10, name:'店主'},
+					                {value:(data.data.zuhuratio)*10, name:'租户'},
+					                {value:(data.data.yuangongratio)*10, name:'员工'},
+					                {value:(data.data.jiashuratio)*10, name:'家属'},
+					            ]
+					        }
+					    ]
+					};
+					if (option && typeof option === "object") {
+					    myChart.setOption(option, true);
+					}
+			    
+	            },
+	            error:function(jqXHR){}
+	        });
+
+        }
+        //人员性别
+        function gender(){
+        	  $.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/statistics/getPersonnelGender.html',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{
+	            	communityId:sessionStorage.communityId,
+	            	communityStreetId:sessionStorage.communityStreetId,
+	            	liveTypeId:sessionStorage.liveTypeId
+	            },
+	            success:function(data){
+	            	// console.log(data)
+	            	$('#boyNum').html(data.data.nannum)
+	            	$('#boyPer').html(data.data.nanratio)
+	            	$('#girlNum').html(data.data.nvnum)
+	            	$('.girlPer').html(data.data.nvratio)
+	            	var dom0 = document.getElementById("container");
+					var myChart0 = echarts.init(dom0);
+					var app0 = {};
+					option0 = null;
+					app0.title = '环形图';
+					option0 = {
+					    tooltip: {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b}: {c} ({d}%)"
+					    },
+					    series: [
+					        {
+					            name:'访问来源',
+					            type:'pie',
+					            radius: ['40%', '80%'],
+					            avoidLabelOverlap: false,
+					            color:['#ff6160','#14e8ec'],
+					            label: {
+					                normal: {
+					                    show: false,
+					                    position: 'center'
+					                },
+					                emphasis: {
+					                    show: true,
+					                    textStyle: {
+					                        fontSize: '16',
+					                        fontWeight: 'bold'
+					                    }
+					                }
+					            },
+					            labelLine: {
+					                normal: {
+					                    show: false
+					                }
+					            },
+					            data:[
+					                {value:(data.data.nanratio)*10, name:'女生'},
+					                {value:(data.data.nvratio)*10, name:'男生'}
+					            ]
+					        }
+					    ]
+					};
+					if (option0 && typeof option0 === "object") {
+					    myChart0.setOption(option0, true);
+					}
+	            },
+	            error:function(jqXHR){}
+	        });
+        }
+        //人员年龄
+        function age(){
+        	 $.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/statistics/getPersonnelAge.html',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{
+	            	communityId:sessionStorage.communityId,
+	            	communityStreetId:sessionStorage.communityStreetId,
+	            	liveTypeId:sessionStorage.liveTypeId
+	            },
+	            success:function(data){
+	            	// console.log(data.data)
+	            	var html = ""
+	            	var countTotal=""
+	            	var array=[]
+	            	var color=[]
+			        for(i=0;i<data.data.length;i++){
+			        	if(data.data[i].agerange == 1){
+	            			var ageItem = '0-6岁'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'0-6岁'})
+	            			color.push('#e977ac')
+	            			var circle = '<div class="circle style="background:#e977ac"></div>'
+		            	}else if(data.data[i].agerange == 2){
+		            		var ageItem = '7-17岁'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'7-17岁'})
+	            			color.push('#e45dcf')
+	            			var circle = '<div class="circle style="background:#e45dcf"></div>'
+		            	}else if(data.data[i].agerange == 3){
+		            		var ageItem = '18-40岁'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'18-40岁'})
+	            			color.push('#7044c8')	
+	            			var circle = '<div class="circle style="background:#7044c8"></div>'
+		            	}else if(data.data[i].agerange == 4){
+		            		var ageItem = '41-47岁'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'41-47岁'})
+	            			color.push('#3ab6c1')	
+	            			var circle = '<div class="circle style="background:#3ab6c1"></div>'
+		            	}else if(data.data[i].agerange == 5){
+		            		var ageItem = '48-65岁'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'48-65岁'})
+	            			color.push('#97b449')	
+	            			var circle = '<div class="circle style="background:#97b449"></div>'
+		            	}else if(data.data[i].agerange == 6){
+		            		var ageItem = '66岁以上'
+	            			array.push({'value':(data.data[i].ratio)*1000,'name':'65岁以上'})
+	            			color.push('#ca9a5d')	
+	            			var circle = '<div class="circle style="background:#ca9a5d"></div>'
+
+		            	}
+			        	html+='<div class="house_infor">'+
+								'<div class="owner">'+
+									'<div class="owner_title">'+
+										circle+
+										ageItem+
+									'</div>'+
+									'<span>'+data.data[i].count+'</span> 人'+
+								'</div>'+
+								'<div class="rate">'+
+									'<div class="Proportion">'+
+										'<div>占比</div>'+
+										'<div>'+
+											'<span>'+(data.data[i].ratio)*100+'%</span>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+							'</div>'
+			        }
+			        $('.ageList').html(html)
+			        var dom2 = document.getElementById("house1");
+					var myChart2 = echarts.init(dom2);
+					var app2 = {};
+					option2 = null;
+					app2.title = '环形图';
+					option2 = {
+					    tooltip: {
+					        trigger: 'item',
+					        formatter: "{a} <br/>{b}: {c} ({d}%)"
+					    },
+					    series: [
+					        {
+					            name:'访问来源',
+					            type:'pie',
+					            radius: ['40%', '80%'],
+					            avoidLabelOverlap: false,
+					            color:color,
+					            label: {
+					                normal: {
+					                    show: false,
+					                    position: 'center'
+					                },
+					                emphasis: {
+					                    show: true,
+					                    textStyle: {
+					                        fontSize: '16',
+					                        fontWeight: 'bold'
+					                    }
+					                }
+					            },
+					            labelLine: {
+					                normal: {
+					                    show: false
+					                }
+					            },
+					            data:array
+					        }
+					    ]
+					};
+					;
+					if (option2 && typeof option2 === "object") {
+					    myChart2.setOption(option2, true);
+					}
+
+	            },
+	            error:function(jqXHR){}
+	        });
+
+        }
     </script>
 </body>
 </html>

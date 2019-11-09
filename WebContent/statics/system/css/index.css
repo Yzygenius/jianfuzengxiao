@@ -191,7 +191,6 @@ h6 {
 }
 .content .Statistics .statist .stat_conts .census_right .cright_total{
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 .content .Statistics .statist .stat_conts .census_right .cright_total .total{

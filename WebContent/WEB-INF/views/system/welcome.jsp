@@ -21,11 +21,11 @@
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息统计
 				</div>
 				<div class="nav_btn">
-					<div class="so_far active">上线至今</div>
-					<div class="custom" id="daterange-btn">自定义</div>
+					<div class="so_far active" data-id="0">上线至今</div>
+					<div class="custom" id="daterange-btn" data-id="1">自定义</div>
 				</div>
 				<div class="nav_time" id="time0">
-					<span>2019/07/23</span> 至 <span>2019/07/25</span>
+					<span class="start"></span> 至 <span class="end"></span>
 				</div>
 			</div>
 			<div class="statist">
@@ -39,27 +39,27 @@
 					<div class="census_left">
 						<div class="title">户数</div>
 						<div class="number">
-							2831121<span>户</span>
+							<span class="totalNum" style="font-size: 36px">2831121</span><span>户</span>
 						</div>
 					</div>
 					<div class="census_right">
 						<div class="cright_top">
 							<div class="cright_type">
 								<div>商住房</div>
-								<div>123123</div>
+								<div id="szf">123123</div>
 							</div>
 							<div class="cright_type">
 								<div>自住房</div>
-								<div>123123</div>
+								<div id="zzf">123123</div>
 							</div>
 							<div class="cright_type">
 								<div>商铺</div>
-								<div>123123</div>
+								<div id="sp">123123</div>
 							</div>
 						</div>
 						<div class="cright_total">
-							<div class="total">闲置：1231231</div>
-							<div class="total">已用：1231231</div>
+							<div class="total">闲置：<span id="idle">1231231</span></div>
+							<div class="total">已用：<span id="used">1231231</span></div>
 						</div>
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 					<div class="census_left">
 						<div class="title">户数</div>
 						<div class="number">
-							2831121<span>户</span>
+							<span class="totalNum" style="font-size: 36px">2831121</span><span>户</span>
 						</div>
 					</div>
 					<div class="census_right">
@@ -302,6 +302,8 @@
 <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/daterangepicker.js"></script>
 <script>
 	$(function() {
+		houseInfor()
+		personInfor()
 		var itemList = ""
 		for (var i = 0; i <= 10; i++) {
 			itemList += '<div class="itemList">'
@@ -337,9 +339,58 @@
 			} else {
 				$('.nav_time').fadeIn(0);
 			}
+			if($(this).attr("data-id") == "0"){
+				houseInfor()
+				personInfor()
+			}
 		})
-
 	})
+	//首页房屋信息统计
+	function houseInfor(start,end){
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getHousesCount.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+            	startTime:start,
+            	stopTime:end
+            },
+            success:function(data){
+            	$('.totalNum').html(data.data.housescount)
+            	$('#szf').html(data.data.szf)
+            	$('#zzf').html(data.data.zjf)
+            	$('#sp').html(data.data.sp)
+            	$('#idle').html(data.data.idle)
+            	$('#used').html(data.data.used)
+            },
+            error:function(jqXHR){}
+        });
+	}
+	//人员信息统计
+	function personInfor(start,end){
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getPersonnelCount.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+            	startTime:start,
+            	stopTime:end
+            },
+            success:function(data){
+            	console.log(data)
+            },
+            error:function(jqXHR){}
+        });
+
+	}
 	//时间
 	$('#daterange-btn').daterangepicker(
 			{
@@ -360,6 +411,8 @@
 						'<span>' + start.format('YYYY/MM/DD')
 								+ '</span> 至 <span>' + end.format('YYYY/MM/DD')
 								+ '</span>');
+				houseInfor(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'))
+				personInfor(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'))
 				// $('#daterange-btn').addClass('active').siblings('.so_far').removeClass('active');
 			});
 </script>

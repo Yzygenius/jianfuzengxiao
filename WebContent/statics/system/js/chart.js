@@ -94,7 +94,6 @@ option0 = {
         }
     ]
 };
-;
 if (option0 && typeof option0 === "object") {
     myChart0.setOption(option0, true);
 }
@@ -147,49 +146,49 @@ if (option1 && typeof option1 === "object") {
 }
 
 
-var dom2 = document.getElementById("house1");
-var myChart2 = echarts.init(dom2);
-var app2 = {};
-option2 = null;
-app2.title = '环形图';
-option2 = {
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    series: [
-        {
-            name:'访问来源',
-            type:'pie',
-            radius: ['40%', '80%'],
-            avoidLabelOverlap: false,
-            color:['#14e8ec','#ff6160'],
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        fontSize: '16',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            data:[
-                {value:600, name:'房主通过'},
-                {value:400, name:'员工通过'}
-            ]
-        }
-    ]
-};
-;
-if (option2 && typeof option2 === "object") {
-    myChart2.setOption(option2, true);
-}
+//var dom2 = document.getElementById("house1");
+//var myChart2 = echarts.init(dom2);
+//var app2 = {};
+//option2 = null;
+//app2.title = '环形图';
+//option2 = {
+//    tooltip: {
+//        trigger: 'item',
+//        formatter: "{a} <br/>{b}: {c} ({d}%)"
+//    },
+//    series: [
+//        {
+//            name:'访问来源',
+//            type:'pie',
+//            radius: ['40%', '80%'],
+//            avoidLabelOverlap: false,
+//            color:['#14e8ec','#ff6160'],
+//            label: {
+//                normal: {
+//                    show: false,
+//                    position: 'center'
+//                },
+//                emphasis: {
+//                    show: true,
+//                    textStyle: {
+//                        fontSize: '16',
+//                        fontWeight: 'bold'
+//                    }
+//                }
+//            },
+//            labelLine: {
+//                normal: {
+//                    show: false
+//                }
+//            },
+//            data:[
+//                {value:600, name:'房主通过'},
+//                {value:400, name:'员工通过'}
+//            ]
+//        }
+//    ]
+//};
+//;
+//if (option2 && typeof option2 === "object") {
+//    myChart2.setOption(option2, true);
+//}
