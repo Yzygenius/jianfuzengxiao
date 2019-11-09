@@ -192,15 +192,15 @@ h6 {
 }
 .statime .lately.blue{
     background: #1E87F0;
-    box-shadow: 0px 7px 50px rgba(30,135,240,.6);
+    box-shadow: 0px 5px 50px rgba(30,135,240,.5);
 }
 .statime .lately.orange{
     background: #FAA05A;
-    box-shadow: 0px 7px 50px rgba(250,160,90,.6);
+    box-shadow: 0px 5px 50px rgba(250,160,90,.5);
 }
 .statime .lately.green{
     background: #32D296;
-    box-shadow: 0px 7px 50px rgba(50,210,150,.6);
+    box-shadow: 0px 5px 50px rgba(50,210,150,.5);
 }
 .statime .so_far{
     width: 80px;

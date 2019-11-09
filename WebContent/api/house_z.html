@@ -163,10 +163,13 @@
                 $('.hetitle').html('门店信息');
                 $('#height').css('height','140px')
               }
+
               // 是房屋的时候上报家属或者租户点击跳页
               $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
               $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
-
+              if(data.data.houses.hStatus !== '2'){
+                $('.total_add').parent('a').fadeOut(0);
+              }
               //头部房屋、门店信息数据
               $('.header_infor').html(html);
                 layer.closeAll('loading')

@@ -347,11 +347,13 @@ body{
 }
 .pop_up .pop_feedback{
     width: 89.5%;
+    max-height: 130px;
     margin: 14px auto 20px;
     border: 1px solid #0091FF;
     border-radius: 8px;
     padding: 3%;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 .pop_up .pop_feedback .feedback_title{
     color: #333;
@@ -363,6 +365,7 @@ body{
     color: #333;
     font-size: 12px;
     line-height: 22px;
+    word-wrap:break-word;
 }
 /*未通过*/
 .pop_up.fail{

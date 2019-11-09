@@ -15,7 +15,7 @@
             <div class="hetitle">社区管家</div>
         </div>
         <div class="header_nav">
-            <div class="header_btn active admin_list" data-class="administration">管理列表<div class="header_red"></div></div>
+            <div class="header_btn active admin_list" data-class="administration">管理列表</div>
             <div class="header_btn newsCenter" data-class="news">消息中心<div class="header_red" id="number"></div></div>
         </div>
     </div>
@@ -54,8 +54,7 @@
         </div>
         <div class="pop_feedback">
             <div class="feedback_title">管理员反馈：</div>
-            <div class="feedback">
-                信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息管理员反馈信息</div>
+            <div class="feedback"></div>
         </div>
         <div class="pop_btn"><a href="personnel_y.html">查看</a></div>
     </div>
@@ -126,12 +125,6 @@
                                 '</a>';
                 }
                  $('.cont_list0').html(html);
-                 if(data.data.total == 0){
-                     $('.admin_list .header_red').fadeOut(0);
-                 }else{
-                     $('.admin_list .header_red').fadeIn(0);
-                     $('.admin_list .header_red').html(data.data.total);
-                 }
                 
                  $('.admin_list').attr('data-page',1);
                  $('.admin_list').attr('data-total',data.data.total);
@@ -269,7 +262,7 @@
                   '<div class="pop_time">'+data.data.createTime+'</div>'+
                   '<div class="pop_text">'+data.data.content+'</div>'+
                   '<div class="poptime">首次提报时间：'+time+'</div>'+
-                  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.content+'</div>'+
+                  '<div class="pop_feedback"><div class="feedback_title">管理员反馈：</div><div class="feedback">'+data.data.auditRemark+'</div>'+
                   '</div>'+'<div class="pop_btn"><a href="personnel_y.html?personnelId='+personnelId+'">查看</a></div>'
                 }
                 if(data.data.msgTypeId=='4'){
