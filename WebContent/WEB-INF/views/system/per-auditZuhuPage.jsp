@@ -55,10 +55,10 @@
 			</form>
 		</div>
 		
-		<xblock>
-			<button class="layui-btn layui-btn-danger" onclick="delAll()">
+		<xblock style="height: 38px;">
+			<!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
 				<i class="layui-icon">&#xe640;</i>批量删除
-			</button>
+			</button> -->
 			<!-- <button class="layui-btn"
 				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', 820)">
 				<i class="layui-icon">&#xe608;</i>添加
@@ -68,8 +68,8 @@
 		<table class="layui-table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" value="" name="" id="checkAll"
-						onclick="checkAll(this)"></th>
+					<!-- <th><input type="checkbox" value="" name="" id="checkAll"
+						onclick="checkAll(this)"></th> -->
 					<th>姓名</th>
 					<th>性别</th>
 					<th>民族</th>
@@ -90,8 +90,8 @@
 
 	<table id="clone-tr" style="display: none;">
 		<tr>
-			<td row="checkBoxId"><input type="checkbox" class="checkId"
-				value="" name=""></td>
+			<!-- <td row="checkBoxId"><input type="checkbox" class="checkId"
+				value="" name=""></td> -->
 			<td row="ids" style="display: none;"></td>
 			<td row="username"></td>
 			<td row="gender">
@@ -111,10 +111,10 @@
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button> -->
-				<button class="layui-btn-danger layui-btn layui-btn-xs"
+				<!-- <button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
-				</button>
+				</button> -->
 			</td>
 		</tr>
 	</table>
@@ -245,7 +245,7 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(data[i].personnelId);
+							//tr.find('[row=checkBoxId]').children().val(data[i].personnelId);
 							tr.find('[row=ids]').text(data[i].personnelId);
 							tr.find('[row=username]').text(data[i].username);
 							if(data[i].gender == 1){

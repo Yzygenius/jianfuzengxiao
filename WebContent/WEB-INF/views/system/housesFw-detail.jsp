@@ -280,6 +280,33 @@
 			x_admin_show(title, url + '?personnelId=' + id, w, h);
 		}
 		
+		function banner_del(obj) {
+			layer.confirm('确认要删除吗？', function(index) {
+				var id = $(obj).parent('td').siblings('[row=ids]').text();
+				$.ajax({
+					url : "/jianfuzengxiao/system/per/delPer.html",
+					type : 'post',
+					dataType : "json",
+					data : {
+						'personnelId' : id
+					},
+					success : function(result) {
+						if (result.code == 1) {
+							layer.msg('删除成功', {icon : 1, time: 1000}, function(){
+								location.reload()
+							});
+						} else {
+							layer.msg(result.msg, {icon : 7});
+						}
+					},
+					error : function(result) {
+						layer.msg("加载数据出错，请刷新页面", {icon: 2})
+					}
+				});
+
+			});
+		}
+		
 		function checkAll(obj) {
 			if ($(obj).prop('checked')) {
 				$('.checkId').prop('checked', true)
@@ -321,10 +348,10 @@
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button> -->
-				<!-- <button class="layui-btn-danger layui-btn layui-btn-xs"
+				<button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
-				</button> -->
+				</button>
 			</td>
 		</tr>
 	</table>

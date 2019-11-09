@@ -125,7 +125,7 @@ public class HttpClientUtlis {
 		JSONObject jsonObject = JSONObject.parseObject(json2);
  
         // 打印执行结果
-        logger.info(jsonObject.toString());
+        //System.out.println(jsonObject);
         return jsonObject;
 	}
 	
