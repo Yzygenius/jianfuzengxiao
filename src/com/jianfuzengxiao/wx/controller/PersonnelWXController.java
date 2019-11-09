@@ -64,7 +64,7 @@ public class PersonnelWXController extends BaseController{
 			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
 			personnelInfo.setHousesId(model.getHousesId());
 			personnelInfo.setSts("A");
-			List<PersonnelInfoMVO> list = personnelInfoService.queryList(personnelInfo);
+			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("houses", housesInfo);
 			map.put("per", list);
