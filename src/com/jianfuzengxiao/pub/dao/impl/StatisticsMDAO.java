@@ -95,24 +95,21 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 
 	@Override
 	public List<Statistics> queryHouseType(Statistics entity) throws SysException, AppException {
-		/*StringBuilder sql = new StringBuilder();
-		sql.append("select COUNT(*) as 'total', ");
-		sql.append("(select COUNT(*) ");
-		sql.append("from personnel_info where sts ='A' and live_type_id in ('3','4'))as 'rent' ");
-		sql.append("from houses_info b ");
-		sql.append("WHERE b.sts='A' ");
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(houses_id) count,house_type,cast(COUNT(houses_id)/(SELECT count(houses_id) from houses_info where sts='A') as decimal(18,2)) as ratio ");
+		sql.append("from houses_info where sts='A' ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
+					sql.append(" AND community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
-					sql.append(" AND b.houses_type_id in ("+entity.getHousesTypeId()+")");
+					sql.append(" AND houses_type_id in ("+entity.getHousesTypeId()+")");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -121,8 +118,8 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		} catch (DataAccessException e) {
 			logger.error("查询统计错误：{}", e.getMessage());
 			throw new SysException("查询统计错误", "10000", e);
-		}*/
-		return null;
+		}
+		return resultList;
 	}
 
 	@Override
@@ -349,6 +346,37 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			throw new SysException("查询统计错误", "10000", e);
 		}
 		return entity;
+	}
+
+	@Override
+	public List<Statistics> queryPersonnelNation(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(personnel_id) count,nation_name, cast(COUNT(personnel_id)/(SELECT count(personnel_id) from personnel_info where sts='A') as decimal(18,2)) as ratio ");
+		sql.append("from personnel_info where sts='A' ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND community_id in ("+entity.getCommunityId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND community_street_id in ("+entity.getCommunityStreetId()+")");
+				}
+			}
+			sql.append("GROUP BY nation_id ");
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return resultList;
 	}
 	
 	

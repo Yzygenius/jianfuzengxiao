@@ -38,4 +38,9 @@ public interface IStatisticsMDAO extends IDAO<Statistics> {
 	
 	/** 人员年龄情况 */
 	public List<Statistics> queryPersonnelAge(Statistics entity) throws SysException, AppException;
+	
+	/** 人员民族情况 */
+	public List<Statistics> queryPersonnelNation(Statistics entity) throws SysException, AppException;
+	
+	
 }

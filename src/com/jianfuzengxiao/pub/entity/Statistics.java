@@ -39,6 +39,7 @@ public class Statistics extends Entity {
 	protected String rentratio;
 	protected String waitrent;
 	protected String waitrentratio;
+	protected String houseType;
 	
 	//人员
 	protected String fangzhunum;
@@ -58,9 +59,22 @@ public class Statistics extends Entity {
 	protected String agerange;
 	protected String count;
 	protected String ratio;
+	protected String nationName;
 	
 	
 	
+	public String getHouseType() {
+		return houseType;
+	}
+	public void setHouseType(String houseType) {
+		this.houseType = houseType;
+	}
+	public String getNationName() {
+		return nationName;
+	}
+	public void setNationName(String nationName) {
+		this.nationName = nationName;
+	}
 	public String getRatio() {
 		return ratio;
 	}

@@ -151,6 +151,28 @@ public class StatisticsSysController extends BaseController {
 	/**
 	 * 
 	 * <p style="color:#36F;">
+	 * 房屋户型情况
+	 * </p>
+	 * @param communityId 社区ID， communityStreetId 小区/街道ID， housesTypeId 房屋分类(1自建房,2商住房,3商铺)
+	 * @return  count 数量，houseType 名称， ratio 比例
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月9日 上午11:18:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getHouseType")
+	public String getHouseType(Statistics entity){
+		try {
+			List<Statistics> list = statisticsService.queryHouseType(entity);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
 	 * 人员分类情况
 	 * </p>
 	 * @param communityId 社区ID， communityStreetId 小区/街道ID
@@ -198,7 +220,7 @@ public class StatisticsSysController extends BaseController {
 	 * 人员年龄情况
 	 * </p>
 	 * @param communityId 社区ID， communityStreetId 小区/街道ID, liveTypeId 人员分布 1,3 房主 、2,4店主、 5租户、6员工、7家属
-	 * @return agerange 1(0-6) 2(7-17) 3(18-40) 4(41-47) 5(48-65) 6(66-)    ,  count 对应数量
+	 * @return agerange 1(0-6) 2(7-17) 3(18-40) 4(41-47) 5(48-65) 6(66-)    ,  count 对应数量 , ratio 比例
 	 * @throws 
 	 * @author 闫子扬 
 	 * @date 2019年11月9日 上午11:18:27
@@ -217,6 +239,28 @@ public class StatisticsSysController extends BaseController {
 					st.setRatio(String.valueOf(BigDouble.getRoundingCount(BigDouble.getDivisionCount(Double.parseDouble(st.getCount()), count))));
 				}
 			}
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 人员民族情况
+	 * </p>
+	 * @param communityId 社区ID， communityStreetId 小区/街道ID, liveTypeId 人员分布 1,3 房主 、2,4店主、 5租户、6员工、7家属
+	 * @return count 数量， nationName 名称,  ratio 比例
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月9日 上午11:18:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPersonnelNation")
+	public String getPersonnelNation(Statistics entity){
+		try {
+			List<Statistics> list = statisticsService.queryPersonnelNation(entity);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询统计失败", e);
