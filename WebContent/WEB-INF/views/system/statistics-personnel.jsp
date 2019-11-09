@@ -41,7 +41,7 @@
 				<div class="nav_num">(共计10户)</div>
 			</div>
 		</div>
-		<div class="total">人员总量：23373人</div>
+		<div class="total" id="total">人员总量：</div>
 		<div style="display: flex; flex-wrap: wrap; min-width: 1200px;">
 			<div class="house">
 				<div class="statis">
@@ -144,7 +144,7 @@
 			</div>
 			<div class="house">
 				<div class="statis">
-					<img src="images/Path_2.png" alt="">人员性别分布
+					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">人员性别分布
 				</div>
 				<div class="statime">
 					<div class="so_far active" data-liveTypeId ="" data-type ="person">全部</div>
@@ -199,79 +199,7 @@
 			</div>
 			<div class="house">
 				<div class="statis">
-					<img src="images/Path_2.png" alt="">人员民族分布
-				</div>
-				<div class="statime">
-					<div class="so_far active">全部</div>
-					<div class="so_far">房主</div>
-					<div class="so_far">店主</div>
-					<div class="so_far">租户</div>
-					<div class="so_far">家属</div>
-					<div class="so_far">员工</div>
-				</div>
-				<div class="clear"></div>
-				<div style="display: flex; align-items: center;">
-					<div class="house_detail">
-						<div class="house_infor">
-							<div class="owner">
-								<div class="owner_title">
-									<div class="circle"></div>
-									民族1
-								</div>
-								<span>3432424</span> 人
-							</div>
-							<div class="rate">
-								<div class="Proportion">
-									<div>占比</div>
-									<div>
-										<span>25%</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="house_infor">
-							<div class="owner">
-								<div class="owner_title">
-									<div class="circle" style="background: rgb(255, 97, 96);"></div>
-									民族2
-								</div>
-								<span>3432424</span> 人
-							</div>
-							<div class="rate">
-								<div class="Proportion">
-									<div>占比</div>
-									<div>
-										<span>25%</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="house_infor">
-							<div class="owner">
-								<div class="owner_title">
-									<div class="circle" style="background: rgb(255, 97, 96);"></div>
-									民族3
-								</div>
-								<span>3432424</span> 人
-							</div>
-							<div class="rate">
-								<div class="Proportion">
-									<div>占比</div>
-									<div>
-										<span>25%</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="chart">
-						<div id="house0" style="height: 100%"></div>
-					</div>
-				</div>
-			</div>
-			<div class="house">
-				<div class="statis">
-					<img src="images/Path_2.png" alt="">人员年龄段分布
+					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">人员年龄段分布
 				</div>
 				<div class="statime">
 					<div class="so_far active" data-liveTypeId ="" data-type="age">全部</div>
@@ -393,6 +321,25 @@
 					</div>
 				</div>
 			</div>
+			<div class="house" style="width: 100%;">
+				<div class="statis">
+					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">人员民族分布
+				</div>
+				<div class="statime">
+					<div class="so_far active" data-liveTypeId ="" data-type ="nation">全部</div>
+					<div class="so_far" data-liveTypeId ="1,3" data-type ="nation">房主</div>
+					<div class="so_far" data-liveTypeId ="2,4" data-type ="nation">店主</div>
+					<div class="so_far" data-liveTypeId ="5" data-type ="nation">租户</div>
+					<div class="so_far" data-liveTypeId ="7" data-type ="nation">家属</div>
+					<div class="so_far" data-liveTypeId ="6" data-type ="nation">员工</div>
+				</div>
+				<div class="clear"></div>
+				<div style="display: flex; align-items: center;margin-top: 20px;">
+					<div class="chart" style="width:1500px;">
+						<div id="shape" style="height: 100%"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="/jianfuzengxiao/statics/system/js/jquery-3.3.1.min.js"></script>
@@ -413,12 +360,15 @@
                 	 gender();
                 }else if($(this).attr("data-type") == "age"){
                 	age();
+                }else if($(this).attr("data-type") == "nation"){
+                	Nation();
                 }
                
             })
             call()     //调用房屋分类
             gender()   //调用性别
             age()      //调用年龄
+            Nation()   //调用民族
             // 社区
             $.ajax({
 	            //请求方式
@@ -503,6 +453,7 @@
 	            },
 	            success:function(data){
 	            	// console.log(data.data)
+	            	$('#total').html('人员总量:'+data.data.total+'人')
 	            	$('#num1').html(data.data.fangzhunum)
 	            	$('#percent1').html(data.data.fangzhuratio+'%')
 	            	$('#num2').html(data.data.dianzhunum)
@@ -757,7 +708,148 @@
 	            },
 	            error:function(jqXHR){}
 	        });
+        }
+        // 民族
+        function Nation(){
+				$.ajax({
+	            //请求方式
+	            type:'POST',
+	            //发送请求的地址
+	            url:'/jianfuzengxiao/system/statistics/getPersonnelNation.html',
+	            //服务器返回的数据类型
+	            dataType:'json',
+	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	            data:{
+	            	communityId:sessionStorage.communityId,
+	            	communityStreetId:sessionStorage.communityStreetId,
+	            	liveTypeId:sessionStorage.liveTypeId
+	            },
+	            success:function(data){
+	            	// console.log(data.data)
+	            	var res = data.data;
+	            	var dataAxis = [];
+	            	// var countTotal=""
+	            	var data=[]
+	            	// var color=[]
+	            	console.log(res);
+			     	for(var i in res){
+			     		var ratio = parseInt(res[i].ratio*100);
+			     		dataAxis.push(res[i].nationName);
+			     		data.push(ratio)
+			     	}
+			        var dom = document.getElementById("shape");
+				    var myChart = echarts.init(dom);
+				    var app = {};
+				    option = null;
+				    // var dataAxis = dataAxis;
+				    // var data = data;
+				    var yMax = 100;
+				    var dataShadow = [];
 
+				    for (var i = 0; i < data.length; i++) {
+				        dataShadow.push(yMax);
+				    }
+
+				    option = {
+				    	tooltip : {
+				            trigger: 'item',
+				            transitionDuration : 0.4,  // 动画变换时间，单位s
+				            backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
+				            borderColor: '#333',       // 提示边框颜色
+				            borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+				            borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
+				            padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+				            // 接受数组分别设定上右下左边距，同css
+				            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				                type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+				                lineStyle : {          // 直线指示器样式设置
+				                    color: '#48b',
+				                    width: 2,
+				                    type: 'solid'
+				                },
+				                shadowStyle : {                       // 阴影指示器样式设置
+				                    width: 'auto',                   // 阴影大小
+				                    color: 'rgba(150,150,150,0.3)'  // 阴影颜色
+				                }
+				            },
+				            formatter: function (params) {
+					            var htmlStr = '比例：'+params.value + '%';
+					            return htmlStr; 
+					        }
+				        },
+				        grid: {
+				            left: '3%',
+				            right: '4%',
+				            bottom: '3%',
+				            top:20,
+				            containLabel: true
+				        },
+				        xAxis :{
+				            type : 'category',
+				            // boundaryGap : false,
+				            data : dataAxis,
+
+				        },
+				        yAxis: {
+				            axisLine: {
+				                show: false
+				            },
+				            axisTick: {
+				                show: false
+				            },
+				            axisLabel: {
+				                textStyle: {
+				                    color: '#333'
+				                }
+				            }
+				        },
+				        series: [
+				            { // For shadow
+				                type: 'bar',
+				                itemStyle: {
+				                    normal: {color: 'rgba(0,0,0,0)'}
+				                },
+				                barGap:'-100%',
+				                barCategoryGap:'50%',
+				                data: dataShadow,
+				                // animation: false
+				            },
+				            {
+				                type: 'bar',
+				                itemStyle: {
+				                    normal: {
+				                        color: new echarts.graphic.LinearGradient(
+				                            0, 0, 0, 1,
+				                            [
+				                                {offset: 0, color: '#73F3AE'},
+				                                {offset: 0.5, color: '#64E1CC'},
+				                                {offset: 1, color: '#4BC2FE'}
+				                            ]
+				                        )
+				                    },
+				                    emphasis: {
+				                        color: new echarts.graphic.LinearGradient(
+				                            0, 0, 0, 1,
+				                            [
+				                                {offset: 0, color: '#4BC2FE'},
+				                                {offset: 0.7, color: '#64E1CC'},
+				                                {offset: 1, color: '#73F3AE'}
+				                            ]
+				                        )
+				                    }
+				                },
+				                data: data
+				            }
+				        ]
+				    };
+
+				    if (option && typeof option === "object") {
+				        myChart.setOption(option, true);
+				    }
+
+	            },
+	            error:function(jqXHR){}
+	        });
         }
     </script>
 </body>
