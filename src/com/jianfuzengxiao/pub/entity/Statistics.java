@@ -57,9 +57,16 @@ public class Statistics extends Entity {
 	protected String nvratio;
 	protected String agerange;
 	protected String count;
+	protected String ratio;
 	
 	
 	
+	public String getRatio() {
+		return ratio;
+	}
+	public void setRatio(String ratio) {
+		this.ratio = ratio;
+	}
 	public String getHousescount() {
 		return housescount;
 	}

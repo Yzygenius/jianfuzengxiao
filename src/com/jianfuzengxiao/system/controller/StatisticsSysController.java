@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
+import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.pub.entity.Statistics;
 import com.jianfuzengxiao.pub.service.IStatisticsService;
 
@@ -207,6 +208,15 @@ public class StatisticsSysController extends BaseController {
 	public String getPersonnelAge(Statistics entity){
 		try {
 			List<Statistics> list = statisticsService.queryPersonnelAge(entity);
+			if(list.size() > 0){
+				double count = 0;
+				for(Statistics s : list){
+					count += Double.parseDouble(s.getCount());
+				}
+				for(Statistics st : list){
+					st.setRatio(String.valueOf(BigDouble.getRoundingCount(BigDouble.getDivisionCount(Double.parseDouble(st.getCount()), count))));
+				}
+			}
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询统计失败", e);
