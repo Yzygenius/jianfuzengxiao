@@ -66,7 +66,7 @@
 				<div class="stat_cont scont">
 					<div class="title">人员数</div>
 					<div class="number">
-						28321<span>个</span>
+						<span id="personNum" style="font-size: 36px"></span><span>个</span>
 					</div>
 				</div>
 				<div class="stat_cont stat_conts">
@@ -79,23 +79,23 @@
 					<div class="census_right">
 						<div class="cright_type">
 							<div>房主</div>
-							<div>123123</div>
+							<div id="fz">123123</div>
 						</div>
 						<div class="cright_type">
 							<div>店主</div>
-							<div>123123</div>
+							<div id="dz">123123</div>
 						</div>
 						<div class="cright_type">
 							<div>租户</div>
-							<div>123123</div>
+							<div id="zh">123123</div>
 						</div>
 						<div class="cright_type">
 							<div>家属</div>
-							<div>123123</div>
+							<div id="js">123123</div>
 						</div>
 						<div class="cright_type">
 							<div>员工</div>
-							<div>123123</div>
+							<div id="yg">123123</div>
 						</div>
 					</div>
 				</div>
@@ -187,19 +187,19 @@
 					<div class="block">
 						<div class="item">
 							<p class="ques">总量</p>
-							<p class="value">1231</p>
+							<p class="value" id="f1">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">待处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="f2">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">已处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="f3">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">处理率</p>
-							<p class="value">100%</p>
+							<p class="value" id="f4">100%</p>
 						</div>
 					</div>
 
@@ -209,19 +209,19 @@
 					<div class="block">
 						<div class="item">
 							<p class="ques">总量</p>
-							<p class="value">1231</p>
+							<p class="value" id="d1">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">待处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="d2">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">已处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="d3">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">处理率</p>
-							<p class="value">100%</p>
+							<p class="value" id="d4">100%</p>
 						</div>
 					</div>
 
@@ -231,19 +231,19 @@
 					<div class="block">
 						<div class="item">
 							<p class="ques">总量</p>
-							<p class="value">1231</p>
+							<p class="value" id="z1">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">待处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="z2">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">已处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="z3">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">处理率</p>
-							<p class="value">100%</p>
+							<p class="value" id="z4">100%</p>
 						</div>
 					</div>
 
@@ -253,19 +253,19 @@
 					<div class="block">
 						<div class="item">
 							<p class="ques">总量</p>
-							<p class="value">1231</p>
+							<p class="value" id="j1">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">待处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="j2">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">已处理</p>
-							<p class="value">1231</p>
+							<p class="value" id="j3">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">处理率</p>
-							<p class="value">100%</p>
+							<p class="value" id="j4">100%</p>
 						</div>
 					</div>
 
@@ -275,19 +275,19 @@
 					<div class="block">
 						<div class="item">
 							<p class="ques">总量</p>
-							<p class="value">1231</p>
+							<p class="value" id="y1">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">待处理</p>
-							<p class="value">1231</p>
+							<p class="value"id="y2">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">已处理</p>
-							<p class="value">1231</p>
+							<p class="value"id="y3">1231</p>
 						</div>
 						<div class="item">
 							<p class="ques">处理率</p>
-							<p class="value">100%</p>
+							<p class="value"id="y4">100%</p>
 						</div>
 					</div>
 
@@ -304,6 +304,7 @@
 	$(function() {
 		houseInfor()
 		personInfor()
+		kind()
 		var itemList = ""
 		for (var i = 0; i <= 10; i++) {
 			itemList += '<div class="itemList">'
@@ -360,12 +361,21 @@
             	stopTime:end
             },
             success:function(data){
-            	$('.totalNum').html(data.data.housescount)
-            	$('#szf').html(data.data.szf)
-            	$('#zzf').html(data.data.zjf)
-            	$('#sp').html(data.data.sp)
-            	$('#idle').html(data.data.idle)
-            	$('#used').html(data.data.used)
+            	if(data.data.housescount == 0){
+					$('.totalNum').html(0)
+	            	$('#szf').html(0)
+	            	$('#zzf').html(0)
+	            	$('#sp').html(0)
+	            	$('#idle').html(0)
+	            	$('#used').html(0)
+            	}else{
+            		$('.totalNum').html(data.data.housescount)
+	            	$('#szf').html(data.data.szf)
+	            	$('#zzf').html(data.data.zjf)
+	            	$('#sp').html(data.data.sp)
+	            	$('#idle').html(data.data.idle)
+	            	$('#used').html(data.data.used)
+            	}
             },
             error:function(jqXHR){}
         });
@@ -385,11 +395,140 @@
             	stopTime:end
             },
             success:function(data){
-            	console.log(data)
+            	// console.log(data)
+            	if(data.data.percount == 0){
+            		$('#personNum').html(0)
+	            	$('#fz').html(0)
+	            	$('#dz').html(0)
+	            	$('#zh').html(0)
+	            	$('#js').html(0)
+	            	$('#yg').html(0)
+            	}else{
+					$('#personNum').html(data.data.percount)
+	            	$('#fz').html(data.data.fangzhunum)
+	            	$('#dz').html(data.data.dianzhunum)
+	            	$('#zh').html(data.data.zuhunum)
+	            	$('#js').html(data.data.jiashunum)
+	            	$('#yg').html(data.data.yuangongnum)
+            	}
+            	
             },
             error:function(jqXHR){}
         });
 
+	}
+	function kind(){
+		// 房主
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPer.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+               live_type_id:"1,3"
+            },
+            success:function(data){
+            	console.log(data)
+            	$('#f1').html(data.data.total)
+            	$('#f2').html(data.data.waitaudit)
+            	$('#f3').html(data.data.audit)
+            	$('#f4').html(data.data.auditratio+'%')
+
+            },
+            error:function(jqXHR){}
+        });
+
+        // 店主
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPer.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+               live_type_id:"2,4"
+            },
+            success:function(data){
+            	console.log(data)
+            	$('#d1').html(data.data.total)
+            	$('#d2').html(data.data.waitaudit)
+            	$('#d3').html(data.data.audit)
+            	$('#d4').html(data.data.auditratio+'%')
+
+            },
+            error:function(jqXHR){}
+        });
+         // 租户
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPer.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+               live_type_id:"5"
+            },
+            success:function(data){
+            	console.log(data)
+            	$('#z1').html(data.data.total)
+            	$('#z2').html(data.data.waitaudit)
+            	$('#z3').html(data.data.audit)
+            	$('#z4').html(data.data.auditratio+'%')
+
+            },
+            error:function(jqXHR){}
+        });
+         // 家属
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPer.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+               live_type_id:"7"
+            },
+            success:function(data){
+            	console.log(data)
+            	$('#j1').html(data.data.total)
+            	$('#j2').html(data.data.waitaudit)
+            	$('#j3').html(data.data.audit)
+            	$('#j4').html(data.data.auditratio+'%')
+
+            },
+            error:function(jqXHR){}
+        });
+         // 员工
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPer.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+               live_type_id:"6"
+            },
+            success:function(data){
+            	console.log(data)
+            	$('#y1').html(data.data.total)
+            	$('#y2').html(data.data.waitaudit)
+            	$('#y3').html(data.data.audit)
+            	$('#y4').html(data.data.auditratio+'%')
+
+            },
+            error:function(jqXHR){}
+        });
 	}
 	//时间
 	$('#daterange-btn').daterangepicker(

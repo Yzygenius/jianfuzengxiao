@@ -57,7 +57,7 @@
 				<div class="nav_num">(共计<span>10</span>户)</div>
 			</div>
 		</div>
-		<div class="total">房屋总量：23373户</div>
+		<div class="total">房屋总量：<span>23373</span>户</div>
 		<div style="display: flex; flex-wrap: wrap; min-width: 1200px;">
 			<div class="house">
 				<div class="statis">
@@ -129,10 +129,10 @@
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">房屋出租情况
 				</div>
 				<div class="statime">
-					<div class="so_far active" data-housesTypeId = "" >全部</div>
-					<div class="so_far" data-housesTypeId = "1">自建房</div>
-					<div class="so_far" data-housesTypeId = "2">商住房</div>
-					<div class="so_far" data-housesTypeId = "3">商铺</div>
+					<div class="so_far active" data-housesTypeId = "" data-rent="rent">全部</div>
+					<div class="so_far" data-housesTypeId = "1" data-rent="rent">自建房</div>
+					<div class="so_far" data-housesTypeId = "2" data-rent="rent">商住房</div>
+					<div class="so_far" data-housesTypeId = "3" data-rent="rent">商铺</div>
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;">
@@ -177,7 +177,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="house">
+			<div class="house" style="display: none">
 				<div class="statis">
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">房屋利用情况
 				</div>
@@ -235,14 +235,14 @@
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">房屋户型情况
 				</div>
 				<div class="statime">
-					<div class="so_far active">全部</div>
-					<div class="so_far">自建房</div>
-					<div class="so_far">商住房</div>
-					<div class="so_far">门店</div>
+					<div class="so_far active" data-housesTypeId = "" data-rent="apart">全部</div>
+					<div class="so_far"data-housesTypeId = "1" data-rent="apart">自建房</div>
+					<div class="so_far"data-housesTypeId = "2" data-rent="apart">商住房</div>
+					<div class="so_far"data-housesTypeId = "3" data-rent="apart">商铺</div>
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;">
-					<div class="house_detail">
+					<div class="house_detail houseKind">
 						<div class="house_infor">
 							<div class="owner">
 								<div class="owner_title">
@@ -296,10 +296,16 @@
 	        window.sessionStorage.clear();   //清除缓存
 	        call();  //调用房屋分类
 	        rent();  //调用出租信息
+	        apartment();
             $('.statime .so_far').click(function () {
                 $(this).addClass('active').siblings('.so_far').removeClass('active')
                 sessionStorage.housesTypeId = $(this).attr("data-housesTypeId")
-                rent();   //点击房屋类型调用出租信息
+                if($(this).attr('data-rent') == 'rent'){
+                	rent();   //点击房屋类型调用出租信息
+            	}else if($(this).attr('data-rent') == 'apart'){
+ 					apartment();
+            	}
+               
             })
             // 社区
             $.ajax({
@@ -324,6 +330,7 @@
 			    		 sessionStorage.communityId = $(this).attr("data-communityId")
 		 	         	 call()  //调用房屋分类
 		 	         	 rent()  //调用出租信息
+		 	         	 apartment();   //户型
 			    	})
 	            },
 	            error:function(jqXHR){}
@@ -352,6 +359,7 @@
 				        sessionStorage.communityStreetId = $(this).attr("data-communityStreetId")
 		 	         	call()  //调用房屋分类
 		 	         	rent()  //调用出租信息
+		 	         	apartment(); //户型
 				    })
 			     
 	            },
@@ -373,13 +381,28 @@
 	            	communityStreetId:sessionStorage.communityStreetId
 	            },
 	            success:function(data){
+	                var array=[]
+	            	if(data.data.total == 0){
+		            	$('#num1').html(0)
+	                    $('#percent1').html(0+'%')
+	                    $('#num2').html(0)
+	                    $('#percent2').html(0+'%')
+	                    $('#num3').html(0)
+	                    $('#percent3').html(0+'%')
+                        array.push({'value':100,'name':'无'})
+
+	            	}else{
+	            		$('#num1').html(data.data.zjf)
+	                    $('#percent1').html(data.data.zjfratio+'%')
+	                    $('#num2').html(data.data.szf)
+	                    $('#percent2').html(data.data.szfratio+'%')
+	                    $('#num3').html(data.data.sp)
+	                    $('#percent3').html(data.data.spratio+'%')
+	                    array.push({value:(data.data.zjfratio)*10, name:'自建房'},{value:(data.data.szfratio)*10, name:'商住房'},{value:(data.data.spratio)*10, name:'门店'})
+	            	}
+                    
 	            	// console.log(data.data)
-                    $('#num1').html(data.data.zjf)
-                    $('#percent1').html(data.data.zjfratio+'%')
-                    $('#num2').html(data.data.szf)
-                    $('#percent2').html(data.data.szfratio+'%')
-                    $('#num3').html(data.data.sp)
-                    $('#percent3').html(data.data.spratio+'%')
+                    $('.total span').html(data.data.total)
 	            	var dom = document.getElementById("house");
 					var myChart = echarts.init(dom);
 					var app = {};
@@ -415,14 +438,15 @@
 					                    show: false
 					                }
 					            },
-					            data:[
-					                // {value:250, name:'自建房'},
-					                // {value:375, name:'商住房'},
-					                // {value:375, name:'门店'},
-					                {value:(data.data.zjfratio)*10, name:'自建房'},
-					                {value:(data.data.szfratio)*10, name:'商住房'},
-					                {value:(data.data.spratio)*10, name:'门店'},
-					            ]
+					            data:array
+					            // data:[
+					            //     // {value:250, name:'自建房'},
+					            //     // {value:375, name:'商住房'},
+					            //     // {value:375, name:'门店'},
+					            //     // {value:(data.data.zjfratio)*10, name:'自建房'},
+					            //     // {value:(data.data.szfratio)*10, name:'商住房'},
+					            //     // {value:(data.data.spratio)*10, name:'门店'},
+					            // ]
 					        }
 					    ]
 					};
@@ -505,7 +529,102 @@
             },
             error:function(jqXHR){}
         });
+    }
+     //房屋户型情况
+    function apartment(){
+      $.ajax({
+        //请求方式
+        type:'POST',
+        //发送请求的地址
+        url:'/jianfuzengxiao/system/statistics/getHouseType.html',
+        //服务器返回的数据类型
+        dataType:'json',
+        //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+        data:{
+        	communityId:sessionStorage.communityId,
+        	communityStreetId:sessionStorage.communityStreetId,
+        	housesTypeId:sessionStorage.housesTypeId
+        },
+        success:function(data){
+        	console.log(data)
+        	var html=""
+        	var color=[]
+        	var array=[]
+        	for(var i = 0;i<data.data.length;i++){
+               color.push('#0091FF');
+			   array.push({'value':(data.data[i].ratio)*1000,'name':data.data[i].houseType})
+			   if(data.data[i].count == 0){
+			   	var  houseName = '无'
+			   }else{
+			   	var houseName = data.data[i].houseType
+			   }
+               html += 	'<div class="house_infor">'+
+							'<div class="owner">'+
+								'<div class="owner_title">'+
+									'<div class="circle"></div>'+
+									houseName+
+								'</div>'+
+								'<span>'+data.data[i].count+'</span> 户'+
+							'</div>'+
+							'<div class="rate">'+
+								'<div class="Proportion">'+
+									'<div>占比</div>'+
+									'<div>'+
+										'<span>'+(data.data[i].ratio)*100+'%</span>'+
+									'</div>'+
+								'</div>'+
+							'</div>'+
+						'</div>'
+        	}
+        	$('.house_detail.houseKind').html(html)
+    	    var dom2 = document.getElementById("house1");
+				var myChart2 = echarts.init(dom2);
+				var app2 = {};
+				option2 = null;
+				app2.title = '环形图';
+				option2 = {
+				    tooltip: {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b}: {c} ({d}%)"
+				    },
+				    series: [
+				        {
+				            name:'访问来源',
+				            type:'pie',
+				            radius: ['40%', '80%'],
+				            avoidLabelOverlap: false,
+				            color:color,
+				            label: {
+				                normal: {
+				                    show: false,
+				                    position: 'center'
+				                },
+				                emphasis: {
+				                    show: true,
+				                    textStyle: {
+				                        fontSize: '16',
+				                        fontWeight: 'bold'
+				                    }
+				                }
+				            },
+				            labelLine: {
+				                normal: {
+				                    show: false
+				                }
+				            },
+				            data:array
+				        }
+				    ]
+				};
+				;
+				if (option2 && typeof option2 === "object") {
+				    myChart2.setOption(option2, true);
+				}
 
+        	
+        },
+        error:function(jqXHR){}
+    });
     }
 
     </script>
