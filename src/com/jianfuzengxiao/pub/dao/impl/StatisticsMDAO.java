@@ -38,7 +38,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -72,7 +72,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
 					sql.append(" AND b.houses_type_id in ("+entity.getHousesTypeId()+")");
@@ -109,7 +109,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
 					sql.append(" AND b.houses_type_id in ("+entity.getHousesTypeId()+")");
@@ -145,7 +145,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -182,7 +182,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -227,7 +227,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND b.communityStreet_id in ("+entity.getCommunityStreetId()+")");
+					sql.append(" AND b.community_street_id in ("+entity.getCommunityStreetId()+")");
 				}
 			}
 			sql.append(" ) a GROUP BY nnd ");
