@@ -77,8 +77,9 @@
             responseCallback("button js callback");
         });
     })
-    window.onload=function(){
-        if(sessionStorage.token == undefined || !sessionStorage.token){
+    $(document).ready(function(){
+         //do something
+         if(sessionStorage.token == undefined || !sessionStorage.token){
             var data = {
                 'action': 'jsNGetToken',
                 'needCallBack': '',
@@ -98,9 +99,10 @@
                 }
             });
             // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
-        }else{
-            load(1);
         }
+    })
+    
+    window.onload=function(){
         $('.foo-bor').click(function(){
             if(sessionStorage.token == undefined || !sessionStorage.token){
                 var data = {
