@@ -35,8 +35,12 @@ import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.base.utils.ExcelUtil;
 import com.jianfuzengxiao.base.utils.Upxml;
 import com.jianfuzengxiao.pub.entity.AttachFileMVO;
+import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
+import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesTypeMVO;
+import com.jianfuzengxiao.pub.service.ICommunityInfoService;
+import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IExcelImportService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IHousesTypeService;
@@ -54,6 +58,12 @@ public class CommonSysContoller extends BaseController {
 	
 	@Autowired
 	private IExcelImportService excelImportService;
+	
+	@Autowired
+	private ICommunityInfoService communityInfoService;
+	
+	@Autowired
+	private ICommunityStreetInfoService communityStreetInfoService;
 	
 	@ResponseBody
 	@RequestMapping(value="/uploadExcel")
@@ -112,6 +122,52 @@ public class CommonSysContoller extends BaseController {
         }
 
     }
+    
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取小区或街道列表
+	 * </p>
+	 * @param status 1小区2街道(如果是房屋，参数传1、如果是店铺参数传空或不用此参数), communityId 社区ID 
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午9:05:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getCommunityStreetList")
+	public String getCommunityStreetList(CommunityStreetInfoMVO model){
+		try {
+			model.setSts("A");
+			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(model);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取小区/街道列表出错", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 获取社区列表
+	 * </p>
+	 * @return    
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年10月29日 上午9:05:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getCommunityList")
+	public String getCommunityList(){
+		try {
+			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
+			communityInfoMVO.setSts("A");
+			List<CommunityInfoMVO> list = communityInfoService.queryList(new CommunityInfoMVO());
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取社区列表出错", e);
+		}
+	}
 	
 	/**
 	 * 

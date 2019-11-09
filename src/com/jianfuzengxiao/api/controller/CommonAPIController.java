@@ -128,6 +128,7 @@ public class CommonAPIController extends BaseController {
 	@RequestMapping(value="/getCommunityStreetList")
 	public String getCommunityStreetList(CommunityStreetInfoMVO model){
 		try {
+			model.setSts("A");
 			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(model);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
@@ -149,6 +150,8 @@ public class CommonAPIController extends BaseController {
 	@RequestMapping(value="/getCommunityList")
 	public String getCommunityList(){
 		try {
+			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
+			communityInfoMVO.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(new CommunityInfoMVO());
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
