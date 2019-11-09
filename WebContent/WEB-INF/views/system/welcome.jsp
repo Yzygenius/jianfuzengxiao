@@ -1,149 +1,366 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.0</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/font.css">
-    <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css">
-    <link rel="stylesheet" href="/jianfuzengxiao/statics/system/assets/css/flipclock.css">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/index.css">
+<link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/iconfont.css">
+<link href="/jianfuzengxiao/statics/system/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css" />
+<title>首页</title>
 </head>
 <body>
+	<div class="content">
+		<div class="Statistics">
+			<div class="statinav">
+				<div class="nav_img">
+					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息统计
+				</div>
+				<div class="nav_btn">
+					<div class="so_far active">上线至今</div>
+					<div class="custom" id="daterange-btn">自定义</div>
+				</div>
+				<div class="nav_time" id="time0">
+					<span>2019/07/23</span> 至 <span>2019/07/25</span>
+				</div>
+			</div>
+			<div class="statist">
+				<div class="stat_cont scont">
+					<div class="title">场所</div>
+					<div class="number">
+						28321<span>个</span>
+					</div>
+				</div>
+				<div class="stat_cont stat_conts colorBtn">
+					<div class="census_left">
+						<div class="title">户数</div>
+						<div class="number">
+							2831121<span>户</span>
+						</div>
+					</div>
+					<div class="census_right">
+						<div class="cright_top">
+							<div class="cright_type">
+								<div>商住房</div>
+								<div>123123</div>
+							</div>
+							<div class="cright_type">
+								<div>自住房</div>
+								<div>123123</div>
+							</div>
+							<div class="cright_type">
+								<div>商铺</div>
+								<div>123123</div>
+							</div>
+						</div>
+						<div class="cright_total">
+							<div class="total">闲置：1231231</div>
+							<div class="total">已用：1231231</div>
+						</div>
+					</div>
+				</div>
+				<div class="stat_cont scont">
+					<div class="title">人员数</div>
+					<div class="number">
+						28321<span>个</span>
+					</div>
+				</div>
+				<div class="stat_cont stat_conts">
+					<div class="census_left">
+						<div class="title">户数</div>
+						<div class="number">
+							2831121<span>户</span>
+						</div>
+					</div>
+					<div class="census_right">
+						<div class="cright_type">
+							<div>房主</div>
+							<div>123123</div>
+						</div>
+						<div class="cright_type">
+							<div>店主</div>
+							<div>123123</div>
+						</div>
+						<div class="cright_type">
+							<div>租户</div>
+							<div>123123</div>
+						</div>
+						<div class="cright_type">
+							<div>家属</div>
+							<div>123123</div>
+						</div>
+						<div class="cright_type">
+							<div>员工</div>
+							<div>123123</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="total_infor">
+			<div class="infor_left">
+				<div class="topHead">
+					<div class="headItem1">
+						<div class="newsInfo">
+							<span>最新上报信息</span>
+							<p class="line"></p>
+						</div>
+						<div class="date">2019-11-8</div>
+						<div class="today">今天</div>
+					</div>
+					<div class="headItem2">
+						<div class="check0">
+							<input type="checkbox" checked value="已处理" id="up0"> <label
+								for="up0">已处理</label>
+						</div>
+						<div class="check0">
+							<input type="checkbox" checked value="待处理" id="up1"> <label
+								for="up1">待处理</label>
+						</div>
+					</div>
+				</div>
+				<div class="infoCenter">
+					<div class="itemList">
+						<div class="check0">
+							<input type="checkbox" id="check0"> <label for="check0"></label>
+						</div>
+						<div class="text first">Cotilla</div>
+						<div class="text second">iMac 21”</div>
+						<div class="text third">Abdullah Un Noman</div>
+						<div class="text fourth">Mirpur 2, Dhaka</div>
+						<div class="text fifth">2</div>
+						<div class="status green">Complete</div>
+						<div class="status orange" style="display: none;">On Hold</div>
+						<div class="status zs" style="display: none;">Pending</div>
+						<div class="status red" style="display: none;">Failed</div>
+						<div class="text sixth">#123DFF</div>
+					</div>
+					<div class="itemList">
+						<div class="check0">
+							<input type="checkbox" id="check1"> <label for="check1"></label>
+						</div>
+						<div class="text first">Cotilla</div>
+						<div class="text second">iMac 21”</div>
+						<div class="text third">Abdullah Un Noman</div>
+						<div class="text fourth">Mirpur 2, Dhaka</div>
+						<div class="text fifth">2</div>
+						<div class="status green" style="display: none;">Complete</div>
+						<div class="status orange" style="display: none;">On Hold</div>
+						<div class="status zs">Pending</div>
+						<div class="status red" style="display: none;">Failed</div>
+						<div class="text sixth">#123DFF</div>
+					</div>
+					<div class="itemList">
+						<div class="check0">
+							<input type="checkbox" id="check3"> <label for="check3"></label>
+						</div>
+						<div class="text first">Cotilla</div>
+						<div class="text second">iMac 21”</div>
+						<div class="text third">Abdullah Un Noman</div>
+						<div class="text fourth">Mirpur 2, Dhaka</div>
+						<div class="text fifth">2</div>
+						<div class="status green" style="display: none;">Complete</div>
+						<div class="status orange">On Hold</div>
+						<div class="status zs" style="display: none;">Pending</div>
+						<div class="status red" style="display: none;">Failed</div>
+						<div class="text sixth">#123DFF</div>
+					</div>
+				</div>
+			</div>
+			<div class="infor_right">
+				<div class="topHead">
+					<div class="headItem1">
+						<div class="newsInfo">
+							<span>最新上报信息</span>
+							<p class="line"></p>
+						</div>
+						<div class="date">2019-11-8</div>
+						<div class="today">今天</div>
+					</div>
+				</div>
+				<div class="report_list">
+					<p class="title">房主认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value">100%</p>
+						</div>
+					</div>
 
-<div class="centerView" data-type="index" th:fragment="content">
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-    <div class="row-content am-cf">
-        <div class="row am-cf">
-            <div class="am-u-sm-12 am-u-md-8">
-                <div class="widget am-cf am-text-center">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl" style="font-size: 24px;margin: 20px 0 0 35px;">
-                            <span id="today"></span>
-                        </div>
-                    </div>
-                    <div class="widget-body-md widget-body am-fr">
-                        <div class="clock" style="margin:2em;"></div>
-                    </div>
-                </div>
-            </div>
+				</div>
+				<div class="report_list">
+					<p class="title">店主认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value">100%</p>
+						</div>
+					</div>
 
-<!--             <div class="am-u-sm-12 am-u-md-4">
-                <div class="widget am-cf am-text-center">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">工具箱</div>
-                    </div>
-                    <div class="widget-body widget-body-md am-fr">
-                        <table style="width: 100%;height: 100%;text-align: center;">
-                            <tr>
-                                <th>
-                                    <div style="cursor:pointer" data-am-modal="{target: '#calculatorModal', closeViaDimmer: 0, width: 300, height: 360}">
-                                        <img src="/jianfuzengxiao/statics/system/assets/icon/calculator.png" style="width: 60px">
-                                    </div>
-                                    <small>计算器</small>
-                                </th>
-                                <th>
-                                    <div style="cursor:pointer" data-am-modal="{target: '#weatherModal', closeViaDimmer: 0, width: 900, height: 225}">
-                                        <img src="/jianfuzengxiao/statics/system/assets/icon/weather.png" style="width: 60px">
-                                    </div>
-                                    <small>天气</small>
-                                </th>
-                                <th>
-                                    <div style="cursor:pointer" data-am-modal="{target: '#todomvcModal', closeViaDimmer: 0, width: 800, height: 600}">
-                                        <img src="/jianfuzengxiao/statics/system/assets/icon/notepad.png" style="width: 60px">
-                                    </div>
-                                    <small>备忘录</small>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+				</div>
+				<div class="report_list">
+					<p class="title">租户认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value">100%</p>
+						</div>
+					</div>
 
+				</div>
+				<div class="report_list">
+					<p class="title">家属认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value">100%</p>
+						</div>
+					</div>
 
-<!--         <div class="row am-cf">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
-                <div class="tpl-user-card am-text-center widget-body-lg">
-                    <div class="tpl-user-card-title">
-                        月度最佳员工
-                    </div>
-                    <img class="achievement-image" src="" alt="" id="bestImg">
-                    <div class="achievement-subheading" id="bestName">
+				</div>
+				<div class="report_list">
+					<p class="title">员工认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value">100%</p>
+						</div>
+					</div>
 
-                    </div>
-                    <div class="achievement-description">
-                        再接再厉，勇创新高！
-                    </div>
-                </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg">
-                <div class="widget am-cf widget-body-lg">
-                    <div class="widget-body  am-fr">
-                        <div class="am-scrollable-horizontal ">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">站内信</div>
-                            </div>
-                            <div class="widget-body widget-body-md am-fr">
-                                <p id="messageP">暂无最新信息</p>
-                                <span id="MessageRealnameS" style="float: right"></span><br/>
-                                <span id="MessageSendTimeS" style="float: right"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg">
-                <div class="widget am-cf widget-body-lg">
-                    <div class="widget-body  am-fr">
-                        <div class="am-scrollable-horizontal ">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">公告板</div>
-                            </div>
-                            <div class="widget-body widget-body-md am-fr">
-                                <p id="noticeP">暂无最新信息</p>
-                                <span id="NoticeRealnameS" style="float: right"></span><br/>
-                                <span id="NoticeSendTimeS" style="float: right"></span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </div>
-</div>
-<script type="text/javascript" src="/jianfuzengxiao/statics/js/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="/jianfuzengxiao/statics/system/assets/js/flipclock.min.js"></script>
-<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/welcome.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#indexA').attr('class','active');
-        //翻页钟插件初始化
-         var clock = $('.clock').FlipClock({
-            clockFace: 'TwentyFourHourClock'
-        });
-        $("#today").text(getCurrentDateTime() + " 农历 " + showCal());
-        //最佳员工
-       // getBestImageNum();
-        //getBestUserName();
-        //最后一条信息和公告
-        //getLastMessage();
-        //getLastNotice(); 
-    });
-</script>
-</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+<script src="/jianfuzengxiao/statics/system/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/moment.js"></script>
+
+<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/daterangepicker.js"></script>
+<script>
+	$(function() {
+		var itemList = ""
+		for (var i = 0; i <= 10; i++) {
+			itemList += '<div class="itemList">'
+					+ '<div class="check0">'
+					+ '<input type="checkbox" class="select" id="check'+i+'" >'
+					+ '<label for="check'+i+'"></label>'
+					+ '</div>'
+					+ '<div class="text first">Cotilla</div>'
+					+ '<div class="text second">iMac 21”</div>'
+					+ '<div class="text third">Abdullah Un Noman</div>'
+					+ '<div class="text fourth">Mirpur 2, Dhaka</div>'
+					+ '<div class="text fifth"> 2 </div>'
+					+ '<div class="status green">Complete</div>'
+					+ '<div class="status orange" style="display: none;">On Hold</div>'
+					+ '<div class="status zs" style="display: none;">Pending</div>'
+					+ '<div class="status red" style="display: none;">Failed</div>'
+					+ '<div class="text sixth">#123DFF</div>' + '</div>'
+		}
+		$('.infoCenter').html(itemList);
+		$('.select').each(function() {
+			$(this).click(function() {
+				if ($(this).is(":checked")) {
+					$(this).parents('.itemList').addClass('active');
+				} else {
+					$(this).parents('.itemList').removeClass('active');
+				}
+			})
+		})
+		$('.nav_btn div').click(function() {
+			$(this).addClass('active').siblings().removeClass('active');
+			if ($('.so_far').hasClass('active')) {
+				$('.nav_time').fadeOut(0);
+			} else {
+				$('.nav_time').fadeIn(0);
+			}
+		})
+
+	})
+	//时间
+	$('#daterange-btn').daterangepicker(
+			{
+				ranges : {
+					'自定义' : [ moment(), moment().subtract(-1, 'days') ],
+					'本周' : [ moment(), moment() ],
+					'上周' : [ moment().subtract(-1, 'days'),
+							moment().subtract(-1, 'days') ],
+					'本月' : [ moment(), moment().subtract(-6, 'days') ],
+					'上月' : [ moment(), moment().subtract(-29, 'days') ],
+					'今年' : [ moment(), moment().subtract(-59, 'days'), ]
+				},
+				startDate : moment(),
+				endDate : moment()
+			},
+			function(start, end, label) {
+				$('#time0').html(
+						'<span>' + start.format('YYYY/MM/DD')
+								+ '</span> 至 <span>' + end.format('YYYY/MM/DD')
+								+ '</span>');
+				// $('#daterange-btn').addClass('active').siblings('.so_far').removeClass('active');
+			});
+</script>
 </html>

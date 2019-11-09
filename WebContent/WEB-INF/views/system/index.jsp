@@ -153,19 +153,19 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="/jianfuzengxiao/system/news/toNewsPage.html">
+                        <a _href="/jianfuzengxiao/system/statistics/toIndex.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>上报信息统计</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="/jianfuzengxiao/system/news/toNewsPage.html">
+                        <a _href="/jianfuzengxiao/system/statistics/toHouses.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>房屋信息统计</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="/jianfuzengxiao/system/news/toNewsPage.html">
+                        <a _href="/jianfuzengxiao/system/statistics/toPersonnel.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>人员信息统计</cite>
                         </a>
@@ -248,9 +248,9 @@
     <!-- 右侧主体结束 -->
     <!-- 中部结束 -->
     <!-- 底部开始 -->
-    <div class="footer">
+    <!-- <div class="footer">
         <div class="copyright"> 备案号   &nbsp;&nbsp;&nbsp;&nbsp;</div>  
-    </div>
+    </div> -->
     <!-- 底部结束 -->
 </body>
 </html>
