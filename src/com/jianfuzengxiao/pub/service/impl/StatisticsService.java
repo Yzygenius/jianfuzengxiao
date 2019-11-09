@@ -57,4 +57,19 @@ public class StatisticsService extends BaseService implements IStatisticsService
 	public List<Statistics> queryPersonnelAge(Statistics entity) throws SysException, AppException {
 		return statisticsMDAO.queryPersonnelAge(entity);
 	}
+
+	@Override
+	public Statistics queryTodayReportPer(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryTodayReportPer(entity);
+	}
+
+	@Override
+	public Statistics queryHousesCount(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryHousesCount(entity);
+	}
+
+	@Override
+	public Statistics queryPersonnelCount(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryPersonnelCount(entity);
+	}
 }

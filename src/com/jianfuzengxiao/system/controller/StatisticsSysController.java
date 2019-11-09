@@ -40,6 +40,72 @@ public class StatisticsSysController extends BaseController {
 	/**
 	 * 
 	 * <p style="color:#36F;">
+	 * 首页最新上报信息
+	 * </p>
+	 *	@param live_type_id(1,3), 店主传参:live_type_id(2,4), 租户传参:live_type_id(5), 家属传参:live_type_id(7), 员工传参:live_type_id(6), 
+	 *	@return total 总数， audit 已处理   waitaudit 未处理  auditratio 比例 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月9日 上午11:18:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getTodayReportPer")
+	public String getTodayReportPer(Statistics entity){
+		try {
+			entity = statisticsService.queryTodayReportPer(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 首页房屋信息统计
+	 * </p>
+	 *	@param  startTime  stopTime
+	 *	@return housesCount 房屋总数， zjf 自建房 , szf 商住房, sp 商铺, used 已用， idle 闲置
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月9日 上午11:18:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getHousesCount")
+	public String getHousesCount(Statistics entity){
+		try {
+			entity = statisticsService.queryHousesCount(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 首页人员信息统计
+	 * </p>
+	 *	@param  startTime  stopTime
+	 *	@return percount 人员总数， fangzhunum 房主， dianzhunum 店主， zuhunum 租户， yuangongnum 员工， jiashunum 家属
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月9日 上午11:18:27
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPersonnelCount")
+	public String getPersonnelCount(Statistics entity){
+		try {
+			entity = statisticsService.queryPersonnelCount(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
 	 * 房屋分类情况
 	 * </p>
 	 *	@param communityId 社区ID， communityStreetId 小区/街道ID
