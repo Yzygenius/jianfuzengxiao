@@ -335,7 +335,7 @@
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;margin-top: 20px;">
-					<div class="chart" style="width:1500px;">
+					<div class="chart shape" style="width:1500px;">
 						<div id="shape" style="height: 100%"></div>
 					</div>
 				</div>
@@ -393,6 +393,7 @@
 		 	         	 call()     //调用房屋分类
 		 	         	 gender()   //调用性别
 		 	         	 age()      //年龄
+		 	         	 Nation()   //民族
 			    	})
 	            },
 	            error:function(jqXHR){}
@@ -422,6 +423,7 @@
 		 	         	call()    //调用房屋分类
 		 	         	gender()  //调用性别
 		 	         	age()     //年龄
+		 	         	Nation()  //民族
 				    })
 			     
 	            },
@@ -604,61 +606,85 @@
 	            	liveTypeId:sessionStorage.liveTypeId
 	            },
 	            success:function(data){
-	            	// console.log(data.data)
+	            	console.log(data.data.length)
 	            	var html = ""
 	            	var countTotal=""
 	            	var array=[]
 	            	var color=[]
-			        for(i=0;i<data.data.length;i++){
-			        	if(data.data[i].agerange == 1){
-	            			var ageItem = '0-6岁'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'0-6岁'})
-	            			color.push('#e977ac')
-	            			var circle = '<div class="circle style="background:#e977ac"></div>'
-		            	}else if(data.data[i].agerange == 2){
-		            		var ageItem = '7-17岁'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'7-17岁'})
-	            			color.push('#e45dcf')
-	            			var circle = '<div class="circle style="background:#e45dcf"></div>'
-		            	}else if(data.data[i].agerange == 3){
-		            		var ageItem = '18-40岁'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'18-40岁'})
-	            			color.push('#7044c8')	
-	            			var circle = '<div class="circle style="background:#7044c8"></div>'
-		            	}else if(data.data[i].agerange == 4){
-		            		var ageItem = '41-47岁'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'41-47岁'})
-	            			color.push('#3ab6c1')	
-	            			var circle = '<div class="circle style="background:#3ab6c1"></div>'
-		            	}else if(data.data[i].agerange == 5){
-		            		var ageItem = '48-65岁'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'48-65岁'})
-	            			color.push('#97b449')	
-	            			var circle = '<div class="circle style="background:#97b449"></div>'
-		            	}else if(data.data[i].agerange == 6){
-		            		var ageItem = '66岁以上'
-	            			array.push({'value':(data.data[i].ratio)*1000,'name':'65岁以上'})
-	            			color.push('#ca9a5d')	
-	            			var circle = '<div class="circle style="background:#ca9a5d"></div>'
-
-		            	}
-			        	html+='<div class="house_infor">'+
-								'<div class="owner">'+
-									'<div class="owner_title">'+
-										circle+
-										ageItem+
+	            	if(data.data.length == 0){
+	            		var ageItem = '暂时没有'
+            			array.push({'value':100,'name':'无'})
+            			color.push('#e977ac')
+            			html+='<div class="house_infor">'+
+									'<div class="owner">'+
+										'<div class="owner_title">'+
+											'<div class="circle style="background:#e977ac"></div>'+
+											ageItem+
+										'</div>'+
+										'<span>0</span> 人'+
 									'</div>'+
-									'<span>'+data.data[i].count+'</span> 人'+
-								'</div>'+
-								'<div class="rate">'+
-									'<div class="Proportion">'+
-										'<div>占比</div>'+
-										'<div>'+
-											'<span>'+(data.data[i].ratio)*100+'%</span>'+
+									'<div class="rate">'+
+										'<div class="Proportion">'+
+											'<div>占比</div>'+
+											'<div>'+
+												'<span>0%</span>'+
+											'</div>'+
 										'</div>'+
 									'</div>'+
-								'</div>'+
-							'</div>'
+								'</div>'
+	            	}else{
+
+				        for(i=0;i<data.data.length;i++){
+				        	if(data.data[i].agerange == 1){
+		            			var ageItem = '0-6岁'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'0-6岁'})
+		            			color.push('#e977ac')
+		            			var circle = '<div class="circle" style="background:#e977ac"></div>'
+			            	}else if(data.data[i].agerange == 2){
+			            		var ageItem = '7-17岁'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'7-17岁'})
+		            			color.push('#e45dcf')
+		            			var circle = '<div class="circle" style="background:#e45dcf"></div>'
+			            	}else if(data.data[i].agerange == 3){
+			            		var ageItem = '18-40岁'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'18-40岁'})
+		            			color.push('#7044c8')	
+		            			var circle = '<div class="circle" style="background:#7044c8"></div>'
+			            	}else if(data.data[i].agerange == 4){
+			            		var ageItem = '41-47岁'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'41-47岁'})
+		            			color.push('#3ab6c1')	
+		            			var circle = '<div class="circle" style="background:#3ab6c1"></div>'
+			            	}else if(data.data[i].agerange == 5){
+			            		var ageItem = '48-65岁'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'48-65岁'})
+		            			color.push('#97b449')	
+		            			var circle = '<div class="circle" style="background:#97b449"></div>'
+			            	}else if(data.data[i].agerange == 6){
+			            		var ageItem = '66岁以上'
+		            			array.push({'value':(data.data[i].ratio)*1000,'name':'65岁以上'})
+		            			color.push('#ca9a5d')	
+		            			var circle = '<div class="circle" style="background:#ca9a5d"></div>'
+
+			            	}
+				        	html+='<div class="house_infor">'+
+									'<div class="owner">'+
+										'<div class="owner_title">'+
+											circle+
+											ageItem+
+										'</div>'+
+										'<span>'+data.data[i].count+'</span> 人'+
+									'</div>'+
+									'<div class="rate">'+
+										'<div class="Proportion">'+
+											'<div>占比</div>'+
+											'<div>'+
+												'<span>'+(data.data[i].ratio)*100+'%</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'
+				        }
 			        }
 			        $('.ageList').html(html)
 			        var dom2 = document.getElementById("house1");
@@ -731,12 +757,16 @@
 	            	// var countTotal=""
 	            	var data=[]
 	            	// var color=[]
-	            	console.log(res);
-			     	for(var i in res){
-			     		var ratio = parseInt(res[i].ratio*100);
-			     		dataAxis.push(res[i].nationName);
-			     		data.push(ratio)
-			     	}
+	            	if(res == undefined){
+	            		dataAxis.push('无');
+	            	}else{
+	            		for(var i in res){
+			     			var ratio = parseInt(res[i].ratio*100);
+				     		dataAxis.push(res[i].nationName);
+				     		data.push(ratio)
+			     	    }
+	            	}
+			     	
 			        var dom = document.getElementById("shape");
 				    var myChart = echarts.init(dom);
 				    var app = {};
