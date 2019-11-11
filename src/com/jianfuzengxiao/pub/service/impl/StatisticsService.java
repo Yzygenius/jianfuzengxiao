@@ -30,8 +30,14 @@ public class StatisticsService extends BaseService implements IStatisticsService
 		double total = Double.parseDouble(entity.getTotal());
 		double rent = Double.parseDouble(entity.getRent());
 		double waitrent = BigDouble.getMinusCount(total, rent);
-		double rentratio = BigDouble.getRoundingCount(BigDouble.getDivisionCount(rent, total));
-		double waitrentratio = BigDouble.getRoundingCount(BigDouble.getDivisionCount(waitrent, total));
+		double rentratio = 0;
+		if (BigDouble.getDivisionCount(rent, total) != 0) {
+			rentratio = BigDouble.getRoundingCount(BigDouble.getDivisionCount(rent, total));
+		}
+		double waitrentratio = 0;
+		if (BigDouble.getDivisionCount(waitrent, total) != 0) {
+			waitrentratio = BigDouble.getRoundingCount(BigDouble.getDivisionCount(waitrent, total));
+		}
 		entity.setRentratio(BigDouble.scientificNotation(rentratio));
 		entity.setWaitrent(BigDouble.scientificNotation(waitrent));
 		entity.setWaitrentratio(BigDouble.scientificNotation(waitrentratio));
