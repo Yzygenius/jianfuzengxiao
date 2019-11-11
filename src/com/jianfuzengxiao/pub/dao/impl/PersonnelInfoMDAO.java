@@ -254,7 +254,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 		sql.append( "SELECT a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_positive_photo,a.certificates_positive_file,a.certificates_negative_photo,a.certificates_negative_file,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,ifnull(date_format(a.update_time,'%Y-%m-%d %H:%i:%s'),'')update_time,a.sts,DATEDIFF(current_date, a.lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
 		sql.append(",b.houses_status,b.prov_name,b.city_name,b.area_name,ifnull(b.community_name,'')community_name,ifnull(b.community_street_name,'')community_street_name ");
 		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
-		sql.append(",b.house_type,b.houses_type_name ");
+		sql.append(",b.house_type,b.houses_type_name,b.houses_type_id ");
 		sql.append("FROM PERSONNEL_INFO a ");
 		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
 		sql.append("WHERE 1=1 ");

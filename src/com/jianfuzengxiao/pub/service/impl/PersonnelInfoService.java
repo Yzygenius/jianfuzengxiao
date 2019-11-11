@@ -252,12 +252,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			logger.info(json.toString());
 			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
 			
-			
-			json.put("type", 1);
-			logger.info(json.toString());
-			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("发送通知错误", e);
 		}
 		
 		return model;
@@ -329,12 +325,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			logger.info(json.toString());
 			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
 			
-			
-			json.put("type", 1);
-			logger.info(json.toString());
-			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("发送通知错误", e);
 		}
 		return model;
 	}

@@ -18,11 +18,18 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String housesAddress;
 	private String houseType;
 	private String housesTypeName;
+	private String housesTypeId;
 	
 	private String adminId;
 	
 	
 	
+	public String getHousesTypeId() {
+		return housesTypeId;
+	}
+	public void setHousesTypeId(String housesTypeId) {
+		this.housesTypeId = housesTypeId;
+	}
 	public String getHouseType() {
 		return houseType;
 	}
