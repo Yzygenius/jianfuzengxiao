@@ -462,8 +462,13 @@
                 console.log(e.target.result)
                 //获取图片dom
                 var img = document.getElementById(id);
+                if(e.target.result !=''){
+                  img.src = e.target.result;
+                }else{
+                       window.location.reload(true); 
+                }
                 //图片路径设置为读取的图片
-                img.src = e.target.result;
+               
                 // if(id=='preview12'){
                 //     document.getElementById("prev2").style.display = "none";
                 // }
@@ -473,9 +478,6 @@
                 } 
 
             };
-           reader.onerror=function(){
-            alert('失败')
-        }
             layer.load(1);
             var formData = new FormData();
             formData.append('file',file);
