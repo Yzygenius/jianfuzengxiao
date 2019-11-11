@@ -6,7 +6,9 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="format-detection" content="telephone=yes"/>
+    <!-- <meta name="format-detection" content="telephone=yes"/> -->
+    <meta name="format-detection"  content="telephone=no">
+    <meta  http-equiv="x-rim-auto-match" content="none">
     <link rel="stylesheet" href="css/personnel_y.css">
     <title>人员信息</title>
     <style>
@@ -88,7 +90,8 @@
                     <div class="item">
                         <div class="item-one">联系电话</div>
                         <!-- <div class="item-two">{{list.telephone}} <a style="display: block;" :href="'tel:'+list.telephone"><img class="phone" src="images/yang/phone.png" alt=""></a></div> -->
-                        <div class="item-two" onclick="callphone">{{list.telephone}}<img class="phone" src="images/yang/phone.png" alt=""></div>
+                        <!-- <div class="item-two" onclick="callphone">{{list.telephone}}<img class="phone" src="images/yang/phone.png" alt=""></div> -->
+                        <a href="wtai://wp//mc;13764567708">拨打10086 </a>  < a href="wtai://wp/ap;13764567708;">将10086存储至电话簿 </a> 
                     </div>
                 </div>
             </div>
@@ -399,14 +402,14 @@
             }
         });
     }
-    function callphone(){
+    // function callphone(){
 
 
-        // mui('body').on('tap','#servicePhone',function(){
-     var phone = '13323232333';
-     plus.device.dial(phone,false);
-    // })
+    //     // mui('body').on('tap','#servicePhone',function(){
+    //  var phone = '13323232333';
+    //  plus.device.dial(phone,false);
+    // // })
 
-    },
+    // },
 </script>
 </html>
