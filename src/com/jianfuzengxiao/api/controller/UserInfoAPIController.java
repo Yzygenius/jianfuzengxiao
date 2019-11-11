@@ -103,7 +103,8 @@ public class UserInfoAPIController extends BaseController {
 			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
-			model.setStatus(UserInfo.status_waiting);
+			//model.setStatus(UserInfo.status_waiting);
+			model.setStatus(UserInfo.status_passed);
 			//base64转file
 			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");

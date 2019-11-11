@@ -124,9 +124,9 @@ public class PersonnelSysController extends BaseController {
 				}
 			}
 			PageInfo pageInfo = getPage();
-			pageInfo.setSortName("createTime");
+			pageInfo.setSortName("updateTime");
 			pageInfo.setSortOrder("desc");
-			entity.setSts("A");
+			//entity.setSts("A");
 			pageInfo = personnelInfoService.queryPage(entity, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);
 		} catch (Exception e) {

@@ -19,6 +19,7 @@ import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.api.controller.CertificatesTypeAPIController;
 import com.jianfuzengxiao.base.common.HttpClientUtlis;
+import com.jianfuzengxiao.base.common.PushUtils;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
 import com.jianfuzengxiao.pub.dao.ILiveTypeMDAO;
@@ -138,6 +139,9 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		housesInfo.setHousesId(model.getHousesId());
 		housesInfo = housesInfoMDAO.queryBean(housesInfo);
 		
+		//消息类型
+		String type = "";
+		
 		LiveTypeMVO liveType = new LiveTypeMVO();
 		//如果身份一致，则为自持房产
 		if (StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), userInfoMVO.getCertificatesNumber())) {
@@ -147,11 +151,13 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 				liveType = liveTypeMDAO.queryBean(liveType);
 				model.setLiveTypeId(LiveType.fangzhu_chanquanren);
 				model.setLiveTypeName(liveType.getLiveTypeName());
+				type = "z0101";
 			}else if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_dianpu)) {
 				liveType.setLiveTypeId(LiveType.dianzhu_chanquanren);
 				liveType = liveTypeMDAO.queryBean(liveType);
 				model.setLiveTypeId(LiveType.dianzhu_chanquanren);
 				model.setLiveTypeName(liveType.getLiveTypeName());
+				type = "z0104";
 			}
 			model.setLeaseMode(PersonnelInfo.lease_mode_changqi);
 			model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
@@ -163,11 +169,13 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 				liveType = liveTypeMDAO.queryBean(liveType);
 				model.setLiveTypeId(LiveType.fangzhu_zulin);
 				model.setLiveTypeName(liveType.getLiveTypeName());
+				type = "z0101";
 			}else if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_dianpu)) {
 				liveType.setLiveTypeId(LiveType.dianzhu_zulin);
 				liveType = liveTypeMDAO.queryBean(liveType);
 				model.setLiveTypeId(LiveType.dianzhu_zulin);
 				model.setLiveTypeName(liveType.getLiveTypeName());
+				type = "z0104";
 			}
 			model.setLeaseMode(PersonnelInfo.lease_mode_youxiaoqi);
 		}
@@ -191,6 +199,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		model.setStatus(PersonnelInfo.status_waiting);
 		model.setPerSort(PersonnelInfo.per_sort_app);
 		model.setAuditRemark(" ");
+		model.setUpdateTime(DateUtil.nowTime());
 		model = this.insert(model);
 		
 		//如果是租赁的上传租赁合同
@@ -237,21 +246,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoService.insert(msgInfoMVO);
 		
 		try {
-			String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
-			JSONObject json = new JSONObject();
-			json.put("type", 0);
-			json.put("userId", model.getUserId());
-			json.put("userType", 1);
-			json.put("appKey", "pasq");
 			
-			JSONObject json2 = new JSONObject();
-			json2.put("title", title);
-			json2.put("body", content);
-			json2.put("type", "z0101");
-			json.put("body", json2);
-			logger.info(json.toString());
-			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
-			
+			PushUtils.toPush(model.getUserId(), title, content, type);	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
 		}
@@ -272,6 +268,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		}
 		
 		model.setAuditRemark(" ");
+		model.setUpdateTime(DateUtil.nowTime());
 		model = this.insert(model);
 		
 		PersonnelInfoMVO personnelInfoMVO = new PersonnelInfoMVO();
@@ -308,23 +305,19 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoMVO.setContent(content);
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
-		
+		String type = "";
+		if (model.getLiveTypeId().equals("5")) {
+			type = "z0201";
+		}
+		if (model.getLiveTypeId().equals("6")) {
+			type = "z0208";
+		}
+		if (model.getLiveTypeId().equals("7")) {
+			type = "z0205";
+		}
 		try {
-			String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
-			JSONObject json = new JSONObject();
-			json.put("type", 0);
-			json.put("userId", model.getUserId());
-			json.put("userType", 1);
-			json.put("appKey", "pasq");
 			
-			JSONObject json2 = new JSONObject();
-			json2.put("title", title);
-			json2.put("body", content);
-			json2.put("type", "z0101");
-			json.put("body", json2);
-			logger.info(json.toString());
-			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
-			
+			PushUtils.toPush(userId, title, content, type);	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
 		}
@@ -346,16 +339,26 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgTypeMVO.setMsgTypeId("5");
 		msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
 		
+		String title = msgTypeMVO.getMsgTypeName();
+		String content = "您所提交的【身份信息更新审核】已进入审核流程，请耐心等待";
+				
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(personnelInfo.getUserId());
 		msgInfoMVO.setPersonnelId(personnelInfoMVO.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setTitle(msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setContent("您所提交的【身份信息更新审核】已进入审核流程，请耐心等待");
+		msgInfoMVO.setTitle(title);
+		msgInfoMVO.setContent(content);
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
 		
+		try {
+			
+			PushUtils.toPush(personnelInfo.getUserId(), title, content, "z0301");	
+		} catch (Exception e) {
+			logger.info("发送通知错误", e);
+		}
+
 		entity.setStatus(PersonnelInfo.status_waiting);
 		return this.update(entity);
 	}
@@ -365,12 +368,13 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		PersonnelInfoMVO per = personnelInfoMDAO.queryBean(entity);
 		
-		this.update(entity);
+		personnelInfoMDAO.update(entity);
 		
 		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
 		housesInfoMVO.setHousesId(per.getHousesId());
 		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);
 		
+		String type = "";
 		String hname = "";
 		if (StringUtils.equals(HousesInfo.houses_status_fangwu, housesInfoMVO.getHousesStatus())) {
 			hname = housesInfoMVO.getCommunityName()+" "+housesInfoMVO.getStoriedBuildingNumber()+"-"+housesInfoMVO.getUnit()+"-"+housesInfoMVO.getHouseNumber();
@@ -378,35 +382,95 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		if (StringUtils.equals(HousesInfo.houses_status_dianpu, housesInfoMVO.getHousesStatus())) {
 			hname = per.getEnterpriseName();
 		}
+		if(per.getLiveTypeId().equals("1") || per.getLiveTypeId().equals("3")){
+			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
+				type = "z0102";
+			}
+			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
+				type = "z0103";
+			}
+		}
+		if(per.getLiveTypeId().equals("2") || per.getLiveTypeId().equals("4")){
+			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
+				type = "z0102";
+			}
+			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
+				type = "z0103";
+			}
+		}
+		if(per.getLiveTypeId().equals("5")){
+			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
+				type = "z0202";
+			}
+			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
+				type = "z0203";
+			}
+		}
+		if(per.getLiveTypeId().equals("6")){
+			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
+				type = "z0209";
+			}
+			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
+				type = "z0209";
+			}
+		}
+		if(per.getLiveTypeId().equals("7")){
+			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
+				type = "z0206";
+			}
+			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
+				type = "z0207";
+			}
+		}
 		
 		if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_passed)) {
 			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
 			msgTypeMVO.setMsgTypeId("4");
 			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
 			
-			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
-			msgInfoMVO.setUserId(per.getUserId());
-			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
-			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
-			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
-			msgInfoMVO.setTitle(per.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
-			msgInfoMVO.setContent("您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知");
-			msgInfoMVO.setStatus(MsgInfo.status_not_read);
-			msgInfoService.insert(msgInfoMVO);
-		}else if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_reject)) {
-			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
-			msgTypeMVO.setMsgTypeId("3");
-			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
+			String title = per.getLiveTypeName() + msgTypeMVO.getMsgTypeName();
+			String content = "您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知";
 			
 			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 			msgInfoMVO.setUserId(per.getUserId());
 			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
 			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
-			msgInfoMVO.setTitle(per.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
-			msgInfoMVO.setContent("您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】未能通过审核，请悉知");
+			msgInfoMVO.setTitle(title);
+			msgInfoMVO.setContent(content);
 			msgInfoMVO.setStatus(MsgInfo.status_not_read);
 			msgInfoService.insert(msgInfoMVO);
+			
+			try {
+				
+				PushUtils.toPush(per.getUserId(), title, content, type);	
+			} catch (Exception e) {
+				logger.info("发送通知错误", e);
+			}
+			
+		}else if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_reject)) {
+			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
+			msgTypeMVO.setMsgTypeId("3");
+			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
+			
+			String title = per.getLiveTypeName() + msgTypeMVO.getMsgTypeName();
+			String content = "您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知";
+			
+			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
+			msgInfoMVO.setUserId(per.getUserId());
+			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
+			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
+			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
+			msgInfoMVO.setTitle(title);
+			msgInfoMVO.setContent(content);
+			msgInfoMVO.setStatus(MsgInfo.status_not_read);
+			msgInfoService.insert(msgInfoMVO);
+			try {
+				
+				PushUtils.toPush(per.getUserId(), title, content, type);	
+			} catch (Exception e) {
+				logger.info("发送通知错误", e);
+			}
 		}
 		return 1;
 	}

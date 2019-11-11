@@ -140,7 +140,7 @@
                     <li>
                         <a _href="/jianfuzengxiao/system/per/toAuditZuhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>租户审核</cite>
+                            <cite>租户/员工/家属审核</cite>
                         </a>
                     </li >
                 </ul>
@@ -220,7 +220,7 @@
                     <li>
                         <a _href="/jianfuzengxiao/system/per/toAuditZuhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>租户审核</cite>
+                            <cite>租户/员工/家属审核</cite>
                         </a>
                     </li >
                 </ul>
