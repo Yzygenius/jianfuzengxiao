@@ -38,11 +38,9 @@
             </div>
         </div>
         <div class="facell">
-            <div class="face" id="enter1" style="border: 1px solid #eee;">
+            <div class="face" id="enter1">
                 <img src="images/tao/face.png" alt="" id="preview10">
-                <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
-                    capture="camera" />
-                <p class="faceword" id="faceph" style="display:none">点击拍摄人脸照片</p>
+                <p class="faceword" id="faceph">点击拍摄人脸照片</p>
             </div>
             <div class="allimg">
                 <div class="a">
@@ -246,6 +244,7 @@
             },
             success:function(data){
                 var res=data.data
+                console.log(res)
                 if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
                     var leaseStartTime = res.leaseStartTime
                     var leaseStopTime = ""
@@ -253,11 +252,11 @@
                     var leaseStartTime = res.leaseStartTime
                     var leaseStopTime = res.leaseStopTime
                 }
-                if(res.gender == 1){
-                    var gender = '男'
-                }else if(res.gender == 2){
-                    var gender = '女'
-                }
+                // if(res.gender == 1){
+                //     var gender = '男'
+                // }else if(res.gender == 2){
+                //     var gender = '女'
+                // }
                 sessionStorage.housesId = res.housesId
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
@@ -377,10 +376,18 @@
                         layer.closeAll('loading');
                         if(data.code == 1){
                             layer.msg('提交成功');
-                            setTimeout(function(){
-                                location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
-                                window.closeAll(); 
-                            }, 1500);
+                            if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 3 || liveTypeId == 4){
+                                 setTimeout(function(){
+                                    // location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
+                                    window.location.href = "verify1.html";
+                                }, 1500);
+                             }else{
+                                  setTimeout(function(){
+                                    location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
+                                    window.closeAll(); 
+                                }, 1500);
+                             }
+                           
                         }else{
                             layer.msg(data.msg);
                         }

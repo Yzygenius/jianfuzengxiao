@@ -95,6 +95,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
                 pageSize:10,
                 page:1
             },
@@ -167,6 +168,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
                 pageSize:10,
                 page:1
             },
@@ -204,6 +206,9 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0'
+
+
             },
             success:function(data){
                 if(data.code == 1){
@@ -297,7 +302,9 @@
     };
     // 点击添加房产
     function btnhref(){
-        window.location.href = "verify1_y.html?userId="+sessionStorage.userId;
+        // window.location.href = "verify1_y.html?userId="+sessionStorage.userId;
+        window.location.href = "verify1_y.html?userId="+"3f46dc65c0494fd88c08b5f013d446f0";
+
     }
     function onload(){
         //请求数据
@@ -312,6 +319,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
                 pageSize:10,
                 page:page
             },
@@ -426,6 +434,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId,
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
                 pageSize:10,
                 page:page
             },

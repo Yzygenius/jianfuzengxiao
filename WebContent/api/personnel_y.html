@@ -153,7 +153,11 @@
                     <div class="item-one">门店地址：</div>
                     <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
                 </div>
-                <div class="item">
+                <div class="item" v-if="housesTypeId == 3">
+                    <div class="item-one">门店类型：</div>
+                    <div class="item-two">{{list.housesTypeName}}({{list.enterpriseName}})</div>
+                </div>
+                <div class="item" v-else>
                     <div class="item-one">门店类型：</div>
                     <div class="item-two">{{list.housesTypeName}}</div>
                 </div>
@@ -192,7 +196,11 @@
                     <div class="item-one">房屋地址：</div>
                     <div class="item-two address">{{list.provName}}{{list.cityName}}{{list.areaName}}{{list.communityName}}{{list.communityStreetName}}{{list.housesAddress}}</div>
                 </div>
-                <div class="item">
+                <div class="item" v-if="housesTypeId == 3">
+                    <div class="item-one">房屋类型：</div>
+                    <div class="item-two">{{list.housesTypeName}}({{list.enterpriseName}})</div>
+                </div>
+                <div class="item" v-else>
                     <div class="item-one">房屋类型：</div>
                     <div class="item-two">{{list.housesTypeName}}</div>
                 </div>
@@ -301,7 +309,8 @@
            housesStatus:'',//房屋类型,
            gender:'', //性别
            pop_up:false,
-           liveTypeId:''
+           liveTypeId:'',
+           housesTypeId:''
         },
         mounted:function (){
 
@@ -388,6 +397,7 @@
               app.status=res.status
               app.housesStatus = res.housesStatus
               app.liveTypeId = res.liveTypeId
+              app.housesTypeId = res.housesTypeId
               console.log(res.liveTypeId)
                 // 拨打电话
                document.getElementById('phone').onclick = function(e) {
@@ -427,6 +437,7 @@
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
                 userId:sessionStorage.userId
+                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
             },
             success:function(data){
               layer.closeAll('loading')
@@ -448,6 +459,7 @@
               app.list = res
               app.status=res.status
               app.liveTypeId = res.liveTypeId
+              app.housesTypeId = res.housesTypeId
               console.log(res.liveTypeId)
               // 拨打电话
               document.getElementById('phone').onclick = function(e) {

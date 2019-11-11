@@ -113,7 +113,13 @@
                 // 传到下一页参数
                 var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
+
                 var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
+                if(data.data.houses.housesTypeId == 3){
+                    var houseKind = data.data.houses.housesTypeName + '('+data.data.houses.enterpriseName+')'
+                }else{
+                    var houseKind = data.data.houses.housesTypeName
+                }
                 var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
                             in_title_time+upload_btn+
@@ -124,7 +130,7 @@
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">房屋类型</div>'+
-                            '<div class="haddress_detail">'+data.data.houses.housesTypeName+'</div>'+
+                            '<div class="haddress_detail">'+houseKind+'</div>'+
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">房屋户型</div>'+
@@ -139,6 +145,11 @@
                 var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
                 $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = ''
+                 if(data.data.houses.housesTypeId == 3){
+                    var houseKind = data.data.houses.housesTypeName + '('+data.data.houses.enterpriseName+')'
+                }else{
+                    var houseKind = data.data.houses.housesTypeName
+                }
                 var html = '<div class="hinfor_title">'+img+
                             '<div class="in_title_text">'+data.data.houses.communityStreetName+'</div>'+
                             in_title_time+upload_btn+
@@ -153,7 +164,7 @@
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">门店类型</div>'+
-                            '<div class="haddress_detail">'+data.data.houses.housesTypeName+'</div>'+
+                            '<div class="haddress_detail">'+houseKind+'</div>'+
                         '</div>'+
                         '<div class="hinfor_address">'+
                             '<div class="haddress">门店户型</div>'+
