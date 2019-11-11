@@ -79,6 +79,19 @@
 						</bean>
 					</property>
 				</bean>
+				<!-- housesType表查id的缓存，ID-VALUE  -->
+				<bean class="com.bamboo.framework.entity.TableCacheConfig">
+					<property name="cacheName" value="table.cache.idvalue.housestypeid"/>
+					<property name="cacheType" value="ID_VALUE"/>
+					<property name="sql" value="select houses_type_name as value, houses_type_id as label from houses_type" />
+					<property name="configuration">
+						<bean class="net.sf.ehcache.config.CacheConfiguration">
+							<property name="maxElementsInMemory" value="10000"/>
+							<property name="eternal" value="false"/>
+							<property name="overflowToDisk" value="false"/>
+						</bean>
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>

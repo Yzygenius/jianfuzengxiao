@@ -13,4 +13,8 @@ import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 public interface IExcelImportService extends IService {
 
 	public boolean addPersonnelExcel(String filePath) throws Exception;
+	
+	public boolean addFangwuExcel(String filePath) throws Exception;
+	
+	public boolean addMendianExcel(String filePath) throws Exception;
 }
