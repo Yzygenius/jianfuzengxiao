@@ -75,6 +75,10 @@ layui.use(['form','layer', 'upload'], function(){
    
   	//监听提交
 	form.on('submit(update)', function(data){
+		if($('#newPwd').val().length < 6 || $('#newPwd').val().length > 16){
+			layer.msg("请输入6-16位的密码", {icon: 7});
+			return false;
+		}
 		if($('#newPwd').val() != $('#confirmPwd').val()){
 			layer.msg('两次输入密码不一致', {icon : 7});
 			return false;

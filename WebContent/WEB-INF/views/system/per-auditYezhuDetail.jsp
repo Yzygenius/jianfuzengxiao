@@ -53,8 +53,8 @@
 		  	<tr>
 		    	<td>民族：${per.nationName }</td>
 		  	</tr>
-		  	<tr>
-		    	<td style="height: 120px;">人脸照片：<img onclick="opneimg(this)" src="${per.facePhoto }"/></td>
+		  	<tr style="height: 120px;">
+		    	<td >人脸照片：<img onclick="opneimg(this)" src="${per.facePhoto }"/></td>
 		  	</tr>
 		  	<tr>
 		    	<td style="height: 120px;">联系电话：${per.telephone }</td>
@@ -175,31 +175,31 @@
 	<c:if test="${per.status == 1 ||  per.status == 3}">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
-				<label class="layui-form-label">审核</label>
-				<div class="layui-input-block">
+				<label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">审核</label>
+				<div class="layui-input-block" style="font-size:16px;font-weight: bold;">
 					<c:if test="${per.status == 1}">
-						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" checked>
-						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回">
+						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" checked >
+						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" >
 					</c:if>
 					<c:if test="${per.status == 3}">
-						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过">
-						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" checked>
+						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" >
+						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" checked >
 					</c:if>
 				</div>
 			</div>
 			<c:if test="${per.status == 1}">
 				<div id="desc" class="layui-form-item layui-form-text" style="display: none;">
-				    <label class="layui-form-label">驳回原因</label>
+				    <label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">驳回原因</label>
 				    <div class="layui-input-block">
-				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+				      <textarea name="desc" placeholder="请输入内容，1000字符以内" class="layui-textarea" maxlength="1000"></textarea>
 				    </div>
 				</div>
 			</c:if>
 			<c:if test="${per.status == 3}">
 				<div id="desc" class="layui-form-item layui-form-text">
-				    <label class="layui-form-label">驳回原因</label>
+				    <label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">驳回原因</label>
 				    <div class="layui-input-block">
-				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea">${per.auditRemark }</textarea>
+				      <textarea name="desc" placeholder="请输入内容，1000字符以内" class="layui-textarea" maxlength="1000">${per.auditRemark }</textarea>
 				    </div>
 				</div>
 			</c:if>

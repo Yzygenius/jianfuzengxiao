@@ -105,10 +105,12 @@ public class UserInfoAPIController extends BaseController {
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
 			model.setStatus(UserInfo.status_waiting);
 			//base64转file
-			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
-			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
+			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
+			Map<String, String> facePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
 			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
+			model.setFacePhoto(request.getContextPath() + "/" + facePhoto.get("relativePath"));
 			userInfoService.insert(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -215,12 +217,16 @@ public class UserInfoAPIController extends BaseController {
 			//model.setStatus(UserInfo.status_waiting);
 			//base64转file
 			if (StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {
-				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 				model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
 			}
 			if (StringUtils.substringBefore(model.getCertificatesNegativePhoto(), ",").equals("data:image/jpeg;base64")) {
-				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
 				model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
+			}
+			if (StringUtils.substringBefore(model.getFacePhoto(), ",").equals("data:image/jpeg;base64")) {
+				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
+				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
@@ -248,12 +254,16 @@ public class UserInfoAPIController extends BaseController {
 			//model.setStatus(UserInfo.status_waiting);
 			//base64转file
 			if (StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {
-				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto());
+				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 				model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
 			}
 			if (StringUtils.substringBefore(model.getCertificatesNegativePhoto(), ",").equals("data:image/jpeg;base64")) {
-				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto());
+				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
 				model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
+			}
+			if (StringUtils.substringBefore(model.getFacePhoto(), ",").equals("data:image/jpeg;base64")) {
+				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
+				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);

@@ -1,16 +1,24 @@
 package com.jianfuzengxiao.pub.service.impl;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.ClientProtocolException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 import com.bamboo.framework.base.impl.BaseService;
 import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
+import com.jianfuzengxiao.api.controller.CertificatesTypeAPIController;
+import com.jianfuzengxiao.base.common.HttpClientUtlis;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
 import com.jianfuzengxiao.pub.dao.ILiveTypeMDAO;
@@ -35,7 +43,8 @@ import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 @Service
 public class PersonnelInfoService extends BaseService implements IPersonnelInfoService {
-
+	private static Logger logger = LoggerFactory.getLogger(PersonnelInfoService.class);
+	
 	@Autowired
 	private IPersonnelInfoMDAO personnelInfoMDAO;
 	
@@ -215,15 +224,41 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgTypeMVO.setMsgTypeId("1");
 		msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
 		
+		String title = model.getLiveTypeName() + msgTypeMVO.getMsgTypeName();
+		String content = "您所提交的【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已进入审核流程，请耐心等待";
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(model.getUserId());
 		msgInfoMVO.setPersonnelId(model.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setTitle(model.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setContent("您所提交的【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已进入审核流程，请耐心等待");
+		msgInfoMVO.setTitle(title);
+		msgInfoMVO.setContent(content);
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
+		
+		try {
+			String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
+			JSONObject json = new JSONObject();
+			json.put("type", 0);
+			json.put("userId", model.getUserId());
+			json.put("userType", 1);
+			json.put("appKey", "pasq");
+			
+			JSONObject json2 = new JSONObject();
+			json2.put("title", title);
+			json2.put("body", content);
+			json2.put("type", "z0101");
+			json.put("body", json2);
+			logger.info(json.toString());
+			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
+			
+			
+			json.put("type", 1);
+			logger.info(json.toString());
+			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return model;
 	}
@@ -266,15 +301,41 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgTypeMVO.setMsgTypeId("1");
 		msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
 		
+		String title = model.getLiveTypeName() + msgTypeMVO.getMsgTypeName();
+		String content = "您所提交的【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已进入审核流程，请耐心等待";
 		MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
 		msgInfoMVO.setUserId(userId);
 		msgInfoMVO.setPersonnelId(model.getPersonnelId());
 		msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 		msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setTitle(model.getLiveTypeName() + msgTypeMVO.getMsgTypeName());
-		msgInfoMVO.setContent("您所提交的【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已进入审核流程，请耐心等待");
+		msgInfoMVO.setTitle(title);
+		msgInfoMVO.setContent(content);
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
+		
+		try {
+			String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
+			JSONObject json = new JSONObject();
+			json.put("type", 0);
+			json.put("userId", model.getUserId());
+			json.put("userType", 1);
+			json.put("appKey", "pasq");
+			
+			JSONObject json2 = new JSONObject();
+			json2.put("title", title);
+			json2.put("body", content);
+			json2.put("type", "z0101");
+			json.put("body", json2);
+			logger.info(json.toString());
+			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
+			
+			
+			json.put("type", 1);
+			logger.info(json.toString());
+			logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return model;
 	}
 

@@ -350,7 +350,7 @@
 				</button> -->
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
-					<i class="layui-icon">&#xe640;</i>删除
+					<i class="layui-icon">&#xe640;</i>解除人房关系
 				</button>
 			</td>
 		</tr>

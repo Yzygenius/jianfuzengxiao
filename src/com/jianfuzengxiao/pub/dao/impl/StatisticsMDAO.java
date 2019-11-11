@@ -272,11 +272,11 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 	@Override
 	public Statistics queryTodayReportPer(Statistics entity) throws SysException, AppException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select sum(case when status !='1' then 1 else 0 end) as audit, ");
-		sql.append("sum(case when status='1' then 1 else 0 end) as waitaudit, ");
+		sql.append("select ifnull(sum(case when status !='1' then 1 else 0 end),0) as audit, ");
+		sql.append("ifnull(sum(case when status='1' then 1 else 0 end),0) as waitaudit, ");
 		sql.append("count(personnel_id) as total,");
 		sql.append(
-				"cast((sum(case when status !='1' then 1 else 0 end)/COUNT(personnel_id)) as decimal(18,2))*100 as auditratio  ");
+				"ifnull(cast((sum(case when status !='1' then 1 else 0 end)/COUNT(personnel_id)) as decimal(18,2)),0) as auditratio  ");
 		sql.append("from personnel_info ");
 		sql.append("WHERE sts='A' and date(create_time) = curdate() ");
 		List<Statistics> resultList = null;

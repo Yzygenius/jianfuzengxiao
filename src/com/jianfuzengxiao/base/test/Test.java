@@ -38,7 +38,7 @@ public class Test {
 		System.out.println(StringUtils.substringBefore(time1, "-"));*/	
 		
 		//http://消息中心IP/platform  api.usnoon.com   admin.usnoon.com
-		String url = "http://101.201.141.82:8769/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
+		String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
 		JSONObject json = new JSONObject();
 		json.put("type", 0);
 		json.put("userId", "1561651");

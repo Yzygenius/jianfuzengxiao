@@ -74,7 +74,7 @@
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
 			<button type="button" class="layui-btn" id="uploadExcel"><i class="layui-icon">&#xe608;</i>excel导入</button>
-			<button type="button" class="layui-btn" onclick="banner_download()"><i class="layui-icon">&#xe608;</i>excel导入</button>
+			<button type="button" class="layui-btn" onclick="banner_download()"><i class="layui-icon">&#xe608;</i>excel导出</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">

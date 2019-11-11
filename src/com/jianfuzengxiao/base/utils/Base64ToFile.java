@@ -11,12 +11,30 @@ import java.util.Map;
 import com.bamboo.framework.common.util.DateUtil;
 import com.jianfuzengxiao.base.common.Constant;
 import com.jianfuzengxiao.base.common.DataFileUtil;
+import com.jianfuzengxiao.base.common.RC;
 
 import sun.misc.BASE64Decoder;
 
 public class Base64ToFile {
 
-	public static Map<String, String> base64ToFile(String base64) throws Exception {
+	public static Map<String, String> base64ToFile(String base64, String type) throws Exception {
+		String uploadImgDir = "";
+		switch (type) {
+		case "A":
+			uploadImgDir = Constant.UPLOAD_FACE_IMAGE_DIR;
+			break;
+		case "B":
+			uploadImgDir = Constant.UPLOAD_CERT_IMAGE_DIR;
+			break;
+		case "C":
+			uploadImgDir = Constant.UPLOAD_LEASE_CONTRACT_IMAGE_DIR;
+			break;
+		case "Z":
+			uploadImgDir = Constant.UPLOAD_OTHER_IMAGE_DIR;
+			break;
+		//default:
+			//return apiResult(RC.OTHER_CZ_ERROR);
+		}
 		Map<String, String> map = new HashMap<String, String>();
 		if(base64.contains("data:image")){
 			base64 = base64.substring(base64.indexOf(",")+1);
@@ -27,7 +45,7 @@ public class Base64ToFile {
 		String fileName = ApiUtil.uuid() + ".png";
 		//创建文件目录
 		String day = DateUtil.now("yyyyMMdd");
-		String relativePath = Constant.UPLOAD_CERT_IMAGE_DIR + day;
+		String relativePath = uploadImgDir + day;
 		String filePath = DataFileUtil.getWebappRoot() + "/" + relativePath;
 		File dir = new File(filePath);
 		if (!dir.exists() && !dir.isDirectory()) {

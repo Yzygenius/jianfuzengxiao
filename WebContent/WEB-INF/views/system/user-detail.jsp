@@ -89,6 +89,29 @@
 		  	<tr>
 		    	<td>办证机关：${user.certificatesOffice }</td>
 		  	</tr>
+		  	<c:if test="${user.status == 1 }">
+			  	<tr>
+			    	<td>状态：待审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${user.status == 2 }">
+			  	<tr>
+			    	<td>状态：已通过审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${user.status == 3 }">
+			  	<tr>
+			    	<td>状态：未通过审核</td>
+			  	</tr>
+		  	</c:if>
+		  	<c:if test="${user.status == '' ||  user.status == null}">
+			  	<tr>
+			    	<td>状态： </td>
+			  	</tr>
+		  	</c:if>
+		  	<tr>
+		    	<td>&nbsp;</td>
+		  	</tr>
 		  	<tr>
 		    	<td>上报时间：${user.createTime }</td>
 		  	</tr>
@@ -109,31 +132,31 @@
 	<c:if test="${user.status == 1 ||  user.status == 3}">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
-				<label class="layui-form-label">审核</label>
-				<div class="layui-input-block">
+				<label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">审核</label>
+				<div class="layui-input-block" style="font-size:16px;font-weight: bold;">
 					<c:if test="${user.status == 1}">
-						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" checked>
-						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回">
+						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" checked >
+						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" >
 					</c:if>
 					<c:if test="${user.status == 3}">
-						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过">
-						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" checked>
+						<input type="radio" name="audit" lay-filter="ra" value="2" title="通过" >
+						<input type="radio" name="audit" lay-filter="ra" value="3" title="驳回" checked >
 					</c:if>
 				</div>
 			</div>
 			<c:if test="${user.status == 1}">
 				<div id="desc" class="layui-form-item layui-form-text" style="display: none;">
-				    <label class="layui-form-label">驳回原因</label>
+				    <label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">驳回原因</label>
 				    <div class="layui-input-block">
-				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+				      <textarea name="desc" placeholder="请输入内容，1000字符以内" class="layui-textarea" maxlength="1000"></textarea>
 				    </div>
 				</div>
 			</c:if>
 			<c:if test="${user.status == 3}">
 				<div id="desc" class="layui-form-item layui-form-text">
-				    <label class="layui-form-label">驳回原因</label>
+				    <label class="layui-form-label" style="text-align: left;padding: 9px 0 9px 30px;font-size:16px;font-weight: bold;">驳回原因</label>
 				    <div class="layui-input-block">
-				      <textarea name="desc" placeholder="请输入内容" class="layui-textarea">${user.auditRemark }</textarea>
+				      <textarea name="desc" placeholder="请输入内容，1000字符以内" class="layui-textarea" maxlength="1000">${user.auditRemark }</textarea>
 				    </div>
 				</div>
 			</c:if>

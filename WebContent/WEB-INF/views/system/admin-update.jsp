@@ -86,6 +86,18 @@ layui.use(['form','layer', 'upload'], function(){
    
   	//监听提交
 	form.on('submit(update)', function(data){
+		if($('#loginName').val().length < 6 || $('#loginName').val().length > 16){
+			layer.msg("请输入6-16位的用户名", {icon: 7});
+			return false;
+		}
+		if($('#username').val().length < 1){
+			layer.msg("请输入有效姓名", {icon: 7});
+			return false;
+		}
+		if($('#telephone').val().length != 11){
+			layer.msg("请输入有效电话", {icon: 7});
+			return false;
+		}
 	    $.ajax({  
 			url : "/jianfuzengxiao/system/admin/updateAdmin.html",  
 			type : 'post',

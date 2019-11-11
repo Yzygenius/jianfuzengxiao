@@ -78,7 +78,7 @@
 				<span>楼号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" lay-verify="required" required="" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="10" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -89,7 +89,7 @@
 				<span>单元</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="unit" name="unit" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="unit" name="unit" lay-verify="required" required="" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="10" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -100,7 +100,7 @@
 				<span>门牌号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="houseNumber" name="houseNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="houseNumber" name="houseNumber" lay-verify="required" required="" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="10" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -111,7 +111,7 @@
 				<span>详细地址</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="housesAddress" name="housesAddress" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="housesAddress" name="housesAddress" lay-verify="required" required="" maxlength="50" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -122,7 +122,7 @@
 				<span>房屋户型</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="houseType" name="houseType" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="houseType" name="houseType" lay-verify="required" required="" maxlength="10" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -146,7 +146,7 @@
 					<span>产权证号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="propertyCertificatesNumber" name="propertyCertificatesNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="propertyCertificatesNumber" name="propertyCertificatesNumber" lay-verify="required" oninput = "value=value.replace(/[^\w\\]/ig, '')" maxlength="50" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -157,7 +157,7 @@
 					<span>产权人姓名</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="propertyOwnerName" name="propertyOwnerName" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="propertyOwnerName" name="propertyOwnerName" lay-verify="required" required="" maxlength="30" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>

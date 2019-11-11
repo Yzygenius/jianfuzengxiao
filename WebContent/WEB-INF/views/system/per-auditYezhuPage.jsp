@@ -83,8 +83,10 @@
 					<th>民族</th>
 					<th>联系电话</th>
 					<th>类型</th>
+					<th>居住地址</th>
 					<th>居住时间</th>
 					<th>状态</th>
+					<th>最新上报时间</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -108,8 +110,10 @@
 			<td row="nationName"></td>
 			<td row="telephone"></td>
 			<td row="liveTypeName"></td>
+			<td row="lesaseAddress"></td>
 			<td row="leaseTime"></td>
 			<td row="status"></td>
+			<td row="auditTime"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
@@ -274,6 +278,8 @@
 							tr.find('[row=nationName]').text(data[i].nationName);
 							tr.find('[row=telephone]').text(data[i].telephone);
 							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
+							//居住地址
+							tr.find('[row=leaseAddress]').text(data[i].liveTypeName);
 							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
 								tr.find('[row=leaseTime]').text('长期');
 							}else{
@@ -286,7 +292,8 @@
 							}else if(data[i].status == 3){
 								tr.find('[row=status]').text('未通过审核');
 							}
-
+							//最新上报时间
+							tr.find('[row=auditTime]').text(data[i].liveTypeName);
 							$('#x-img').append(tr);
 							//close loading
 							layer.closeAll('loading');
