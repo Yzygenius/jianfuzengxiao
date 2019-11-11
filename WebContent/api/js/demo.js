@@ -39,6 +39,24 @@ setupWebViewJavascriptBridge(function(bridge) {
 	});
 
 })
+document.getElementById('enter1').onclick = function(e) {
+	var data = {
+		'action': 'jsNGetPhoto',
+		'needCallBack': '',
+		'message': '',
+		'parameter': {
+			'scale': '0.5,1.0',
+		}
+	}
+	window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+		console.log(resp)
+		var list=JSON.parse(resp)
+		// document.getElementById("content").innerHTML = list.msg;
+
+        document.getElementById('preview10').setAttribute('src','');
+		document.getElementById('preview10').setAttribute('src','data:image/jpeg;base64,'+list.data.img)
+	});
+}
 document.getElementById('enter2').onclick = function(e) {
 	var data = {
 		'action': 'jsNGetIDCard',

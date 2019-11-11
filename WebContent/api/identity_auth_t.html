@@ -23,8 +23,8 @@
         <div class="facell">
             <div class="face" id="enter1">
                 <img src="images/tao/face.png" alt="" id="preview10">
-                <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
-                    capture="camera" />
+             <!--    <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
+                    capture="camera" /> -->
                 <p class="faceword" id="faceph">点击拍摄人脸照片</p>
             </div>
             <div class="allimg">
@@ -208,6 +208,7 @@
             var infor = {
                     'userId' : sessionStorage.userId,
                     'facePhoto' : $('#preview10').attr('src'),
+                    // 'facePhoto':document.getElementById('#preview10').attr('src'),
                     'certificatesPositivePhoto' : $('#preview11').attr('src'),
                     'certificatesNegativePhoto' : $('#preview12').attr('src'),
                     'certificatesTypeName' : document.getElementById('trigger1').value,
@@ -226,9 +227,9 @@
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
             var base = 'data:image/jpeg;base64';
-            if($('#preview10').attr('name') !== 'success'){
-                infor.facePhoto = ''
-            }
+            // if($('#preview10').attr('name') !== 'success'){
+            //     infor.facePhoto = ''
+            // }
             if(!infor.certificatesNegativePhoto.match(base)){
                 infor.certificatesNegativePhoto = ''
             }
@@ -284,9 +285,10 @@
                     	console.log(data)
                         layer.closeAll('loading');
                         if(data.code == 1){
-                            layer.msg('提交成功');
+                            // layer.msg('提交成功');
                             setTimeout(function(){
-                                location.replace("idenWait_y.html")
+                                // location.replace("idenWait_y.html")
+                                window.location.href = "verify1_y.html"
                             }, 1500);
                         }else{
                             layer.msg(data.msg);
@@ -499,7 +501,7 @@
                         layer.closeAll('loading');
                         layer.msg('上传成功',{time:1000});
                         $('#preview10').attr('src',res.data.absolutePath);
-                        $('#preview10').attr('name','success');
+                        // $('#preview10').attr('name','success');
                         $('#faceph').remove();
                     }else{
                         layer.msg(res.msg);
