@@ -398,7 +398,7 @@
 	                    $('#percent2').html(data.data.szfratio+'%')
 	                    $('#num3').html(data.data.sp)
 	                    $('#percent3').html(data.data.spratio+'%')
-	                    array.push({value:(data.data.zjfratio)*10, name:'自建房'},{value:(data.data.szfratio)*10, name:'商住房'},{value:(data.data.spratio)*10, name:'门店'})
+	                    array.push({value:(data.data.zjfratio)*10, name:'自建房'},{value:(data.data.szfratio)*10, name:'商住房'},{value:(data.data.spratio)*10, name:'商铺'})
 	            	}
                     
 	            	// console.log(data.data)
