@@ -87,7 +87,7 @@
                     </div>
                     <div class="item">
                         <div class="item-one">联系电话</div>
-                        <div class="item-two">{{list.telephone}} <a style="display: block;" :href="'tel:'+list.telephone"><img class="phone" src="images/yang/phone.png" alt=""></a></div>
+                        <div class="item-two">{{list.telephone}}<img class="phone" src="images/yang/phone.png" id="phone" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -240,7 +240,48 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/jquery.base64.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/alrem.js" charset="utf-8"></script>
 <script type="text/javascript">
+    console.log(jQuery.base64.encode('eGlhb21hYnVoZWk='))
+    function setupWebViewJavascriptBridge(callback) {
+        if(window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            document.addEventListener(
+                'WebViewJavascriptBridgeReady',
+                function() {
+                    callback(WebViewJavascriptBridge)
+                },
+                false
+            );
+        }
+
+        if(window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback);
+        }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function() {
+            document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+    }
+
+    setupWebViewJavascriptBridge(function(bridge) {
+        //注册原生调起方法
+        //参数1： buttonjs 注册flag 供原生使用，要和原生统一
+        //参数2： data  是原生传给js 的数据
+        //参数3： responseCallback 是js 的回调，可以通过该方法给原生传数据
+        bridge.registerHandler("webReCall", function(data, responseCallback) {
+
+            document.getElementById("content").innerHTML = data;
+            responseCallback("button js callback");
+        });
+
+    })
      //获取参数
     function getQueryString(name) {
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -286,6 +327,8 @@
         }else{
             nonzero();
         }
+
+
         $('.delete').click(function(){
             //请求数据
             $.ajax({
@@ -346,12 +389,28 @@
               app.housesStatus = res.housesStatus
               app.liveTypeId = res.liveTypeId
               console.log(res.liveTypeId)
+                // 拨打电话
+               document.getElementById('phone').onclick = function(e) {
+                    var data = {
+                        'action': 'jsNCallTel',
+                        'needCallBack': '0',
+                        'message': '',
+                        'parameter': {
+                            'tel': res.telephone,
+                        }
+                    }
+                    window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                        // var list=JSON.parse(resp)
+                        console.log(resp)
+                    });
+                }
               // 跳转页面
               if(res.liveTypeId == '1' || res.liveTypeId == '2' || res.liveTypeId == '3' || res.liveTypeId == '4'){
                 $('.an_btn').append('<div class="item-btn"><a href="update_infor.html?personnelId='+personnelId+'">更新上报</a></div>')
               }else{
                 $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
               }
+              
             },
             error:function(jqXHR){
             }
@@ -390,6 +449,21 @@
               app.status=res.status
               app.liveTypeId = res.liveTypeId
               console.log(res.liveTypeId)
+              // 拨打电话
+              document.getElementById('phone').onclick = function(e) {
+                    var data = {
+                        'action': 'jsNCallTel',
+                        'needCallBack': '0',
+                        'message': '',
+                        'parameter': {
+                            'tel': res.telephone,
+                        }
+                    }
+                    window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                        // var list=JSON.parse(resp)
+                        console.log(resp)
+                    });
+                }
               // 跳转页面
               $('.an_btn').append('<div class="item-btn"><a href="update_infor.html">更新上报</a></div>')
               $('.live').fadeOut(0);
