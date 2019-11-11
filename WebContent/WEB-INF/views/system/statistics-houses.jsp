@@ -230,7 +230,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="house">
+			<div class="house" style="width: 100%">
 				<div class="statis">
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">房屋户型情况
 				</div>
@@ -242,7 +242,7 @@
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;">
-					<div class="house_detail houseKind">
+					<div class="house_detail houseKind" style="display: none">
 						<div class="house_infor">
 							<div class="owner">
 								<div class="owner_title">
@@ -278,8 +278,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="chart">
-						<div id="house1" style="height: 100%"></div>
+					<div class="chart zxt" style="width: 100%">
+						<div id="shape" style="height: 100%"></div>
 					</div>
 				</div>
 			</div>
@@ -477,10 +477,16 @@
             },
             success:function(data){
             	// console.log(data.data)
+            	if(data.data == undefined){
+            		var waitrentratio = 0
+            	}else{
+            		var waitrentratio =(data.data.waitrentratio)*100
+
+            	}
             	$('#leaseNum1').html(data.data.rent)
             	$('#leaseCent1').html((data.data.rentratio)*100+'%')
             	$('#leaseNum2').html(data.data.waitrent)
-            	$('#leaseCent2').html((data.data.waitrentratio)*100+'%')
+            	$('#leaseCent2').html(waitrentratio.toFixed(2)+'%')
             	var dom0 = document.getElementById("container");
 				var myChart0 = echarts.init(dom0);
 				var app0 = {};
@@ -531,7 +537,7 @@
         });
     }
      //房屋户型情况
-    function apartment(){
+         function apartment(){
       $.ajax({
         //请求方式
         type:'POST',
@@ -546,86 +552,233 @@
         	housesTypeId:sessionStorage.housesTypeId
         },
         success:function(data){
-        	console.log(data)
-        	var html=""
-        	var color=[]
-        	var array=[]
-        	for(var i = 0;i<data.data.length;i++){
-               color.push('#0091FF');
-			   array.push({'value':(data.data[i].ratio)*1000,'name':data.data[i].houseType})
-			   if(data.data[i].count == 0){
-			   	var  houseName = '无'
-			   }else{
-			   	var houseName = data.data[i].houseType
-			   }
-               html += 	'<div class="house_infor">'+
-							'<div class="owner">'+
-								'<div class="owner_title">'+
-									'<div class="circle"></div>'+
-									houseName+
-								'</div>'+
-								'<span>'+data.data[i].count+'</span> 户'+
-							'</div>'+
-							'<div class="rate">'+
-								'<div class="Proportion">'+
-									'<div>占比</div>'+
-									'<div>'+
-										'<span>'+(data.data[i].ratio)*100+'%</span>'+
-									'</div>'+
-								'</div>'+
-							'</div>'+
-						'</div>'
-        	}
-        	$('.house_detail.houseKind').html(html)
-    	    var dom2 = document.getElementById("house1");
-				var myChart2 = echarts.init(dom2);
-				var app2 = {};
-				option2 = null;
-				app2.title = '环形图';
-				option2 = {
-				    tooltip: {
-				        trigger: 'item',
-				        formatter: "{a} <br/>{b}: {c} ({d}%)"
-				    },
-				    series: [
-				        {
-				            name:'访问来源',
-				            type:'pie',
-				            radius: ['40%', '80%'],
-				            avoidLabelOverlap: false,
-				            color:color,
-				            label: {
-				                normal: {
-				                    show: false,
-				                    position: 'center'
-				                },
-				                emphasis: {
-				                    show: true,
-				                    textStyle: {
-				                        fontSize: '16',
-				                        fontWeight: 'bold'
-				                    }
-				                }
-				            },
-				            labelLine: {
-				                normal: {
-				                    show: false
-				                }
-				            },
-				            data:array
-				        }
-				    ]
-				};
-				;
-				if (option2 && typeof option2 === "object") {
-				    myChart2.setOption(option2, true);
-				}
+        	var res = data.data;
+        	var dataAxis = [];
+	            	// var countTotal=""
+	            	var data=[]
+	            	// var color=[]
+	            	console.log(res);
+            		for(var i in res){
+            			if(res[i].count == 0){
+            				dataAxis.push("无");
+            			}else{
+            				var ratio = parseInt(res[i].ratio*100);
+				     		dataAxis.push(res[i].houseType);
+				     		data.push(ratio)
+            			}
+			     		
+		     		}
 
+			     	
+			        var dom = document.getElementById("shape");
+				    var myChart = echarts.init(dom);
+				    var app = {};
+				    option = null;
+				    // var dataAxis = dataAxis;
+				    // var data = data;
+				    var yMax = 100;
+				    var dataShadow = [];
+
+				    for (var i = 0; i < data.length; i++) {
+				        dataShadow.push(yMax);
+				    }
+
+				    option = {
+				    	tooltip : {
+				            trigger: 'item',
+				            transitionDuration : 0.4,  // 动画变换时间，单位s
+				            backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
+				            borderColor: '#333',       // 提示边框颜色
+				            borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+				            borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
+				            padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+				            // 接受数组分别设定上右下左边距，同css
+				            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				                type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+				                lineStyle : {          // 直线指示器样式设置
+				                    color: '#48b',
+				                    width: 2,
+				                    type: 'solid'
+				                },
+				                shadowStyle : {                       // 阴影指示器样式设置
+				                    width: 'auto',                   // 阴影大小
+				                    color: 'rgba(150,150,150,0.3)'  // 阴影颜色
+				                }
+				            },
+				            formatter: function (params) {
+					            var htmlStr = '比例：'+params.value + '%';
+					            return htmlStr; 
+					        }
+				        },
+				        grid: {
+				            left: '3%',
+				            right: '4%',
+				            bottom: '3%',
+				            top:20,
+				            containLabel: true
+				        },
+				        xAxis :{
+				            type : 'category',
+				            // boundaryGap : false,
+				            data : dataAxis,
+
+				        },
+				        yAxis: {
+				            axisLine: {
+				                show: false
+				            },
+				            axisTick: {
+				                show: false
+				            },
+				            axisLabel: {
+				                textStyle: {
+				                    color: '#333'
+				                }
+				            }
+				        },
+				        series: [
+				            { // For shadow
+				                type: 'bar',
+				                itemStyle: {
+				                    normal: {color: 'rgba(0,0,0,0)'}
+				                },
+				                barGap:'-100%',
+				                barCategoryGap:'50%',
+				                data: dataShadow,
+				                // animation: false
+				            },
+				            {
+				                type: 'bar',
+				                itemStyle: {
+				                    normal: {
+				                        color: new echarts.graphic.LinearGradient(
+				                            0, 0, 0, 1,
+				                            [
+				                                {offset: 0, color: '#73F3AE'},
+				                                {offset: 0.5, color: '#64E1CC'},
+				                                {offset: 1, color: '#4BC2FE'}
+				                            ]
+				                        )
+				                    },
+				                    emphasis: {
+				                        color: new echarts.graphic.LinearGradient(
+				                            0, 0, 0, 1,
+				                            [
+				                                {offset: 0, color: '#4BC2FE'},
+				                                {offset: 0.7, color: '#64E1CC'},
+				                                {offset: 1, color: '#73F3AE'}
+				                            ]
+				                        )
+				                    }
+				                },
+				                data: data
+				            }
+				        ]
+				    };
+
+				    if (option && typeof option === "object") {
+				        myChart.setOption(option, true);
+				    }
         	
         },
         error:function(jqXHR){}
     });
     }
+    // function apartment(){
+    //   $.ajax({
+    //     //请求方式
+    //     type:'POST',
+    //     //发送请求的地址
+    //     url:'/jianfuzengxiao/system/statistics/getHouseType.html',
+    //     //服务器返回的数据类型
+    //     dataType:'json',
+    //     //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+    //     data:{
+    //     	communityId:sessionStorage.communityId,
+    //     	communityStreetId:sessionStorage.communityStreetId,
+    //     	housesTypeId:sessionStorage.housesTypeId
+    //     },
+    //     success:function(data){
+    //     	console.log(data)
+    //     	var html=""
+    //     	var color=[]
+    //     	var array=[]
+    //     	for(var i = 0;i<data.data.length;i++){
+    //            color.push('#0091FF');
+			 //   array.push({'value':(data.data[i].ratio)*1000,'name':data.data[i].houseType})
+			 //   if(data.data[i].count == 0){
+			 //   	var  houseName = '无'
+			 //   }else{
+			 //   	var houseName = data.data[i].houseType
+			 //   }
+    //            html += 	'<div class="house_infor">'+
+				// 			'<div class="owner">'+
+				// 				'<div class="owner_title">'+
+				// 					'<div class="circle"></div>'+
+				// 					houseName+
+				// 				'</div>'+
+				// 				'<span>'+data.data[i].count+'</span> 户'+
+				// 			'</div>'+
+				// 			'<div class="rate">'+
+				// 				'<div class="Proportion">'+
+				// 					'<div>占比</div>'+
+				// 					'<div>'+
+				// 						'<span>'+(data.data[i].ratio)*100+'%</span>'+
+				// 					'</div>'+
+				// 				'</div>'+
+				// 			'</div>'+
+				// 		'</div>'
+    //     	}
+    //     	$('.house_detail.houseKind').html(html)
+    // 	    var dom2 = document.getElementById("house1");
+				// var myChart2 = echarts.init(dom2);
+				// var app2 = {};
+				// option2 = null;
+				// app2.title = '环形图';
+				// option2 = {
+				//     tooltip: {
+				//         trigger: 'item',
+				//         formatter: "{a} <br/>{b}: {c} ({d}%)"
+				//     },
+				//     series: [
+				//         {
+				//             name:'访问来源',
+				//             type:'pie',
+				//             radius: ['40%', '80%'],
+				//             avoidLabelOverlap: false,
+				//             color:color,
+				//             label: {
+				//                 normal: {
+				//                     show: false,
+				//                     position: 'center'
+				//                 },
+				//                 emphasis: {
+				//                     show: true,
+				//                     textStyle: {
+				//                         fontSize: '16',
+				//                         fontWeight: 'bold'
+				//                     }
+				//                 }
+				//             },
+				//             labelLine: {
+				//                 normal: {
+				//                     show: false
+				//                 }
+				//             },
+				//             data:array
+				//         }
+				//     ]
+				// };
+				// ;
+				// if (option2 && typeof option2 === "object") {
+				//     myChart2.setOption(option2, true);
+				// }
+
+        	
+    //     },
+    //     error:function(jqXHR){}
+    // });
+    // }
 
     </script>
 </body>
