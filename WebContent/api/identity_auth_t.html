@@ -458,6 +458,7 @@
             }
             //读取完成
             reader.onload = function (e) {
+                console.log(e)
                 //获取图片dom
                 var img = document.getElementById(id);
                 //图片路径设置为读取的图片
@@ -471,6 +472,9 @@
                 } 
 
             };
+           reader.onerror=function(){
+            alert('失败')
+        }
             layer.load(1);
             var formData = new FormData();
             formData.append('file',file);
