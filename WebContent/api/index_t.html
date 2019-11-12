@@ -153,7 +153,7 @@
               var code = data.code;
               console.log(data.code)
               layer.closeAll('loading')
-              if(code == 0){
+              if(code == 0 || code == '0'){
                 // if(data.data.status == 1){
                 //     console.log('审核中')
                 //     window.location.href = "idenWait_y.html";
@@ -167,7 +167,7 @@
                 //      window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
                 // }
                  window.location.href = "management_z.html";
-              }else{
+              }else if(code == 3002 || code == "3002"){
                 // if(idcar == 2){
                     window.location.href = "identity_auth_t.html";
                 // }
