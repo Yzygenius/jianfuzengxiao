@@ -83,4 +83,9 @@ public class StatisticsService extends BaseService implements IStatisticsService
 	public List<Statistics> queryPersonnelNation(Statistics entity) throws SysException, AppException {
 		return statisticsMDAO.queryPersonnelNation(entity);
 	}
+
+	@Override
+	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryReportInfo(entity);
+	}
 }

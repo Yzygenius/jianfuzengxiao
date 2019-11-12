@@ -44,4 +44,8 @@ public interface IStatisticsService extends IService {
 	
 	/** 人员民族情况 */
 	public List<Statistics> queryPersonnelNation(Statistics entity) throws SysException, AppException;
+	
+	/*上报*/
+	/** 上报信息 */
+	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException;
 }

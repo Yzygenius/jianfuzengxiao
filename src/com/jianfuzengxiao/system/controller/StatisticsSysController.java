@@ -267,4 +267,26 @@ public class StatisticsSysController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 上报信息
+	 * </p>
+	 * @param communityId 社区, communityStreetId 小区, startTime stopTime
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月12日 上午9:33:47
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getReportInfo")
+	public String getReportInfo(Statistics entity){
+		try {
+			entity = statisticsService.queryReportInfo(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
 }

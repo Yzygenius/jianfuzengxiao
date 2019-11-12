@@ -414,4 +414,73 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		return resultList;
 	}
 
+	@Override
+	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT count(personnel_id) total ");
+		sql.append(",sum(case when status in(2,3) then 1 else 0 end) as total_pass ");
+		sql.append(",sum(case when status in(1) then 1 else 0 end) as total_wait ");
+		sql.append(",ifnull(cast((sum(case when status in(2,3) then 1 else 0 end)/count(personnel_id)) as decimal(18,2)),0) as total_pass_ratio ");
+		sql.append(",sum(case when live_type_id in(1,3) then 1 else 0 end) as fangzhunum");
+		sql.append(",sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end) as fangzhu_pass");
+		sql.append(",sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end) as fangzhu_wait");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(1,3) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(1,3) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_wait_ratio");
+		sql.append(",sum(case when live_type_id in(5) then 1 else 0 end) as zuhunum");
+		sql.append(",sum(case when live_type_id in(5) and status in(2,3) then 1 else 0 end) as zuhu_pass");
+		sql.append(",sum(case when live_type_id in(5) and status in(1) then 1 else 0 end) as zuhu_wait");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(5) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(5) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_wait_ratio");
+		sql.append(",sum(case when live_type_id in(7) then 1 else 0 end) as jiashunum");
+		sql.append(",sum(case when live_type_id in(7) and status in(2,3) then 1 else 0 end) as jiashu_pass");
+		sql.append(",sum(case when live_type_id in(7) and status in(1) then 1 else 0 end) as jiashu_wait");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(7) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(7) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_wait_ratio");
+		sql.append(",sum(case when live_type_id in(2,4) then 1 else 0 end) as dianzhunum");
+		sql.append(",sum(case when live_type_id in(2,4) and status in(2,3) then 1 else 0 end) as dianzhu_pass");
+		sql.append(",sum(case when live_type_id in(2,4) and status in(1) then 1 else 0 end) as dianzhu_wait");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_wait_ratio");
+		sql.append(",sum(case when live_type_id in(6) then 1 else 0 end) as yuangongnum");
+		sql.append(",sum(case when live_type_id in(6) and status in(2,3) then 1 else 0 end) as yuangong_pass");
+		sql.append(",sum(case when live_type_id in(6) and status in(1) then 1 else 0 end) as yuangong_wait");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_wait_ratio  ");
+		sql.append("from personnel_info a  ");
+		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("WHERE a.sts='A' ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND a.update_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND a.update_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			} else {
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
 }
