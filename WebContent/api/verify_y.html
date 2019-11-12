@@ -410,10 +410,11 @@
             if(formData.leaseStartTime == '居住开始时间' || formData.leaseStartTime == undefined || formData.leaseStopTime == '居住截止时间' || formData.leaseStopTime == undefined ){
                 layer.msg('请选择居住时效')
                 return false
-            }else if(formData.leaseContract && formData.leaseContract == ''){
-                layer.msg('请添加租赁合同')
-                return false
             }
+            // else if(formData.leaseContract && formData.leaseContract == ''){
+            //     layer.msg('请添加租赁合同')
+            //     return false
+            // }
         }else if(type == 3){ //门店自持
             var house = $('#support .store');
             formData.enterpriseName = document.getElementById('ent_name').value;
@@ -438,10 +439,11 @@
             }else if(formData.enterpriseName && formData.enterpriseName == ''){
                 layer.msg('请填写企业名称')
                 return false
-            }else if(formData.leaseContract == ''){
-                layer.msg('请添加租赁合同')
-                return false
             }
+            // else if(formData.leaseContract == ''){
+            //     layer.msg('请添加租赁合同')
+            //     return false
+            // }
         }
         var housesId = house.attr('data-houseId');
         formData.housesId = housesId,
