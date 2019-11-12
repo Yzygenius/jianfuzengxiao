@@ -11,10 +11,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bamboo.framework.base.impl.BaseDAO;
+import com.bamboo.framework.entity.PageInfo;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.jianfuzengxiao.pub.dao.IStatisticsMDAO;
 import com.jianfuzengxiao.pub.entity.FuncListMVO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 
 @Repository
@@ -278,7 +280,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append(
 				"ifnull(cast((sum(case when status !='1' then 1 else 0 end)/COUNT(personnel_id)) as decimal(18,2)),0) as auditratio  ");
 		sql.append("from personnel_info ");
-		sql.append("WHERE sts='A' and date(create_time) = curdate() ");
+		sql.append("WHERE sts='A' and date(update_time) = curdate() ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
@@ -448,7 +450,8 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_wait_ratio  ");
 		sql.append("from personnel_info a  ");
 		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
-		sql.append("WHERE a.sts='A' ");
+		//sql.append("WHERE a.sts='A' ");
+		sql.append("WHERE 1=1 ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
@@ -481,6 +484,170 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			throw new SysException("查询统计错误", "10000", e);
 		}
 		return entity;
+	}
+
+	@Override
+	public Statistics queryFangwuReportPass(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ifnull(sum(case when live_type_id in(1,3) and status in(2) then 1 else 0 end),0) as fangzhu_pass ");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(1,3,5,7) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_ratio ");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(1,3) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_pass_ratio ");
+		sql.append(",ifnull(sum(case when live_type_id in(5) and status in(2) then 1 else 0 end),0) as zuhu_pass");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(1,3,5,7) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(5) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_pass_ratio");
+		sql.append(",ifnull(sum(case when live_type_id in(7) and status in(2) then 1 else 0 end),0) as jiashu_pass");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(1,3,5,7) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(7) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_pass_ratio ");
+		sql.append("from personnel_info a  ");
+		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
+		//sql.append("WHERE a.sts='A' ");
+		sql.append("WHERE 1=1 ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND a.update_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND a.update_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			} else {
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
+	@Override
+	public Statistics queryMendianReportPass(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ifnull(sum(case when live_type_id in(2,4) and status in(2) then 1 else 0 end),0) as dianzhu_pass ");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(2,4,6) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_ratio ");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_pass_ratio ");
+		sql.append(",ifnull(sum(case when live_type_id in(6) and status in(2) then 1 else 0 end),0) as yuangong_pass");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(2,4,6) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_pass_ratio");
+		sql.append("from personnel_info a  ");
+		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
+		//sql.append("WHERE a.sts='A' ");
+		sql.append("WHERE 1=1 ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND a.update_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND a.update_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			} else {
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
+	@Override
+	public List<Statistics> queryReportCurve(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ifnull(COUNT(personnel_id),0)count,ifnull(year(a.update_time),'') as year,ifnull(month(a.update_time),'') as month,ifnull(day(a.update_time),'') as day ");
+		sql.append("from personnel_info a  ");
+		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
+		//sql.append("WHERE a.sts='A' ");
+		sql.append("WHERE 1=1 ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND a.update_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND a.update_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			sql.append(" GROUP BY day ");
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return resultList;
+	}
+
+	@Override
+	public PageInfo queryTodayReportPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException, AppException {
+		StringBuffer sql = new StringBuffer();
+		sql.append(
+				"select a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.update_status ");
+		sql.append(",b.houses_status,b.community_name,b.community_street_name,b.storied_building_number,b.unit,b.house_number,b.houses_address,ifnull(b.store_location, 0)store_location ");
+		sql.append("from PERSONNEL_INFO a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("where date(a.update_time)=curdate() ");
+
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getStatus())) {
+					sql.append(" AND a.status in("+ entity.getStatus() +") ");
+				}
+			}
+			logger.info(sql.toString() + " -- " + params.toString());
+			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
+					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return pageInfo;
 	}
 
 }

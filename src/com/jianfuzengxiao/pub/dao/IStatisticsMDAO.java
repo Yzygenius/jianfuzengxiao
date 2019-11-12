@@ -3,8 +3,10 @@ package com.jianfuzengxiao.pub.dao;
 import java.util.List;
 
 import com.bamboo.framework.base.IDAO;
+import com.bamboo.framework.entity.PageInfo;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 
 public interface IStatisticsMDAO extends IDAO<Statistics> {
@@ -18,6 +20,9 @@ public interface IStatisticsMDAO extends IDAO<Statistics> {
 	
 	/** 人员信息统计 */
 	public Statistics queryPersonnelCount(Statistics entity) throws SysException, AppException;
+	
+	/** 人员信息统计 */
+	public PageInfo queryTodayReportPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException, AppException;
 
 	/* 房屋 */
 	/** 房屋分类情况 */
@@ -46,4 +51,12 @@ public interface IStatisticsMDAO extends IDAO<Statistics> {
 	/** 上报信息 */
 	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException;
 	
+	/** 房屋上报通过 */
+	public Statistics queryFangwuReportPass(Statistics entity) throws SysException, AppException;
+	
+	/** 门店上报通过 */
+	public Statistics queryMendianReportPass(Statistics entity) throws SysException, AppException;
+	
+	/** 上报曲线 */
+	public List<Statistics> queryReportCurve(Statistics entity) throws SysException, AppException;
 }

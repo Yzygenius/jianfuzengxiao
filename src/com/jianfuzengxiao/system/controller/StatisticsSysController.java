@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 import com.jianfuzengxiao.pub.service.IStatisticsService;
 
@@ -36,6 +38,23 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/toPersonnel")
 	public String toPersonnel(){
 		return "/system/statistics-personnel";
+	}
+	
+	/** 
+	 * 今日上报信息列表
+	 * */
+	@ResponseBody
+	@RequestMapping(value="/getTodayReportPage")
+	public String getTodayReportPage(PersonnelInfoMVO entity){
+		try {
+			PageInfo pageInfo = getPage();
+			pageInfo.setSortName("updateTime");
+			pageInfo.setSortOrder("desc");
+			pageInfo = statisticsService.queryTodayReportPage(entity, pageInfo);
+			return apiResult(RC.SUCCESS, pageInfo);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
 	}
 	
 	/**
@@ -274,7 +293,7 @@ public class StatisticsSysController extends BaseController {
 	 * </p>
 	 * @param communityId 社区, communityStreetId 小区, startTime stopTime
 	 * @return    
-	 * String    返回类型 
+	 * 
 	 * @throws 
 	 * @author 闫子扬 
 	 * @date 2019年11月12日 上午9:33:47
@@ -285,6 +304,75 @@ public class StatisticsSysController extends BaseController {
 		try {
 			entity = statisticsService.queryReportInfo(entity);
 			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 房屋上报已通过
+	 * </p>
+	 * @param communityId 社区, communityStreetId 小区, startTime stopTime
+	 * @return    
+	 * fangzhuPass 房主通过数量, fangzhuRatio 房主比例, fangzhuPassRatio 房主通过率, zuhuPass 租户通过数量, zuhuRatio 租户比例, zuhuPassRatio 租户通过率, jiashuPass 家属数量, jiashuRatio 家属比例, jiashuPassRatio 家属通过率
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月12日 上午9:33:47
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getFangwuReportPass")
+	public String getFangwuReportPass(Statistics entity){
+		try {
+			entity = statisticsService.queryFangwuReportPass(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	   * 门店上报已通过
+	 * </p>
+	 * @param communityId 社区, communityStreetId 小区, startTime stopTime
+	 * @return    
+	 * dianzhuPass 店主通过数量, dianzhuRatio 店主比例, dianzhuPassRatio 店主通过率, yuangongPass 员工通过数量, yuangongRatio 员工比例, yuangongPassRatio 员工通过率
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月12日 上午9:33:47
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getMendianReportPass")
+	public String getMendianReportPass(Statistics entity){
+		try {
+			entity = statisticsService.queryMendianReportPass(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 上报信息曲线
+	 * </p>
+	 * @param communityId 社区, communityStreetId 小区, startTime stopTime
+	 * @return    
+	 * count 数量，year 年, month 月,  day 天
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年11月12日 上午9:33:47
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getReportCurve")
+	public String getReportCurve(Statistics entity){
+		try {
+			List<Statistics> list = statisticsService.queryReportCurve(entity);
+			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "查询统计失败", e);
 		}

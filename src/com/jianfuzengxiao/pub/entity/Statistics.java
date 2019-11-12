@@ -61,8 +61,228 @@ public class Statistics extends Entity {
 	protected String ratio;
 	protected String nationName;
 	
+	//上报信息
+	protected String totalPass;
+	protected String totalWait;
+	protected String totalPassRatio;
+	protected String fangzhuPass;
+	protected String fangzhuWait;
+	protected String fangzhuPassRatio;
+	protected String fangzhuWaitRatio;
+	protected String zuhuPass;
+	protected String zuhuWait;
+	protected String zuhuPassRatio;
+	protected String zuhuWaitRatio;
+	protected String dianzhuPass;
+	protected String dianzhuWait;
+	protected String dianzhuPassRatio;
+	protected String dianzhuWaitRatio;
+	protected String yuangongPass;
+	protected String yuangongWait;
+	protected String yuangongPassRatio;
+	protected String yuangongWaitRatio;
+	protected String jiashuPass;
+	protected String jiashuWait;
+	protected String jiashuPassRatio;
+	protected String jiashuWaitRatio;
+	protected String fangzhuRatio;
+	protected String dianzhuRatio;
+	protected String zuhuRatio;
+	protected String jiashuRatio;
+	protected String yuangongRatio;
+	protected String year;
+	protected String month;
+	protected String day;
 	
 	
+	
+	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
+	public String getFangzhuRatio() {
+		return fangzhuRatio;
+	}
+	public void setFangzhuRatio(String fangzhuRatio) {
+		this.fangzhuRatio = fangzhuRatio;
+	}
+	public String getDianzhuRatio() {
+		return dianzhuRatio;
+	}
+	public void setDianzhuRatio(String dianzhuRatio) {
+		this.dianzhuRatio = dianzhuRatio;
+	}
+	public String getZuhuRatio() {
+		return zuhuRatio;
+	}
+	public void setZuhuRatio(String zuhuRatio) {
+		this.zuhuRatio = zuhuRatio;
+	}
+	public String getJiashuRatio() {
+		return jiashuRatio;
+	}
+	public void setJiashuRatio(String jiashuRatio) {
+		this.jiashuRatio = jiashuRatio;
+	}
+	public String getYuangongRatio() {
+		return yuangongRatio;
+	}
+	public void setYuangongRatio(String yuangongRatio) {
+		this.yuangongRatio = yuangongRatio;
+	}
+	public String getTotalPass() {
+		return totalPass;
+	}
+	public void setTotalPass(String totalPass) {
+		this.totalPass = totalPass;
+	}
+	public String getTotalWait() {
+		return totalWait;
+	}
+	public void setTotalWait(String totalWait) {
+		this.totalWait = totalWait;
+	}
+	public String getTotalPassRatio() {
+		return totalPassRatio;
+	}
+	public void setTotalPassRatio(String totalPassRatio) {
+		this.totalPassRatio = totalPassRatio;
+	}
+	public String getFangzhuPass() {
+		return fangzhuPass;
+	}
+	public void setFangzhuPass(String fangzhuPass) {
+		this.fangzhuPass = fangzhuPass;
+	}
+	public String getFangzhuWait() {
+		return fangzhuWait;
+	}
+	public void setFangzhuWait(String fangzhuWait) {
+		this.fangzhuWait = fangzhuWait;
+	}
+	public String getFangzhuPassRatio() {
+		return fangzhuPassRatio;
+	}
+	public void setFangzhuPassRatio(String fangzhuPassRatio) {
+		this.fangzhuPassRatio = fangzhuPassRatio;
+	}
+	public String getFangzhuWaitRatio() {
+		return fangzhuWaitRatio;
+	}
+	public void setFangzhuWaitRatio(String fangzhuWaitRatio) {
+		this.fangzhuWaitRatio = fangzhuWaitRatio;
+	}
+	public String getZuhuPass() {
+		return zuhuPass;
+	}
+	public void setZuhuPass(String zuhuPass) {
+		this.zuhuPass = zuhuPass;
+	}
+	public String getZuhuWait() {
+		return zuhuWait;
+	}
+	public void setZuhuWait(String zuhuWait) {
+		this.zuhuWait = zuhuWait;
+	}
+	public String getZuhuPassRatio() {
+		return zuhuPassRatio;
+	}
+	public void setZuhuPassRatio(String zuhuPassRatio) {
+		this.zuhuPassRatio = zuhuPassRatio;
+	}
+	public String getZuhuWaitRatio() {
+		return zuhuWaitRatio;
+	}
+	public void setZuhuWaitRatio(String zuhuWaitRatio) {
+		this.zuhuWaitRatio = zuhuWaitRatio;
+	}
+	public String getDianzhuPass() {
+		return dianzhuPass;
+	}
+	public void setDianzhuPass(String dianzhuPass) {
+		this.dianzhuPass = dianzhuPass;
+	}
+	public String getDianzhuWait() {
+		return dianzhuWait;
+	}
+	public void setDianzhuWait(String dianzhuWait) {
+		this.dianzhuWait = dianzhuWait;
+	}
+	public String getDianzhuPassRatio() {
+		return dianzhuPassRatio;
+	}
+	public void setDianzhuPassRatio(String dianzhuPassRatio) {
+		this.dianzhuPassRatio = dianzhuPassRatio;
+	}
+	public String getDianzhuWaitRatio() {
+		return dianzhuWaitRatio;
+	}
+	public void setDianzhuWaitRatio(String dianzhuWaitRatio) {
+		this.dianzhuWaitRatio = dianzhuWaitRatio;
+	}
+	public String getYuangongPass() {
+		return yuangongPass;
+	}
+	public void setYuangongPass(String yuangongPass) {
+		this.yuangongPass = yuangongPass;
+	}
+	public String getYuangongWait() {
+		return yuangongWait;
+	}
+	public void setYuangongWait(String yuangongWait) {
+		this.yuangongWait = yuangongWait;
+	}
+	public String getYuangongPassRatio() {
+		return yuangongPassRatio;
+	}
+	public void setYuangongPassRatio(String yuangongPassRatio) {
+		this.yuangongPassRatio = yuangongPassRatio;
+	}
+	public String getYuangongWaitRatio() {
+		return yuangongWaitRatio;
+	}
+	public void setYuangongWaitRatio(String yuangongWaitRatio) {
+		this.yuangongWaitRatio = yuangongWaitRatio;
+	}
+	public String getJiashuPass() {
+		return jiashuPass;
+	}
+	public void setJiashuPass(String jiashuPass) {
+		this.jiashuPass = jiashuPass;
+	}
+	public String getJiashuWait() {
+		return jiashuWait;
+	}
+	public void setJiashuWait(String jiashuWait) {
+		this.jiashuWait = jiashuWait;
+	}
+	public String getJiashuPassRatio() {
+		return jiashuPassRatio;
+	}
+	public void setJiashuPassRatio(String jiashuPassRatio) {
+		this.jiashuPassRatio = jiashuPassRatio;
+	}
+	public String getJiashuWaitRatio() {
+		return jiashuWaitRatio;
+	}
+	public void setJiashuWaitRatio(String jiashuWaitRatio) {
+		this.jiashuWaitRatio = jiashuWaitRatio;
+	}
 	public String getHouseType() {
 		return houseType;
 	}

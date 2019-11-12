@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/iconfont.css">
 <link href="/jianfuzengxiao/statics/system/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css" />
+<link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css" media="all">
 <title>首页</title>
 </head>
 <body>
@@ -114,61 +115,37 @@
 					</div>
 					<div class="headItem2">
 						<div class="check0">
-							<input type="checkbox" checked value="已处理" id="up0"> <label
+							<input type="checkbox" value="已处理" id="up0"> <label
 								for="up0">已处理</label>
 						</div>
 						<div class="check0">
-							<input type="checkbox" checked value="待处理" id="up1"> <label
+							<input type="checkbox" value="待处理" id="up1"> <label
 								for="up1">待处理</label>
 						</div>
 					</div>
 				</div>
-				<div class="infoCenter">
-					<div class="itemList">
-						<div class="check0">
-							<input type="checkbox" id="check0"> <label for="check0"></label>
-						</div>
-						<div class="text first">Cotilla</div>
-						<div class="text second">iMac 21”</div>
-						<div class="text third">Abdullah Un Noman</div>
-						<div class="text fourth">Mirpur 2, Dhaka</div>
-						<div class="text fifth">2</div>
-						<div class="status green">Complete</div>
-						<div class="status orange" style="display: none;">On Hold</div>
-						<div class="status zs" style="display: none;">Pending</div>
-						<div class="status red" style="display: none;">Failed</div>
-						<div class="text sixth">#123DFF</div>
-					</div>
-					<div class="itemList">
-						<div class="check0">
-							<input type="checkbox" id="check1"> <label for="check1"></label>
-						</div>
-						<div class="text first">Cotilla</div>
-						<div class="text second">iMac 21”</div>
-						<div class="text third">Abdullah Un Noman</div>
-						<div class="text fourth">Mirpur 2, Dhaka</div>
-						<div class="text fifth">2</div>
-						<div class="status green" style="display: none;">Complete</div>
-						<div class="status orange" style="display: none;">On Hold</div>
-						<div class="status zs">Pending</div>
-						<div class="status red" style="display: none;">Failed</div>
-						<div class="text sixth">#123DFF</div>
-					</div>
-					<div class="itemList">
-						<div class="check0">
-							<input type="checkbox" id="check3"> <label for="check3"></label>
-						</div>
-						<div class="text first">Cotilla</div>
-						<div class="text second">iMac 21”</div>
-						<div class="text third">Abdullah Un Noman</div>
-						<div class="text fourth">Mirpur 2, Dhaka</div>
-						<div class="text fifth">2</div>
-						<div class="status green" style="display: none;">Complete</div>
-						<div class="status orange">On Hold</div>
-						<div class="status zs" style="display: none;">Pending</div>
-						<div class="status red" style="display: none;">Failed</div>
-						<div class="text sixth">#123DFF</div>
-					</div>
+				<div id="todayReportInfo" class="infoCenter">
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>性别</th>
+								<th>民族</th>
+								<th>联系电话</th>
+								<th>类型</th>
+								<th>居住地址</th>
+								<th>居住时间</th>
+								<th>状态</th>
+								<th>最新上报时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="x-img">
+			
+						</tbody>
+					</table>
+			
+					<div id="page"></div>
 				</div>
 			</div>
 			<div class="infor_right">
@@ -300,30 +277,60 @@
 <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/moment.js"></script>
 
 <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/daterangepicker.js"></script>
+<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
+<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 <script>
+	var $, form, layer, laydate, lement, laypage;
+	var status = '1,2,3';
 	$(function() {
+		layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
+			//var total;
+			$ = layui.jquery//jquery
+			, form = layui.form
+			, layer = layui.layer//弹出层
+			, laydate = layui.laydate//日期插件
+			, lement = layui.element//面包导航
+			, laypage = layui.laypage;//分页
+			
+			page()
+			
+			$('#up0').change(function(){
+				if($(this).prop('checked')){
+					status = '2,3'
+				}
+				if($('#up1').prop('checked') == true){
+					status = '1'
+				}
+				if($(this).prop('checked') == true && $('#up1').prop('checked') == true){
+					status = '1,2,3'
+				}
+				if($(this).prop('checked') == false && $('#up1').prop('checked') == false){
+					status = '1,2,3'
+				}
+				page()
+			})
+			$('#up1').change(function(){
+				if($(this).prop('checked')){
+					status = '1'
+				}
+				if($('#up0').prop('checked') == true){
+					status = '2,3'
+				}
+				if($(this).prop('checked') == true && $('#up0').prop('checked') == true){
+					status = '1,2,3'
+				}
+				if($(this).prop('checked') == false && $('#up0').prop('checked') == false){
+					status = '1,2,3'
+				}
+				page()
+			})
+		})
+		
 		houseInfor()
 		personInfor()
 		kind()
-		var itemList = ""
-		for (var i = 0; i <= 10; i++) {
-			itemList += '<div class="itemList">'
-					+ '<div class="check0">'
-					+ '<input type="checkbox" class="select" id="check'+i+'" >'
-					+ '<label for="check'+i+'"></label>'
-					+ '</div>'
-					+ '<div class="text first">Cotilla</div>'
-					+ '<div class="text second">iMac 21”</div>'
-					+ '<div class="text third">Abdullah Un Noman</div>'
-					+ '<div class="text fourth">Mirpur 2, Dhaka</div>'
-					+ '<div class="text fifth"> 2 </div>'
-					+ '<div class="status green">Complete</div>'
-					+ '<div class="status orange" style="display: none;">On Hold</div>'
-					+ '<div class="status zs" style="display: none;">Pending</div>'
-					+ '<div class="status red" style="display: none;">Failed</div>'
-					+ '<div class="text sixth">#123DFF</div>' + '</div>'
-		}
-		$('.infoCenter').html(itemList);
+		
+		
 		$('.select').each(function() {
 			$(this).click(function() {
 				if ($(this).is(":checked")) {
@@ -346,6 +353,104 @@
 			}
 		})
 	})
+	
+	//上报信息详情
+	function banner_details(obj, title, url, w, h) {
+		var id = $(obj).parent('td').siblings('[row=ids]').text();
+		x_admin_show(title, url + '?personnelId=' + id, w, h);
+	}
+	
+	function page() {
+		$.ajax({
+			url : "/jianfuzengxiao/system/statistics/getTodayReportPage.html",
+			type : 'post',
+			dataType : "json",
+			data: {'status': status},
+			success : function(result) {
+				laypage.render({
+					elem : 'page',
+					count : result.data.total,
+					jump : function(obj) {
+						todayReportInfo(obj.curr)
+					}
+				})
+				if(result.data.total == 0){
+					$('#page').hide()
+				}
+			}
+		})
+	}
+	
+	//今日上报信息
+	function todayReportInfo(page){
+		$.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getTodayReportPage.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+            	'page': page,
+            	'status': status
+            },
+            success:function(result){
+            	//console.log(result)
+            	$('#x-img').html('');
+				var data = result.data.rows;
+				for (var i = 0; i < data.length; i++) {
+					var tr = $('#clone-tr').find('tr').clone();
+					tr.find('[row=ids]').text(data[i].personnelId);
+					tr.find('[row=username]').text(data[i].username);
+					if(data[i].gender == 1){
+						tr.find('[row=gender]').text('男');
+					}else if(data[i].gender == 2) {
+						tr.find('[row=gender]').text('女');
+					}else{
+						tr.find('[row=gender]').text('');
+					}
+					tr.find('[row=nationName]').text(data[i].nationName);
+					tr.find('[row=telephone]').text(data[i].telephone);
+					tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
+					//居住地址
+					
+					if(data[i].housesStatus == 1){
+						tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+data[i].storiedBuildingNumber+'号楼'+data[i].unit+'单元'+data[i].houseNumber+'号');
+					}else if(data[i].housesStatus == 2){
+						if(data[i].storeLocation == 1){
+							tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+'内铺'+data[i].houseNumber+'号');
+						}else if(data[i].storeLocation == 2){
+							tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+'外铺'+data[i].houseNumber+'号');
+						}else{
+							tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+data[i].houseNumber+'号');
+						}
+						
+					}else{
+						tr.find('[row=leaseAddress]').text('');
+					}
+					
+					if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
+						tr.find('[row=leaseTime]').text('长期');
+					}else{
+						tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
+					}
+					if(data[i].status == 1){
+						tr.find('[row=status]').text('待审核');
+					}else if(data[i].status == 2){
+						tr.find('[row=status]').text('已通过审核');
+					}else if(data[i].status == 3){
+						tr.find('[row=status]').text('未通过审核');
+					}
+					//最新上报时间
+					tr.find('[row=auditTime]').text(data[i].updateTime);
+					$('#x-img').append(tr);
+				}
+            },
+            error:function(jqXHR){}
+        });
+	}
+	
 	//首页房屋信息统计
 	function houseInfor(start,end){
 		$.ajax({
@@ -595,4 +700,37 @@
 				// $('#daterange-btn').addClass('active').siblings('.so_far').removeClass('active');
 			});
 </script>
+
+<table id="clone-tr" style="display: none;">
+	<tr>
+		<!-- <td row="checkBoxId"><input type="checkbox" class="checkId"
+			value="" name=""></td> -->
+		<td row="ids" style="display: none;"></td>
+		<td row="username"></td>
+		<td row="gender">
+			<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
+		</td>
+		<td row="nationName"></td>
+		<td row="telephone"></td>
+		<td row="liveTypeName"></td>
+		<td row="leaseAddress"></td>
+		<td row="leaseTime"></td>
+		<td row="status"></td>
+		<td row="auditTime"></td>
+		<td class="td-manage">
+			<button class="layui-btn layui-btn layui-btn-xs"
+				onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
+				<i class="layui-icon">&#xe615;</i>查看
+			</button>
+			<!-- <button class="layui-btn layui-btn layui-btn-xs"
+				onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
+				<i class="layui-icon">&#xe642;</i>编辑
+			</button> -->
+			<!-- <button class="layui-btn-danger layui-btn layui-btn-xs"
+				onclick="banner_del(this)" href="javascript:;">
+				<i class="layui-icon">&#xe640;</i>删除
+			</button> -->
+		</td>
+	</tr>
+</table>
 </html>

@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bamboo.framework.base.impl.BaseService;
+import com.bamboo.framework.entity.PageInfo;
 import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.pub.dao.IStatisticsMDAO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 import com.jianfuzengxiao.pub.service.IStatisticsService;
 
@@ -87,5 +89,25 @@ public class StatisticsService extends BaseService implements IStatisticsService
 	@Override
 	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException {
 		return statisticsMDAO.queryReportInfo(entity);
+	}
+
+	@Override
+	public Statistics queryFangwuReportPass(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryFangwuReportPass(entity);
+	}
+
+	@Override
+	public Statistics queryMendianReportPass(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryMendianReportPass(entity);
+	}
+
+	@Override
+	public List<Statistics> queryReportCurve(Statistics entity) throws SysException, AppException {
+		return statisticsMDAO.queryReportCurve(entity);
+	}
+
+	@Override
+	public PageInfo queryTodayReportPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException, AppException {
+		return statisticsMDAO.queryTodayReportPage(entity, pageInfo);
 	}
 }
