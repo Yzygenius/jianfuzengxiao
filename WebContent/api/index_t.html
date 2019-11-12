@@ -153,23 +153,24 @@
               var code = data.code;
               console.log(data.code)
               layer.closeAll('loading')
-              if(code == 1){
-                if(data.data.status == 1){
-                    console.log('审核中')
-                    window.location.href = "idenWait_y.html";
+              if(code == 0){
+                // if(data.data.status == 1){
+                //     console.log('审核中')
+                //     window.location.href = "idenWait_y.html";
                    
-                }else if(data.data.status == 2){
-                    console.log('审核通过')
-                    window.location.href = "management_z.html";
-                }else if(data.data.status == 3){
-                     console.log('审核失败')
-                     var auditRemark = escape(data.data.auditRemark)
-                     window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
-                }
+                // }else if(data.data.status == 2){
+                //     console.log('审核通过')
+                //     window.location.href = "management_z.html";
+                // }else if(data.data.status == 3){
+                //      console.log('审核失败')
+                //      var auditRemark = escape(data.data.auditRemark)
+                //      window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
+                // }
+                 window.location.href = "management_z.html";
               }else{
-                if(idcar == 2){
+                // if(idcar == 2){
                     window.location.href = "identity_auth_t.html";
-                }
+                // }
               }
             },
             error:function(jqXHR){
