@@ -63,17 +63,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="stat_cont scont">
+		<!-- 		<div class="stat_cont scont">
 					<div class="title">人员数</div>
 					<div class="number">
 						<span id="personNum" style="font-size: 36px"></span><span>个</span>
 					</div>
-				</div>
+				</div> -->
 				<div class="stat_cont stat_conts">
 					<div class="census_left">
-						<div class="title">户数</div>
+						<div class="title">人员数</div>
 						<div class="number">
-							<span class="totalNum" style="font-size: 36px">2831121</span><span>户</span>
+							<span id="personNum" style="font-size: 36px">2831121</span><span>人</span>
 						</div>
 					</div>
 					<div class="census_right">

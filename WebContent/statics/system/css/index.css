@@ -137,7 +137,7 @@ h6 {
 .content .Statistics .statist .stat_cont{
     display: flex;
     flex-flow: column;
-    width: 33%;
+    width: 39%;
     min-width: fit-content;
     padding: 16px;
     border-radius: 4.85px;
@@ -159,7 +159,7 @@ h6 {
     font-size: 16px;
 }
 .content .Statistics .statist .scont{
-    width: 16%;
+    width: 20%;
     background: url("../images/bg2.png") no-repeat;
     background-size: 100% 100%;
 }
@@ -196,7 +196,7 @@ h6 {
 .content .Statistics .statist .stat_conts .census_right .cright_total .total{
     height: 35px;
     box-sizing: border-box;
-    padding: 0 10px;
+    padding: 0 20px;
     text-align: center;
     border-radius: 15px;
     line-height: 35px;
