@@ -166,11 +166,13 @@
                 //      var auditRemark = escape(data.data.auditRemark)
                 //      window.location.href = "idenNopass_y.html?auditRemark="+auditRemark;
                 // }
-                 window.location.href = "management_z.html";
-              }else if(code == 3002){
-                if(idcar == 2){
                     window.location.href = "identity_auth_t.html";
-                }
+
+                
+              }else{
+                // if(idcar == 2){
+                     window.location.href = "management_z.html";
+                // }
               }
             },
             error:function(jqXHR){
