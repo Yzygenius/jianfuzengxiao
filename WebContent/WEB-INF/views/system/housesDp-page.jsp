@@ -67,7 +67,7 @@
 				<!-- <input type="text" name="storiedBuildingNumber" placeholder="请输入楼号" autocomplete="off" class="layui-input">
 				<input type="text" name="unit" placeholder="请输入单元号" autocomplete="off" class="layui-input"> -->
 				<input type="text" name="houseNumber" placeholder="请输入门牌号" autocomplete="off" class="layui-input">
-				<input type="text" name="keyword" placeholder="姓名/手机号/身份证号" autocomplete="off" class="layui-input">
+				<input type="text" name="keyword" placeholder="产权人/店主/手机号/身份证号" autocomplete="off" class="layui-input">
 				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
@@ -90,9 +90,11 @@
 					<th>社区</th>
 					<th>小区/街道</th>
 					<th>门牌号</th>
+					<th>产权人</th>
+					<th>房主</th>
 					<th>包户干部</th>
 					<th>干部电话</th>
-					<th>驻点人数</th>
+					<th>驻店人数</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -116,6 +118,8 @@
 			<!-- <td row="storiedBuildingNumber"></td>
 			<td row="unit"></td> -->
 			<td row="houseNumber"></td>
+			<td row="propertyOwnerName"></td>
+			<td row="fangzhu"></td>
 			<td row="username"></td>
 			<td row="adminTelephone"></td>
 			<td row="leaseCount"></td>
@@ -214,6 +218,9 @@
 		        form.on('select(province)', function(data){
 		        	//provName = data.elem[data.elem.selectedIndex].text;
 		        	provCode = data.value;
+		        	cityCode = '';
+		            areaCode = '';
+		        
 		        	$.each(provinceList, function (index, item) {
 						if(item.code == data.value){
 							cityList = item.childList;
@@ -232,15 +239,16 @@
 			        $("#city").append(str);
 			      	//append后必须从新渲染
 		            form.render('select');
-			      	
+		            
 		            serchCommunity();
+		            return false;
 		        });
 		      	
 		     	//监听市下拉框
 		        form.on('select(city)', function(data){
 		        	//cityName = data.elem[data.elem.selectedIndex].text;
 		        	cityCode = data.value;
-		        	
+		        	areaCode = '';
 		        	$.each(cityList, function (index, item) {
 						if(item.code == data.value){
 							areaList = item.childList;
@@ -317,15 +325,16 @@
 		
 	    /* 社区加载 */
 	    function serchCommunity(){
+	    	var data = {
+					'provCode': provCode,
+					'cityCode': cityCode,
+					'areaCode': areaCode
+				};
 	    	$.ajax({  
 				url : "/jianfuzengxiao/system/community/getCommunityList.html",  
 				type : 'post',
 				dataType: "json",
-				data: {
-					'provCode': provCode,
-					'cityCode': cityCode,
-					'areaCode': areaCode
-				},
+				data: data,
 				success : function(result){
 					if(result.code == 1){
 						$('#communitySel').html('');
@@ -449,6 +458,8 @@
 							}else{
 								tr.find('[row=houseNumber]').text(data[i].houseNumber);
 							}
+							tr.find('[row=propertyOwnerName]').text(data[i].propertyOwnerName);
+							tr.find('[row=fangzhu]').text(data[i].fangzhu);
 							tr.find('[row=username]').text(data[i].username);
 							tr.find('[row=adminTelephone]').text(data[i].adminTelephone);
 							tr.find('[row=leaseCount]').text(data[i].leaseCount);

@@ -137,14 +137,13 @@ public class ReportWxController extends BaseController {
 			double count = fzlist1.size() + zhlist1.size() + jshlist1.size() + yglist1.size();
 			
 			double aduitCount = fzlist2.size() + zhlist2.size() + jshlist2.size() + yglist2.size();
-			
-			double round = BigDouble.getRoundingCount(aduitCount / count);
-			
-			if (count > 0) {
-				map.put("clv", round);
-			}else {
-				map.put("clv", 1);
+			double round = 0;
+			if(round != 0 && aduitCount != 0){
+				round = BigDouble.getRoundingCount(aduitCount / count);
 			}
+			
+			map.put("clv", round);
+			
 			return apiResult(RC.SUCCESS, map);
 		} catch (Exception e) {
 			return exceptionResult(logger, "获取上报数量失败", e);

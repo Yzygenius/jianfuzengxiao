@@ -87,6 +87,18 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 				entity.setAdminTelephone(adminInfo.getTelephone());
 				entity.setUsername(adminInfo.getUsername());
 			}
+			
+			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+			personnelInfo.setHousesId(entity.getHousesId());
+			personnelInfo.setLiveTypeId("1,2,3,4");
+			personnelInfo.setSts("A");
+			List<PersonnelInfoMVO> list2 = personnelInfoService.queryList(personnelInfo);
+			if(list2.size() > 0){
+				personnelInfo = list2.get(0);
+				entity.setFangzhu(personnelInfo.getUsername());
+				entity.setEnterpriseName(personnelInfo.getEnterpriseName());
+				entity.setFangzhuTel(personnelInfo.getTelephone());
+			}
 			model.addAttribute("houses", entity);
 		} catch (Exception e) {
 			return "/system/error";
@@ -120,6 +132,31 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String toHousesDpDetail(Model model, HousesInfoMVO entity){
 		try {
 			entity = housesInfoService.queryBean(entity);
+			AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+			aduitDistribution.setHousesId(entity.getHousesId());
+			aduitDistribution.setSts("A");
+			List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+			
+			if (list.size() > 0) {
+				aduitDistribution = list.get(0);
+				AdminInfoMVO adminInfo = new AdminInfoMVO();
+				adminInfo.setAdminId(aduitDistribution.getAdminId());
+				adminInfo = adminInfoService.queryBean(adminInfo);
+				entity.setAdminTelephone(adminInfo.getTelephone());
+				entity.setUsername(adminInfo.getUsername());
+			}
+			
+			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+			personnelInfo.setHousesId(entity.getHousesId());
+			personnelInfo.setLiveTypeId("1,2,3,4");
+			personnelInfo.setSts("A");
+			List<PersonnelInfoMVO> list2 = personnelInfoService.queryList(personnelInfo);
+			if(list2.size() > 0){
+				personnelInfo = list2.get(0);
+				entity.setFangzhu(personnelInfo.getUsername());
+				entity.setEnterpriseName(personnelInfo.getEnterpriseName());
+				entity.setFangzhuTel(personnelInfo.getTelephone());
+			}
 			model.addAttribute("houses", entity);
 		} catch (Exception e) {
 			return "/system/error";

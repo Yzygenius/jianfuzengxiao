@@ -72,6 +72,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	public PersonnelInfoMVO insert(PersonnelInfoMVO personnelInfo) throws SysException, AppException {
 		personnelInfo.setCreateTime(DateUtil.nowTime());
 		personnelInfo.setSts(STS_NORMAL);
+		personnelInfo.setUpdateStatus(PersonnelInfo.update_status_one);
 		return personnelInfoMDAO.insert(personnelInfo);
 	}
 
@@ -360,6 +361,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		}
 
 		entity.setStatus(PersonnelInfo.status_waiting);
+		entity.setUpdateStatus(PersonnelInfo.update_status_again);
 		return this.update(entity);
 	}
 
@@ -375,6 +377,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);
 		
 		String type = "";
+		int integralType = 0;
+		String integralContent = "";
 		String hname = "";
 		if (StringUtils.equals(HousesInfo.houses_status_fangwu, housesInfoMVO.getHousesStatus())) {
 			hname = housesInfoMVO.getCommunityName()+" "+housesInfoMVO.getStoriedBuildingNumber()+"-"+housesInfoMVO.getUnit()+"-"+housesInfoMVO.getHouseNumber();
@@ -382,48 +386,71 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		if (StringUtils.equals(HousesInfo.houses_status_dianpu, housesInfoMVO.getHousesStatus())) {
 			hname = per.getEnterpriseName();
 		}
+		//房主
 		if(per.getLiveTypeId().equals("1") || per.getLiveTypeId().equals("3")){
 			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
 				type = "z0102";
+				integralType = 31;
+				integralContent = "完成业主申请通过";
 			}
 			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
 				type = "z0103";
 			}
 		}
+		//店主
 		if(per.getLiveTypeId().equals("2") || per.getLiveTypeId().equals("4")){
 			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
 				type = "z0102";
+				integralType = 31;
+				integralContent = "完成业主申请通过";
 			}
 			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
 				type = "z0103";
 			}
 		}
+		//租户
 		if(per.getLiveTypeId().equals("5")){
 			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
 				type = "z0202";
+				integralType = 32;
+				integralContent = "完成租户申请通过";
 			}
 			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
 				type = "z0203";
 			}
 		}
+		//员工
 		if(per.getLiveTypeId().equals("6")){
 			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
 				type = "z0209";
+				integralType = 32;
+				integralContent = "完成员工申请通过";
 			}
 			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
 				type = "z0209";
 			}
 		}
+		//家属
 		if(per.getLiveTypeId().equals("7")){
 			if(entity.getStatus().equals(PersonnelInfo.status_passed)){
 				type = "z0206";
+				integralType = 32;
+				integralContent = "完成家属申请通过";
 			}
 			if(entity.getStatus().equals(PersonnelInfo.status_reject)){
 				type = "z0207";
 			}
 		}
 		
+		
+		
 		if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_passed)) {
+			//如果是更新上报
+			if (per.getUpdateStatus().equals(PersonnelInfo.update_status_again)) {
+				type = "z0302";
+				integralType = 33;
+				integralContent = "完成信息更新申请通过";
+			}
 			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
 			msgTypeMVO.setMsgTypeId("4");
 			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);
@@ -442,13 +469,19 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			msgInfoService.insert(msgInfoMVO);
 			
 			try {
-				
-				PushUtils.toPush(per.getUserId(), title, content, type);	
+				//通知
+				PushUtils.toPush(per.getUserId(), title, content, type);
+				//积分
+				PushUtils.toIntegral(per.getUserId(), integralContent, integralType);
 			} catch (Exception e) {
 				logger.info("发送通知错误", e);
 			}
 			
 		}else if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_reject)) {
+			//如果是更新上报
+			if (per.getUpdateStatus().equals(PersonnelInfo.update_status_again)) {
+				type = "z0303";
+			}
 			MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
 			msgTypeMVO.setMsgTypeId("3");
 			msgTypeMVO = msgTypeMDAO.queryBean(msgTypeMVO);

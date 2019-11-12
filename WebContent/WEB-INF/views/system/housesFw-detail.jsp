@@ -95,6 +95,21 @@
 		  	<tr>
 		    	<td><span>房屋类型：</span>${houses.housesTypeName }</td>
 		  	</tr>
+		  	
+		  	<c:if test="${houses.housesStatus == 2}">
+		  	<tr>
+		    	<td>&nbsp;</td>
+		  	</tr>
+		  	<tr>
+		    	<td><span>门店名称：</span>${houses.enterpriseName }</td>
+		  	</tr>
+		  	</c:if>
+		  	<tr>
+		    	<td><span>房主：</span>${houses.fangzhu }</td>
+		  	</tr>
+		  	<tr>
+		    	<td><span>房主联系电话：</span>${houses.fangzhuTel }</td>
+		  	</tr>
 		  	<tr>
 		    	<td><span>产权人：</span>${houses.propertyOwnerName }</td>
 		  	</tr>
@@ -156,6 +171,7 @@
 						<th>类型</th>
 						<th>居住时间</th>
 						<th>状态</th>
+						<th>最新上报时间</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -260,6 +276,12 @@
 							}else if(data[i].status == 3){
 								tr.find('[row=status]').text('未通过审核');
 							}
+							//最新上报时间
+							tr.find('[row=auditTime]').text(data[i].updateTime);
+							//删除
+							if(data[i].status != 1){
+								tr.find('[row=manage]').append('<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="banner_del(this)" href="javascript:;"><i class="layui-icon">&#xe640;</i>解除人房关系</button>');
+							}
 							$('#data-list').append(tr);
 							//close loading
 							layer.closeAll('loading');
@@ -339,7 +361,8 @@
 			<td row="liveTypeName"></td>
 			<td row="leaseTime"></td>
 			<td row="status"></td>
-			<td class="td-manage">
+			<td row="auditTime"></td>
+			<td class="td-manage" row="manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
@@ -348,10 +371,10 @@
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button> -->
-				<button class="layui-btn-danger layui-btn layui-btn-xs"
+				<!-- <button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>解除人房关系
-				</button>
+				</button> -->
 			</td>
 		</tr>
 	</table>

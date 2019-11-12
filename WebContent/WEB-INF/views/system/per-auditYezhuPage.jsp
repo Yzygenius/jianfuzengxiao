@@ -110,7 +110,7 @@
 			<td row="nationName"></td>
 			<td row="telephone"></td>
 			<td row="liveTypeName"></td>
-			<td row="lesaseAddress"></td>
+			<td row="leaseAddress"></td>
 			<td row="leaseTime"></td>
 			<td row="status"></td>
 			<td row="auditTime"></td>
@@ -258,6 +258,7 @@
 				dataType : "json",
 				data : data,
 				success : function(result) {
+				//	console.log(result)
 					if (result.code == 1) {
 						$('#total').text('共有数据：' + result.data.total + '条');
 
@@ -279,7 +280,22 @@
 							tr.find('[row=telephone]').text(data[i].telephone);
 							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
 							//居住地址
-							tr.find('[row=leaseAddress]').text(data[i].liveTypeName);
+							
+							if(data[i].housesStatus == 1){
+								tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+data[i].storiedBuildingNumber+'号楼'+data[i].unit+'单元'+data[i].houseNumber+'号');
+							}else if(data[i].housesStatus == 2){
+								if(data[i].storeLocation == 1){
+									tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+'内铺'+data[i].houseNumber+'号');
+								}else if(data[i].storeLocation == 2){
+									tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+'外铺'+data[i].houseNumber+'号');
+								}else{
+									tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+data[i].houseNumber+'号');
+								}
+								
+							}else{
+								tr.find('[row=leaseAddress]').text('');
+							}
+							
 							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
 								tr.find('[row=leaseTime]').text('长期');
 							}else{
@@ -293,7 +309,7 @@
 								tr.find('[row=status]').text('未通过审核');
 							}
 							//最新上报时间
-							tr.find('[row=auditTime]').text(data[i].liveTypeName);
+							tr.find('[row=auditTime]').text(data[i].updateTime);
 							$('#x-img').append(tr);
 							//close loading
 							layer.closeAll('loading');

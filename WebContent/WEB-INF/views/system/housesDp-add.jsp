@@ -73,7 +73,7 @@
 					<span class="x-red">*</span>
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<div class="layui-form-item" id="storeLocationSel2">
 				<label class="layui-form-label">
 					<span>内/外铺</span>
 				</label>
@@ -203,7 +203,7 @@
 					<div class="layui-upload">
 						<button type="button" class="layui-btn" id="uploadHouseTypePhoto">上传图片</button>
 					  	<div class="layui-upload-list">
-					    	<img width="400" class="layui-upload-img" id="houseTypePhoto">
+					    	<img class="layui-upload-img" id="houseTypePhoto">
 					    	
 					  	</div>
 					</div>  
@@ -239,6 +239,8 @@
 	var housesTypeName = '';
 	var propertyCertificatesPhoto = '';
 	var houseTypePhoto = '';
+	var communityStreetStatus = '';
+	var communityStreetList = '';
     layui.use(['form','layer','upload'], function(){
     	var $ = layui.jquery
         form = layui.form
@@ -252,6 +254,9 @@
 			}
 			if(houseTypePhoto == ''){
 				layer.msg('请上传户型图照片', {icon: 7});
+			}
+			if(communityStreetStatus == 2){
+				storeLocation = '';
 			}
 		    $.ajax({  
 				url : "/jianfuzengxiao/system/houses/addHouses.html",  
@@ -346,6 +351,8 @@
         form.on('select(province)', function(data){
         	provName = data.elem[data.elem.selectedIndex].text;
         	provCode = data.value;
+        	cityCode = '';
+	      	areaCode = '';
         	$.each(provinceList, function (index, item) {
 				if(item.code == data.value){
 					cityList = item.childList;
@@ -372,7 +379,7 @@
         form.on('select(city)', function(data){
         	cityName = data.elem[data.elem.selectedIndex].text;
         	cityCode = data.value;
-        	
+        	areaCode = '';
         	$.each(cityList, function (index, item) {
 				if(item.code == data.value){
 					areaList = item.childList;
@@ -408,11 +415,21 @@
         	serchCommunityStreet();
         });
       
-      	//监听社区
+      	//监听小区
         form.on('select(communityStreetSel)', function(data){
         	communityStreetName = data.elem[data.elem.selectedIndex].text;
         	communityStreetId = data.value;
-        	
+	       	$.each(communityStreetList, function (index, item) {
+	       		if(item.communityStreetId == communityStreetId){
+	       			communityStreetStatus = item.status;
+           			if(item.status == 2){
+           				$('#storeLocationSel2').hide();
+           			}else{
+           				$('#storeLocationSel2').show();
+           			}
+           		}
+	        });
+        	//console.log(communityStreetList)
         });
       	
       	//监听房屋类型
@@ -511,6 +528,7 @@
 					}
 					$('#communityStreetSel').append(str);
 					form.render('select');
+					communityStreetList = result.data;
 				}
 			},
 			error : function(result){

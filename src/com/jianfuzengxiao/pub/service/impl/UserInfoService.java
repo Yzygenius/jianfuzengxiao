@@ -141,9 +141,12 @@ public class UserInfoService extends BaseService implements IUserInfoService {
 			per.setCertificatesStopTime(entity.getCertificatesStopTime());
 			per.setCertificatesAddress(entity.getCertificatesAddress());
 			per.setCertificatesOffice(entity.getCertificatesOffice());
+			per.setUpdateStatus(PersonnelInfo.update_status_again);
+			per.setUpdateTime(DateUtil.nowTime());
+			per.setStatus(PersonnelInfo.status_waiting);
 			personnelInfoService.update(per);
 		}
-		entity.setStatus(UserInfo.status_waiting);
+		//entity.setStatus(UserInfo.status_waiting);
 		return this.update(entity);
 	}
 

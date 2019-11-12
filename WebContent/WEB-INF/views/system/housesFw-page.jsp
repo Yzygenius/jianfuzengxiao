@@ -60,7 +60,7 @@
 				<input type="text" name="storiedBuildingNumber" placeholder="请输入楼号" autocomplete="off" class="layui-input">
 				<input type="text" name="unit" placeholder="请输入单元号" autocomplete="off" class="layui-input">
 				<input type="text" name="houseNumber" placeholder="请输入门牌号" autocomplete="off" class="layui-input">
-				<input type="text" name="keyword" placeholder="姓名/手机号/身份证号" autocomplete="off" class="layui-input">
+				<input type="text" name="keyword" placeholder="产权人/房主/手机号/身份证号" autocomplete="off" class="layui-input">
 				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
@@ -87,6 +87,8 @@
 					<th>楼号</th>
 					<th>单元</th>
 					<th>门牌号</th>
+					<th>产权人</th>
+					<th>房主</th>
 					<th>包户干部</th>
 					<th>干部电话</th>
 					<th>居住人数</th>
@@ -113,6 +115,8 @@
 			<td row="storiedBuildingNumber"></td>
 			<td row="unit"></td>
 			<td row="houseNumber"></td>
+			<td row="propertyOwnerName"></td>
+			<td row="fangzhu"></td>
 			<td row="username"></td>
 			<td row="adminTelephone"></td>
 			<td row="leaseCount"></td>
@@ -458,7 +462,6 @@
 				success : function(result) {
 					if (result.code == 1) {
 						$('#total').text('共有数据：' + result.data.total + '条');
-
 						$('#x-img').html('');
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
@@ -471,6 +474,8 @@
 							tr.find('[row=storiedBuildingNumber]').text(data[i].storiedBuildingNumber);
 							tr.find('[row=unit]').text(data[i].unit);
 							tr.find('[row=houseNumber]').text(data[i].houseNumber);
+							tr.find('[row=propertyOwnerName]').text(data[i].propertyOwnerName);
+							tr.find('[row=fangzhu]').text(data[i].fangzhu);
 							tr.find('[row=username]').text(data[i].username);
 							tr.find('[row=adminTelephone]').text(data[i].adminTelephone);
 							tr.find('[row=leaseCount]').text(data[i].leaseCount);

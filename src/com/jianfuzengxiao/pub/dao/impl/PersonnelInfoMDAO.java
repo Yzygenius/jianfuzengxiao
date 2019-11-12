@@ -21,145 +21,151 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	public PageInfo queryPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
-		sql.append("from PERSONNEL_INFO ");
+				"select a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.update_status ");
+		sql.append(",b.houses_status,b.community_name,b.community_street_name,b.storied_building_number,b.unit,b.house_number,b.houses_address,ifnull(b.store_location, 0)store_location ");
+		sql.append("from PERSONNEL_INFO a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
 		sql.append("where 1=1");
 
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getPersonnelId())) {
-					sql.append(" AND personnel_id=?");
+					sql.append(" AND a.personnel_id=?");
 					params.add(entity.getPersonnelId());
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND houses_id in("+entity.getHousesId()+")");
+					sql.append(" AND a.houses_id in("+entity.getHousesId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getUserId())) {
-					sql.append(" AND user_id like ?");
+					sql.append(" AND a.user_id like ?");
 					params.add("%" + entity.getUserId() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getPerSort())) {
-					sql.append(" AND per_sort=?");
+					sql.append(" AND a.per_sort=?");
 					params.add(entity.getPerSort());
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id in ("+entity.getLiveTypeId()+")");
+					sql.append(" AND a.live_type_id in ("+entity.getLiveTypeId()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getLiveTypeName())) {
-					sql.append(" AND live_type_name like ?");
+					sql.append(" AND a.live_type_name like ?");
 					params.add("%" + entity.getLiveTypeName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getLeaseMode())) {
-					sql.append(" AND lease_mode=?");
+					sql.append(" AND a.lease_mode=?");
 					params.add(entity.getLeaseMode());
 				}
 				if (StringUtils.isNotBlank(entity.getLeaseStartTime())) {
-					sql.append("  AND lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.lease_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getLeaseStartTime());
 				}
 				if (StringUtils.isNotBlank(entity.getLeaseStopTime())) {
-					sql.append("  AND lease_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.lease_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getLeaseStopTime());
 				}
 				if (StringUtils.isNotBlank(entity.getUsername())) {
-					sql.append(" AND username like ?");
+					sql.append(" AND a.username like ?");
 					params.add("%" + entity.getUsername() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getGender())) {
-					sql.append(" AND gender=?");
+					sql.append(" AND a.gender=?");
 					params.add(entity.getGender());
 				}
 				if (StringUtils.isNotBlank(entity.getFacePhoto())) {
-					sql.append(" AND face_photo like ?");
+					sql.append(" AND a.face_photo like ?");
 					params.add("%" + entity.getFacePhoto() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getFaceFile())) {
-					sql.append(" AND face_file like ?");
+					sql.append(" AND a.face_file like ?");
 					params.add("%" + entity.getFaceFile() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getBirthDate())) {
-					sql.append("  AND birth_date=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.birth_date=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getBirthDate());
 				}
 				if (StringUtils.isNotBlank(entity.getNationId())) {
-					sql.append(" AND nation_id=?");
+					sql.append(" AND a.nation_id=?");
 					params.add(entity.getNationId());
 				}
 				if (StringUtils.isNotBlank(entity.getNationName())) {
-					sql.append(" AND nation_name like ?");
+					sql.append(" AND a.nation_name like ?");
 					params.add("%" + entity.getNationName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getTelephone())) {
-					sql.append(" AND telephone like ?");
+					sql.append(" AND a.telephone like ?");
 					params.add("%" + entity.getTelephone() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesTypeId())) {
-					sql.append(" AND certificates_type_id=?");
+					sql.append(" AND a.certificates_type_id=?");
 					params.add(entity.getCertificatesTypeId());
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesTypeName())) {
-					sql.append(" AND certificates_type_name like ?");
+					sql.append(" AND a.certificates_type_name like ?");
 					params.add("%" + entity.getCertificatesTypeName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesPositivePhoto())) {
-					sql.append(" AND certificates_positive_photo like ?");
+					sql.append(" AND a.certificates_positive_photo like ?");
 					params.add("%" + entity.getCertificatesPositivePhoto() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesPositiveFile())) {
-					sql.append(" AND certificates_positive_file like ?");
+					sql.append(" AND a.certificates_positive_file like ?");
 					params.add("%" + entity.getCertificatesPositiveFile() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesNegativePhoto())) {
-					sql.append(" AND certificates_negative_photo like ?");
+					sql.append(" AND a.certificates_negative_photo like ?");
 					params.add("%" + entity.getCertificatesNegativePhoto() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesNegativeFile())) {
-					sql.append(" AND certificates_negative_file like ?");
+					sql.append(" AND a.certificates_negative_file like ?");
 					params.add("%" + entity.getCertificatesNegativeFile() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesNumber())) {
-					sql.append(" AND certificates_number like ?");
+					sql.append(" AND a.certificates_number like ?");
 					params.add("%" + entity.getCertificatesNumber() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesStartTime())) {
-					sql.append("  AND certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getCertificatesStartTime());
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesStopTime())) {
-					sql.append("  AND certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getCertificatesStopTime());
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesAddress())) {
-					sql.append(" AND certificates_address like ?");
+					sql.append(" AND a.certificates_address like ?");
 					params.add("%" + entity.getCertificatesAddress() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCertificatesOffice())) {
-					sql.append(" AND certificates_office like ?");
+					sql.append(" AND a.certificates_office like ?");
 					params.add("%" + entity.getCertificatesOffice() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getEnterpriseName())) {
-					sql.append(" AND enterprise_name like ?");
+					sql.append(" AND a.enterprise_name like ?");
 					params.add("%" + entity.getEnterpriseName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status in ("+entity.getStatus()+")");
+					sql.append(" AND a.status in ("+entity.getStatus()+")");
 				}
 				if (StringUtils.isNotBlank(entity.getAuditRemark())) {
-					sql.append(" AND audit_remark like ?");
+					sql.append(" AND a.audit_remark like ?");
 					params.add("%" + entity.getAuditRemark() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCreateTime())) {
-					sql.append("  AND create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getCreateTime());
 				}
 				if (StringUtils.isNotBlank(entity.getUpdateTime())) {
-					sql.append("  AND update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getUpdateTime());
 				}
 				if (StringUtils.isNotBlank(entity.getSts())) {
-					sql.append(" AND sts like ?");
+					sql.append(" AND a.sts like ?");
 					params.add("%" + entity.getSts() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getUpdateStatus())) {
+					sql.append(" AND a.update_status = ?");
+					params.add(entity.getUpdateStatus());
 				}
 			}
 			logger.info(sql.toString() + " -- " + params.toString());

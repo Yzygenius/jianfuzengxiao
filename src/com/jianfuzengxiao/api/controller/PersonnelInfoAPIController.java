@@ -224,15 +224,16 @@ public class PersonnelInfoAPIController extends BaseController {
 			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
 			throwAppException(list.size() > 1, RC.PERSONNEL_INFO_REPORT_EXIST);
 			
-			if (StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {
+			
+			if (StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {
 				Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 				model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
 			}
-			if (StringUtils.substringBefore(model.getCertificatesNegativePhoto(), ",").equals("data:image/jpeg;base64")) {
+			if (StringUtils.isNotBlank(model.getCertificatesNegativePhoto()) && StringUtils.substringBefore(model.getCertificatesNegativePhoto(), ",").equals("data:image/jpeg;base64")) {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
 				model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
-			if (StringUtils.substringBefore(model.getFacePhoto(), ",").equals("data:image/jpeg;base64")) {
+			if (StringUtils.isNotBlank(model.getFacePhoto()) && StringUtils.substringBefore(model.getFacePhoto(), ",").equals("data:image/jpeg;base64")) {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}

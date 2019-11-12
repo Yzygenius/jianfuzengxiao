@@ -210,7 +210,7 @@
 					<div class="layui-upload">
 						<button type="button" class="layui-btn" id="uploadHouseTypePhoto">上传图片</button>
 					  	<div class="layui-upload-list">
-					    	<img width="400" class="layui-upload-img" id="houseTypePhoto">
+					    	<img class="layui-upload-img" id="houseTypePhoto">
 					    	
 					  	</div>
 					</div>  
@@ -354,6 +354,8 @@
         form.on('select(province)', function(data){
         	provName = data.elem[data.elem.selectedIndex].text;
         	provCode = data.value;
+        	cityCode = '';
+        	areaCode = '';
         	$.each(provinceList, function (index, item) {
 				if(item.code == data.value){
 					cityList = item.childList;
@@ -380,7 +382,7 @@
         form.on('select(city)', function(data){
         	cityName = data.elem[data.elem.selectedIndex].text;
         	cityCode = data.value;
-        	
+        	areaCode = '';
         	$.each(cityList, function (index, item) {
 				if(item.code == data.value){
 					areaList = item.childList;

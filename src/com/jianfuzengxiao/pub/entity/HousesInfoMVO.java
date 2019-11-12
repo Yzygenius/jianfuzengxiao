@@ -18,8 +18,27 @@ public class HousesInfoMVO extends HousesInfo {
 	
 	private String hStatus;
 
+	private String fangzhu;
+	
+	private String fangzhuTel;
 	
 	
+	public String getFangzhuTel() {
+		return fangzhuTel;
+	}
+
+	public void setFangzhuTel(String fangzhuTel) {
+		this.fangzhuTel = fangzhuTel;
+	}
+
+	public String getFangzhu() {
+		return fangzhu;
+	}
+
+	public void setFangzhu(String fangzhu) {
+		this.fangzhu = fangzhu;
+	}
+
 	public String gethStatus() {
 		return hStatus;
 	}

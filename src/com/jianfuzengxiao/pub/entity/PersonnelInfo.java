@@ -27,6 +27,11 @@ public class PersonnelInfo extends Entity {
 	/** 6 撤销 */
 	public final static String status_cexiao = "6";
 	
+	/** 首次上报 */
+	public final static String update_status_one = "1";
+	/** 更新上报 */
+	public final static String update_status_again = "2";
+	
 	protected String personnelId;
 
 	protected String housesId;
@@ -94,6 +99,8 @@ public class PersonnelInfo extends Entity {
 	protected String updateTime;
 
 	protected String sts;
+	
+	protected String updateStatus;
 
 	public String getPersonnelId() {
 		return personnelId;
@@ -366,4 +373,13 @@ public class PersonnelInfo extends Entity {
 	public void setSts(String sts) {
 		this.sts = sts;
 	}
+
+	public String getUpdateStatus() {
+		return updateStatus;
+	}
+
+	public void setUpdateStatus(String updateStatus) {
+		this.updateStatus = updateStatus;
+	}
+	
 }

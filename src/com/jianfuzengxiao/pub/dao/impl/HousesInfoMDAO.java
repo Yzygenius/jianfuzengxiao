@@ -24,10 +24,12 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
 		sql.append(",b.username,b.admin_telephone,b.admin_id ");
 		sql.append(",count(c.personnel_id)lease_count ");
+		sql.append(",ifnull(d.username,'')fangzhu ");
 		sql.append("from HOUSES_INFO a ");
 		sql.append("left join (select ad.admin_id,ad.houses_id,ai.username,ai.telephone admin_telephone from aduit_distribution ad left join admin_info ai on(ad.admin_id=ai.admin_id) where ad.sts='A') b on(a.houses_id=b.houses_id) ");
 		//sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.status in(2) ) ");
 		sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.sts='A' ) ");
+		sql.append("left join personnel_info d on(a.houses_id=d.houses_id and d.sts='A' and d.live_type_id in(1,2,3,4) ) ");
 		sql.append("where 1=1 ");
 
 		List<Object> params = new ArrayList<Object>();
@@ -167,7 +169,8 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 				}
 				
 				if (StringUtils.isNotBlank(entity.getKeyword())) {
-					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? ) ");
+					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? or d.usename like ?) ");
+					params.add("%" + entity.getKeyword() + "%");
 					params.add("%" + entity.getKeyword() + "%");
 					params.add("%" + entity.getKeyword() + "%");
 					params.add("%" + entity.getKeyword() + "%");

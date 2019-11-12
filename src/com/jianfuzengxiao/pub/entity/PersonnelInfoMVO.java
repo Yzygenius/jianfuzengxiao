@@ -19,11 +19,18 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String houseType;
 	private String housesTypeName;
 	private String housesTypeId;
+	private String storeLocation;
 	
 	private String adminId;
 	
 	
 	
+	public String getStoreLocation() {
+		return storeLocation;
+	}
+	public void setStoreLocation(String storeLocation) {
+		this.storeLocation = storeLocation;
+	}
 	public String getHousesTypeId() {
 		return housesTypeId;
 	}
