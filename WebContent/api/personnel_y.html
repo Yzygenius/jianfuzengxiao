@@ -416,7 +416,7 @@
                 }
               // 跳转页面
               if(res.liveTypeId == '1' || res.liveTypeId == '2' || res.liveTypeId == '3' || res.liveTypeId == '4'){
-                $('.an_btn').append('<div class="item-btn"><a href="update_infor.html?personnelId='+personnelId+'">更新上报</a></div>')
+                $('.an_btn').append('<div class="item-btn"><a href="update_infor.html?personnelId='+personnelId+'&housesId='+res.housesId+'">更新上报</a></div>')
               }else{
                 $('.an_btn').append('<div class="item-btn"><a href="update_more_infor.html?personnelId='+personnelId+'&liveTypeId='+res.liveTypeId+'&liveTypeName='+escape(res.liveTypeName)+'">更新上报</a></div>')
               }

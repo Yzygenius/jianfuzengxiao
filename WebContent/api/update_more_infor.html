@@ -252,11 +252,11 @@
                     var leaseStartTime = res.leaseStartTime
                     var leaseStopTime = res.leaseStopTime
                 }
-                // if(res.gender == 1){
-                //     var gender = '男'
-                // }else if(res.gender == 2){
-                //     var gender = '女'
-                // }
+                if(res.gender == 1){
+                     var gender = '男'
+                 }else if(res.gender == 2){
+                     var gender = '女'
+                }
                 sessionStorage.housesId = res.housesId
                 console.log(res)
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
@@ -332,6 +332,7 @@
                 infor.gender = 2
             }
             // console.log(infor)
+        
             if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
                 layer.msg('请选择居住开始时间');
             }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
@@ -376,18 +377,10 @@
                         layer.closeAll('loading');
                         if(data.code == 1){
                             layer.msg('提交成功');
-                            if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 3 || liveTypeId == 4){
-                                 setTimeout(function(){
-                                    // location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
-                                    window.location.href = "verify1.html";
-                                }, 1500);
-                             }else{
-                                  setTimeout(function(){
-                                    location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
-                                    window.closeAll(); 
-                                }, 1500);
-                             }
-                           
+                              setTimeout(function(){
+                                location.replace("idenTenant1_y.html?housesId="+sessionStorage.housesId)
+                                window.closeAll(); 
+                            }, 1500);
                         }else{
                             layer.msg(data.msg);
                         }

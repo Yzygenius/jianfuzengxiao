@@ -179,7 +179,7 @@
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
-            <div class="new_select">重新选择</div>
+            <!-- <div class="new_select">重新选择</div> -->
         </div>
         <div class="box-one house">
             <!-- <div class="box-title"><img src="images/yang/house3.png" alt=""><span>百青年之都 23-02-2304</span><span class="zc">自持</span></div>
@@ -200,7 +200,7 @@
         <div class="title">
             <img src="images/yang/line.png" alt="">
             <div class="title_text"><p>选择房屋/门店</p></div>
-            <div class="new_select">重新选择</div>
+            <!-- <div class="new_select">重新选择</div> -->
         </div>
         <div class="box-one house">
             <div class="box-title"></div>
@@ -234,7 +234,7 @@
             </div>
             <div class="inputInput">
                 <p>企业名称</p>
-                <input type="text" placeholder="填写企业名称" id="enter_name">
+                <input type="text" value="" placeholder="填写企业名称" id="enter_name">
             </div>
             <div class="upload_box second"><span>上传租赁合同</span><input id="file2" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"></div>
             <div class="images">
@@ -354,9 +354,9 @@
                     for(var i = 0;i<infor.contractList.length;i++){
                         add.append('<div class="addimg"><div class="cloase"><img src="images/list/cloase.png" alt=""></div><img class="add_img" src="'+infor.contractList[i].fileThumb+'" alt=""></div>')
                     }
-                    $('#date3').html(infor.leaseStartTime);
-                    $('#date4').html(infor.leaseStartTime);
-                    $('#enter_name').value(infor.enterpriseName)
+                    $('#date3').html(infor.leaseStartTime)
+                    $('#date4').html(infor.leaseStartTime)
+                     document.getElementById('enter_name').value= infor.enterpriseName
                 }
             }else{
                 layer.msg(data.msg);

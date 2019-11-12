@@ -32,8 +32,6 @@
         <div class="facell">
             <div class="face" id="enter1" style="border: 1px solid #eee;">
                 <img src="images/tao/face.png" alt="" id="preview10">
-                <input type="file" name="file" id="camear" onchange="imgPreview(this,'preview10')" accept="image/*"
-                    capture="camera" />
                 <p class="faceword" id="faceph" style="display:none">点击拍摄人脸照片</p>
             </div>
             <div class="allimg">
@@ -147,6 +145,8 @@
         return null;
     }
     var personnelId = getQueryString("personnelId");
+    var housesId = getQueryString("housesId");
+    console.log(housesId);
     var live=""
     $(function(){
         layer.load(1);
@@ -264,8 +264,8 @@
         // 点击提交
         $('#submit').click(function(){
             var infor = {
-                    // 'certificatesPositivePhoto' : $('#preview11').attr('src'),
-                    // 'certificatesNegativePhoto' : $('#preview12').attr('src'),
+                    'certificatesPositivePhoto' : $('#preview11').attr('src'),
+                    'certificatesNegativePhoto' : $('#preview12').attr('src'),
                     'userId':sessionStorage.userId,
                     'facePhoto' : $('#preview10').attr('src'),
                     'certificatesTypeName' : document.getElementById('trigger1').value,
@@ -302,7 +302,7 @@
             }else if(infor.gender == '女'){
                 infor.gender = 2
             }
-            // console.log(infor)
+
             if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
                 layer.msg('请选择居住开始时间');
             }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
@@ -346,10 +346,11 @@
                         console.log(data)
                         layer.closeAll('loading');
                         if(data.code == 1){
-                            layer.msg('提交成功');
-                            setTimeout(function(){
-                                location.replace("idenWait_y.html")
-                            }, 1500);
+                            // layer.msg('提交成功');
+                            // setTimeout(function(){
+                                // location.replace("idenWait_y.html")
+                               window.location.href ="verify_y.html?housesId="+housesId
+                            // }, 1500);
                         }else{
                             layer.msg(data.msg);
                         }

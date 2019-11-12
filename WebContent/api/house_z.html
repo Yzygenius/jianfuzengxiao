@@ -101,11 +101,12 @@
               var imgUrl = data.data.houses.houseTypePhoto
               $('.pop_exhibition img').attr('src',imgUrl)
               $('.total_num .num').html(data.data.per.length)
-              if(data.data.houses.hStatus == 3){
-                var upload_btn = '<a href="verify_y.html?housesId='+data.data.houses.housesId+'"><div class="upload_btn">修改信息</div></a>'
-              }else{
-                var upload_btn =''
-              }
+              // if(data.data.houses.hStatus == 3){
+              //   var upload_btn = '<a href="verify_y.html?housesId='+data.data.houses.housesId+'"><div class="upload_btn">修改信息</div></a>'
+              // }else{
+              //   var upload_btn =''
+              // }
+               var upload_btn =''
               // 判断是房屋或者门店显示新建联系人
               if(data.data.houses.housesStatus==1){  //房屋
                 $('.total_num .lxr').html("房屋联系人")
