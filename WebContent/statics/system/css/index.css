@@ -76,7 +76,8 @@ h6 {
     font-style: normal;
 }
 .content{
-    width: 1600px;
+    width: 100%;
+    overflow-x: scroll;
 }
 .content .Statistics{
     width:100%;

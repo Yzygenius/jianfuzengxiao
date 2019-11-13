@@ -76,10 +76,10 @@ h6 {
     font-style: normal;
 }
 .content{
-    width: 1600px;
+    width: 100%;
     padding: 10px;
     background: #F3F6FE;
-    overflow: hidden;
+    overflow-x: scroll;
     box-sizing: border-box;
 }
 .content .nav{
