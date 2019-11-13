@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css"/>
 </head>
 <body>
-    <div class="content">
+    <div class="content" style="overflow-x: scroll;">
         <div class="nav">
             <div class="Community Community0">
                 <div class="nav_title"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">社区</div>

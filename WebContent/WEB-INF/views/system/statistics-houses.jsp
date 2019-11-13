@@ -12,7 +12,7 @@
 <title>房屋信息统计</title>
 </head>
 <body>
-	<div class="content">
+	<div class="content" style="overflow-x: scroll;">
 		<div class="nav">
 			<div class="Community Community0">
 				<div class="nav_title">
