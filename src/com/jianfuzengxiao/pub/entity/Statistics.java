@@ -98,6 +98,12 @@ public class Statistics extends Entity {
 	
 	
 	
+	public String getTotalWaitRatio() {
+		return totalWaitRatio;
+	}
+	public void setTotalWaitRatio(String totalWaitRatio) {
+		this.totalWaitRatio = totalWaitRatio;
+	}
 	public String getYear() {
 		return year;
 	}
