@@ -112,7 +112,8 @@
                 $('.total_num .lxr').html("房屋联系人")
                 var img = '<img src="images/list/house.png" alt="">'
                 // 传到下一页参数
-                var address =escape(data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber) 
+                // escape
+                var address =data.data.houses.communityStreetName +'  '+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber
                 $('.total_num').after('<a href="javascript:open()"><div class="total_add"><span>+</span>新增关联人</div></a>')
 
                 var in_title_time = '<div class="in_title_time">'+data.data.houses.storiedBuildingNumber+'-'+data.data.houses.unit+'-'+data.data.houses.houseNumber+'</div>'
@@ -143,8 +144,8 @@
                 $('.total_num .lxr').html("门店联系人")
                 var img = '<img src="images/list/store.png" alt="">'
                 // 传到下一页参数
-                var address =escape(data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号') 
-                $('.total_num').after('<a href="identity_yg_t.html?address='+address+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
+                var address =data.data.houses.communityStreetName+'  '+data.data.houses.houseNumber+'号'
+                $('.total_num').after('<a href="identity_yg_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="total_add"><span>+</span>新增关联人</div></a>')
                 var in_title_time = ''
                  if(data.data.houses.housesTypeId == 3){
                     var houseKind = data.data.houses.housesTypeName + '('+data.data.houses.enterpriseName+')'
@@ -176,9 +177,11 @@
                 $('#height').css('height','140px')
               }
 
+               // alert(housesId)
+               // alert(address)
               // 是房屋的时候上报家属或者租户点击跳页
-              $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+address+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
-              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+address+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
+              $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
+              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
               if(data.data.houses.hStatus !== '2'){
                 $('.total_add').parent('a').fadeOut(0);
               }

@@ -147,7 +147,7 @@
         return null;
     }
     // 这样调用：housesId即为上个页面传回来的变量名
-    var address = getQueryString("address");
+    var address = decodeURI(decodeURI(getQueryString("address")));
     var housesId = getQueryString("housesId");
     $('.live-title .live_p0').html(address)
     $(function(){
