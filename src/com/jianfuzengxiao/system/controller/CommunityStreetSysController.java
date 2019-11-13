@@ -1,5 +1,6 @@
 package com.jianfuzengxiao.system.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
@@ -32,6 +36,9 @@ public class CommunityStreetSysController extends BaseController {
 	
 	@Autowired
 	private ICommunityStreetInfoService communityStreetInfoService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
 	
 	@RequestMapping(value="/toCommunityStreetPage")
 	public String toCommunityStreetPage(){
@@ -76,6 +83,21 @@ public class CommunityStreetSysController extends BaseController {
 	@RequestMapping(value="/getCommunityStreetPage")
 	public String getCommunityStreetPage(CommunityStreetInfoMVO communityStreetInfo){
 		try {
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				LgzgMVO lgzg = new LgzgMVO();
+				lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				lgzg.setSts("A");
+				List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+				if (lgzgList.size() > 0) {
+					List<String> list = new ArrayList<String>();
+					for(LgzgMVO lg : lgzgList){
+						list.add(lg.getCommunityId());
+					}
+					communityStreetInfo.setCommunityId(StringUtils.join(list.toArray(),","));
+				}else{
+					communityStreetInfo.setCommunityId("0");
+				}
+			}
 			PageInfo pageInfo = getPage();
 			pageInfo.setSortName("listOrder");
 			pageInfo.setSortOrder("asc");
@@ -91,6 +113,24 @@ public class CommunityStreetSysController extends BaseController {
 	@RequestMapping(value="/getCommunityStreetList")
 	public String getCommunityStreetList(CommunityStreetInfoMVO communityStreetInfo){
 		try {
+			if(StringUtils.isBlank(communityStreetInfo.getCommunityId())){
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						communityStreetInfo.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						communityStreetInfo.setCommunityId("0");
+					}
+				}
+			}
+			
 			communityStreetInfo.setSts("A");
 			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(communityStreetInfo);
 			return apiResult(RC.SUCCESS, list);

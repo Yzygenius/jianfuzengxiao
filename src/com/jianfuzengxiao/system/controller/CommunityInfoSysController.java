@@ -1,5 +1,6 @@
 package com.jianfuzengxiao.system.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
+
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
 @Controller
@@ -26,6 +31,9 @@ public class CommunityInfoSysController extends BaseController {
 	
 	@Autowired
 	private ICommunityInfoService communityInfoService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
 	
 	@RequestMapping(value="/toCommunityPage")
 	public String toCommunityPage(){
@@ -63,6 +71,23 @@ public class CommunityInfoSysController extends BaseController {
 	@RequestMapping(value="/getCommunityPage")
 	public String getCommunityPage(CommunityInfoMVO communityInfo){
 		try {
+			
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				LgzgMVO lgzg = new LgzgMVO();
+				lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				lgzg.setSts("A");
+				List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+				if (lgzgList.size() > 0) {
+					List<String> list = new ArrayList<String>();
+					for(LgzgMVO lg : lgzgList){
+						list.add(lg.getCommunityId());
+					}
+					communityInfo.setCommunityId(StringUtils.join(list.toArray(),","));
+				}else{
+					communityInfo.setCommunityId("0");
+				}
+			}
+			
 			PageInfo pageInfo = getPage();
 			pageInfo.setSortName("listOrder");
 			pageInfo.setSortOrder("asc");
@@ -78,7 +103,21 @@ public class CommunityInfoSysController extends BaseController {
 	@RequestMapping(value="/getCommunityList")
 	public String getCommunityList(CommunityInfoMVO communityInfo){
 		try {
-			
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				LgzgMVO lgzg = new LgzgMVO();
+				lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				lgzg.setSts("A");
+				List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+				if (lgzgList.size() > 0) {
+					List<String> list = new ArrayList<String>();
+					for(LgzgMVO lg : lgzgList){
+						list.add(lg.getCommunityId());
+					}
+					communityInfo.setCommunityId(StringUtils.join(list.toArray(),","));
+				}else{
+					communityInfo.setCommunityId("0");
+				}
+			}
 			communityInfo.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(communityInfo);
 			return apiResult(RC.SUCCESS, list);

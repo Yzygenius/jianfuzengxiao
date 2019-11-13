@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>X-admin v1.0</title>
+<title>admin</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -29,7 +29,8 @@
 			class="layui-icon" style="line-height: 30px">&#xe666;</i></a>
 	</div>
 	<div class="x-body">
-		<xblock>
+		<xblock style="height: 38px;">
+		<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 		<button class="layui-btn layui-btn-danger" onclick="delAll()">
 			<i class="layui-icon">&#xe640;</i>批量删除
 		</button>
@@ -37,12 +38,14 @@
 			onclick="banner_add('新增','/jianfuzengxiao/system/communityStreet/toAddCommunityStreet.html', 780, 520)">
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
+		</c:if>
 		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
 		<table class="layui-table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" value="" name="" id="checkAll"
-						onclick="checkAll(this)"></th>
+					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
+					</c:if>
 					<th>排序</th>
 					<th>小区街道名称</th>
 					<th>类别</th>
@@ -62,8 +65,9 @@
 
 	<table id="clone-tr" style="display: none;">
 		<tr>
-			<td row="checkBoxId"><input type="checkbox" class="checkId"
-				value="" name=""></td>
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
+			</c:if>
 			<td row="ids" style="display: none;"></td>
 			<td row="listOrder"></td>
 			<td row="communityStreetName">
@@ -78,6 +82,7 @@
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/communityStreet/toCommunityStreetDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/communityStreet/toUpdateCommunityStreet.html', 780, 520)">
 					<i class="layui-icon">&#xe642;</i>编辑
@@ -86,6 +91,7 @@
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
 				</button>
+				</c:if>
 			</td>
 		</tr>
 	</table>

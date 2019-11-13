@@ -222,7 +222,9 @@ public class PersonnelInfoAPIController extends BaseController {
 			personnelInfo.setHousesId(model.getHousesId());
 			personnelInfo.setSts("A");
 			List<PersonnelInfoMVO> list = personnelInfoService.queryPerList(personnelInfo);
-			throwAppException(list.size() > 1, RC.PERSONNEL_INFO_REPORT_EXIST);
+		//	System.out.println(list.size());
+		//	System.out.println(model.getHousesId());
+		//	throwAppException(list.size() > 1, RC.PERSONNEL_INFO_REPORT_EXIST);
 			
 			
 			if (StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.substringBefore(model.getCertificatesPositivePhoto(), ",").equals("data:image/jpeg;base64")) {

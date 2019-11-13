@@ -5,6 +5,7 @@ import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.jianfuzengxiao.base.common.Constant;
 import com.jianfuzengxiao.base.common.DataFileUtil;
 import com.jianfuzengxiao.base.common.FileUtil;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.base.utils.ExcelUtil;
@@ -39,11 +41,13 @@ import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesTypeMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IExcelImportService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IHousesTypeService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 
 @Controller
 @RequestMapping(value="/system/common")
@@ -64,6 +68,9 @@ public class CommonSysContoller extends BaseController {
 	
 	@Autowired
 	private ICommunityStreetInfoService communityStreetInfoService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
 	
 	@ResponseBody
 	@RequestMapping(value="/uploadExcel")
@@ -161,8 +168,9 @@ public class CommonSysContoller extends BaseController {
 	public String getCommunityList(){
 		try {
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
+			
 			communityInfoMVO.setSts("A");
-			List<CommunityInfoMVO> list = communityInfoService.queryList(new CommunityInfoMVO());
+			List<CommunityInfoMVO> list = communityInfoService.queryList(communityInfoMVO);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "获取社区列表出错", e);

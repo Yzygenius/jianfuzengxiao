@@ -66,7 +66,7 @@ public class HttpClientUtlis {
 		return map;
 	}
 
-	public static JSON doPost(String url, Map<String, String> params, HttpServletRequest request)
+	public static JSON doPost(String url, Map<String, String> params)
 			throws UnsupportedEncodingException {
 		// Map<String, Object> map = null;
 		String result = null;

@@ -25,10 +25,12 @@ import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IAdminInfoService;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 import com.jianfuzengxiao.pub.service.IUserInfoService;
 
@@ -48,6 +50,9 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	
 	@Autowired
 	private IAdminInfoService adminInfoService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
 	
 	@RequestMapping(value="/toHousesFwPage")
 	public String toHousesFwPage(){
@@ -235,9 +240,43 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	@RequestMapping(value="/getHousesPage", method=RequestMethod.POST)
 	public String getHousesPage(HousesInfoMVO model){
 		try {
-			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
-				model.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+			//流管专干
+			if (StringUtils.isBlank(model.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						model.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						model.setCommunityId("0");
+					}
+				}
 			}
+			
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					model.setHousesId(housesId);
+				}else {
+					model.setHousesId("0");
+				}
+			}
+			
 			PageInfo pageInfo = getPage();
 			model.setSts("A");
 			pageInfo = housesInfoService.queryPage(model, pageInfo);

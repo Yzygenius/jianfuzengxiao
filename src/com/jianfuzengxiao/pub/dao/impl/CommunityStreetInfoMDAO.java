@@ -43,8 +43,7 @@ public class CommunityStreetInfoMDAO extends CommunityStreetInfoSDAO implements 
 					params.add(entity.getStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND a.community_id=?");
-					params.add(entity.getCommunityId());
+					sql.append(" AND a.community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getListOrder())) {
 					sql.append(" AND a.list_order=?");

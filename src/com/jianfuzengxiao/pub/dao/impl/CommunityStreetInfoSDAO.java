@@ -136,8 +136,7 @@ public class CommunityStreetInfoSDAO extends BaseDAO<CommunityStreetInfoMVO> imp
 					params.add(entity.getStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND community_id=?");
-					params.add(entity.getCommunityId());
+					sql.append(" AND community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getListOrder())) {
 					sql.append(" AND list_order=?");

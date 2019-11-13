@@ -192,6 +192,7 @@
 	<script type="text/javascript">
 		var $, form, layer, laypage;
 		var housesId = '${houses.housesId}';
+		var roleId = '${sessionScope.SESSION_ADMIN.roleId }';
 		$(function(){
 			layui.use(['form', 'layer', 'laypage'], function() {
 				$ = layui.jquery//jquery
@@ -279,8 +280,11 @@
 							//最新上报时间
 							tr.find('[row=auditTime]').text(data[i].updateTime);
 							//删除
-							if(data[i].status != 1){
-								tr.find('[row=manage]').append('<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="banner_del(this)" href="javascript:;"><i class="layui-icon">&#xe640;</i>解除人房关系</button>');
+							
+							if(roleId == 1){
+								if(data[i].status != 1){
+									tr.find('[row=manage]').append('<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="banner_del(this)" href="javascript:;"><i class="layui-icon">&#xe640;</i>解除人房关系</button>');
+								}
 							}
 							$('#data-list').append(tr);
 							//close loading

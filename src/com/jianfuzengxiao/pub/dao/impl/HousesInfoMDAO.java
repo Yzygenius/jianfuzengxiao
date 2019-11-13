@@ -36,8 +36,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
-					sql.append(" AND a.houses_id=?");
-					params.add(entity.getHousesId());
+					sql.append(" AND a.houses_id in("+entity.getHousesId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getAdminId())) {
 					sql.append(" AND b.admin_id=?");
@@ -76,8 +75,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 					params.add("%" + entity.getPropertyCertificatesFile() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND a.community_id=?");
-					params.add(entity.getCommunityId());
+					sql.append(" AND a.community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityName())) {
 					sql.append(" AND a.community_name like ?");

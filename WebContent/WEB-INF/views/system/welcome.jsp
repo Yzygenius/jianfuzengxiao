@@ -12,6 +12,12 @@
 <link href="/jianfuzengxiao/statics/system/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css" />
 <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css" media="all">
+<style type="text/css">
+	#page{
+		position: absolute;
+    	bottom: 0;
+	}
+</style>
 <title>首页</title>
 </head>
 <body>

@@ -334,15 +334,15 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		PersonnelInfoMVO personnelInfoMVO = this.queryBean(entity);
 		
-		UserInfoMVO userInfoMVO = new UserInfoMVO();
-		userInfoMVO.setUserId(personnelInfoMVO.getUserId());
-		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
-		
 		PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
 		personnelInfo.setHousesId(personnelInfoMVO.getHousesId());
 		personnelInfo.setPerSort(PersonnelInfo.per_sort_app);
 		List<PersonnelInfoMVO> list = this.queryList(personnelInfo);
 		personnelInfo = list.get(0);
+		
+		UserInfoMVO userInfoMVO = new UserInfoMVO();
+		userInfoMVO.setUserId(personnelInfo.getUserId());
+		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
 		MsgTypeMVO msgTypeMVO = new MsgTypeMVO();
 		msgTypeMVO.setMsgTypeId("5");
@@ -378,8 +378,14 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		PersonnelInfoMVO per = personnelInfoMDAO.queryBean(entity);
 		
+		PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
+		personnelInfo.setHousesId(per.getHousesId());
+		personnelInfo.setPerSort(PersonnelInfo.per_sort_app);
+		List<PersonnelInfoMVO> list = this.queryList(personnelInfo);
+		personnelInfo = list.get(0);
+		
 		UserInfoMVO userInfoMVO = new UserInfoMVO();
-		userInfoMVO.setUserId(per.getUserId());
+		userInfoMVO.setUserId(personnelInfo.getUserId());
 		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
 		personnelInfoMDAO.update(entity);
@@ -471,7 +477,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			String content = "您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知";
 			
 			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
-			msgInfoMVO.setUserId(per.getUserId());
+			msgInfoMVO.setUserId(userInfoMVO.getUserId());
 			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
 			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
@@ -482,9 +488,9 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			
 			try {
 				//通知
-				PushUtils.toPush(per.getUserId(), userInfoMVO.getOpId(), title, content, type);
+				PushUtils.toPush(userInfoMVO.getUserId(), userInfoMVO.getOpId(), title, content, type);
 				//积分
-				PushUtils.toIntegral(per.getUserId(), integralContent, integralType);
+				PushUtils.toIntegral(userInfoMVO.getUserId(), integralContent, integralType);
 			} catch (Exception e) {
 				logger.info("发送通知错误", e);
 			}
@@ -502,7 +508,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			String content = "您所提交的【"+hname+"】"+per.getLiveTypeName()+"申请【人员姓名："+per.getUsername()+"】已通过审核，请悉知";
 			
 			MsgInfoMVO msgInfoMVO = new MsgInfoMVO();
-			msgInfoMVO.setUserId(per.getUserId());
+			msgInfoMVO.setUserId(userInfoMVO.getUserId());
 			msgInfoMVO.setPersonnelId(entity.getPersonnelId());
 			msgInfoMVO.setMsgTypeId(msgTypeMVO.getMsgTypeId());
 			msgInfoMVO.setMsgTypeName(msgTypeMVO.getMsgTypeName());
@@ -512,7 +518,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			msgInfoService.insert(msgInfoMVO);
 			try {
 				
-				PushUtils.toPush(per.getUserId(), userInfoMVO.getOpId(), title, content, type);	
+				PushUtils.toPush(userInfoMVO.getUserId(), userInfoMVO.getOpId(), title, content, type);	
 			} catch (Exception e) {
 				logger.info("发送通知错误", e);
 			}

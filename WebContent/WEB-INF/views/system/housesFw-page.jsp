@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +31,7 @@
 	<div class="x-body">
 		<div class="layui-row">
 			<form class="layui-form layui-col-md12 x-so">
-				
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 				<div class="layui-input-inline">
 					<select id="province" name="province" lay-filter="province" lay-search="">
 						<option value="">请选择省</option>
@@ -47,6 +47,7 @@
 						<option value="">请选择县/区</option>
 					</select>
 				</div>
+				</c:if>
 				<div class="layui-input-inline">
 					<select id="communitySel" name="communitySel" lay-filter="communitySel" lay-search="">
 						<option value="">请选择社区</option>
@@ -65,7 +66,8 @@
 			</form>
 		</div>
 		
-		<xblock>
+		<xblock style="height: 38px;">
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 			<button class="layui-btn layui-btn-danger" onclick="delAll()">
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
@@ -75,13 +77,15 @@
 			</button>
 			<button type="button" class="layui-btn" id="uploadExcel"><i class="layui-icon">&#xe608;</i>excel导入</button>
 			<button type="button" class="layui-btn" onclick="banner_download()"><i class="layui-icon">&#xe608;</i>excel导出</button>
+			</c:if>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" value="" name="" id="checkAll"
-						onclick="checkAll(this)"></th>
+					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
+					</c:if>
 					<th>社区</th>
 					<th>小区</th>
 					<th>楼号</th>
@@ -105,8 +109,9 @@
 
 	<table id="clone-tr" style="display: none;">
 		<tr>
-			<td row="checkBoxId"><input type="checkbox" class="checkId"
-				value="" name=""></td>
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
+			</c:if>
 			<td row="ids" style="display: none;"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
@@ -125,6 +130,7 @@
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
@@ -133,6 +139,7 @@
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
 				</button>
+				</c:if>
 			</td>
 		</tr>
 	</table>

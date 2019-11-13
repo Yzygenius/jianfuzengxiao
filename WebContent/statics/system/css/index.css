@@ -305,7 +305,7 @@ input[type="checkbox"]:checked + label:before{
     background: #F3F6FE;
 }
 .content .infoCenter{
-    height: 585px;
+    height: 660px;
     overflow: hidden;
 }
 .content .infoCenter .itemList .text{

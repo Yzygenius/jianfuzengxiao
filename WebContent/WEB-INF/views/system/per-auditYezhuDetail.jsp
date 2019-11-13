@@ -171,7 +171,7 @@
 		</tbody>
 	</table>
 
-	
+	<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 	<c:if test="${per.status == 1 ||  per.status == 3}">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
@@ -209,6 +209,7 @@
 		    	</div>
 		  	</div>
 		</form>
+	</c:if>
 	</c:if>
 	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>

@@ -546,7 +546,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_pass_ratio ");
 		sql.append(",ifnull(sum(case when live_type_id in(6) and status in(2) then 1 else 0 end),0) as yuangong_pass");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(2,4,6) AND status in(2) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_ratio");
-		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_pass_ratio");
+		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_pass_ratio ");
 		sql.append("from personnel_info a  ");
 		sql.append("LEFT JOIN houses_info b on(a.houses_id=b.houses_id) ");
 		//sql.append("WHERE a.sts='A' ");
