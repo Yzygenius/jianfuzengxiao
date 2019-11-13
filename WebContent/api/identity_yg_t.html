@@ -240,9 +240,6 @@
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
             var base = 'data:image/jpeg;base64';
-            if($('#preview10').attr('name') !== 'success'){
-                infor.facePhoto = ''
-            }
             if(!infor.certificatesNegativePhoto.match(base)){
                 infor.certificatesNegativePhoto = ''
             }
