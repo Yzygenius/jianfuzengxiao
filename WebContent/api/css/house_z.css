@@ -159,7 +159,7 @@ body{
     width: 57px;
 }
 .header .header_infor .hinfor_address .haddress_detail{
-    width: 253px;
+    width: 80%;
     font-weight: bold;
     color: rgba(0,0,0,.8);
 }
