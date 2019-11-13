@@ -454,6 +454,15 @@
             // console.log(data);
             // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
             document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            var dat3 = document.getElementById('date1').value
+            var dat4 = document.getElementById('select_3').value
+            var t1 = new Date(dat3.replace(/-/g, '/'));
+            var t2 = new Date(dat4.replace(/-/g, '/'));
+            if(t1.getTime()>t2.getTime()){
+                layer.msg("开始时间不能大于结束时间") 
+                document.getElementById('date1').value=""
+                document.getElementById('select_3').value=""
+            }
             date1.hide()
             $(this).hide()
         });

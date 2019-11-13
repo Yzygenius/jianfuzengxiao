@@ -201,6 +201,7 @@
                         if(weekdayArr !== '' && weekdayArr2 !== ''){
                             sessionStorage.setItem('weekdayArr',JSON.stringify(weekdayArr))
                             sessionStorage.setItem('weekdayArr2',JSON.stringify(weekdayArr2))
+                            // var date = document.getElementById('date3').value;
                             Positive('身份证','女','1992-01-08','回族');
                             Back('2012-2-8','2012-2-8');
                         }
@@ -441,6 +442,15 @@
             // console.log(data);
             // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
             document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            var dat3 = document.getElementById('date1').value
+            var dat4 = document.getElementById('select_3').value
+            var t1 = new Date(dat3.replace(/-/g, '/'));
+            var t2 = new Date(dat4.replace(/-/g, '/'));
+            if(t1.getTime()>t2.getTime()){
+                layer.msg("开始时间不能大于结束时间") 
+                document.getElementById('date1').value=""
+                document.getElementById('select_3').value=""
+            }
             date1.hide()
             $(this).hide()
         });
@@ -454,7 +464,7 @@
             start:1994,
             end:2999,
             select:Prescription0,
-            title:'证件有效期开始时间'
+            title:'居住时效'
         },function (data) {
             // console.log(data);
             document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
@@ -468,15 +478,24 @@
             start:1994,
             end:2999,
             select:Prescription1,
-            title:'证件有效期结束时间'
+            title:'居住时效'
         },function (data) {
             // console.log(data);
             // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
             document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
+            var dat3 = document.getElementById('date3').value
+            var dat4 = document.getElementById('date4').value
+            var t1 = new Date(dat3.replace(/-/g, '/'));
+            var t2 = new Date(dat4.replace(/-/g, '/'));
+            if(t1.getTime()>t2.getTime()){
+                layer.msg("开始时间不能大于结束时间") 
+                document.getElementById('date3').value=""
+                document.getElementById('date4').value=""   
+            }
+
             date3.hide()
             $(this).hide()
         });
-
         $("#select_date2").click(function () {
             date3.show();
             date4.hide();

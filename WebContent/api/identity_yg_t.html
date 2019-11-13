@@ -441,6 +441,15 @@
             // console.log(data);
             // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
             document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+            var dat3 = document.getElementById('date1').value
+            var dat4 = document.getElementById('select_3').value
+            var t1 = new Date(dat3.replace(/-/g, '/'));
+            var t2 = new Date(dat4.replace(/-/g, '/'));
+            if(t1.getTime()>t2.getTime()){
+                layer.msg("开始时间不能大于结束时间") 
+                document.getElementById('date1').value=""
+                document.getElementById('select_3').value=""
+            }
             date1.hide()
             $(this).hide()
         });
@@ -454,7 +463,7 @@
             start:1994,
             end:2999,
             select:Prescription0,
-            title:'证件有效期开始时间'
+            title:'居住时效'
         },function (data) {
             // console.log(data);
             document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
@@ -468,11 +477,20 @@
             start:1994,
             end:2999,
             select:Prescription1,
-            title:'证件有效期结束时间'
+            title:'居住时效'
         },function (data) {
             // console.log(data);
             // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
             document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
+            var dat3 = document.getElementById('date3').value
+            var dat4 = document.getElementById('date4').value
+            var t1 = new Date(dat3.replace(/-/g, '/'));
+            var t2 = new Date(dat4.replace(/-/g, '/'));
+            if(t1.getTime()>t2.getTime()){
+                layer.msg("开始时间不能大于结束时间") 
+                document.getElementById('date3').value=""
+                document.getElementById('date4').value=""
+            }
             date3.hide()
             $(this).hide()
         });

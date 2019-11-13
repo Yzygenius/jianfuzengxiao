@@ -527,6 +527,15 @@ var date2 = $.selectDate("#date2",{
 },function (data) {
     // console.log(data);
     $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+    var dat3 = $('#date1').html()
+    var dat4 = $('#date2').html()
+    var t1 = new Date(dat3.replace(/-/g, '/'));
+    var t2 = new Date(dat4.replace(/-/g, '/'));
+    if(t1.getTime()>t2.getTime()){
+        layer.msg("开始时间不能大于结束时间") 
+        $('#date1').html('居住开始时间')
+        $('#date2').html('居住开始时间')
+    }
     date1.hide()
     $(this).hide()
 });
@@ -556,6 +565,15 @@ var date4 = $.selectDate("#date4",{
 },function (data) {
     // console.log(data);
     $("#date4").html(data.year+"-"+data.month+"-"+data.day);
+    var dat3 = $('#date3').html()
+    var dat3 = $('#date4').html()
+    var t1 = new Date(dat3.replace(/-/g, '/'));
+    var t2 = new Date(dat4.replace(/-/g, '/'));
+    if(t1.getTime()>t2.getTime()){
+        layer.msg("开始时间不能大于结束时间") 
+         $('#date3').html('居住开始时间')
+         $('#date4').html('居住截止时间')
+    }
     date3.hide()
     $(this).hide()
 });
