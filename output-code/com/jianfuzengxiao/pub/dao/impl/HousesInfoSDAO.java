@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
 @Override
     public HousesInfoMVO insert(final HousesInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO HOUSES_INFO (houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO HOUSES_INFO (houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts) ");
+        sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -31,6 +31,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
                 	int i = 0;
                 	java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString()); 
                 	ps.setString(++i, StringUtils.trimToNull(entity.getHousesId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getAdminId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getHousesStatus()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getPropertyOwnerName()));
@@ -78,6 +79,10 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
         sql.append("UPDATE  HOUSES_INFO  SET ");
         List<Object> params = new ArrayList<Object>();
         try {
+            if (entity.getAdminId() != null) {
+                sql.append("admin_id=?,");
+                params.add(entity.getAdminId());
+            }
             if (entity.getUserId() != null) {
                 sql.append("user_id=?,");
                 params.add(entity.getUserId());
@@ -231,7 +236,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
     @Override
     public List<HousesInfoMVO> queryList(HousesInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  HOUSES_INFO ");
         sql.append("WHERE 1=1 ");
         List<HousesInfoMVO> resultList = null;
@@ -241,6 +246,10 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
             	if (StringUtils.isNotBlank(entity.getHousesId())) {
                 sql.append(" AND houses_id=?");
                 params.add(entity.getHousesId());
+            }
+            	if (StringUtils.isNotBlank(entity.getAdminId())) {
+                sql.append(" AND admin_id=?");
+                params.add(entity.getAdminId());
             }
             	if (StringUtils.isNotBlank(entity.getUserId())) {
                 sql.append(" AND user_id=?");
@@ -380,7 +389,7 @@ private static Logger logger = LoggerFactory.getLogger(HousesInfoSDAO.class);
     @Override
     public HousesInfoMVO queryBean(HousesInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT houses_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  HOUSES_INFO ");
         sql.append("WHERE houses_id=? ");
         List<Object> params = new ArrayList<Object>();

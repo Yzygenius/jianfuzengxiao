@@ -41,7 +41,7 @@
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn"
-				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 370)">
+				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 410)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
@@ -157,7 +157,8 @@
 		//分页
 		function page() {
 			var data = {
-				'keyword': keyword
+				'keyword': keyword,
+				'roleId': 2
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -191,7 +192,8 @@
 		function serchData(page) {
 			var data = {
 				'page' : page,
-				'keyword': keyword
+				'keyword': keyword,
+				'roleId': 2
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -213,7 +215,6 @@
 							tr.find('[row=telephone]').text(data[i].telephone);
 							tr.find('[row=wxAccountNumber]').text(data[i].wxName);
 							tr.find('[row=housesCount]').text(data[i].manageHousesCount);
-
 							$('#x-img').append(tr);
 							//close loading
 							layer.closeAll('loading');

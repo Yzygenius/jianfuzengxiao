@@ -70,6 +70,8 @@ public class PersonnelInfo extends Entity {
     protected  String  updateTime;
     
     protected  String  sts;
+    
+    protected  String  updateStatus;
 
     public String getPersonnelId() {
         return personnelId;
@@ -274,5 +276,11 @@ public class PersonnelInfo extends Entity {
     }
     public void setSts(String  sts) {
         this.sts = sts;
+    }
+    public String getUpdateStatus() {
+        return updateStatus;
+    }
+    public void setUpdateStatus(String  updateStatus) {
+        this.updateStatus = updateStatus;
     }
 }

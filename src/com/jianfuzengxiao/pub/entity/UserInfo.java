@@ -12,6 +12,8 @@ public class UserInfo extends Entity {
 	public final static String status_reject = "3";
 
 	protected String userId;
+	
+	protected String opId;
 
 	protected String username;
 
@@ -58,6 +60,15 @@ public class UserInfo extends Entity {
 	protected String sts;
 
 	protected String leaseStartTime;
+
+	
+	public String getOpId() {
+		return opId;
+	}
+
+	public void setOpId(String opId) {
+		this.opId = opId;
+	}
 
 	public String getUserId() {
 		return userId;

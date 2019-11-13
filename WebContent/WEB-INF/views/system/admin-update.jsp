@@ -41,6 +41,26 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">
+					<span>角色</span>
+				</label>
+				<div class="layui-input-inline">
+					<select id="roleSel" name="roleSel" lay-filter="roleSel" disabled="true" lay-verify="required" lay-search="">
+						<option value="">请选择</option>
+						<c:if test="${admin.roleId == 3}">
+							<option value="3" selected>流动专干</option>
+						</c:if>
+						<c:if test="${admin.roleId == 2}">
+							<option value="2" selected>包户干部</option>
+						</c:if>
+						
+			        </select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">
 					<span>姓名</span>
 				</label>
 				<div class="layui-input-inline">

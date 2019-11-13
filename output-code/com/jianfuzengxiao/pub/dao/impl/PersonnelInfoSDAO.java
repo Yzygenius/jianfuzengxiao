@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
 @Override
     public PersonnelInfoMVO insert(final PersonnelInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO PERSONNEL_INFO (personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,lease_start_time,lease_stop_time,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO PERSONNEL_INFO (personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,lease_start_time,lease_stop_time,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,create_time,update_time,sts,update_status) ");
+        sql.append("VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -64,6 +64,7 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
                 	ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateStatus()));
                 	return ps;
               }
             });
@@ -212,6 +213,10 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
                 sql.append("sts=?,");
                 params.add(entity.getSts());
             }
+            if (entity.getUpdateStatus() != null) {
+                sql.append("update_status=?,");
+                params.add(entity.getUpdateStatus());
+            }
             sql.deleteCharAt(sql.length() - 1);
             sql.append(" WHERE personnel_id=?");
             params.add(entity.getPersonnelId());
@@ -241,7 +246,7 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
     @Override
     public List<PersonnelInfoMVO> queryList(PersonnelInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
         sql.append("FROM  PERSONNEL_INFO ");
         sql.append("WHERE 1=1 ");
         List<PersonnelInfoMVO> resultList = null;
@@ -384,6 +389,10 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
                 sql.append(" AND sts=?");
                 params.add(entity.getSts());
             }
+            	if (StringUtils.isNotBlank(entity.getUpdateStatus())) {
+                sql.append(" AND update_status=?");
+                params.add(entity.getUpdateStatus());
+            }
         	   }
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(),
@@ -398,7 +407,7 @@ private static Logger logger = LoggerFactory.getLogger(PersonnelInfoSDAO.class);
     @Override
     public PersonnelInfoMVO queryBean(PersonnelInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
         sql.append("FROM  PERSONNEL_INFO ");
         sql.append("WHERE personnel_id=? ");
         List<Object> params = new ArrayList<Object>();

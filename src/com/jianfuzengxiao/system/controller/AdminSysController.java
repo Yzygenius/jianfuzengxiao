@@ -74,6 +74,13 @@ public class AdminSysController extends BaseController {
 		return "/system/admin-resetPwd";
 	}
 	
+	//流动专干
+	@RequestMapping(value="/toLgzgManagePage")
+	public String toLgzgManagePage(){
+		return "/system/admin-lgzgPage";
+	}
+
+	
 	@ResponseBody
 	@RequestMapping(value="/getAdminPage", method = RequestMethod.POST)
 	public String getAdminPage(AdminInfoMVO entity){
@@ -124,7 +131,7 @@ public class AdminSysController extends BaseController {
 			throwAppException(list.size() > 0, RC.REGIST_PARAM_TYPE_EXIST);
 			
 			RoleInfoMVO roleInfo = new RoleInfoMVO();
-			roleInfo.setRoleId("2");
+			roleInfo.setRoleId(entity.getRoleId());
 			roleInfo = roleInfoService.queryBean(roleInfo);
 			
 			String random = RandomUtil.randomStr(6);

@@ -133,6 +133,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 					sql.append(" AND houses_type_id in (" + entity.getHousesTypeId() + ")");
 				}
 			}
+			sql.append(" GROUP BY house_type ");
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
 					new BeanPropertyRowMapper<Statistics>(Statistics.class));
@@ -423,6 +424,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append(",sum(case when status in(2,3) then 1 else 0 end) as total_pass ");
 		sql.append(",sum(case when status in(1) then 1 else 0 end) as total_wait ");
 		sql.append(",ifnull(cast((sum(case when status in(2,3) then 1 else 0 end)/count(personnel_id)) as decimal(18,2)),0) as total_pass_ratio ");
+		sql.append(",ifnull(cast((sum(case when status in(1) then 1 else 0 end)/count(personnel_id)) as decimal(18,2)),0) as total_wait_ratio ");
 		sql.append(",sum(case when live_type_id in(1,3) then 1 else 0 end) as fangzhunum");
 		sql.append(",sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end) as fangzhu_pass");
 		sql.append(",sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end) as fangzhu_wait");

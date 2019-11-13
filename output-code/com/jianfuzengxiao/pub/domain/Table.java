@@ -1,7 +1,7 @@
 package com.jianfuzengxiao.pub.domain;
 
 /**
- * @Created：2019-10-28
+ * @Created：2019-11-13
  * @Author null
  * @Version:1.0
  * @Email:jilongliang@sina.com
@@ -18,6 +18,7 @@ public interface Table {
     String FUNC_LIST = "FUNC_LIST";
     String HOUSES_INFO = "HOUSES_INFO";
     String HOUSES_TYPE = "HOUSES_TYPE";
+    String LGZG = "LGZG";
     String LIVE_TYPE = "LIVE_TYPE";
     String MSG_INFO = "MSG_INFO";
     String MSG_TYPE = "MSG_TYPE";

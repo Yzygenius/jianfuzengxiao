@@ -12,11 +12,11 @@ public class PushUtils {
 	private static Logger logger = LoggerFactory.getLogger(PushUtils.class);
 	
 	/** 通知 */
-	public static void toPush(String userId, String title, String content, String type) throws ClientProtocolException, IOException{
+	public static void toPush(String userId, String opId, String title, String content, String type) throws ClientProtocolException, IOException{
 		String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
 		JSONObject json = new JSONObject();
-		json.put("type", 0);//消息类型 0通知 1消息 
-		json.put("userId", userId);
+		json.put("type", 1);//消息类型 0通知 1消息 
+		json.put("userId", opId);
 		json.put("userType", 1);// 目标类型：1 业主 
 		json.put("appKey", "pasq");//系统标识： pasq
 		

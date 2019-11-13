@@ -248,7 +248,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		try {
 			
-			PushUtils.toPush(model.getUserId(), title, content, type);	
+			PushUtils.toPush(userInfoMVO.getUserId(), userInfoMVO.getOpId(), title, content, type);	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
 		}
@@ -259,6 +259,10 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	@Override
 	public PersonnelInfoMVO addPersonnel(PersonnelInfoMVO model) throws SysException, AppException {
 		String userId = model.getUserId();
+		UserInfoMVO userInfoMVO = new UserInfoMVO();
+		userInfoMVO.setUserId(userId);
+		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
+		
 		model.setUserId(null);
 		model.setStatus(PersonnelInfo.status_waiting);
 		model.setPerSort(PersonnelInfo.per_sort_not_app);
@@ -318,7 +322,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		}
 		try {
 			
-			PushUtils.toPush(userId, title, content, type);	
+			PushUtils.toPush(userId, userInfoMVO.getOpId(), title, content, type);	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
 		}
@@ -329,6 +333,10 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	public int updatePersonnel(PersonnelInfoMVO entity) throws SysException, AppException {
 		
 		PersonnelInfoMVO personnelInfoMVO = this.queryBean(entity);
+		
+		UserInfoMVO userInfoMVO = new UserInfoMVO();
+		userInfoMVO.setUserId(personnelInfoMVO.getUserId());
+		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
 		PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
 		personnelInfo.setHousesId(personnelInfoMVO.getHousesId());
@@ -355,7 +363,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		try {
 			
-			PushUtils.toPush(personnelInfo.getUserId(), title, content, "z0301");	
+			PushUtils.toPush(personnelInfo.getUserId(), userInfoMVO.getOpId(),title, content, "z0301");	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
 		}
@@ -369,6 +377,10 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	public int updateAuditPersonnel(PersonnelInfoMVO entity) throws SysException, AppException {
 		
 		PersonnelInfoMVO per = personnelInfoMDAO.queryBean(entity);
+		
+		UserInfoMVO userInfoMVO = new UserInfoMVO();
+		userInfoMVO.setUserId(per.getUserId());
+		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
 		personnelInfoMDAO.update(entity);
 		
@@ -470,7 +482,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			
 			try {
 				//通知
-				PushUtils.toPush(per.getUserId(), title, content, type);
+				PushUtils.toPush(per.getUserId(), userInfoMVO.getOpId(), title, content, type);
 				//积分
 				PushUtils.toIntegral(per.getUserId(), integralContent, integralType);
 			} catch (Exception e) {
@@ -500,7 +512,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			msgInfoService.insert(msgInfoMVO);
 			try {
 				
-				PushUtils.toPush(per.getUserId(), title, content, type);	
+				PushUtils.toPush(per.getUserId(), userInfoMVO.getOpId(), title, content, type);	
 			} catch (Exception e) {
 				logger.info("发送通知错误", e);
 			}

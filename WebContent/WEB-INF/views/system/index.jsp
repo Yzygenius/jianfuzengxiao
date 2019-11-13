@@ -53,7 +53,7 @@
      <!-- 左侧菜单开始 -->
     <div class="left-nav">
       <div id="side-nav">
-      	<c:if test="${admin.roleId == 1}">
+      	<c:if test="${admin.roleId == 1 || admin.roleId == 3}">
         <ul id="nav">
             <li>
                 <a href="javascript:;">
@@ -104,10 +104,18 @@
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
+                	<c:if test="${admin.roleId == 1}">
+                	<li>
+                        <a _href="/jianfuzengxiao/system/admin/toLgzgManagePage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>流动专干管理</cite>
+                        </a>
+                    </li >
+                    </c:if>
                     <li>
                         <a _href="/jianfuzengxiao/system/admin/toAdminPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>干部管理</cite>
+                            <cite>包户干部管理</cite>
                         </a>
                     </li >
                     <li>
@@ -221,6 +229,33 @@
                         <a _href="/jianfuzengxiao/system/per/toAuditZuhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>租户/员工/家属审核</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+             <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>统计分析</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="/jianfuzengxiao/system/statistics/toIndex.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>上报信息统计</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/statistics/toHouses.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>房屋信息统计</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/jianfuzengxiao/system/statistics/toPersonnel.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>人员信息统计</cite>
                         </a>
                     </li >
                 </ul>

@@ -5,6 +5,8 @@ public class UserInfo extends Entity {
     
     protected  String  userId;
     
+    protected  String  opId;
+    
     protected  String  username;
     
     protected  String  gender;
@@ -56,6 +58,12 @@ public class UserInfo extends Entity {
     }
     public void setUserId(String  userId) {
         this.userId = userId;
+    }
+    public String getOpId() {
+        return opId;
+    }
+    public void setOpId(String  opId) {
+        this.opId = opId;
     }
     public String getUsername() {
         return username;

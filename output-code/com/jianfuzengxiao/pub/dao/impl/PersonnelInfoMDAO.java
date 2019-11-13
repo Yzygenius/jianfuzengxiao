@@ -20,7 +20,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
     private static Logger logger = LoggerFactory.getLogger(PersonnelInfoMDAO.class);
     public PageInfo queryPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("select personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d %H:%i:%s')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
         sql.append("from PERSONNEL_INFO ");
         sql.append("where 1=1");
 
@@ -162,6 +162,10 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
             	if (StringUtils.isNotBlank(entity.getSts())) {
                 sql.append(" AND sts like ?");
                 params.add("%" + entity.getSts() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getUpdateStatus())) {
+                sql.append(" AND update_status=?");
+                params.add(entity.getUpdateStatus());
             }
             }
             pageInfo = this.pagingQuery(sql.toString(), pageInfo, params, 

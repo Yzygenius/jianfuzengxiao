@@ -65,6 +65,7 @@ public class Statistics extends Entity {
 	protected String totalPass;
 	protected String totalWait;
 	protected String totalPassRatio;
+	protected String totalWaitRatio;
 	protected String fangzhuPass;
 	protected String fangzhuWait;
 	protected String fangzhuPassRatio;

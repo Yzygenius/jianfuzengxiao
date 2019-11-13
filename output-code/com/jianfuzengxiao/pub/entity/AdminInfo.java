@@ -29,6 +29,10 @@ public class AdminInfo extends Entity {
     
     protected  String  isWx;
     
+    protected  String  wxName;
+    
+    protected  String  wxAccountNumber;
+    
     protected  String  wxOpenid;
     
     protected  String  wxPhoto;
@@ -120,6 +124,18 @@ public class AdminInfo extends Entity {
     }
     public void setIsWx(String  isWx) {
         this.isWx = isWx;
+    }
+    public String getWxName() {
+        return wxName;
+    }
+    public void setWxName(String  wxName) {
+        this.wxName = wxName;
+    }
+    public String getWxAccountNumber() {
+        return wxAccountNumber;
+    }
+    public void setWxAccountNumber(String  wxAccountNumber) {
+        this.wxAccountNumber = wxAccountNumber;
     }
     public String getWxOpenid() {
         return wxOpenid;

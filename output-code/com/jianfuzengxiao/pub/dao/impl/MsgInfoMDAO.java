@@ -20,7 +20,7 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
     private static Logger logger = LoggerFactory.getLogger(MsgInfoMDAO.class);
     public PageInfo queryPage(MsgInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select msg_id,user_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("select msg_id,user_id,personnel_id,msg_type_id,msg_type_name,title,content,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("from MSG_INFO ");
         sql.append("where 1=1");
 
@@ -34,6 +34,10 @@ public class MsgInfoMDAO extends MsgInfoSDAO implements IMsgInfoMDAO {
             	if (StringUtils.isNotBlank(entity.getUserId())) {
                 sql.append(" AND user_id like ?");
                 params.add("%" + entity.getUserId() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getPersonnelId())) {
+                sql.append(" AND personnel_id=?");
+                params.add(entity.getPersonnelId());
             }
             	if (StringUtils.isNotBlank(entity.getMsgTypeId())) {
                 sql.append(" AND msg_type_id=?");

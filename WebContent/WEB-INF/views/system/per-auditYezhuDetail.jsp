@@ -285,8 +285,8 @@
 						var j = 1;
 						for(var i=0; i<result.data.length; i++){
 							j += i;
-							str += '<tr><td>租赁合同'+j
-							str += '<img onclick="opneimg(this)" src="'+result.data.fileThumb+'"/></td></tr>'
+							str += '<tr style="height: 120px;"><td>租赁合同'+j
+							str += '<img onclick="opneimg(this)" src="'+result.data[i].fileThumb+'"/></td></tr>'
 						}
 						$('#x-img').append(str)
 					} else {

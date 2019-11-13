@@ -20,7 +20,7 @@ public class CommunityInfoMDAO extends CommunityInfoSDAO implements ICommunityIn
     private static Logger logger = LoggerFactory.getLogger(CommunityInfoMDAO.class);
     public PageInfo queryPage(CommunityInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("select community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
         sql.append("from COMMUNITY_INFO ");
         sql.append("where 1=1");
 
@@ -50,6 +50,30 @@ public class CommunityInfoMDAO extends CommunityInfoSDAO implements ICommunityIn
             	if (StringUtils.isNotBlank(entity.getSts())) {
                 sql.append(" AND sts like ?");
                 params.add("%" + entity.getSts() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getProvCode())) {
+                sql.append(" AND prov_code like ?");
+                params.add("%" + entity.getProvCode() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getProvName())) {
+                sql.append(" AND prov_name like ?");
+                params.add("%" + entity.getProvName() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getCityCode())) {
+                sql.append(" AND city_code like ?");
+                params.add("%" + entity.getCityCode() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getCityName())) {
+                sql.append(" AND city_name like ?");
+                params.add("%" + entity.getCityName() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getAreaCode())) {
+                sql.append(" AND area_code like ?");
+                params.add("%" + entity.getAreaCode() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getAreaName())) {
+                sql.append(" AND area_name like ?");
+                params.add("%" + entity.getAreaName() + "%");
             }
             }
             pageInfo = this.pagingQuery(sql.toString(), pageInfo, params, 

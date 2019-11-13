@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
 @Override
     public AdminInfoMVO insert(final AdminInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO ADMIN_INFO (admin_id,login_name,password,satl,username,gender,birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_openid,wx_photo,wx_time,wx_password,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO ADMIN_INFO (admin_id,login_name,password,satl,username,gender,birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,wx_time,wx_password,create_time,update_time,sts) ");
+        sql.append("VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -43,6 +43,8 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
                 	ps.setString(++i, StringUtils.trimToNull(entity.getRoleId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getRoleName()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getIsWx()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getWxName()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getWxAccountNumber()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getWxOpenid()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getWxPhoto()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getWxTime()));
@@ -114,6 +116,14 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
                 sql.append("is_wx=?,");
                 params.add(entity.getIsWx());
             }
+            if (entity.getWxName() != null) {
+                sql.append("wx_name=?,");
+                params.add(entity.getWxName());
+            }
+            if (entity.getWxAccountNumber() != null) {
+                sql.append("wx_account_number=?,");
+                params.add(entity.getWxAccountNumber());
+            }
             if (entity.getWxOpenid() != null) {
                 sql.append("wx_openid=?,");
                 params.add(entity.getWxOpenid());
@@ -171,7 +181,7 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
     @Override
     public List<AdminInfoMVO> queryList(AdminInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  ADMIN_INFO ");
         sql.append("WHERE 1=1 ");
         List<AdminInfoMVO> resultList = null;
@@ -230,6 +240,14 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
                 sql.append(" AND is_wx=?");
                 params.add(entity.getIsWx());
             }
+            	if (StringUtils.isNotBlank(entity.getWxName())) {
+                sql.append(" AND wx_name=?");
+                params.add(entity.getWxName());
+            }
+            	if (StringUtils.isNotBlank(entity.getWxAccountNumber())) {
+                sql.append(" AND wx_account_number=?");
+                params.add(entity.getWxAccountNumber());
+            }
             	if (StringUtils.isNotBlank(entity.getWxOpenid())) {
                 sql.append(" AND wx_openid=?");
                 params.add(entity.getWxOpenid());
@@ -272,7 +290,7 @@ private static Logger logger = LoggerFactory.getLogger(AdminInfoSDAO.class);
     @Override
     public AdminInfoMVO queryBean(AdminInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("FROM  ADMIN_INFO ");
         sql.append("WHERE admin_id=? ");
         List<Object> params = new ArrayList<Object>();

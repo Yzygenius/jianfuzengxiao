@@ -51,6 +51,21 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">
+					<span>角色</span>
+				</label>
+				<div class="layui-input-inline">
+					<select id="roleSel" name="roleSel" lay-filter="roleSel" lay-verify="required" lay-search="">
+						<option value="">请选择</option>
+						<option value="3">流动专干</option>
+						<option value="2">包户干部</option>
+			        </select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">
 					<span>姓名</span>
 				</label>
 				<div class="layui-input-inline">
@@ -84,12 +99,16 @@
 	var form, layer, upload;
 	
 	var loginName, password, username, telephone = '';
-	
+	var roleId = '';
     layui.use(['form','layer','upload'], function(){
     	var $ = layui.jquery
         form = layui.form
         layer = layui.layer
         upload = layui.upload;
+    	
+    	form.on('select(roleSel)', function(data){
+    		roleId = data.value;
+        });
 
 	    //监听提交
 		form.on('submit(add)', function(data){
@@ -117,7 +136,8 @@
 					'loginName': $('#loginName').val(),
 					'password': $('#password').val(),
 					'username': $('#username').val(),
-					'telephone': $('#telephone').val()
+					'telephone': $('#telephone').val(),
+					'roleId': roleId
 				},
 				success : function(result){
 					if(result.code == 1){

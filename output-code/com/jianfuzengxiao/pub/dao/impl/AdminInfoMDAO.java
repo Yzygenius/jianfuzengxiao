@@ -20,7 +20,7 @@ public class AdminInfoMDAO extends AdminInfoSDAO implements IAdminInfoMDAO {
     private static Logger logger = LoggerFactory.getLogger(AdminInfoMDAO.class);
     public PageInfo queryPage(AdminInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("select admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
         sql.append("from ADMIN_INFO ");
         sql.append("where 1=1");
 
@@ -78,6 +78,14 @@ public class AdminInfoMDAO extends AdminInfoSDAO implements IAdminInfoMDAO {
             	if (StringUtils.isNotBlank(entity.getIsWx())) {
                 sql.append(" AND is_wx=?");
                 params.add(entity.getIsWx());
+            }
+            	if (StringUtils.isNotBlank(entity.getWxName())) {
+                sql.append(" AND wx_name like ?");
+                params.add("%" + entity.getWxName() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getWxAccountNumber())) {
+                sql.append(" AND wx_account_number like ?");
+                params.add("%" + entity.getWxAccountNumber() + "%");
             }
             	if (StringUtils.isNotBlank(entity.getWxOpenid())) {
                 sql.append(" AND wx_openid like ?");

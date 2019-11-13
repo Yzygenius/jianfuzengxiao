@@ -3,12 +3,21 @@ package com.jianfuzengxiao.pub.entity;
 public class AdminInfoMVO extends AdminInfo {
 	
 	private String manageHousesCount;
+	private String manageCommunityCount;
 	
 	private String jsCode;
 	
 	private String keyword;
 
 	
+	public String getManageCommunityCount() {
+		return manageCommunityCount;
+	}
+
+	public void setManageCommunityCount(String manageCommunityCount) {
+		this.manageCommunityCount = manageCommunityCount;
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}

@@ -7,6 +7,8 @@ public class MsgInfo extends Entity {
     
     protected  String  userId;
     
+    protected  String  personnelId;
+    
     protected  String  msgTypeId;
     
     protected  String  msgTypeName;
@@ -34,6 +36,12 @@ public class MsgInfo extends Entity {
     }
     public void setUserId(String  userId) {
         this.userId = userId;
+    }
+    public String getPersonnelId() {
+        return personnelId;
+    }
+    public void setPersonnelId(String  personnelId) {
+        this.personnelId = personnelId;
     }
     public String getMsgTypeId() {
         return msgTypeId;

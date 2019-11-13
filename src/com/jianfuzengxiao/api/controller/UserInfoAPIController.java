@@ -67,12 +67,13 @@ public class UserInfoAPIController extends BaseController {
 	public String verify(UserInfoMVO model){
 		try{
 			System.out.println(model.getUserId());
+			System.out.println("opid---"+model.getOpId());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
 			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
-			System.out.println(uList.size());
+			//System.out.println(uList.size());
 			throwAppException(uList.size() < 1, RC.USER_INFO_NOT_EXIST);
 			userInfoMVO = uList.get(0);
 			return apiResult(RC.SUCCESS, userInfoMVO);
@@ -98,11 +99,12 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public String addUser(UserInfoMVO model){
 		try {
-			System.out.println(model.getUserId());
-			System.out.println(model.toString());
+			//System.out.println(model.getUserId());
+			//System.out.println(model.toString());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
+			userInfoMVO.setOpId(model.getOpId());
 			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);

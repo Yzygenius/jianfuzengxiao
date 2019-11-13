@@ -20,7 +20,7 @@ public class UserInfoMDAO extends UserInfoSDAO implements IUserInfoMDAO {
     private static Logger logger = LoggerFactory.getLogger(UserInfoMDAO.class);
     public PageInfo queryPage(UserInfoMVO entity, PageInfo pageInfo) throws SysException {
         StringBuffer sql = new StringBuffer();
-        sql.append("select user_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time ");
+        sql.append("select user_id,op_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d %H:%i:%s')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d %H:%i:%s')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d %H:%i:%s')lease_start_time ");
         sql.append("from USER_INFO ");
         sql.append("where 1=1");
 
@@ -30,6 +30,10 @@ public class UserInfoMDAO extends UserInfoSDAO implements IUserInfoMDAO {
             	if (StringUtils.isNotBlank(entity.getUserId())) {
                 sql.append(" AND user_id like ?");
                 params.add("%" + entity.getUserId() + "%");
+            }
+            	if (StringUtils.isNotBlank(entity.getOpId())) {
+                sql.append(" AND op_id like ?");
+                params.add("%" + entity.getOpId() + "%");
             }
             	if (StringUtils.isNotBlank(entity.getUsername())) {
                 sql.append(" AND username like ?");

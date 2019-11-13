@@ -24,9 +24,9 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 	public UserInfoMVO insert(final UserInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO USER_INFO (user_id,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,status,audit_remark,create_time,update_time,sts,lease_start_time) ");
+				"INSERT INTO USER_INFO (user_id,op_id,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,status,audit_remark,create_time,update_time,sts,lease_start_time) ");
 		sql.append(
-				"VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'))");
+				"VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'))");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -34,6 +34,7 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 					int i = 0;
 					java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString());
 					ps.setString(++i, StringUtils.trimToNull(entity.getUserId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getOpId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUsername()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getGender()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getFacePhoto()));
@@ -74,6 +75,10 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 		sql.append("UPDATE  USER_INFO  SET ");
 		List<Object> params = new ArrayList<Object>();
 		try {
+			if (entity.getOpId() != null) {
+				sql.append("op_id=?,");
+				params.add(entity.getOpId());
+			}
 			if (entity.getUsername() != null) {
 				sql.append("username=?,");
 				params.add(entity.getUsername());
@@ -197,7 +202,7 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 	public List<UserInfoMVO> queryList(UserInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT user_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d')lease_start_time ");
+				"SELECT user_id,op_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d')lease_start_time ");
 		sql.append("FROM  USER_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<UserInfoMVO> resultList = null;
@@ -207,6 +212,10 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 				if (StringUtils.isNotBlank(entity.getUserId())) {
 					sql.append(" AND user_id=?");
 					params.add(entity.getUserId());
+				}
+				if (StringUtils.isNotBlank(entity.getOpId())) {
+					sql.append(" AND op_id=?");
+					params.add(entity.getOpId());
 				}
 				if (StringUtils.isNotBlank(entity.getUsername())) {
 					sql.append(" AND username=?");
@@ -315,7 +324,7 @@ public class UserInfoSDAO extends BaseDAO<UserInfoMVO> implements IUserInfoSDAO 
 	public UserInfoMVO queryBean(UserInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT user_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age ");
+				"SELECT user_id,op_id,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_negative_photo,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age ");
 		sql.append("FROM  USER_INFO ");
 		sql.append("WHERE user_id=? ");
 		List<Object> params = new ArrayList<Object>();

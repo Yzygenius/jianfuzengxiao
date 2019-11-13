@@ -111,7 +111,7 @@
 				</button>
 				<button class="layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
-					<i class="layui-icon">&#xe608;</i>添加房屋权限
+					<i class="layui-icon">&#xe608;</i>添加管理房屋权限
 				</button>
 			</td>
 		</tr>

@@ -14,6 +14,18 @@ public class CommunityInfo extends Entity {
     protected  String  updateTime;
     
     protected  String  sts;
+    
+    protected  String  provCode;
+    
+    protected  String  provName;
+    
+    protected  String  cityCode;
+    
+    protected  String  cityName;
+    
+    protected  String  areaCode;
+    
+    protected  String  areaName;
 
     public String getCommunityId() {
         return communityId;
@@ -50,5 +62,41 @@ public class CommunityInfo extends Entity {
     }
     public void setSts(String  sts) {
         this.sts = sts;
+    }
+    public String getProvCode() {
+        return provCode;
+    }
+    public void setProvCode(String  provCode) {
+        this.provCode = provCode;
+    }
+    public String getProvName() {
+        return provName;
+    }
+    public void setProvName(String  provName) {
+        this.provName = provName;
+    }
+    public String getCityCode() {
+        return cityCode;
+    }
+    public void setCityCode(String  cityCode) {
+        this.cityCode = cityCode;
+    }
+    public String getCityName() {
+        return cityName;
+    }
+    public void setCityName(String  cityName) {
+        this.cityName = cityName;
+    }
+    public String getAreaCode() {
+        return areaCode;
+    }
+    public void setAreaCode(String  areaCode) {
+        this.areaCode = areaCode;
+    }
+    public String getAreaName() {
+        return areaName;
+    }
+    public void setAreaName(String  areaName) {
+        this.areaName = areaName;
     }
 }
