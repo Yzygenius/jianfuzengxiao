@@ -11,13 +11,15 @@
     <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/iconfont.css">
     <link href="/jianfuzengxiao/statics/system/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css"/>
+    <style type="text/css">
+    </style>
 </head>
 <body>
     <div class="content" style="overflow-x: scroll;">
         <div class="nav">
             <div class="Community Community0">
                 <div class="nav_title"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">社区</div>
-                <ul class="nav_list">
+                <ul class="nav_list sq" style="width: 90%">
                     <li class="active">全部</li>
                     <li>场所一</li>
                     <li>场所二</li>
@@ -37,7 +39,7 @@
             </div>
             <div class="Community place">
                 <div class="nav_title"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">场所</div>
-                <ul class="nav_list">
+                <ul class="nav_list cs">
                     <li class="active">全部</li>
                     <li>小区一</li>
                     <li>小区二</li>
@@ -49,99 +51,105 @@
                     <li>路2</li>
                     <li>路3</li>
                 </ul>
-                <div class="nav_num">(共计10户)</div>
+                <div class="nav_num">(共计<span>10</span>户)</div>
             </div>
         </div>
         <div class="Statistics">
             <div class="statis"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息统计</div>
             <div class="statime">
-                <div class="so_far active">上线至今</div>
+                <div class="so_far active" data-id="0">上线至今</div>
                 <div class="so_far custom0" id="daterange-btn">自定义</div>
-                <div class="display" id="time0"><span>2019-07-23</span> 至 <span>2019-07-23</span></div>
+                <div class="display" id="time0" style="display:none"><span id="start"></span> 至 <span id="end"></span></div>
             </div>
             <div class="clear"></div>
             <div class="display_details">
-                <div class="details">
+                <!-- 总共 -->
+                <div class="details" id="total">
                     <div class="details_title">上报信息总量</div>
                     <div class="details_num"><span>3432424</span> 条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
-                <div class="details">
+                <!-- 房主 -->
+                <div class="details" id="house_fz">
                     <div class="details_title">上报房主认证</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
-                <div class="details">
+                <!-- 房屋租户 -->
+                <div class="details" id="house_zh">
                     <div class="details_title">上报房屋租户</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
-                <div class="details">
+                <!-- 房屋家属 -->
+                <div class="details" id="house_js">
                     <div class="details_title">上报房屋家属</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
-                <div class="details">
+                <!-- 店主 -->
+                <div class="details" id="house_dz">
                     <div class="details_title">上报店主认证</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
-                <div class="details">
+                <!-- 员工 -->
+                <div class="details" id="house_yz">
                     <div class="details_title">上报店铺员工</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
                         <div class="situation_success">
-                            <div>已处理（87%)</div>
-                            <div>3234424</div>
+                            <div>已处理(<span class="percent">87%</span>)</div>
+                            <div class="listNum0">3234424</div>
                         </div>
                         <div class="situation_success">
-                            <div>未处理（13%)</div>
-                            <div>3234424</div>
+                            <div>未处理(<span class="no_pass">13%</span>)</div>
+                            <div class="listNum1">3234424</div>
                         </div>
                     </div>
                 </div>
@@ -150,10 +158,10 @@
         <div class="curve">
             <div class="statis recently"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息曲线</div>
             <div class="statime recently">
-                <div class="lately blue">近30天</div>
-                <div class="lately orange">近7天</div>
-                <div class="lately green">近半年</div>
-                <div class="display"><span>2019-07-23</span> 至 <span>2019-07-24</span></div>
+                <div class="lately blue" data-day="30">近30天</div>
+                <div class="lately orange" data-day="7">近7天</div>
+                <div class="lately green" data-day="180">近半年</div>
+                <div class="display" style="display: none"><span id="willDay">2019-07-24</span>至<span id="nowDay">2019-07-23</span></div>
             </div>
             <div class="clear"></div>
             <div class="curve_details">
@@ -186,14 +194,14 @@
             <div class="house">
                 <div class="statis"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">房屋上报已通过</div>
                 <div class="statime">
-                    <div class="so_far active">上线至今</div>
-                    <div class="so_far custom">自定义</div>
-                    <div class="display"><span>2019-07-23</span> 至 <span>2019-07-24</span></div>
+                    <div class="so_far active" data-id="1">上线至今</div>
+                    <div class="so_far custom" id="daterange-btn0">自定义</div>
+                    <div class="display" id="time1" style="display:none"><span id="start1"></span> 至 <span id="end1"></span></div>
                 </div>
                 <div class="clear"></div>
                 <div style="display: flex;align-items: center;">
                     <div class="house_detail">
-                        <div class="house_infor">
+                        <div class="house_infor" id="fangzhu">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle"></div>
@@ -204,15 +212,15 @@
                             <div class="rate">
                                 <div class="Proportion">
                                     <div>占比</div>
-                                    <div><span>25%</span></div>
+                                    <div><span class="zb">25%</span></div>
                                 </div>
                                 <div class="Proportion">
                                     <div>审核通过率</div>
-                                    <div><span>30%</span></div>
+                                    <div><span class="pass">30%</span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="house_infor">
+                        <div class="house_infor" id="jiashu">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle" style="background: rgb(255,97,96);"></div>
@@ -223,15 +231,15 @@
                             <div class="rate">
                                 <div class="Proportion">
                                     <div>占比</div>
-                                    <div><span>25%</span></div>
+                                    <div><span class="zb">25%</span></div>
                                 </div>
                                 <div class="Proportion">
                                     <div>审核通过率</div>
-                                    <div><span>30%</span></div>
+                                    <div><span class="pass">30%</span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="house_infor">
+                        <div class="house_infor" id="zuhu">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle" style="background: rgb(255,211,80);"></div>
@@ -242,11 +250,11 @@
                             <div class="rate">
                                 <div class="Proportion">
                                     <div>占比</div>
-                                    <div><span>25%</span></div>
+                                    <div><span class="zb">25%</span></div>
                                 </div>
                                 <div class="Proportion">
                                     <div>审核通过率</div>
-                                    <div><span>30%</span></div>
+                                    <div><span class="pass">30%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -259,48 +267,48 @@
             <div class="house">
                 <div class="statis"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">门店上报已通过</div>
                 <div class="statime">
-                    <div class="so_far active">上线至今</div>
-                    <div class="so_far custom">自定义</div>
-                    <div class="display"><span>2019-07-23</span> 至 <span>2019-07-24</span></div>
+                    <div class="so_far active" data-id="2">上线至今</div>
+                     <div class="so_far custom" id="daterange-btn1">自定义</div>
+                    <div class="display" id="time2" style="display:none"><span id="start2"></span> 至 <span id="end2"></span></div>
                 </div>
                 <div class="clear"></div>
                 <div style="display: flex;align-items: center;">
-                    <div class="house_detail">
+                    <div class="house_detail" id="d_zhu">
                         <div class="house_infor">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle"></div>
                                     店主通过
                                 </div>
-                                <span>3432424</span> 条
+                                <span class="listNum">3432424</span> 条
                             </div>
                             <div class="rate">
                                 <div class="Proportion">
                                     <div>占比</div>
-                                    <div><span>25%</span></div>
+                                    <div><span class="percent">25%</span></div>
                                 </div>
                                 <div class="Proportion">
                                     <div>审核通过率</div>
-                                    <div><span>30%</span></div>
+                                    <div><span class="success_pass">30%</span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="house_infor">
+                        <div class="house_infor" id="y_gong">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle" style="background: rgb(255,97,96);"></div>
                                     店员通过
                                 </div>
-                                <span>3432424</span> 条
+                                <span class="listNum">3432424</span> 条
                             </div>
                             <div class="rate">
                                 <div class="Proportion">
                                     <div>占比</div>
-                                    <div><span>25%</span></div>
+                                    <div><span class="percent">25%</span></div>
                                 </div>
                                 <div class="Proportion">
                                     <div>审核通过率</div>
-                                    <div><span>30%</span></div>
+                                    <div><span class="success_pass">30%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -354,10 +362,420 @@
 <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/daterangepicker.js"></script>
 <script>
     $(function () {
+        var communityStreetId=""  //小区id
+        var communityId=""        //社区id
+        window.sessionStorage.clear();   //清除缓存
+        inforStat()  //上报信息统计
+        house_fw()   //房屋上报信息
+        house_md()   //门店信息上报
+        curve()      //曲线
         $('.Community li').click(function () {
             $(this).addClass('active').siblings('li').removeClass('active')
         })
+        $('.statime .so_far').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            if ($(this).hasClass('active')) {
+                $('#time0').fadeOut(0);
+                $('#time1').fadeOut(0);
+                $('#time2').fadeOut(0);
+
+            } else {
+                $('#time0').fadeIn(0);
+                $('#time1').fadeIn(0);
+                $('#time2').fadeIn(0);
+            }
+            if($(this).attr("data-id") == "0"){
+                $('#start').html('')
+                $('#end').html('')
+               inforStat()
+            }else if($(this).attr("data-id") == "1"){
+               $('#start1').html('')
+               $('#end1').html('')
+               house_fw()   //房屋上报信息
+            }else if($(this).attr("data-id") == "2"){
+              $('#start2').html('')
+              $('#end2').html('')
+               house_md()  //门店信息上报
+            }
+        })
+     // 社区
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/common/getCommunityList.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{},
+            success:function(data){
+                var list1=""
+                // console.log(data.data)
+                for(var i=0; i<data.data.length;i++){
+                    list1 += '<li data-communityId = '+data.data[i].communityId+'>'+data.data[i].communityName+'</li>'
+                }
+                $('.sq').html(list1)
+                $('.sq').prepend('<li data-communityId ="" class="active">全部</li>')
+                $('.sq li').click(function(){
+                    var start = $('#start').html()
+                    var end = $('#end').html()
+                    var start1 = $('#start1').html()
+                    var end1 = $('#end1').html()
+                    var start2 = $('#start2').html()
+                    var end2 = $('#end2').html()
+                    $(this).addClass('active').siblings('li').removeClass('active');
+                     sessionStorage.communityId = $(this).attr("data-communityId");
+                     inforStat(start,end)   //信息统计
+                     house_fw(start1,end1)    //房屋统计
+                     house_md(start2,end2)    //门店统计
+                     curve()
+
+                })
+            },
+            error:function(jqXHR){}
+        });
+         // 小区
+         $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/common/getCommunityStreetList.html ',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{},
+            success:function(data){
+
+                // console.log(data.data);
+                var list2=""
+                for(var i=0; i<data.data.length;i++){
+                    list2 += '<li data-communityStreetId = '+data.data[i].communityStreetId+'>'+data.data[i].communityStreetName+'</li>'
+                }
+                $('.cs').html(list2)
+                $('.cs').prepend('<li data-communityStreetId="" class="active">全部</li>')
+                $('.nav_num span').html(data.data.length)
+                $('.cs li').click(function(){
+                     var start = $('#start').html()
+                     var end = $('#end').html()
+                     var start1 = $('#start1').html()
+                     var end1 = $('#end1').html()
+                     var start2 = $('#start2').html()
+                     var end2 = $('#end2').html()
+                    $(this).addClass('active').siblings('li').removeClass('active')
+                    sessionStorage.communityStreetId = $(this).attr("data-communityStreetId")
+                     inforStat(start,end)     //信息统计
+                     house_fw(start1,end1)    //房屋统计
+                     house_md(start2,end2)    //门店统计
+                     curve()
+                })
+             
+            },
+            error:function(jqXHR){}
+        });
+        
+         var today=new Date();
+         var year=today.getFullYear();        //获取当前年
+         var month=today.getMonth()+1;   //获取当前月
+         var date=today.getDate();            //获取当前日
+         var nowDay = year+'-'+month+"-"+date;
+         console.log(nowDay)
+         $('.statime .lately').click(function(){
+             if($(this).attr("data-day") == "30"){
+                  var today=new Date();
+                  var day_30=today.setDate(today.getDate()-30);
+                  day_30=new Date(day_30);
+                  //获取当前年
+                  var year=day_30.getFullYear();
+                  //获取当前月
+                  var month=day_30.getMonth()+1;
+                  //获取当前日
+                  var date = day_30.getDate();
+                  day_30 = year+'-'+month+"-"+date;
+                  console.log(day_30)
+                  $('#nowDay').html(nowDay)
+                  $('#willDay').html(day_30)
+                  $('.display').fadeIn(0);
+
+                  curve(day_30,nowDay)
+
+             }else if($(this).attr("data-day") == "7"){
+                  var today=new Date();
+                  var day_7=today.setDate(today.getDate()-7);
+                  day_7=new Date(day_7);
+                  //获取当前年
+                  var year=day_7.getFullYear();
+                  //获取当前月
+                  var month=day_7.getMonth()+1;
+                  //获取当前日
+                  var date = day_7.getDate();
+                  day_7 = year+'-'+month+"-"+date;
+                  console.log(day_7)
+                  $('#nowDay').html(nowDay)
+                  $('#willDay').html(day_7)
+                  $('.display').fadeIn(0);
+
+                  curve(day_7,nowDay)
+
+
+             }else if($(this).attr("data-day") == "180"){
+                  var today=new Date();
+                  var day_180=today.setDate(today.getDate()-180);
+                  day_180=new Date(day_180);
+                  //获取当前年
+                  var year=day_180.getFullYear();
+                  //获取当前月
+                  var month=day_180.getMonth()+1;
+                  //获取当前日
+                  var date = day_180.getDate();
+                  day_180 = year+'-'+month+"-"+date;
+                  console.log(day_180)
+                  $('#nowDay').html(nowDay)
+                  $('#willDay').html(day_180)
+                  $('.display').fadeIn(0);
+                  curve(day_180,nowDay)
+             }
+         })
     })
+    // 上报信息统计
+    function inforStat(start,end){
+         $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getReportInfo.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                communityId:sessionStorage.communityId,
+                communityStreetId:sessionStorage.communityStreetId,
+                startTime:start,
+                stopTime:end
+            },
+            success:function(data){
+               // console.log(data.data)
+               $('#total .details_num span').html(data.data.total)
+               $('#total .percent').html((data.data.totalPassRatio)*100 + '%')
+               $('#total .listNum0').html(data.data.totalPass+'条')
+               $('#total .no_pass').html((data.data.totalWaitRatio)*100 + '%')
+               $('#total .listNum1').html(data.data.totalWait+'条')
+
+               $('#house_fz .details_num span').html(data.data.fangzhunum)
+               $('#house_fz .percent').html((data.data.fangzhuPassRatio)*100 + '%')
+               $('#house_fz .listNum0').html(data.data.fangzhuPass+'条')
+               $('#house_fz .no_pass').html((data.data.fangzhuWaitRatio)*100 + '%')
+               $('#house_fz .listNum1').html(data.data.fangzhuWait+'条')
+
+               $('#house_zh .details_num span').html(data.data.zuhunum)
+               $('#house_zh .percent').html((data.data.zuhuPassRatio)*100 + '%')
+               $('#house_zh .listNum0').html(data.data.zuhuPass+'条')
+               $('#house_zh .no_pass').html((data.data.zuhuWaitRatio)*100 + '%')
+               $('#house_zh .listNum1').html(data.data.zuhuWait+'条')
+
+               $('#house_js .details_num span').html(data.data.jiashunum)
+               $('#house_js .percent').html((data.data.jiashuPassRatio)*100 + '%')
+               $('#house_js .listNum0').html(data.data.jiashuPass+'条')
+               $('#house_js .no_pass').html((data.data.jiashuWaitRatio)*100 + '%')
+               $('#house_js .listNum1').html(data.data.jiashuWait+'条')
+
+               $('#house_dz .details_num span').html(data.data.dianzhunum)
+               $('#house_dz .percent').html((data.data.dianzhuPassRatio)*100 + '%')
+               $('#house_dz .listNum0').html(data.data.dianzhuPass+'条')
+               $('#house_dz .no_pass').html((data.data.dianzhuWaitRatio)*100 + '%')
+               $('#house_dz .listNum1').html(data.data.dianzhuWait+'条')
+
+               $('#house_yz .details_num span').html(data.data.yuangongnum)
+               $('#house_yz .percent').html((data.data.yuangongPassRatio)*100 + '%')
+               $('#house_yz .listNum0').html(data.data.yuangongPass+'条')
+               $('#house_yz .no_pass').html((data.data.yuangongWaitRatio)*100 + '%')
+               $('#house_yz .listNum1').html(data.data.yuangongWait+'条')
+            },
+            error:function(jqXHR){}
+        });
+    }
+    // 房屋上报
+    function house_fw(start,end){
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getFangwuReportPass.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                communityId:sessionStorage.communityId,
+                communityStreetId:sessionStorage.communityStreetId,
+                startTime:start,
+                stopTime:end
+            },
+            success:function(data){
+             // console.log(data.data)
+             $('#fangzhu .owner span').html(data.data.fangzhuPass)
+             $('#fangzhu .zb').html((data.data.fangzhuRatio)*100+'%')
+             $('#fangzhu .pass').html((data.data.fangzhuPassRatio)*100+'%')
+             $('#zuhu .owner span').html(data.data.zuhuPass)
+             $('#zuhu .zb').html((data.data.zuhuRatio)*100+'%')
+             $('#zuhu .pass').html((data.data.zuhuPassRatio)*100+'%')
+             $('#jiashu .owner span').html(data.data.jiashuPass)
+             $('#jiashu .zb').html((data.data.jiashuRatio)*100+'%')
+             $('#jiashu .pass').html((data.data.jiashuPassRatio)*100+'%')
+             var dom = document.getElementById("house");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                app.title = '环形图';
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    series: [
+                        {
+                            name:'访问来源',
+                            type:'pie',
+                            radius: ['40%', '80%'],
+                            avoidLabelOverlap: false,
+                            color:['#14e8ec','#ff6160','#ffd350'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '16',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:(data.data.fangzhuPassRatio)*1000, name:'房主通过'},
+                                {value:(data.data.jiashuPassRatio)*1000, name:'家属通过'},
+                                {value:(data.data.zuhuPassRatio)*1000, name:'租户通过'},
+                            ]
+                        }
+                    ]
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            },
+            error:function(jqXHR){}
+        });
+
+    }
+    // 门店上报
+    function house_md(start,end){
+         $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getMendianReportPass.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                communityId:sessionStorage.communityId,
+                communityStreetId:sessionStorage.communityStreetId,
+                startTime:start,
+                stopTime:end
+            },
+            success:function(data){
+             // console.log(data.data)
+             $('#d_zhu .listNum').html(data.data.dianzhuPass)
+             $('#d_zhu .percent').html((data.data.dianzhuRatio)*100 +'%')
+             $('#d_zhu .success_pass').html((data.data.dianzhuPassRatio)*100+'%')
+             $('#y_gong .listNum').html(data.data.yuangongPass)
+             $('#y_gong .percent').html((data.data.yuangongRatio)*100+'%')
+             $('#y_gong .success_pass').html((data.data.yuangongPassRatio)*100)
+             var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                app.title = '环形图';
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    series: [
+                        {
+                            name:'访问来源',
+                            type:'pie',
+                            radius: ['40%', '80%'],
+                            avoidLabelOverlap: false,
+                            color:['#14e8ec','#ff6160'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '16',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:(data.data.dianzhuPassRatio)*1000, name:'店主通过'},
+                                {value:(data.data.jiashuPassRatio)*1000, name:'电员通过'},
+                            ]
+                        }
+                    ]
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            },
+            error:function(jqXHR){}
+        });
+    }
+    // 上报曲线图
+    function curve(start,end){
+         $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'/jianfuzengxiao/system/statistics/getReportCurve.html',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{
+                communityId:sessionStorage.communityId,
+                communityStreetId:sessionStorage.communityStreetId,
+                startTime:start,
+                stopTime:end
+            },
+            success:function(data){
+                console.log(data.data)
+                var date=[];
+                var count=[]
+                for(var i=0;i<data.data.length;i++){
+                   date.push(data.data[i].day+'日')
+                   count.push(data.data[i].count)
+                }
+                // console.log(date)
+                // console.log(count)
+                tu1(date,count);
+            },
+            error:function(jqXHR){}
+        });
+    }
+
     $('.ranges_1 ul').remove();
     $('#daterange-btn').daterangepicker({
             ranges: {
@@ -372,35 +790,171 @@
             endDate: moment()
         },
         function(start, end,label) {
-            $('#time0').html('<span>'+start.format('YYYY/MM/DD')+'</span> 至 <span>'+end.format('YYYY/MM/DD')+'</span>');
-            $('#daterange-btn').addClass('active').siblings('.so_far').removeClass('active');
-            //label:通过它来知道用户选择的是什么，传给后台进行相应的展示
-//      console.log(label)
-//             if(label=='全部'){
-//                 $('#daterange-btn span').html('全部');
-//             }else if(label=='今天'){
-//                 $('#daterange-btn span').html(end.format('YYYY/MM/DD'));
-//             }else if(label=='明天'){
-//                 $('#daterange-btn span').html(start.format('YYYY/MM/DD'));
-//             }else if(label=='未来七天'){
-//                 $('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
-//             }else if(label=='未来30天'){
-//                 $('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
-//             }else if(label=='未来60天'){
-//                 $('#daterange-btn span').html(start.format('YYYY/MM/DD')+'-'+end.format('YYYY/MM/DD'));
-//             }else{
-//
-//             }
-
+            $('#time0').html('<span id="start">'+start.format('YYYY/MM/DD')+'</span> 至 <span id="end">'+end.format('YYYY/MM/DD')+'</span>');
+            $('#time0').fadeIn(0);
+            inforStat(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'))
         }
     );
-    var chart = document.getElementById("container0");
-    var echart = echarts.init(chart);
-    var data0 = ['1日','2日','3日','4日','5日','6日','7日','8日'];
-    var optioni = {
-        title: {
-            text: ''
+    $('#daterange-btn0').daterangepicker({
+            ranges: {
+                '自定义': [moment(), moment().subtract(-1, 'days')],
+                '本周': [moment(), moment()],
+                '上周': [moment().subtract(-1, 'days'), moment().subtract(-1, 'days')],
+                '本月': [moment(),moment().subtract(-6, 'days')],
+                '上月': [moment(),moment().subtract(-29, 'days')],
+                '今年': [moment(),moment().subtract(-59, 'days'), ]
+            },
+            startDate: moment(),
+            endDate: moment()
         },
+        function(start, end,label) {
+            $('#time1').html('<span id="start1">'+start.format('YYYY/MM/DD')+'</span> 至 <span id="end1">'+end.format('YYYY/MM/DD')+'</span>');
+            $('#time1').fadeIn(0);
+            house_fw(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'))
+        }
+    );
+     $('#daterange-btn1').daterangepicker({
+            ranges: {
+                '自定义': [moment(), moment().subtract(-1, 'days')],
+                '本周': [moment(), moment()],
+                '上周': [moment().subtract(-1, 'days'), moment().subtract(-1, 'days')],
+                '本月': [moment(),moment().subtract(-6, 'days')],
+                '上月': [moment(),moment().subtract(-29, 'days')],
+                '今年': [moment(),moment().subtract(-59, 'days'), ]
+            },
+            startDate: moment(),
+            endDate: moment()
+        },
+        function(start, end,label) {
+            $('#time2').html('<span id="start2">'+start.format('YYYY/MM/DD')+'</span> 至 <span id="end2">'+end.format('YYYY/MM/DD')+'</span>');
+            $('#time2').fadeIn(0);
+            house_md(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'))
+        }
+    );
+    function tu1(date,count){
+        var chart = document.getElementById("container0");
+            var echart = echarts.init(chart);
+            // var data0 = ['1日','2日','3日','4日','5日','6日','7日','8日'];
+            var data0 =date;
+            var optioni = {
+                title: {
+                    text: ''
+                },
+                tooltip : {
+                    // trigger: 'axis',
+                    trigger: 'item',           // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
+                    showDelay: 20,             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+                    hideDelay: 100,            // 隐藏延迟，单位ms
+                    transitionDuration : 0.4,  // 动画变换时间，单位s
+                    backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
+                    borderColor: '#333',       // 提示边框颜色
+                    borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+                    borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
+                    padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+                    // 接受数组分别设定上右下左边距，同css
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                        lineStyle : {          // 直线指示器样式设置
+                            color: '#48b',
+                            width: 2,
+                            type: 'solid'
+                        },
+                        shadowStyle : {                       // 阴影指示器样式设置
+                            width: 'auto',                   // 阴影大小
+                            color: 'rgba(150,150,150,0.3)'  // 阴影颜色
+                        }
+                    },
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:20,
+                    containLabel: true
+                },
+
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : data0
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series: [{
+                    name: '上报信息',
+                    type: 'line',
+                    // data: [2270, 3456, 5432, 3423,5432,2270,3456,5432],
+                    data: count,
+                    smooth: true,
+                    symbol: 'emptyCircle',
+                    symbolSize: 10,
+                    itemStyle: {
+                        normal: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#00FFF4' // 0% 处的颜色
+                                }, {
+                                    offset: 1, color: '#6F63F3' // 100% 处的颜色
+                                }],
+                                globalCoord: false // 缺省为 false
+                            },
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#6F63F3' // 0% 处的颜色
+                                }, {
+                                    offset: 1, color: '#00FFF4' // 100% 处的颜色
+                                }],
+                                globalCoord: false // 缺省为 false
+                            },
+                            width: 4
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: "rgba(51,255,25,0)",
+                        }
+                    }
+                }]
+            };
+            echart.setOption(optioni);
+     }
+
+    var dom = document.getElementById("shape");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    var dataAxis = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日','1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'];
+    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220,220, 182, 191, 234, 290, 330, 310, 123, 442, 321];
+    var yMax = 500;
+    var dataShadow = [];
+
+    for (var i = 0; i < data.length; i++) {
+        dataShadow.push(yMax);
+    }
+
+    option = {
         tooltip : {
             // trigger: 'axis',
             trigger: 'item',           // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
@@ -429,93 +983,6 @@
                 color: '#fff'
             }
         },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top:20,
-            containLabel: true
-        },
-
-        xAxis : [
-            {
-                type : 'category',
-                boundaryGap : false,
-                data : data0
-            }
-        ],
-        yAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        series: [{
-            name: '上报信息',
-            type: 'line',
-            data: [2270, 3456, 5432, 3423,5432,2270,3456,5432],
-            smooth: true,
-            symbol: 'emptyCircle',
-            symbolSize: 10,
-            itemStyle: {
-                normal: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: '#00FFF4' // 0% 处的颜色
-                        }, {
-                            offset: 1, color: '#6F63F3' // 100% 处的颜色
-                        }],
-                        globalCoord: false // 缺省为 false
-                    },
-                }
-            },
-            lineStyle: {
-                normal: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [{
-                            offset: 0, color: '#6F63F3' // 0% 处的颜色
-                        }, {
-                            offset: 1, color: '#00FFF4' // 100% 处的颜色
-                        }],
-                        globalCoord: false // 缺省为 false
-                    },
-                    width: 4
-                }
-            },
-            areaStyle: {
-                normal: {
-                    color: "rgba(51,255,25,0)",
-                }
-            }
-        }]
-    };
-    echart.setOption(optioni);
-
-
-
-    var dom = document.getElementById("shape");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    var dataAxis = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日','1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'];
-    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220,220, 182, 191, 234, 290, 330, 310, 123, 442, 321];
-    var yMax = 500;
-    var dataShadow = [];
-
-    for (var i = 0; i < data.length; i++) {
-        dataShadow.push(yMax);
-    }
-
-    option = {
         grid: {
             left: '3%',
             right: '4%',
