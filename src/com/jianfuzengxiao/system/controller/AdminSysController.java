@@ -14,15 +14,21 @@ import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.MD5Util;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.RandomUtil;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfo;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
+import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.RoleInfoMVO;
 import com.jianfuzengxiao.pub.service.IAdminInfoService;
+import com.jianfuzengxiao.pub.service.IAduitDistributionService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IRoleInfoService;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,6 +42,12 @@ public class AdminSysController extends BaseController {
 	
 	@Autowired
 	private IRoleInfoService roleInfoService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
+	
+	@Autowired
+	private IAduitDistributionService aduitDistributionService;
 	
 	@RequestMapping(value="/toAdminPage")
 	public String toAdminPage(){
@@ -85,6 +97,36 @@ public class AdminSysController extends BaseController {
 	@RequestMapping(value="/getAdminPage", method = RequestMethod.POST)
 	public String getAdminPage(AdminInfoMVO entity){
 		try {
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				LgzgMVO lgzg = new LgzgMVO();
+				lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				lgzg.setSts("A");
+				String communityInfo = "0";
+				String adminId = "0";
+				List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+				if (lgzgList.size() > 0) {
+					List<String> list = new ArrayList<String>();
+					for(LgzgMVO lg : lgzgList){
+						list.add(lg.getCommunityId());
+					}
+					communityInfo = StringUtils.join(list.toArray(),",");
+					
+					AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+					aduitDistribution.setCommunityId(communityInfo);
+					aduitDistribution.setSts("A");
+					List<AduitDistributionMVO> list2 = aduitDistributionService.queryList(aduitDistribution);
+					List<String> list3 = new ArrayList<>();
+					if(list2.size() > 0){
+						for(AduitDistributionMVO ad: list2){
+							list3.add(ad.getAdminId());
+						}
+						adminId = StringUtils.join(list3.toArray(),",");
+					}
+				}
+				
+				entity.setAdminId(adminId);
+			}
+			
 			PageInfo pageInfo = getPage();
 			entity.setSts("A");
 			pageInfo = adminInfoService.queryPage(entity, pageInfo);

@@ -2,6 +2,7 @@ package com.jianfuzengxiao.system.controller;
 
 import static com.jianfuzengxiao.base.utils.ApiUtil.throwAppException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
+import com.jianfuzengxiao.pub.service.IHousesInfoService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 
 @Controller
 @RequestMapping(value="/system/auditDistribution")
@@ -29,6 +34,12 @@ public class AduitDistributionSysController extends BaseController {
 	
 	@Autowired
 	private IAduitDistributionService aduitDistributionService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
+	
+	@Autowired
+	private IHousesInfoService housesInfoService;
 	
 	@RequestMapping(value="/toManageHousesPage")
 	public String toManageHousesPage(){
@@ -75,6 +86,21 @@ public class AduitDistributionSysController extends BaseController {
 	@RequestMapping(value="/getHousesPage", method = RequestMethod.POST)
 	public String getHousesPage(HousesInfoMVO entity){
 		try {
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				LgzgMVO lgzg = new LgzgMVO();
+				lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				lgzg.setSts("A");
+				List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+				if (lgzgList.size() > 0) {
+					List<String> list = new ArrayList<String>();
+					for(LgzgMVO lg : lgzgList){
+						list.add(lg.getCommunityId());
+					}
+					entity.setCommunityId(StringUtils.join(list.toArray(),","));
+				}else{
+					entity.setCommunityId("0");
+				}
+			}
 			PageInfo pageInfo = getPage();
 			entity.setSts("A");
 			pageInfo = aduitDistributionService.queryPageNotAdminHouses(entity, pageInfo);
@@ -92,9 +118,14 @@ public class AduitDistributionSysController extends BaseController {
 			throwAppException(StringUtils.isBlank(entity.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
 			List<String> list = Arrays.asList(entity.getHousesId().split(","));
 			for(int i=0; i<list.size(); i++){
+				HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
+				housesInfoMVO.setHousesId(list.get(i));
+				housesInfoMVO = housesInfoService.queryBean(housesInfoMVO);
+				
 				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
 				aduitDistribution.setAdminId(entity.getAdminId());
-				aduitDistribution.setHousesId(list.get(i));
+				aduitDistribution.setCommunityId(housesInfoMVO.getCommunityId());
+				aduitDistribution.setHousesId(housesInfoMVO.getHousesId());
 				aduitDistributionService.insert(aduitDistribution);
 			}
 			return apiResult(RC.SUCCESS);

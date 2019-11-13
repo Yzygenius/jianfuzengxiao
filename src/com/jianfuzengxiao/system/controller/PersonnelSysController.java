@@ -23,9 +23,11 @@ import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.IContractFileService;
+import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
 @Controller
@@ -41,6 +43,9 @@ public class PersonnelSysController extends BaseController {
 	
 	@Autowired
 	private IAduitDistributionService aduitDistributionService;
+	
+	@Autowired
+	private ILgzgService lgzgService;
 	
 	//社区人员管理
 	@RequestMapping(value="/toPerPage")
@@ -107,6 +112,25 @@ public class PersonnelSysController extends BaseController {
 	@RequestMapping(value="/getPerPage", method=RequestMethod.POST)
 	public String getPerPage(PersonnelInfoMVO entity){
 		try{
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//
 			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
 				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
 				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));

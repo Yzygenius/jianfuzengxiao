@@ -22,9 +22,16 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String storeLocation;
 	
 	private String adminId;
+	private String communityId;
 	
 	
 	
+	public String getCommunityId() {
+		return communityId;
+	}
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId;
+	}
 	public String getStoreLocation() {
 		return storeLocation;
 	}

@@ -22,7 +22,7 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 	public PageInfo queryPage(AduitDistributionMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select id,admin_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"select id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("from ADUIT_DISTRIBUTION ");
 		sql.append("where 1=1");
 
@@ -254,8 +254,7 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 					params.add("%" + entity.getPropertyCertificatesFile() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND a.community_id=?");
-					params.add(entity.getCommunityId());
+					sql.append(" AND a.community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityName())) {
 					sql.append(" AND a.community_name like ?");

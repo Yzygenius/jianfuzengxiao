@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,6 +100,7 @@
 				value="" name=""></td>
 			<td row="ids" style="display: none;"></td>
 			<td row="ids2" style="display: none;"></td>
+			<td row="ids3" style="display: none;"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
@@ -420,8 +421,7 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(
-									data[i].id);
+							tr.find('[row=checkBoxId]').children().val(data[i].id);
 							tr.find('[row=ids]').text(data[i].id);
 							tr.find('[row=ids2]').text(data[i].housesId);
 							tr.find('[row=communityName]').text(data[i].communityName);

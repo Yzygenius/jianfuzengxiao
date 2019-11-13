@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,10 +40,12 @@
 			<button class="layui-btn layui-btn-danger" onclick="delAll()">
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 			<button class="layui-btn"
 				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 410)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
+			</c:if>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">

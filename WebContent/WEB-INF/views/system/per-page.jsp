@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,10 +55,12 @@
 			</form>
 		</div>
 		
-		<xblock>
+		<xblock style="height: 38px;">
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 			<button class="layui-btn layui-btn-danger" onclick="delAll()">
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
+			</c:if>
 			<!-- <button class="layui-btn"
 				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', 820)">
 				<i class="layui-icon">&#xe608;</i>添加
@@ -68,8 +70,9 @@
 		<table class="layui-table">
 			<thead>
 				<tr>
-					<th><input type="checkbox" value="" name="" id="checkAll"
-						onclick="checkAll(this)"></th>
+					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
+					</c:if>
 					<th>姓名</th>
 					<th>性别</th>
 					<th>民族</th>
@@ -91,8 +94,9 @@
 
 	<table id="clone-tr" style="display: none;">
 		<tr>
-			<td row="checkBoxId"><input type="checkbox" class="checkId"
-				value="" name=""></td>
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
+			</c:if>
 			<td row="ids" style="display: none;"></td>
 			<td row="username"></td>
 			<td row="gender">
@@ -113,10 +117,12 @@
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button> -->
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
 					onclick="banner_del(this)" href="javascript:;">
 					<i class="layui-icon">&#xe640;</i>删除
 				</button>
+				</c:if>
 			</td>
 		</tr>
 	</table>

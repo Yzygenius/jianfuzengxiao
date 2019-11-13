@@ -30,6 +30,9 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in("+entity.getCommunityId()+") ");
+				}
 				if (StringUtils.isNotBlank(entity.getPersonnelId())) {
 					sql.append(" AND a.personnel_id=?");
 					params.add(entity.getPersonnelId());

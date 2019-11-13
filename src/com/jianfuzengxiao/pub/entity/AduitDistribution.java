@@ -7,6 +7,8 @@ public class AduitDistribution extends Entity {
 	protected String id;
 
 	protected String adminId;
+	
+	protected String communityId;
 
 	protected String housesId;
 
@@ -24,6 +26,14 @@ public class AduitDistribution extends Entity {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getCommunityId() {
+		return communityId;
+	}
+
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId;
 	}
 
 	public String getAdminId() {

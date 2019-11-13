@@ -23,8 +23,8 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	@Override
 	public AduitDistributionMVO insert(final AduitDistributionMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,houses_id,status,create_time,update_time,sts) ");
-		sql.append("VALUES (?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+		sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,community_id,houses_id,status,create_time,update_time,sts) ");
+		sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -33,6 +33,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 					java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString());
 					ps.setString(++i, StringUtils.trimToNull(entity.getId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getAdminId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getCommunityId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getHousesId()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getStatus()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
@@ -58,6 +59,10 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 			if (entity.getAdminId() != null) {
 				sql.append("admin_id=?,");
 				params.add(entity.getAdminId());
+			}
+			if (entity.getCommunityId() != null) {
+				sql.append("community_id=?,");
+				params.add(entity.getCommunityId());
 			}
 			if (entity.getHousesId() != null) {
 				sql.append("houses_id=?,");
@@ -110,7 +115,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	public List<AduitDistributionMVO> queryList(AduitDistributionMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT id,admin_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("FROM  ADUIT_DISTRIBUTION ");
 		sql.append("WHERE 1=1 ");
 		List<AduitDistributionMVO> resultList = null;
@@ -124,6 +129,9 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 				if (StringUtils.isNotBlank(entity.getAdminId())) {
 					sql.append(" AND admin_id=?");
 					params.add(entity.getAdminId());
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getHousesId())) {
 					sql.append(" AND houses_id=?");
@@ -160,7 +168,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	public AduitDistributionMVO queryBean(AduitDistributionMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT id,admin_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("FROM  ADUIT_DISTRIBUTION ");
 		sql.append("WHERE id=? ");
 		List<Object> params = new ArrayList<Object>();

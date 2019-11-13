@@ -613,6 +613,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 				}
 			}
 			sql.append(" GROUP BY day ");
+			sql.append(" order by a.update_time desc ");
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
 					new BeanPropertyRowMapper<Statistics>(Statistics.class));
