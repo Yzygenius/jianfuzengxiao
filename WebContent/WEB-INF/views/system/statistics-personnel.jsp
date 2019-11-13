@@ -321,7 +321,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="house" style="width: 100%;">
+			<div class="house">
 				<div class="statis">
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">人员民族分布
 				</div>
@@ -335,10 +335,32 @@
 				</div>
 				<div class="clear"></div>
 				<div style="display: flex; align-items: center;margin-top: 20px;">
-					<div class="chart shape" style="width:1500px;">
-						<div id="shape" style="height: 100%"></div>
+					<div class="house_detail nationM"
+						style="display: flex; flex-wrap: wrap; max-width: 400px;">
+						<div class="house_infor">
+							<div class="owner">
+								<div class="owner_title">
+									<div class="circle"></div>
+									0-6岁
+								</div>
+								<span>3432424</span> 人
+							</div>
+							<div class="rate">
+								<div class="Proportion">
+									<div>占比</div>
+									<div>
+										<span>25%</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
+					<div class="chart shape">
+						<div id="houseN" style="height: 100%"></div>
+				    </div>
 				</div>
+				
+			</div>
 			</div>
 		</div>
 	</div>
@@ -465,7 +487,7 @@
 	            	$('#num4').html(data.data.yuangongnum)
 	            	$('#percent4').html(data.data.yuangongratio+'%')
 	            	$('#num5').html(data.data.jiashunum)
-	            	$('#percent6').html(data.data.jiashuratio+'%')
+	            	$('#percent5').html(data.data.jiashuratio+'%')
 	            	var dom = document.getElementById("house");
 					var myChart = echarts.init(dom);
 					var app = {};
@@ -540,7 +562,7 @@
 	            	$('#boyNum').html(data.data.nannum)
 	            	$('#boyPer').html(data.data.nanratio)
 	            	$('#girlNum').html(data.data.nvnum)
-	            	$('.girlPer').html(data.data.nvratio)
+	            	$('#girlPer').html(data.data.nvratio)
 	            	var dom0 = document.getElementById("container");
 					var myChart0 = echarts.init(dom0);
 					var app0 = {};
@@ -665,7 +687,6 @@
 		            			array.push({'value':(data.data[i].ratio)*1000,'name':'65岁以上'})
 		            			color.push('#ca9a5d')	
 		            			var circle = '<div class="circle" style="background:#ca9a5d"></div>'
-
 			            	}
 				        	html+='<div class="house_infor">'+
 									'<div class="owner">'+
@@ -679,7 +700,7 @@
 										'<div class="Proportion">'+
 											'<div>占比</div>'+
 											'<div>'+
-												'<span>'+(data.data[i].ratio)*100+'%</span>'+
+												'<span>'+((data.data[i].ratio)*100).toFixed(0)+'%</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -736,151 +757,246 @@
 	        });
         }
         // 民族
-        function Nation(){
-				$.ajax({
-	            //请求方式
-	            type:'POST',
-	            //发送请求的地址
-	            url:'/jianfuzengxiao/system/statistics/getPersonnelNation.html',
-	            //服务器返回的数据类型
-	            dataType:'json',
-	            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-	            data:{
-	            	communityId:sessionStorage.communityId,
-	            	communityStreetId:sessionStorage.communityStreetId,
-	            	liveTypeId:sessionStorage.liveTypeId
-	            },
-	            success:function(data){
-	            	// console.log(data.data)
-	            	var res = data.data;
-	            	var dataAxis = [];
-	            	// var countTotal=""
-	            	var data=[]
-	            	// var color=[]
-	            	if(res == undefined){
-	            		dataAxis.push('无');
-	            	}else{
-	            		for(var i in res){
-			     			var ratio = parseInt(res[i].ratio*100);
-				     		dataAxis.push(res[i].nationName);
-				     		data.push(ratio)
-			     	    }
-	            	}
-			     	
-			        var dom = document.getElementById("shape");
-				    var myChart = echarts.init(dom);
-				    var app = {};
-				    option = null;
-				    // var dataAxis = dataAxis;
-				    // var data = data;
-				    var yMax = 100;
-				    var dataShadow = [];
+       function Nation(){
+			$.ajax({
+	        //请求方式
+	        type:'POST',
+	        //发送请求的地址
+	        url:'/jianfuzengxiao/system/statistics/getPersonnelNation.html',
+	        //服务器返回的数据类型
+	        dataType:'json',
+	        //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	        data:{
+	        	communityId:sessionStorage.communityId,
+	        	communityStreetId:sessionStorage.communityStreetId,
+	        	liveTypeId:sessionStorage.liveTypeId
+	        },
+	        success:function(data){
+	        	// console.log(data.data)
+	        	var res = data.data;
+	        	var html=""
+	        	var array=[]
+	            var color=['#14e8ec','#ff6160','#ffd350','#e977ac','#8ae977','#dd84ea','#75aadb','#5bd5b1','#eb9f67','#eb6780']
+	            // res.push(color)
+	        	// console.log(res)
+	        	for(var i=0;i<res.length;i++){
+	        		array.push({'value':(res[i].ratio)*1000,'name':res[i].nationName})
 
-				    for (var i = 0; i < data.length; i++) {
-				        dataShadow.push(yMax);
-				    }
-
-				    option = {
-				    	tooltip : {
-				            trigger: 'item',
-				            transitionDuration : 0.4,  // 动画变换时间，单位s
-				            backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
-				            borderColor: '#333',       // 提示边框颜色
-				            borderRadius: 4,           // 提示边框圆角，单位px，默认为4
-				            borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
-				            padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
-				            // 接受数组分别设定上右下左边距，同css
-				            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-				                type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
-				                lineStyle : {          // 直线指示器样式设置
-				                    color: '#48b',
-				                    width: 2,
-				                    type: 'solid'
+	        		html+='<div class="house_infor">'+
+									'<div class="owner">'+
+										'<div class="owner_title">'+
+											'<div class="circle" style="background:'+color[i]+'"></div>'+
+											res[i].nationName+
+										'</div>'+
+										'<span>'+res[i].count+'</span> 人'+
+									'</div>'+
+									'<div class="rate">'+
+										'<div class="Proportion">'+
+											'<div>占比</div>'+
+											'<div>'+
+												'<span>'+((res[i].ratio)*100).toFixed(0)+'%</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'
+	        	}
+	        	$('.nationM').html(html)
+	        	var dom = document.getElementById("houseN");
+				var myChart = echarts.init(dom);
+				var app = {};
+				option = null;
+				app.title = '环形图';
+				option = {
+				    tooltip: {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b}: {c} ({d}%)"
+				    },
+				    series: [
+				        {
+				            name:'访问来源',
+				            type:'pie',
+				            radius: ['40%', '80%'],
+				            avoidLabelOverlap: false,
+				            color:color,
+				            label: {
+				                normal: {
+				                    show: false,
+				                    position: 'center'
 				                },
-				                shadowStyle : {                       // 阴影指示器样式设置
-				                    width: 'auto',                   // 阴影大小
-				                    color: 'rgba(150,150,150,0.3)'  // 阴影颜色
-				                }
-				            },
-				            formatter: function (params) {
-					            var htmlStr = '比例：'+params.value + '%';
-					            return htmlStr; 
-					        }
-				        },
-				        grid: {
-				            left: '3%',
-				            right: '4%',
-				            bottom: '3%',
-				            top:20,
-				            containLabel: true
-				        },
-				        xAxis :{
-				            type : 'category',
-				            // boundaryGap : false,
-				            data : dataAxis,
-
-				        },
-				        yAxis: {
-				            axisLine: {
-				                show: false
-				            },
-				            axisTick: {
-				                show: false
-				            },
-				            axisLabel: {
-				                textStyle: {
-				                    color: '#333'
-				                }
-				            }
-				        },
-				        series: [
-				            { // For shadow
-				                type: 'bar',
-				                itemStyle: {
-				                    normal: {color: 'rgba(0,0,0,0)'}
-				                },
-				                barGap:'-100%',
-				                barCategoryGap:'50%',
-				                data: dataShadow,
-				                // animation: false
-				            },
-				            {
-				                type: 'bar',
-				                itemStyle: {
-				                    normal: {
-				                        color: new echarts.graphic.LinearGradient(
-				                            0, 0, 0, 1,
-				                            [
-				                                {offset: 0, color: '#73F3AE'},
-				                                {offset: 0.5, color: '#64E1CC'},
-				                                {offset: 1, color: '#4BC2FE'}
-				                            ]
-				                        )
-				                    },
-				                    emphasis: {
-				                        color: new echarts.graphic.LinearGradient(
-				                            0, 0, 0, 1,
-				                            [
-				                                {offset: 0, color: '#4BC2FE'},
-				                                {offset: 0.7, color: '#64E1CC'},
-				                                {offset: 1, color: '#73F3AE'}
-				                            ]
-				                        )
+				                emphasis: {
+				                    show: true,
+				                    textStyle: {
+				                        fontSize: '16',
+				                        fontWeight: 'bold'
 				                    }
-				                },
-				                data: data
-				            }
-				        ]
-				    };
+				                }
+				            },
+				            labelLine: {
+				                normal: {
+				                    show: false
+				                }
+				            },
+				            data:array
+				            // [
+				            //     {value:250, name:'房主通过'},
+				            //     {value:375, name:'家属通过'},
+				            //     {value:375, name:'租户通过'},
+				            // ]
+				        }
+				    ]
+				};
+				if (option && typeof option === "object") {
+				    myChart.setOption(option, true);
+				}
+	        },
+	        error:function(jqXHR){}
+	    })
+	}
+    //     function Nation(){
+				// $.ajax({
+	   //          //请求方式
+	   //          type:'POST',
+	   //          //发送请求的地址
+	   //          url:'/jianfuzengxiao/system/statistics/getPersonnelNation.html',
+	   //          //服务器返回的数据类型
+	   //          dataType:'json',
+	   //          //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+	   //          data:{
+	   //          	communityId:sessionStorage.communityId,
+	   //          	communityStreetId:sessionStorage.communityStreetId,
+	   //          	liveTypeId:sessionStorage.liveTypeId
+	   //          },
+	   //          success:function(data){
+	   //          	// console.log(data.data)
+	   //          	var res = data.data;
+	   //          	var dataAxis = [];
+	   //          	// var countTotal=""
+	   //          	var data=[]
+	   //          	// var color=[]
+	   //          	if(res == undefined){
+	   //          		dataAxis.push('无');
+	   //          	}else{
+	   //          		for(var i in res){
+			 //     			var ratio = parseInt(res[i].ratio*100);
+				//      		dataAxis.push(res[i].nationName);
+				//      		data.push(ratio)
+			 //     	    }
+	   //          	}
+			     	
+			 //        var dom = document.getElementById("shape");
+				//     var myChart = echarts.init(dom);
+				//     var app = {};
+				//     option = null;
+				//     // var dataAxis = dataAxis;
+				//     // var data = data;
+				//     var yMax = 100;
+				//     var dataShadow = [];
 
-				    if (option && typeof option === "object") {
-				        myChart.setOption(option, true);
-				    }
+				//     for (var i = 0; i < data.length; i++) {
+				//         dataShadow.push(yMax);
+				//     }
 
-	            },
-	            error:function(jqXHR){}
-	        });
-        }
-    </script>
+				//     option = {
+				//     	tooltip : {
+				//             trigger: 'item',
+				//             transitionDuration : 0.4,  // 动画变换时间，单位s
+				//             backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
+				//             borderColor: '#333',       // 提示边框颜色
+				//             borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+				//             borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
+				//             padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+				//             // 接受数组分别设定上右下左边距，同css
+				//             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				//                 type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+				//                 lineStyle : {          // 直线指示器样式设置
+				//                     color: '#48b',
+				//                     width: 2,
+				//                     type: 'solid'
+				//                 },
+				//                 shadowStyle : {                       // 阴影指示器样式设置
+				//                     width: 'auto',                   // 阴影大小
+				//                     color: 'rgba(150,150,150,0.3)'  // 阴影颜色
+				//                 }
+				//             },
+				//             formatter: function (params) {
+				// 	            var htmlStr = '比例：'+params.value + '%';
+				// 	            return htmlStr; 
+				// 	        }
+				//         },
+				//         grid: {
+				//             left: '3%',
+				//             right: '4%',
+				//             bottom: '3%',
+				//             top:20,
+				//             containLabel: true
+				//         },
+				//         xAxis :{
+				//             type : 'category',
+				//             // boundaryGap : false,
+				//             data : dataAxis,
+
+				//         },
+				//         yAxis: {
+				//             axisLine: {
+				//                 show: false
+				//             },
+				//             axisTick: {
+				//                 show: false
+				//             },
+				//             axisLabel: {
+				//                 textStyle: {
+				//                     color: '#333'
+				//                 }
+				//             }
+				//         },
+				//         series: [
+				//             { // For shadow
+				//                 type: 'bar',
+				//                 itemStyle: {
+				//                     normal: {color: 'rgba(0,0,0,0)'}
+				//                 },
+				//                 barGap:'-100%',
+				//                 barCategoryGap:'50%',
+				//                 data: dataShadow,
+				//                 // animation: false
+				//             },
+				//             {
+				//                 type: 'bar',
+				//                 itemStyle: {
+				//                     normal: {
+				//                         color: new echarts.graphic.LinearGradient(
+				//                             0, 0, 0, 1,
+				//                             [
+				//                                 {offset: 0, color: '#73F3AE'},
+				//                                 {offset: 0.5, color: '#64E1CC'},
+				//                                 {offset: 1, color: '#4BC2FE'}
+				//                             ]
+				//                         )
+				//                     },
+				//                     emphasis: {
+				//                         color: new echarts.graphic.LinearGradient(
+				//                             0, 0, 0, 1,
+				//                             [
+				//                                 {offset: 0, color: '#4BC2FE'},
+				//                                 {offset: 0.7, color: '#64E1CC'},
+				//                                 {offset: 1, color: '#73F3AE'}
+				//                             ]
+				//                         )
+				//                     }
+				//                 },
+				//                 data: data
+				//             }
+				//         ]
+				//     };
+
+				//     if (option && typeof option === "object") {
+				//         myChart.setOption(option, true);
+				//     }
+
+	   //          },
+	   //          error:function(jqXHR){}
+	   //      });
+    //     }
+   </script>
 </body>
 </html>
