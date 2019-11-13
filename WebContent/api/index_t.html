@@ -95,6 +95,7 @@
                 if(list.code == 0){
                     sessionStorage.token = list.data.token;
                     sessionStorage.userId = list.data.userid;
+                    sessionStorage.opId = list.data.opid;
                     // $('#h-title').html(sessionStorage.userId)
                     load(1);
                 // document.getElementById("content").innerHTML = resp;
@@ -120,6 +121,7 @@
                 if(list.code == 0){
                     sessionStorage.token = list.data.token;
                     sessionStorage.userId = list.data.userid;
+                    sessionStorage.opId = list.data.opid;
                     if(list.data.userid !== '' && list.data.userid !== undefined){
                         load(2);
                     }else{
