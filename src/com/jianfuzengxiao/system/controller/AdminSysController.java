@@ -67,7 +67,7 @@ public class AdminSysController extends BaseController {
 	
 	@RequestMapping(value="/toAddAdmin")
 	public String toAddAdmin(){
-		return "/system/admin-add";
+		return "/system/admin-addBhgb";
 	}
 	
 	@RequestMapping(value="/toUpdateAdmin")
@@ -79,6 +79,11 @@ public class AdminSysController extends BaseController {
 			return "/system/error";
 		}
 		return "/system/admin-update";
+	}
+	
+	@RequestMapping(value="/toAddLgzg")
+	public String toAddLgzg(){
+		return "/system/admin-addLgzg";
 	}
 	
 	@RequestMapping(value="/toResetPwd")

@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/font.css">
 	<link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css">
+	<link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/index-icon.css">
     <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
     <script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/jianfuzengxiao/statics/system/js/xadmin.js"></script>
@@ -21,7 +22,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="/jianfuzengxiao/system.html">智慧平安社区社群服务系统</a></div>
+        <div class="logo"><a href="/jianfuzengxiao/system.html">智慧平安社区社群服务	</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -57,7 +58,8 @@
         <ul id="nav">
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe6b8;</i>
+                    <!-- <i class="iconfont">&#xe6b8;</i> -->
+                    <span class="iconfont icon-shequ"></span>
                     <cite>基础数据管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -78,7 +80,8 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                    <!-- <i class="iconfont">&#xe723;</i> -->
+                    <span class="iconfont icon-fangwu"></span>
                     <cite>房屋管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -99,7 +102,8 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                   <!--  <i class="iconfont">&#xe723;</i> -->
+                   <span class="iconfont icon-renyuanguanli"></span>
                     <cite>人员管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -108,7 +112,7 @@
                 	<li>
                         <a _href="/jianfuzengxiao/system/admin/toLgzgManagePage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>流动专干管理</cite>
+                            <cite>流管专干管理</cite>
                         </a>
                     </li >
                     </c:if>
@@ -128,7 +132,8 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                    <!-- <i class="iconfont">&#xe723;</i> -->
+                    <span class="iconfont icon-shenhe"></span>
                     <cite>人员审核</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -155,7 +160,8 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                    <!-- <i class="iconfont">&#xe723;</i> -->
+                    <span class="iconfont icon-tongji"></span>
                     <cite>统计分析</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -187,7 +193,8 @@
         <ul id="nav">
         	<li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                   <!--  <i class="iconfont">&#xe723;</i> -->
+                   <span class="iconfont icon-fangwu"></span>
                     <cite>房屋管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -208,7 +215,8 @@
             </li>
         	<li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                    <!-- <i class="iconfont">&#xe723;</i> -->
+                    <span class="iconfont icon-shenhe"></span>
                     <cite>人员审核</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
@@ -235,7 +243,8 @@
             </li>
              <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
+                    <!-- <i class="iconfont">&#xe723;</i> -->
+                    <span class="iconfont icon-tongji"></span>
                     <cite>统计分析</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>

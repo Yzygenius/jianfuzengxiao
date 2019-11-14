@@ -47,7 +47,7 @@
 					<select id="roleSel" name="roleSel" lay-filter="roleSel" disabled="true" lay-verify="required" lay-search="">
 						<option value="">请选择</option>
 						<c:if test="${admin.roleId == 3}">
-							<option value="3" selected>流动专干</option>
+							<option value="3" selected>流管专干</option>
 						</c:if>
 						<c:if test="${admin.roleId == 2}">
 							<option value="2" selected>包户干部</option>

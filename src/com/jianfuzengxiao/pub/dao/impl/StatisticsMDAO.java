@@ -45,6 +45,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
 					sql.append(" AND community_street_id in (" + entity.getCommunityStreetId() + ")");
 				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND houses_id in (" + entity.getHousesId()+ ")");
+				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
@@ -69,6 +72,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append("from personnel_info where sts ='A' and live_type_id in ('3','4') ");
 		if (entity != null) {
 			sql.append("and houses_id in ( SELECT houses_id from houses_info b WHERE b.sts='A' ");
+			if (StringUtils.isNotBlank(entity.getHousesId())) {
+				sql.append(" AND houses_id in (" + entity.getHousesId() + ")");
+			}
 			if (StringUtils.isNotBlank(entity.getCommunityId())) {
 				sql.append(" AND community_id in (" + entity.getCommunityId() + ")");
 			}
@@ -88,6 +94,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND b.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -123,6 +132,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -165,6 +177,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -203,6 +218,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
 					sql.append(" AND a.live_type_id in (" + entity.getLiveTypeId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
@@ -253,6 +271,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
 					sql.append(" AND a.live_type_id in (" + entity.getLiveTypeId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
@@ -383,18 +404,21 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append("sum(case when live_type_id in ('5')   then 1 else 0 end) as zuhunum, ");
 		sql.append("sum(case when live_type_id in ('7')   then 1 else 0 end) as jiashunum, ");
 		sql.append("sum(case when live_type_id in ('6')   then 1 else 0 end) as yuangongnum  ");
-		sql.append("from personnel_info where sts ='A' ");
+		sql.append("from personnel_info a where a.sts ='A' ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getStartTime())) {
-					sql.append(" AND create_time >= ? ");
+					sql.append(" AND a.create_time >= ? ");
 					params.add(entity.getStartTime());
 				}
 				if (StringUtils.isNotBlank(entity.getStopTime())) {
-					sql.append(" AND create_time <= ? ");
+					sql.append(" AND a.create_time <= ? ");
 					params.add(entity.getStopTime());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in("+entity.getHousesId()+") ");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -416,20 +440,41 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 	public List<Statistics> queryPersonnelNation(Statistics entity) throws SysException, AppException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT COUNT(personnel_id) count,nation_name, cast(COUNT(personnel_id)/(SELECT count(personnel_id) from personnel_info where sts='A') as decimal(18,2)) as ratio ");
-		sql.append("from personnel_info where sts='A' ");
+				"SELECT COUNT(personnel_id) count,nation_name, cast(COUNT(personnel_id)/(SELECT count(personnel_id) from personnel_info a left join houses_info b on(a.houses_id=b.houses_id)  ");
+		sql.append("where a.sts='A' ");
+		
+		if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+			sql.append(" AND a.live_type_id in (" + entity.getLiveTypeId() + ")");
+		}
+		if (StringUtils.isNotBlank(entity.getHousesId())) {
+			sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+		}
+		if (StringUtils.isNotBlank(entity.getCommunityId())) {
+			sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+		}
+		if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+			sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+		}
+		
+		sql.append(" ) as decimal(18,2)) as ratio ");
+		sql.append("from personnel_info a  ");
+		sql.append(" left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("where a.sts='A' ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id in (" + entity.getLiveTypeId() + ")");
+					sql.append(" AND a.live_type_id in (" + entity.getLiveTypeId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND community_id in (" + entity.getCommunityId() + ")");
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND community_street_id in (" + entity.getCommunityStreetId() + ")");
+					sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
 				}
 			}
 			sql.append("GROUP BY nation_id ");
@@ -485,6 +530,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -535,6 +583,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -582,6 +633,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
@@ -624,6 +678,9 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
 					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}

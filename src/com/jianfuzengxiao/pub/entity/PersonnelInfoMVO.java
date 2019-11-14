@@ -20,12 +20,26 @@ public class PersonnelInfoMVO extends PersonnelInfo {
 	private String housesTypeName;
 	private String housesTypeId;
 	private String storeLocation;
+	private String propertyOwnerName;
+	private String fangzhu;
 	
 	private String adminId;
 	private String communityId;
 	
 	
 	
+	public String getPropertyOwnerName() {
+		return propertyOwnerName;
+	}
+	public void setPropertyOwnerName(String propertyOwnerName) {
+		this.propertyOwnerName = propertyOwnerName;
+	}
+	public String getFangzhu() {
+		return fangzhu;
+	}
+	public void setFangzhu(String fangzhu) {
+		this.fangzhu = fangzhu;
+	}
 	public String getCommunityId() {
 		return communityId;
 	}

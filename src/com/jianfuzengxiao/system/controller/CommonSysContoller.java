@@ -36,12 +36,14 @@ import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.base.utils.ExcelUtil;
 import com.jianfuzengxiao.base.utils.Upxml;
+import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.AttachFileMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesTypeMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
+import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IExcelImportService;
@@ -68,6 +70,9 @@ public class CommonSysContoller extends BaseController {
 	
 	@Autowired
 	private ICommunityStreetInfoService communityStreetInfoService;
+	
+	@Autowired
+	private IAduitDistributionService aduitDistributionService;
 	
 	@Autowired
 	private ILgzgService lgzgService;
@@ -145,6 +150,53 @@ public class CommonSysContoller extends BaseController {
 	@RequestMapping(value="/getCommunityStreetList")
 	public String getCommunityStreetList(CommunityStreetInfoMVO model){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(model.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						model.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						model.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					HousesInfoMVO housesInfo = new HousesInfoMVO();
+					housesInfo.setHousesId(housesId);
+					housesInfo.setSts("A");
+					List<HousesInfoMVO> hList = housesInfoService.queryGroupByCommunity(housesInfo);
+					if (hList.size() > 0) {
+						List<String> sList = new ArrayList<>();
+						for(HousesInfoMVO h : hList){
+							sList.add(h.getCommunityId());
+						}
+						model.setCommunityId(StringUtils.join(sList.toArray(),","));
+					}else {
+						model.setCommunityId("0");
+					}
+				}else {
+					model.setCommunityId("0");
+				}
+			}
 			model.setSts("A");
 			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(model);
 			return apiResult(RC.SUCCESS, list);
@@ -168,7 +220,53 @@ public class CommonSysContoller extends BaseController {
 	public String getCommunityList(){
 		try {
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
-			
+			//流管专干
+			if (StringUtils.isBlank(communityInfoMVO.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						communityInfoMVO.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						communityInfoMVO.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					HousesInfoMVO housesInfo = new HousesInfoMVO();
+					housesInfo.setHousesId(housesId);
+					housesInfo.setSts("A");
+					List<HousesInfoMVO> hList = housesInfoService.queryGroupByCommunity(housesInfo);
+					if (hList.size() > 0) {
+						List<String> sList = new ArrayList<>();
+						for(HousesInfoMVO h : hList){
+							sList.add(h.getCommunityId());
+						}
+						communityInfoMVO.setCommunityId(StringUtils.join(sList.toArray(),","));
+					}else {
+						communityInfoMVO.setCommunityId("0");
+					}
+				}else {
+					communityInfoMVO.setCommunityId("0");
+				}
+			}
 			communityInfoMVO.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(communityInfoMVO);
 			return apiResult(RC.SUCCESS, list);

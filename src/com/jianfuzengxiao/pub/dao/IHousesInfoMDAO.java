@@ -13,4 +13,6 @@ public interface IHousesInfoMDAO extends IHousesInfoSDAO {
 	public List<HousesInfoMVO> queryBuildingUnitNumList(HousesInfoMVO housesInfo) throws SysException;
 	
 	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO housesInfo) throws SysException;
+	
+	public List<HousesInfoMVO> queryGroupByCommunity(HousesInfoMVO housesInfo) throws SysException;
 }

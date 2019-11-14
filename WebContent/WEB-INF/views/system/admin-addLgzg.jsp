@@ -54,9 +54,9 @@
 					<span>角色</span>
 				</label>
 				<div class="layui-input-inline">
-					<select id="roleSel" name="roleSel" lay-filter="roleSel" lay-verify="required" lay-search="">
+					<select id="roleSel" name="roleSel" lay-filter="roleSel" disabled="true" lay-verify="required" lay-search="">
 						<option value="">请选择</option>
-						<option value="3">流动专干</option>
+						<option value="3" selected>流管专干</option>
 						<option value="2">包户干部</option>
 			        </select>
 				</div>
@@ -137,7 +137,7 @@
 					'password': $('#password').val(),
 					'username': $('#username').val(),
 					'telephone': $('#telephone').val(),
-					'roleId': roleId
+					'roleId': 3
 				},
 				success : function(result){
 					if(result.code == 1){

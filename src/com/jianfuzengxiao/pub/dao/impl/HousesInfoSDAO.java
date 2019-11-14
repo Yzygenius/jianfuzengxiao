@@ -290,8 +290,7 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 					params.add(entity.getPropertyCertificatesFile());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND community_id=?");
-					params.add(entity.getCommunityId());
+					sql.append(" AND community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityName())) {
 					sql.append(" AND community_name=?");

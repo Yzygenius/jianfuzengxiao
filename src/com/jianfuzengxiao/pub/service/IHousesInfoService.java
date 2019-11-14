@@ -32,4 +32,5 @@ public interface IHousesInfoService extends IService {
 	
 	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO housesInfo) throws SysException, AppException;
 
+	public List<HousesInfoMVO> queryGroupByCommunity(HousesInfoMVO housesInfo) throws SysException, AppException;
 }

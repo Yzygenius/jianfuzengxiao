@@ -17,10 +17,12 @@ import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
+import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IStatisticsService;
 
@@ -37,6 +39,9 @@ public class StatisticsSysController extends BaseController {
 	
 	@Autowired
 	private IAduitDistributionService aduitDistributionService;
+	
+	@Autowired
+	private IHousesInfoService husesInfoService;
 	
 	@RequestMapping(value="/toIndex")
 	public String toIndex(){
@@ -177,6 +182,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getHousesCount")
 	public String getHousesCount(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryHousesCount(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -199,6 +239,57 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getPersonnelCount")
 	public String getPersonnelCount(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					String communityId = "0";
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						communityId = StringUtils.join(list.toArray(),",");
+						
+						HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
+						housesInfoMVO.setCommunityId(communityId);
+						housesInfoMVO.setSts("A");
+						List<HousesInfoMVO> list2 = husesInfoService.queryList(housesInfoMVO);
+						if (list2.size() > 0) {
+							List<String> list3 = new ArrayList<String>();
+							for (HousesInfoMVO ad : list2) {
+								list3.add(ad.getHousesId());
+							}
+							String housesId = StringUtils.join(list3.toArray(),",");
+							entity.setHousesId(housesId);
+						}else {
+							entity.setHousesId("0");
+						}
+					}else{
+						entity.setHousesId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryPersonnelCount(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -221,6 +312,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getHousesType")
 	public String getHousesType(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryHousesType(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -243,6 +369,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getHousesRent")
 	public String getHousesRent(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryHousesRent(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -265,6 +426,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getHouseType")
 	public String getHouseType(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			List<Statistics> list = statisticsService.queryHouseType(entity);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
@@ -287,6 +483,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getPersonnelType")
 	public String getPersonnelType(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryPersonnelType(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -309,6 +540,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getPersonnelGender")
 	public String getPersonnelGender(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryPersonnelGender(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -331,6 +597,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getPersonnelAge")
 	public String getPersonnelAge(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			List<Statistics> list = statisticsService.queryPersonnelAge(entity);
 			if(list.size() > 0){
 				double count = 0;
@@ -362,6 +663,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getPersonnelNation")
 	public String getPersonnelNation(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			List<Statistics> list = statisticsService.queryPersonnelNation(entity);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
@@ -385,6 +721,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getReportInfo")
 	public String getReportInfo(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryReportInfo(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -408,6 +779,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getFangwuReportPass")
 	public String getFangwuReportPass(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryFangwuReportPass(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -431,6 +837,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getMendianReportPass")
 	public String getMendianReportPass(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity = statisticsService.queryMendianReportPass(entity);
 			return apiResult(RC.SUCCESS, entity);
 		} catch (Exception e) {
@@ -454,6 +895,41 @@ public class StatisticsSysController extends BaseController {
 	@RequestMapping(value="/getReportCurve")
 	public String getReportCurve(Statistics entity){
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			List<Statistics> list = statisticsService.queryReportCurve(entity);
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {

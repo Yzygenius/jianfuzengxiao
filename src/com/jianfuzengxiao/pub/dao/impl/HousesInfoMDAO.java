@@ -346,4 +346,35 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<HousesInfoMVO> queryGroupByCommunity(HousesInfoMVO entity) throws SysException {
+		StringBuilder sql = new StringBuilder();
+		sql.append(
+				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+		sql.append("FROM  HOUSES_INFO ");
+		sql.append("WHERE 1=1 ");
+		List<HousesInfoMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND houses_id in("+entity.getHousesId()+") ");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND sts=? ");
+					params.add(entity.getSts());
+				}
+				
+			}
+			sql.append(" group by community_id ");
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询HOUSES_INFO错误：{}", e.getMessage());
+			throw new SysException("查询HOUSES_INFO错误", "10000", e);
+		}
+		return resultList;
+	}
 }

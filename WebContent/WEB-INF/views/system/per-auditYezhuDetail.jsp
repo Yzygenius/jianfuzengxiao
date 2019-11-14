@@ -124,6 +124,12 @@
 		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
+		    	<td><span>房主：</span>${per.fangzhu }</td>
+		  	</tr>
+		  	<tr>
+		    	<td><span>产权人：</span>${per.propertyOwnerName }</td>
+		  	</tr>
+		  	<tr>
 		    	<td>房屋ID：${per.housesId }</td>
 		  	</tr>
 		  	<tr>

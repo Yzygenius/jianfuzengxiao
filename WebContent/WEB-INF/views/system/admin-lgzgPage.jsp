@@ -41,7 +41,7 @@
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn"
-				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 410)">
+				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddLgzg.html', 460, 410)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>

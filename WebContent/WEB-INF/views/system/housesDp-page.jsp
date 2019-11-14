@@ -90,6 +90,9 @@
 					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
 					</c:if>
+					<th>省</th>
+					<th>市</th>
+					<th>区/县</th>
 					<th>社区</th>
 					<th>小区/街道</th>
 					<th>门牌号</th>
@@ -115,6 +118,9 @@
 			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
 			</c:if>
 			<td row="ids" style="display: none;"></td>
+			<td row="prov"></td>
+			<td row="city"></td>
+			<td row="area"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
@@ -455,6 +461,9 @@
 							tr.find('[row=checkBoxId]').children().val(
 									data[i].housesId);
 							tr.find('[row=ids]').text(data[i].housesId);
+							tr.find('[row=prov]').text(data[i].provName);
+							tr.find('[row=city]').text(data[i].cityName);
+							tr.find('[row=area]').text(data[i].areaName);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
 							if(data[i].storeLocation == 1){

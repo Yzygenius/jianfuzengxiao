@@ -24,6 +24,7 @@ import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfo;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.IContractFileService;
@@ -79,6 +80,21 @@ public class PersonnelSysController extends BaseController {
 			}else if (entity.getGender().equals("2")) {
 				entity.setGender("女");
 			}
+			if (!StringUtils.equals(entity.getPerSort(), PersonnelInfo.per_sort_app)) {
+				PersonnelInfoMVO personnelInfoMVO = new PersonnelInfoMVO();
+				personnelInfoMVO.setHousesId(entity.getHousesId());
+				personnelInfoMVO.setPerSort(PersonnelInfo.per_sort_app);
+				personnelInfoMVO.setSts("A");
+				List<PersonnelInfoMVO> perlist = personnelInfoService.queryPerList(personnelInfoMVO);
+				if(perlist.size() > 0){
+					personnelInfoMVO = perlist.get(0);
+					entity.setFangzhu(personnelInfoMVO.getUsername());
+				}else {
+					entity.setFangzhu("");
+				}
+			}else {
+				entity.setFangzhu(entity.getUsername());
+			}
 			model.addAttribute("per", entity);
 		} catch (Exception e) {
 			return "/system/error";
@@ -100,6 +116,21 @@ public class PersonnelSysController extends BaseController {
 				entity.setGender("男");
 			}else if (entity.getGender().equals("2")) {
 				entity.setGender("女");
+			}
+			if (!StringUtils.equals(entity.getPerSort(), PersonnelInfo.per_sort_app)) {
+				PersonnelInfoMVO personnelInfoMVO = new PersonnelInfoMVO();
+				personnelInfoMVO.setHousesId(entity.getHousesId());
+				personnelInfoMVO.setPerSort(PersonnelInfo.per_sort_app);
+				personnelInfoMVO.setSts("A");
+				List<PersonnelInfoMVO> perlist = personnelInfoService.queryPerList(personnelInfoMVO);
+				if(perlist.size() > 0){
+					personnelInfoMVO = perlist.get(0);
+					entity.setFangzhu(personnelInfoMVO.getUsername());
+				}else {
+					entity.setFangzhu("");
+				}
+			}else {
+				entity.setFangzhu(entity.getUsername());
 			}
 			model.addAttribute("per", entity);
 		} catch (Exception e) {
