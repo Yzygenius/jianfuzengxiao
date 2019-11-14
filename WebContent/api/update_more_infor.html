@@ -155,7 +155,7 @@
     // 这样调用：housesId即为上个页面传回来的变量名
     var personnelId = getQueryString("personnelId");
     var liveTypeId = getQueryString("liveTypeId");
-    var liveTypeName = getQueryString("liveTypeName");
+    var liveTypeName =decodeURI(decodeURI(getQueryString("liveTypeName")));
     console.log(personnelId)
     console.log(liveTypeId)
     console.log(liveTypeName)
@@ -243,6 +243,7 @@
                 personnelId:personnelId
             },
             success:function(data){
+            	 layer.closeAll('loading');
                 var res=data.data
                 console.log(res)
                 if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
@@ -279,7 +280,7 @@
                 document.getElementById('measn12').value = res.certificatesOffice    //机关
                 document.getElementById('address').value = res.certificatesAddress   //证件地址
                 document.getElementById('telephone').value = res.telephone //telephone
-                layer.closeAll('loading');
+               
             },
             error:function(jqXHR){
             }

@@ -191,6 +191,7 @@ h6 {
 .personCenter .basic_information .kind .an_btn{
     position: absolute;
     right: 0;
+    top:-8px;
 }
 .personCenter .basic_information .kind .item-btn{
     width: 70px;

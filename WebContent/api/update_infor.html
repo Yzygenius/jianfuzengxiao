@@ -224,6 +224,7 @@
                 userId:sessionStorage.userId
             },
             success:function(data){
+            	layer.closeAll('loading');
                 var res=data.data
                 // if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
                 //     var leaseStartTime = res.leaseStartTime
@@ -256,7 +257,7 @@
                 document.getElementById('measn12').value = res.certificatesOffice    //机关
                 document.getElementById('address').value = res.certificatesAddress   //证件地址
                 document.getElementById('telephone').value = res.telephone //telephone
-                layer.closeAll('loading');
+                
             },
             error:function(jqXHR){
             }
