@@ -555,7 +555,7 @@
             		$('#f1').html(data.data.total)
 	            	$('#f2').html(data.data.waitaudit)
 	            	$('#f3').html(data.data.audit)
-	            	$('#f4').html((data.data.auditratio)*100+'%')
+	            	$('#f4').html(parseInt((data.data.auditratio)*100)+'%')
             	}
             	
 
@@ -586,7 +586,7 @@
             		$('#d1').html(data.data.total)
 	            	$('#d2').html(data.data.waitaudit)
 	            	$('#d3').html(data.data.audit)
-	            	$('#d4').html((data.data.auditratio)*100+'%')
+	            	$('#d4').html(parseInt((data.data.auditratio)*100)+'%')
             	}
             	
 
@@ -616,7 +616,7 @@
 					$('#z1').html(data.data.total)
 	            	$('#z2').html(data.data.waitaudit)
 	            	$('#z3').html(data.data.audit)
-	            	$('#z4').html((data.data.auditratio)*100+'%')
+	            	$('#z4').html(parseInt((data.data.auditratio)*100)+'%')
             	}
             	
 
@@ -646,7 +646,7 @@
             		$('#j1').html(data.data.total)
 	            	$('#j2').html(data.data.waitaudit)
 	            	$('#j3').html(data.data.audit)
-	            	$('#j4').html((data.data.auditratio)*100+'%')
+	            	$('#j4').html(parseInt((data.data.auditratio)*100)+'%')
             	}
             	
 
@@ -676,7 +676,7 @@
             		$('#y1').html(data.data.total)
 	            	$('#y2').html(data.data.waitaudit)
 	            	$('#y3').html(data.data.audit)
-	            	$('#y4').html((data.data.auditratio)*100+'%')
+	            	$('#y4').html(parseInt((data.data.auditratio)*100)+'%')
             	}
             	
 

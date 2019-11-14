@@ -563,39 +563,39 @@
             success:function(data){
                console.log(data.data)
                $('#total .details_num span').html(data.data.total)
-               $('#total .percent').html((data.data.totalPassRatio)*100 + '%')
+               $('#total .percent').html(parseInt((data.data.totalPassRatio)*100) + '%')
                $('#total .listNum0').html(data.data.totalPass+'条')
-               $('#total .no_pass').html((data.data.totalWaitRatio)*100 + '%')
+               $('#total .no_pass').html(parseInt((data.data.totalWaitRatio)*100) + '%')
                $('#total .listNum1').html(data.data.totalWait+'条')
 
                $('#house_fz .details_num span').html(data.data.fangzhunum)
-               $('#house_fz .percent').html(((data.data.fangzhuPassRatio)*100).toFixed(0) + '%')
+               $('#house_fz .percent').html(parseInt((data.data.fangzhuPassRatio)*100) + '%')
                $('#house_fz .listNum0').html(data.data.fangzhuPass+'条')
-               $('#house_fz .no_pass').html((data.data.fangzhuWaitRatio)*100 + '%')
+               $('#house_fz .no_pass').html(parseInt((data.data.fangzhuWaitRatio)*100) + '%')
                $('#house_fz .listNum1').html(data.data.fangzhuWait+'条')
 
                $('#house_zh .details_num span').html(data.data.zuhunum)
-               $('#house_zh .percent').html((data.data.zuhuPassRatio)*100 + '%')
+               $('#house_zh .percent').html(parseInt((data.data.zuhuPassRatio)*100) + '%')
                $('#house_zh .listNum0').html(data.data.zuhuPass+'条')
-               $('#house_zh .no_pass').html((data.data.zuhuWaitRatio)*100 + '%')
+               $('#house_zh .no_pass').html(parseInt((data.data.zuhuWaitRatio)*100) + '%')
                $('#house_zh .listNum1').html(data.data.zuhuWait+'条')
 
                $('#house_js .details_num span').html(data.data.jiashunum)
-               $('#house_js .percent').html((data.data.jiashuPassRatio)*100 + '%')
+               $('#house_js .percent').html(parseInt((data.data.jiashuPassRatio)*100) + '%')
                $('#house_js .listNum0').html(data.data.jiashuPass+'条')
-               $('#house_js .no_pass').html((data.data.jiashuWaitRatio)*100 + '%')
+               $('#house_js .no_pass').html(parseInt((data.data.jiashuWaitRatio)*100) + '%')
                $('#house_js .listNum1').html(data.data.jiashuWait+'条')
 
                $('#house_dz .details_num span').html(data.data.dianzhunum)
-               $('#house_dz .percent').html((data.data.dianzhuPassRatio)*100 + '%')
+               $('#house_dz .percent').html(parseInt((data.data.dianzhuPassRatio)*100) + '%')
                $('#house_dz .listNum0').html(data.data.dianzhuPass+'条')
-               $('#house_dz .no_pass').html((data.data.dianzhuWaitRatio)*100 + '%')
+               $('#house_dz .no_pass').html(parseInt((data.data.dianzhuWaitRatio)*100) + '%')
                $('#house_dz .listNum1').html(data.data.dianzhuWait+'条')
 
                $('#house_yz .details_num span').html(data.data.yuangongnum)
-               $('#house_yz .percent').html((data.data.yuangongPassRatio)*100 + '%')
+               $('#house_yz .percent').html(parseInt((data.data.yuangongPassRatio)*100) + '%')
                $('#house_yz .listNum0').html(data.data.yuangongPass+'条')
-               $('#house_yz .no_pass').html((data.data.yuangongWaitRatio)*100 + '%')
+               $('#house_yz .no_pass').html(parseInt((data.data.yuangongWaitRatio)*100) + '%')
                $('#house_yz .listNum1').html(data.data.yuangongWait+'条')
             },
             error:function(jqXHR){}
@@ -620,14 +620,14 @@
             success:function(data){
              // console.log(data.data)
              $('#fangzhu .owner span').html(data.data.fangzhuPass)
-             $('#fangzhu .zb').html((data.data.fangzhuRatio)*100+'%')
-             $('#fangzhu .pass').html((data.data.fangzhuPassRatio)*100+'%')
+             $('#fangzhu .zb').html(parseInt((data.data.fangzhuRatio)*100)+'%')
+             $('#fangzhu .pass').html(parseInt((data.data.fangzhuPassRatio)*100)+'%')
              $('#zuhu .owner span').html(data.data.zuhuPass)
-             $('#zuhu .zb').html((data.data.zuhuRatio)*100+'%')
-             $('#zuhu .pass').html((data.data.zuhuPassRatio)*100+'%')
+             $('#zuhu .zb').html(parseInt((data.data.zuhuRatio)*100)+'%')
+             $('#zuhu .pass').html(parseInt((data.data.zuhuPassRatio)*100)+'%')
              $('#jiashu .owner span').html(data.data.jiashuPass)
-             $('#jiashu .zb').html((data.data.jiashuRatio)*100+'%')
-             $('#jiashu .pass').html((data.data.jiashuPassRatio)*100+'%')
+             $('#jiashu .zb').html(parseInt((data.data.jiashuRatio)*100)+'%')
+             $('#jiashu .pass').html(parseInt((data.data.jiashuPassRatio)*100)+'%')
              var dom = document.getElementById("house");
                 var myChart = echarts.init(dom);
                 var app = {};
@@ -698,11 +698,11 @@
             success:function(data){
              // console.log(data.data)
              $('#d_zhu .listNum').html(data.data.dianzhuPass)
-             $('#d_zhu .percent').html((data.data.dianzhuRatio)*100 +'%')
-             $('#d_zhu .success_pass').html((data.data.dianzhuPassRatio)*100+'%')
+             $('#d_zhu .percent').html(parseInt((data.data.dianzhuRatio)*100) +'%')
+             $('#d_zhu .success_pass').html(parseInt((data.data.dianzhuPassRatio)*100)+'%')
              $('#y_gong .listNum').html(data.data.yuangongPass)
-             $('#y_gong .percent').html((data.data.yuangongRatio)*100+'%')
-             $('#y_gong .success_pass').html((data.data.yuangongPassRatio)*100)
+             $('#y_gong .percent').html(parseInt((data.data.yuangongRatio)*100)+'%')
+             $('#y_gong .success_pass').html(parseInt((data.data.yuangongPassRatio)*100)+'%')
              var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
                 var app = {};
