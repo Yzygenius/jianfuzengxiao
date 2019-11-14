@@ -51,7 +51,7 @@
 					<th>类别</th>
 					<th>社区名称</th>
 					<th>创建时间</th>
-					<th>更新时间</th>
+					<!-- <th>更新时间</th> -->
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -76,7 +76,7 @@
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
 			<td row="createTime"></td>
-			<td row="updateTime"></td>
+			<!-- <td row="updateTime"></td> -->
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/communityStreet/toCommunityStreetDetail.html', 1000, 620)">

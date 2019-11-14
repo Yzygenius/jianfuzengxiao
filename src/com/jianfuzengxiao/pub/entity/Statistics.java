@@ -28,6 +28,7 @@ public class Statistics extends Entity {
 	protected String liveTypeId;
 	
 	//房屋
+	protected String housesId;
 	protected String total;
 	protected String zjf;
 	protected String zjfratio;
@@ -98,6 +99,12 @@ public class Statistics extends Entity {
 	
 	
 	
+	public String getHousesId() {
+		return housesId;
+	}
+	public void setHousesId(String housesId) {
+		this.housesId = housesId;
+	}
 	public String getTotalWaitRatio() {
 		return totalWaitRatio;
 	}

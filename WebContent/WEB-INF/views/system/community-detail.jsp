@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css" media="all">
 <style>
 	.td-width{width: 200px;}
-	.layui-table tr{
+	.table-detail tr{
 		float:left;
 		width:50%;
 		color: #000;
@@ -24,11 +24,12 @@
 	.title{
 		font-weight: bold;
 		font-size: 16px !important;
+		line-height: 40px;
 	}
 </style>
 </head>
 <body>
-	<table class="layui-table" lay-size="lg" lay-skin="nob">
+	<table class="layui-table table-detail" lay-size="lg" lay-skin="nob">
 		
 		<tbody id="x-img">
 			<tr>
@@ -72,17 +73,134 @@
 		</tbody>
 	</table>
 	
+	<div class="x-body">
+		<xblock style="height: 38px;">
+		<%-- <c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+		<button class="layui-btn layui-btn-danger" onclick="delAll()">
+			<i class="layui-icon">&#xe640;</i>批量删除
+		</button>
+		<button class="layui-btn"
+			onclick="banner_add('新增','/jianfuzengxiao/system/communityStreet/toAddCommunityStreet.html', 780, 520)">
+			<i class="layui-icon">&#xe608;</i>添加
+		</button>
+		</c:if> --%>
+		<span class="title">小区/街道</span>
+		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<%-- <c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
+					</c:if> --%>
+					<th>排序</th>
+					<th>小区街道名称</th>
+					<th>类别</th>
+					<th>社区名称</th>
+					<th>创建时间</th>
+					<!-- <th>更新时间</th> -->
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="data-list">
+
+			</tbody>
+		</table>
+
+		<div id="page"></div>
+	</div>
+	
+	
+	
 	<script type="text/javascript" src="/jianfuzengxiao/statics/system/js/jquery.min.js"></script>
 	<script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var $, form, layer;
-		layui.use(['form', 'layer' ], function() {
+		var $, form, layer, laypage;
+		var communityId = ${community.communityId };
+		layui.use(['form', 'layer', 'laypage'], function() {
 			$ = layui.jquery//jquery
 			, form = layui.form
-			, layer = layui.layer;//弹出层
+			, layer = layui.layer//弹出层
+			, laypage = layui.laypage;//分页
 			
+			page()
 		})
+		
+		//分页
+		function page() {
+			$.ajax({
+				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				type : 'post',
+				dataType : "json",
+				data: {'communityId': communityId},
+				success : function(result) {
+					laypage.render({
+						elem : 'page',
+						count : result.data.total,
+						jump : function(obj) {
+							serchData(obj.curr)
+						}
+					})
+					if(result.data.total == 0){
+						//close loading
+						layer.closeAll('loading');
+						$('#page').hide();
+					}else{
+						$('#page').show();
+					}
+				}
+			})
+		}
+
+		function serchData(page) {
+
+			var data = {
+				'page' : page,
+				'communityId': communityId
+			};
+			$.ajax({
+				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				type : 'post',
+				dataType : "json",
+				data : data,
+				success : function(result) {
+					if (result.code == 1) {
+						$('#total').text('共有数据：' + result.data.total + '条');
+
+						$('#data-list').html('');
+						var data = result.data.rows;
+						for (var i = 0; i < data.length; i++) {
+							var tr = $('#clone-tr').find('tr').clone();
+							tr.find('[row=checkBoxId]').children().val(data[i].communityStreetId);
+							tr.find('[row=ids]').text(data[i].communityStreetId);
+							tr.find('[row=listOrder]').text(data[i].listOrder);
+							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
+							if(data[i].status == 1){
+								tr.find('[row=status]').text('小区');
+							}else if(data[i].status == 2){
+								tr.find('[row=status]').text('街道');
+							}else{
+								tr.find('[row=status]').text('其他');
+							}
+							
+							tr.find('[row=communityName]').text(data[i].communityName);
+							tr.find('[row=createTime]').text(data[i].createTime);
+							tr.find('[row=updateTime]').text(data[i].updateTime);
+
+							$('#data-list').append(tr);
+							//close loading
+							layer.closeAll('loading');
+						}
+					} else {
+						layer.msg("加载数据出错，请刷新页面", {icon : 2})
+					}
+
+				},
+				error : function(result) {
+					layer.msg("加载数据出错，请刷新页面", {icon : 2})
+				}
+			});
+		}
 		
 		function opneimg(obj){
         	//console.log(obj)
@@ -93,5 +211,38 @@
         }
 
 	</script>
+	
+	<table id="clone-tr" style="display: none;">
+		<tr>
+			<%-- <c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
+			</c:if> --%>
+			<td row="ids" style="display: none;"></td>
+			<td row="listOrder"></td>
+			<td row="communityStreetName">
+			<td row="status">
+			<td row="communityName">
+				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
+			</td>
+			<td row="createTime"></td>
+			<!-- <td row="updateTime"></td> -->
+			<td class="td-manage">
+				<button class="layui-btn layui-btn layui-btn-xs"
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/communityStreet/toCommunityStreetDetail.html', 1000, 620)">
+					<i class="layui-icon">&#xe615;</i>查看
+				</button>
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+				<button class="layui-btn layui-btn layui-btn-xs"
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/communityStreet/toUpdateCommunityStreet.html', 780, 520)">
+					<i class="layui-icon">&#xe642;</i>编辑
+				</button>
+				<button class="layui-btn-danger layui-btn layui-btn-xs"
+					onclick="banner_del(this)" href="javascript:;">
+					<i class="layui-icon">&#xe640;</i>删除
+				</button>
+				</c:if>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

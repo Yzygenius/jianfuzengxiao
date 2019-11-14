@@ -66,6 +66,7 @@ public class CommunityStreetInfoMDAO extends CommunityStreetInfoSDAO implements 
 					params.add("%" + entity.getCommunityName() + "%");
 				}
 			}
+			logger.info(sql.toString()+" -- "+params.toString());
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<CommunityStreetInfoMVO>(CommunityStreetInfoMVO.class));
 		} catch (DataAccessException e) {

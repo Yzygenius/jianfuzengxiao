@@ -280,14 +280,21 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append("count(personnel_id) as total,");
 		sql.append(
 				"ifnull(cast((sum(case when status !='1' then 1 else 0 end)/COUNT(personnel_id)) as decimal(18,2)),0) as auditratio  ");
-		sql.append("from personnel_info ");
-		sql.append("WHERE sts='A' and date(update_time) = curdate() ");
+		sql.append("from personnel_info a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("WHERE a.sts='A' and date(a.update_time) = curdate() ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
-					sql.append(" AND live_type_id in (" + entity.getLiveTypeId() + ")");
+					sql.append(" AND a.live_type_id in (" + entity.getLiveTypeId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -313,11 +320,25 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		sql.append("sum(case when houses_type_id ='2' then 1 else 0 end) as szf, ");
 		sql.append("sum(case when houses_type_id ='3' then 1 else 0 end) as sp, ");
 		sql.append("(select COUNT(*) ");
-		sql.append(
-				"from houses_info a where sts ='A' and a.houses_id  in (SELECT houses_id from personnel_info WHERE sts='A'))as used, ");
+		sql.append("from houses_info a where sts ='A' ");
+		if (StringUtils.isNotBlank(entity.getCommunityId())) {
+			sql.append(" AND community_id in("+entity.getCommunityId()+") ");
+		}
+		sql.append(" and a.houses_id in (SELECT houses_id from personnel_info WHERE sts='A' ");
+		if (StringUtils.isNotBlank(entity.getHousesId())) {
+			sql.append(" AND houses_id in("+entity.getHousesId()+") ");
+		}
+		sql.append(" ))as used, ");
 		sql.append("(select COUNT(*) ");
-		sql.append(
-				"from houses_info a where sts ='A' and a.houses_id not in (SELECT houses_id from personnel_info WHERE sts='A'))as idle ");
+		sql.append("from houses_info a where sts ='A' ");
+		if (StringUtils.isNotBlank(entity.getCommunityId())) {
+			sql.append(" AND community_id in("+entity.getCommunityId()+") ");
+		}
+		sql.append(" and a.houses_id not in (SELECT houses_id from personnel_info WHERE sts='A' ");
+		if (StringUtils.isNotBlank(entity.getHousesId())) {
+			sql.append(" AND houses_id in("+entity.getHousesId()+") ");
+		}
+		sql.append(" ))as idle ");
 		sql.append("from houses_info b where sts ='A' ");
 		List<Statistics> resultList = null;
 		List<Object> params = new ArrayList<Object>();
@@ -330,6 +351,12 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 				if (StringUtils.isNotBlank(entity.getStopTime())) {
 					sql.append(" AND b.create_time <= ? ");
 					params.add(entity.getStopTime());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND b.houses_id in("+entity.getHousesId()+") ");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in("+entity.getCommunityId()+") ");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
@@ -421,33 +448,33 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 	public Statistics queryReportInfo(Statistics entity) throws SysException, AppException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT count(personnel_id) total ");
-		sql.append(",sum(case when status in(2,3) then 1 else 0 end) as total_pass ");
-		sql.append(",sum(case when status in(1) then 1 else 0 end) as total_wait ");
+		sql.append(",ifnull(sum(case when status in(2,3) then 1 else 0 end),0) as total_pass ");
+		sql.append(",ifnull(sum(case when status in(1) then 1 else 0 end),0) as total_wait ");
 		sql.append(",ifnull(cast((sum(case when status in(2,3) then 1 else 0 end)/count(personnel_id)) as decimal(18,2)),0) as total_pass_ratio ");
 		sql.append(",ifnull(cast((sum(case when status in(1) then 1 else 0 end)/count(personnel_id)) as decimal(18,2)),0) as total_wait_ratio ");
 		sql.append(",sum(case when live_type_id in(1,3) then 1 else 0 end) as fangzhunum");
-		sql.append(",sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end) as fangzhu_pass");
-		sql.append(",sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end) as fangzhu_wait");
+		sql.append(",ifnull(sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end),0) as fangzhu_pass");
+		sql.append(",ifnull(sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end),0) as fangzhu_wait");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(1,3) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_pass_ratio");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(1,3) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(1,3) then 1 else 0 end)) as decimal(18,2)),0) as fangzhu_wait_ratio");
 		sql.append(",sum(case when live_type_id in(5) then 1 else 0 end) as zuhunum");
-		sql.append(",sum(case when live_type_id in(5) and status in(2,3) then 1 else 0 end) as zuhu_pass");
-		sql.append(",sum(case when live_type_id in(5) and status in(1) then 1 else 0 end) as zuhu_wait");
+		sql.append(",ifnull(sum(case when live_type_id in(5) and status in(2,3) then 1 else 0 end),0) as zuhu_pass");
+		sql.append(",ifnull(sum(case when live_type_id in(5) and status in(1) then 1 else 0 end),0) as zuhu_wait");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(5) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_pass_ratio");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(5) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(5) then 1 else 0 end)) as decimal(18,2)),0) as zuhu_wait_ratio");
 		sql.append(",sum(case when live_type_id in(7) then 1 else 0 end) as jiashunum");
-		sql.append(",sum(case when live_type_id in(7) and status in(2,3) then 1 else 0 end) as jiashu_pass");
-		sql.append(",sum(case when live_type_id in(7) and status in(1) then 1 else 0 end) as jiashu_wait");
+		sql.append(",ifnull(sum(case when live_type_id in(7) and status in(2,3) then 1 else 0 end),0) as jiashu_pass");
+		sql.append(",ifnull(sum(case when live_type_id in(7) and status in(1) then 1 else 0 end),0) as jiashu_wait");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(7) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_pass_ratio");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(7) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(7) then 1 else 0 end)) as decimal(18,2)),0) as jiashu_wait_ratio");
 		sql.append(",sum(case when live_type_id in(2,4) then 1 else 0 end) as dianzhunum");
-		sql.append(",sum(case when live_type_id in(2,4) and status in(2,3) then 1 else 0 end) as dianzhu_pass");
-		sql.append(",sum(case when live_type_id in(2,4) and status in(1) then 1 else 0 end) as dianzhu_wait");
+		sql.append(",ifnull(sum(case when live_type_id in(2,4) and status in(2,3) then 1 else 0 end),0) as dianzhu_pass");
+		sql.append(",ifnull(sum(case when live_type_id in(2,4) and status in(1) then 1 else 0 end),0) as dianzhu_wait");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_pass_ratio");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(2,4) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(2,4) then 1 else 0 end)) as decimal(18,2)),0) as dianzhu_wait_ratio");
 		sql.append(",sum(case when live_type_id in(6) then 1 else 0 end) as yuangongnum");
-		sql.append(",sum(case when live_type_id in(6) and status in(2,3) then 1 else 0 end) as yuangong_pass");
-		sql.append(",sum(case when live_type_id in(6) and status in(1) then 1 else 0 end) as yuangong_wait");
+		sql.append(",ifnull(sum(case when live_type_id in(6) and status in(2,3) then 1 else 0 end),0) as yuangong_pass");
+		sql.append(",ifnull(sum(case when live_type_id in(6) and status in(1) then 1 else 0 end),0) as yuangong_wait");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(2,3) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_pass_ratio");
 		sql.append(",ifnull(cast((sum(case when live_type_id in(6) and status in(1) then 1 else 0 end)/sum(case when live_type_id in(6) then 1 else 0 end)) as decimal(18,2)),0) as yuangong_wait_ratio  ");
 		sql.append("from personnel_info a  ");
@@ -640,6 +667,12 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 			if (entity != null) {
 				if (StringUtils.isNotBlank(entity.getStatus())) {
 					sql.append(" AND a.status in("+ entity.getStatus() +") ");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in("+ entity.getHousesId() +") ");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in("+ entity.getCommunityId() +") ");
 				}
 			}
 			logger.info(sql.toString() + " -- " + params.toString());
