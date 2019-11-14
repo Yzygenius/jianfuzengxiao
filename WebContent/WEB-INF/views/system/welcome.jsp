@@ -27,7 +27,7 @@
 				<div class="nav_img">
 					<img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息统计
 				</div>
-				<div class="nav_btn">
+				<div class="nav_btn" style="display: none">
 					<div class="so_far active" data-id="0">上线至今</div>
 					<div class="custom" id="daterange-btn" data-id="1">自定义</div>
 				</div>

@@ -161,7 +161,7 @@
                 <div class="lately blue" data-day="30">近30天</div>
                 <div class="lately orange" data-day="7">近7天</div>
                 <div class="lately green" data-day="180">近半年</div>
-                <div class="display" style="display: none"><span id="willDay">2019-07-24</span>至<span id="nowDay">2019-07-23</span></div>
+                <div class="display display0" style="display: none"><span id="willDay">2019-07-24</span>至<span id="nowDay">2019-07-23</span></div>
             </div>
             <div class="clear"></div>
             <div class="curve_details">
@@ -322,10 +322,10 @@
         <div class="curve">
             <div class="statis recently"><img src="/jianfuzengxiao/statics/system/images/Path_2.png" alt="">上报信息曲线</div>
             <div class="statime recently">
-                <div class="lately blue">近30天</div>
-                <div class="lately orange">近7天</div>
-                <div class="lately green">近半年</div>
-                <div class="display"><span>2019-07-23</span> 至 <span>2019-07-24</span></div>
+                <div class="lately blue" data-day="before_3">近30天</div>
+                <div class="lately orange" data-day="before_7">近7天</div>
+                <div class="lately green" data-day="before_180">近半年</div>
+                <div class="display display1" style="display: none"><span id="willDay1">2019-07-23</span> 至 <span id="nowDay1">2019-07-24</span></div>
             </div>
             <div class="clear"></div>
             <div class="curve_details">
@@ -478,64 +478,72 @@
          var month=today.getMonth()+1;   //获取当前月
          var date=today.getDate();            //获取当前日
          var nowDay = year+'-'+month+"-"+date;
-         console.log(nowDay)
          $('.statime .lately').click(function(){
              if($(this).attr("data-day") == "30"){
-                  var today=new Date();
-                  var day_30=today.setDate(today.getDate()-30);
-                  day_30=new Date(day_30);
-                  //获取当前年
-                  var year=day_30.getFullYear();
-                  //获取当前月
-                  var month=day_30.getMonth()+1;
-                  //获取当前日
-                  var date = day_30.getDate();
-                  day_30 = year+'-'+month+"-"+date;
-                  console.log(day_30)
+                  hq_date(30)
+                  var day = hq_date(30)
                   $('#nowDay').html(nowDay)
-                  $('#willDay').html(day_30)
-                  $('.display').fadeIn(0);
-
-                  curve(day_30,nowDay)
+                  $('#willDay').html(day)
+                  $('.display0').fadeIn(0);
+                  curve(day,nowDay)
 
              }else if($(this).attr("data-day") == "7"){
-                  var today=new Date();
-                  var day_7=today.setDate(today.getDate()-7);
-                  day_7=new Date(day_7);
-                  //获取当前年
-                  var year=day_7.getFullYear();
-                  //获取当前月
-                  var month=day_7.getMonth()+1;
-                  //获取当前日
-                  var date = day_7.getDate();
-                  day_7 = year+'-'+month+"-"+date;
-                  console.log(day_7)
+                  hq_date(7)
+                  var day = hq_date(7)
                   $('#nowDay').html(nowDay)
-                  $('#willDay').html(day_7)
-                  $('.display').fadeIn(0);
-
-                  curve(day_7,nowDay)
+                  $('#willDay').html(day)
+                  $('.display0').fadeIn(0);
+                  curve(day,nowDay)
 
 
              }else if($(this).attr("data-day") == "180"){
-                  var today=new Date();
-                  var day_180=today.setDate(today.getDate()-180);
-                  day_180=new Date(day_180);
-                  //获取当前年
-                  var year=day_180.getFullYear();
-                  //获取当前月
-                  var month=day_180.getMonth()+1;
-                  //获取当前日
-                  var date = day_180.getDate();
-                  day_180 = year+'-'+month+"-"+date;
-                  console.log(day_180)
-                  $('#nowDay').html(nowDay)
-                  $('#willDay').html(day_180)
-                  $('.display').fadeIn(0);
-                  curve(day_180,nowDay)
+                  hq_date(180)
+                  var day = hq_date(180)
+                 $('#nowDay').html(nowDay)
+                  $('#willDay').html(day)
+                  $('.display0').fadeIn(0);
+                  curve(day,nowDay)
+             }else if($(this).attr("data-day") == "before_3"){
+                  hq_date(30)
+                  var day = hq_date(30)
+                  $('#nowDay1').html(nowDay)
+                  $('#willDay1').html(day)
+                  $('.display1').fadeIn(0);
+                  curve(day,nowDay)
+             }else if($(this).attr("data-day") == "before_7"){
+                console.log('7')
+                  hq_date(7)
+                  var day = hq_date(7)
+                  $('#nowDay1').html(nowDay)
+                  $('#willDay1').html(day)
+                  $('.display1').fadeIn(0);
+                  curve(day,nowDay)
+             }else if($(this).attr("data-day") == "before_180"){
+                console.log('180')
+
+                  hq_date(180)
+                  var day = hq_date(180)
+                  $('#nowDay1').html(nowDay)
+                  $('#willDay1').html(day)
+                  $('.display1').fadeIn(0);
+                  curve(day,nowDay)
              }
          })
     })
+    // 获取时间函数
+    function hq_date(sky){
+        var today=new Date();
+        var day=today.setDate(today.getDate()-sky);
+        day=new Date(day);
+        //获取当前年
+        var year=day.getFullYear();
+        //获取当前月
+        var month=day.getMonth()+1;
+        //获取当前日
+        var date = day.getDate();
+        day = year+'-'+month+"-"+date;
+        return day;
+    }
     // 上报信息统计
     function inforStat(start,end){
          $.ajax({
@@ -553,7 +561,7 @@
                 stopTime:end
             },
             success:function(data){
-               // console.log(data.data)
+               console.log(data.data)
                $('#total .details_num span').html(data.data.total)
                $('#total .percent').html((data.data.totalPassRatio)*100 + '%')
                $('#total .listNum0').html(data.data.totalPass+'条')
@@ -561,7 +569,7 @@
                $('#total .listNum1').html(data.data.totalWait+'条')
 
                $('#house_fz .details_num span').html(data.data.fangzhunum)
-               $('#house_fz .percent').html((data.data.fangzhuPassRatio)*100 + '%')
+               $('#house_fz .percent').html(((data.data.fangzhuPassRatio)*100).toFixed(0) + '%')
                $('#house_fz .listNum0').html(data.data.fangzhuPass+'条')
                $('#house_fz .no_pass').html((data.data.fangzhuWaitRatio)*100 + '%')
                $('#house_fz .listNum1').html(data.data.fangzhuWait+'条')
@@ -761,16 +769,19 @@
                 stopTime:end
             },
             success:function(data){
-                console.log(data.data)
+                // console.log(data.data)
                 var date=[];
-                var count=[]
+                var count=[];
+                var count1=[];
                 for(var i=0;i<data.data.length;i++){
                    date.push(data.data[i].day+'日')
                    count.push(data.data[i].count)
+                   count1.push(parseInt(data.data[i].count))
                 }
                 // console.log(date)
                 // console.log(count)
                 tu1(date,count);
+                tu2(date,count1)
             },
             error:function(jqXHR){}
         });
@@ -940,118 +951,123 @@
             };
             echart.setOption(optioni);
      }
+    function tu2(date,count1){
+        var dom = document.getElementById("shape");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        // var dataAxis = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日','1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'];
+        var dataAxis =  date;
+        // var data = [10,4,3,2,1];
+        var data = count1;
+        // var yMax = 500;
+        var yMax= ""
+        var dataShadow = [];
 
-    var dom = document.getElementById("shape");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    var dataAxis = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日','1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日'];
-    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220,220, 182, 191, 234, 290, 330, 310, 123, 442, 321];
-    var yMax = 500;
-    var dataShadow = [];
+        for (var i = 0; i < data.length; i++) {
+            dataShadow.push(yMax);
+        }
 
-    for (var i = 0; i < data.length; i++) {
-        dataShadow.push(yMax);
-    }
-
-    option = {
-        tooltip : {
-            // trigger: 'axis',
-            trigger: 'item',           // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
-            showDelay: 20,             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
-            hideDelay: 100,            // 隐藏延迟，单位ms
-            transitionDuration : 0.4,  // 动画变换时间，单位s
-            backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
-            borderColor: '#333',       // 提示边框颜色
-            borderRadius: 4,           // 提示边框圆角，单位px，默认为4
-            borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
-            // 接受数组分别设定上右下左边距，同css
-            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
-                lineStyle : {          // 直线指示器样式设置
-                    color: '#48b',
-                    width: 2,
-                    type: 'solid'
-                },
-                shadowStyle : {                       // 阴影指示器样式设置
-                    width: 'auto',                   // 阴影大小
-                    color: 'rgba(150,150,150,0.3)'  // 阴影颜色
-                }
-            },
-            textStyle: {
-                color: '#fff'
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top:20,
-            containLabel: true
-        },
-        xAxis :{
-            type : 'category',
-            // boundaryGap : false,
-            data : dataAxis,
-
-        },
-        yAxis: {
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                textStyle: {
-                    color: '#333'
-                }
-            }
-        },
-        series: [
-            { // For shadow
-                type: 'bar',
-                itemStyle: {
-                    normal: {color: 'rgba(0,0,0,0)'}
-                },
-                barGap:'-100%',
-                barCategoryGap:'50%',
-                data: dataShadow,
-                animation: false
-            },
-            {
-                type: 'bar',
-                itemStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#73F3AE'},
-                                {offset: 0.5, color: '#64E1CC'},
-                                {offset: 1, color: '#4BC2FE'}
-                            ]
-                        )
+        option = {
+            tooltip : {
+                // trigger: 'axis',
+                trigger: 'item',           // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
+                showDelay: 20,             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+                hideDelay: 100,            // 隐藏延迟，单位ms
+                transitionDuration : 0.4,  // 动画变换时间，单位s
+                backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
+                borderColor: '#333',       // 提示边框颜色
+                borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+                borderWidth: 0,            // 提示边框线宽，单位px，默认为0（无边框）
+                padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+                // 接受数组分别设定上右下左边距，同css
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                    lineStyle : {          // 直线指示器样式设置
+                        color: '#48b',
+                        width: 2,
+                        type: 'solid'
                     },
-                    emphasis: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#4BC2FE'},
-                                {offset: 0.7, color: '#64E1CC'},
-                                {offset: 1, color: '#73F3AE'}
-                            ]
-                        )
+                    shadowStyle : {                       // 阴影指示器样式设置
+                        width: 'auto',                   // 阴影大小
+                        color: 'rgba(150,150,150,0.3)'  // 阴影颜色
                     }
                 },
-                data: data
-            }
-        ]
-    };
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top:20,
+                containLabel: true
+            },
+            xAxis :{
+                type : 'category',
+                // boundaryGap : false,
+                data : dataAxis,
 
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+            },
+            yAxis: {
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#333'
+                    }
+                }
+            },
+            series: [
+                { // For shadow
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {color: 'rgba(0,0,0,0)'}
+                    },
+                    barGap:'-100%',
+                    barCategoryGap:'50%',
+                    data: dataShadow,
+                    animation: false
+                },
+                {
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: '#73F3AE'},
+                                    {offset: 0.5, color: '#64E1CC'},
+                                    {offset: 1, color: '#4BC2FE'}
+                                ]
+                            )
+                        },
+                        emphasis: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: '#4BC2FE'},
+                                    {offset: 0.7, color: '#64E1CC'},
+                                    {offset: 1, color: '#73F3AE'}
+                                ]
+                            )
+                        }
+                    },
+                    data: data
+                }
+            ]
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
     }
+   
 </script>
 </body>
 </html>
