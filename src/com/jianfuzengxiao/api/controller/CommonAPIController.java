@@ -148,9 +148,8 @@ public class CommonAPIController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getCommunityList")
-	public String getCommunityList(){
+	public String getCommunityList(CommunityInfoMVO communityInfoMVO){
 		try {
-			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
 			communityInfoMVO.setSts("A");
 			List<CommunityInfoMVO> list = communityInfoService.queryList(new CommunityInfoMVO());
 			return apiResult(RC.SUCCESS, list);
