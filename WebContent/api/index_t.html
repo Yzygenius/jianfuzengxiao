@@ -79,65 +79,65 @@
             responseCallback("button js callback");
         });
     })
-    // $(document).ready(function(){
-    //      //do something
-    //      if(sessionStorage.token == undefined || !sessionStorage.token){
-    //         var data = {
-    //             'action': 'jsNGetToken',
-    //             'needCallBack': '',
-    //             'message': '',
-    //             "parameter":{
-    //                 "business":"业务"
-    //                 }
-    //         }
-    //         window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
-    //             var list=JSON.parse(resp)
-    //             if(list.code == 0){
-    //                 sessionStorage.token = list.data.token;
-    //                 sessionStorage.userId = list.data.userid;
-    //                 sessionStorage.opId = list.data.opid;
-    //                 // $('#h-title').html(sessionStorage.userId)
-    //                 load(1);
-    //             // document.getElementById("content").innerHTML = resp;
-    //             }
-    //         });
-    //         // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
-    //     }else{
-    //         load(1);
-    //     }
-    // })
-    // $('.foo-bor').click(function(){
-    //     if(sessionStorage.token == undefined || !sessionStorage.token){
-    //         var data = {
-    //             'action': 'jsNGetToken',
-    //             'needCallBack': '',
-    //             'message': '',
-    //             "parameter":{
-    //                 "business":"业务"
-    //                 }
-    //         }
-    //         window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
-    //             var list=JSON.parse(resp)
-    //             if(list.code == 0){
-    //                 sessionStorage.token = list.data.token;
-    //                 sessionStorage.userId = list.data.userid;
-    //                 sessionStorage.opId = list.data.opid;
-    //                 if(list.data.userid !== '' && list.data.userid !== undefined){
-    //                     load(2);
-    //                 }else{
-    //                     layer.msg('userId未找到')
-    //                 }
-    //                 // $('#content').html(list.data.userid)
-    //             // document.getElementById("content").innerHTML = resp;
-    //             }
-    //         });
-    //         // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
-    //     }else{
-    //         load(2);
-    //     }
-    // })
-    var userid =""
-    sessionStorage.userId = '3f46dc65c0494fd88c08b5f013d446f0'
+    $(document).ready(function(){
+          //do something
+          if(sessionStorage.token == undefined || !sessionStorage.token){
+             var data = {
+                 'action': 'jsNGetToken',
+                 'needCallBack': '',
+                 'message': '',
+                 "parameter":{
+                     "business":"业务"
+                     }
+             }
+             window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                 var list=JSON.parse(resp)
+                 if(list.code == 0){
+                     sessionStorage.token = list.data.token;
+                     sessionStorage.userId = list.data.userid;
+                     sessionStorage.opId = list.data.opid;
+                     // $('#h-title').html(sessionStorage.userId)
+                     load(1);
+                 // document.getElementById("content").innerHTML = resp;
+                 }
+             });
+             // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
+         }else{
+             load(1);
+         }
+     })
+     $('.foo-bor').click(function(){
+         if(sessionStorage.token == undefined || !sessionStorage.token){
+             var data = {
+                 'action': 'jsNGetToken',
+                 'needCallBack': '',
+                 'message': '',
+                 "parameter":{
+                     "business":"业务"
+                     }
+             }
+             window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                 var list=JSON.parse(resp)
+                 if(list.code == 0){
+                     sessionStorage.token = list.data.token;
+                     sessionStorage.userId = list.data.userid;
+                     sessionStorage.opId = list.data.opid;
+                     if(list.data.userid !== '' && list.data.userid !== undefined){
+                         load(2);
+                     }else{
+                         layer.msg('userId未找到')
+                     }
+                     // $('#content').html(list.data.userid)
+                 // document.getElementById("content").innerHTML = resp;
+                 }
+             });
+             // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
+         }else{
+             load(2);
+         }
+    })
+    //var userid =""
+    //sessionStorage.userId = '3f46dc65c0494fd88c08b5f013d446f0'
     function load(idcar) {
         layer.load(1);
         $.ajax({
@@ -149,7 +149,8 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-                userId:sessionStorage.userId
+                userId:sessionStorage.userId,
+                opId: sessionStorage.opId
             },
             success:function(data){
               var code = data.code;
