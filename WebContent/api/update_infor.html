@@ -239,8 +239,6 @@
                     var gender = '女'
                 }
                 console.log(res)
-                Positive('身份证',gender,res.birthDate,res.nationName+'族');
-                Back(res.certificatesStartTime,res.certificatesStopTime,res.leaseStartTime,res.leaseStopTime);
                 document.getElementById('namev').value = res.username
                 document.getElementById('select_1').value = res.leaseStartTime
                 document.getElementById('preview10').setAttribute('src',res.facePhoto)
@@ -257,6 +255,8 @@
                 document.getElementById('measn12').value = res.certificatesOffice    //机关
                 document.getElementById('address').value = res.certificatesAddress   //证件地址
                 document.getElementById('telephone').value = res.telephone //telephone
+                Positive('身份证',gender,res.birthDate,res.nationName+'族');
+                Back(res.certificatesStartTime,res.certificatesStopTime,res.leaseStartTime,res.leaseStopTime);
                 
             },
             error:function(jqXHR){

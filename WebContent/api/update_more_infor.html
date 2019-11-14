@@ -170,7 +170,6 @@
         layer.load(1);
         var weekdayArr2;
         var weekdayArr;
-
         $.ajax({
             //请求方式
             type:'POST',
@@ -243,9 +242,11 @@
                 personnelId:personnelId
             },
             success:function(data){
-            	 layer.closeAll('loading');
+                layer.closeAll('loading');
+            	// alert('ok')
                 var res=data.data
                 console.log(res)
+                // alert(res.username)
                 if (res.liveTypeId == 1 || res.liveTypeId ==2 || res.liveTypeId == 7){
                     var leaseStartTime = res.leaseStartTime
                     var leaseStopTime = ""
@@ -258,10 +259,9 @@
                  }else if(res.gender == 2){
                      var gender = '女'
                 }
+
                 sessionStorage.housesId = res.housesId
-                console.log(res)
-                Positive('身份证',gender,res.birthDate,res.nationName+'族');
-                Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
+                console.log(res)  
                 document.getElementById('select_1').value = leaseStartTime
                 document.getElementById('namev').value = res.username
                 document.getElementById('date3').value = leaseStartTime
@@ -280,7 +280,8 @@
                 document.getElementById('measn12').value = res.certificatesOffice    //机关
                 document.getElementById('address').value = res.certificatesAddress   //证件地址
                 document.getElementById('telephone').value = res.telephone //telephone
-               
+                Positive('身份证',gender,res.birthDate,res.nationName+'族');
+                Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
             },
             error:function(jqXHR){
             }
@@ -384,7 +385,7 @@
                             }, 1500);
                         }else{
                             layer.msg(data.msg);
-                        }
+                        } 
                     },
                     error:function(jqXHR){
                     }
