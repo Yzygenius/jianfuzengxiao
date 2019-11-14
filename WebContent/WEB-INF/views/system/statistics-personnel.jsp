@@ -560,9 +560,9 @@
 	            success:function(data){
 	            	// console.log(data)
 	            	$('#boyNum').html(data.data.nannum)
-	            	$('#boyPer').html(data.data.nanratio)
+	            	$('#boyPer').html(data.data.nanratio+'%')
 	            	$('#girlNum').html(data.data.nvnum)
-	            	$('#girlPer').html(data.data.nvratio)
+	            	$('#girlPer').html(data.data.nvratio+'%')
 	            	var dom0 = document.getElementById("container");
 					var myChart0 = echarts.init(dom0);
 					var app0 = {};
