@@ -542,7 +542,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-               live_type_id:"1,3"
+               liveTypeId:"1,3"
             },
             success:function(data){
             	console.log(data)
@@ -555,7 +555,7 @@
             		$('#f1').html(data.data.total)
 	            	$('#f2').html(data.data.waitaudit)
 	            	$('#f3').html(data.data.audit)
-	            	$('#f4').html(data.data.auditratio+'%')
+	            	$('#f4').html((data.data.auditratio)*100+'%')
             	}
             	
 
@@ -573,7 +573,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-               live_type_id:"2,4"
+               liveTypeId:"2,4"
             },
             success:function(data){
             	console.log(data)
@@ -586,7 +586,7 @@
             		$('#d1').html(data.data.total)
 	            	$('#d2').html(data.data.waitaudit)
 	            	$('#d3').html(data.data.audit)
-	            	$('#d4').html(data.data.auditratio+'%')
+	            	$('#d4').html((data.data.auditratio)*100+'%')
             	}
             	
 
@@ -603,7 +603,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-               live_type_id:"5"
+               liveTypeId:"5"
             },
             success:function(data){
             	console.log(data)
@@ -616,7 +616,7 @@
 					$('#z1').html(data.data.total)
 	            	$('#z2').html(data.data.waitaudit)
 	            	$('#z3').html(data.data.audit)
-	            	$('#z4').html(data.data.auditratio+'%')
+	            	$('#z4').html((data.data.auditratio)*100+'%')
             	}
             	
 
@@ -633,7 +633,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-               live_type_id:"7"
+               liveTypeId:"7"
             },
             success:function(data){
             	console.log(data)
@@ -646,7 +646,7 @@
             		$('#j1').html(data.data.total)
 	            	$('#j2').html(data.data.waitaudit)
 	            	$('#j3').html(data.data.audit)
-	            	$('#j4').html(data.data.auditratio+'%')
+	            	$('#j4').html((data.data.auditratio)*100+'%')
             	}
             	
 
@@ -663,7 +663,7 @@
             dataType:'json',
             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
             data:{
-               live_type_id:"6"
+               liveTypeId:"6"
             },
             success:function(data){
             	console.log(data)
@@ -676,7 +676,7 @@
             		$('#y1').html(data.data.total)
 	            	$('#y2').html(data.data.waitaudit)
 	            	$('#y3').html(data.data.audit)
-	            	$('#y4').html(data.data.auditratio+'%')
+	            	$('#y4').html((data.data.auditratio)*100+'%')
             	}
             	
 
