@@ -233,27 +233,27 @@ public class CommonAPIController extends BaseController {
 	    	HashMap<String, JSONObject> map = new HashMap<>();
 	    	for (AreaInfoMVO area2 : areaLv2List) {
 				JSONObject jsonObj2 = new JSONObject();
-				jsonObj2.put("code", area2.getAreaCode());
-				jsonObj2.put("name", area2.getAreaName());
+				jsonObj2.put("id", area2.getAreaCode());
+				jsonObj2.put("value", area2.getAreaName());
 	    		
 				JSONArray jsonArr3 = new JSONArray();
 	    		for (AreaInfoMVO area3 : areaLv3List) {
 					if (StringUtils.equals(area3.getParentCode(), area2.getAreaCode())) {
 						JSONObject jsonObj3 = new JSONObject();
-						jsonObj3.put("code", area3.getAreaCode());
-						jsonObj3.put("name", area3.getAreaName());
+						jsonObj3.put("id", area3.getAreaCode());
+						jsonObj3.put("value", area3.getAreaName());
 						jsonArr3.add(jsonObj3);
 					}
 				}
-	    		jsonObj2.put("childList", jsonArr3);
+	    		jsonObj2.put("childs", jsonArr3);
 	    		map.put(area2.getAreaCode(), jsonObj2);
 			}
 	    	
 	    	// 整理一二级上下级关系
 	    	for (AreaInfoMVO area1 : areaLv1List) {
 				JSONObject jsonObj1 = new JSONObject();
-				jsonObj1.put("code", area1.getAreaCode());
-				jsonObj1.put("name", area1.getAreaName());
+				jsonObj1.put("id", area1.getAreaCode());
+				jsonObj1.put("value", area1.getAreaName());
 	    		
 				JSONArray jsonArr2 = new JSONArray();
 	    		for (AreaInfoMVO area2 : areaLv2List) {
@@ -261,7 +261,7 @@ public class CommonAPIController extends BaseController {
 						jsonArr2.add(map.get(area2.getAreaCode()));
 					}
 				}
-	    		jsonObj1.put("childList", jsonArr2);
+	    		jsonObj1.put("childs", jsonArr2);
 	    		jsonArr.add(jsonObj1);
 			}
 	    	return apiResult(RC.SUCCESS_CODE, "获取地区列表成功", jsonArr);
