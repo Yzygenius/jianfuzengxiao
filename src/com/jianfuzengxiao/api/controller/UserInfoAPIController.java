@@ -66,8 +66,8 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/verify", method=RequestMethod.POST)
 	public String verify(UserInfoMVO model){
 		try{
-			System.out.println(model.getUserId());
-			System.out.println("opid---"+model.getOpId());
+			logger.info("userid---"+model.getUserId());
+			logger.info("opid---"+model.getOpId());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
