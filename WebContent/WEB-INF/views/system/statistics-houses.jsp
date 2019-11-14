@@ -393,11 +393,11 @@
 
 	            	}else{
 	            		$('#num1').html(data.data.zjf)
-	                    $('#percent1').html(data.data.zjfratio+'%')
+	                    $('#percent1').html(parseInt(data.data.zjfratio)+'%')
 	                    $('#num2').html(data.data.szf)
-	                    $('#percent2').html(data.data.szfratio+'%')
+	                    $('#percent2').html(parseInt(data.data.szfratio)+'%')
 	                    $('#num3').html(data.data.sp)
-	                    $('#percent3').html(data.data.spratio+'%')
+	                    $('#percent3').html(parseInt(data.data.spratio)+'%')
 	                    array.push({value:(data.data.zjfratio)*10, name:'自建房'},{value:(data.data.szfratio)*10, name:'商住房'},{value:(data.data.spratio)*10, name:'商铺'})
 	            	}
                     
@@ -484,9 +484,9 @@
 
             	}
             	$('#leaseNum1').html(data.data.rent)
-            	$('#leaseCent1').html((data.data.rentratio)*100+'%')
+            	$('#leaseCent1').html(parseInt((data.data.rentratio)*100)+'%')
             	$('#leaseNum2').html(data.data.waitrent)
-            	$('#leaseCent2').html(waitrentratio.toFixed(2)+'%')
+            	$('#leaseCent2').html(parseInt(waitrentratio)+'%')
             	var dom0 = document.getElementById("container");
 				var myChart0 = echarts.init(dom0);
 				var app0 = {};

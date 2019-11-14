@@ -479,15 +479,15 @@
 	            	// console.log(data.data)
 	            	$('#total').html('人员总量:'+data.data.total+'人')
 	            	$('#num1').html(data.data.fangzhunum)
-	            	$('#percent1').html(data.data.fangzhuratio+'%')
+	            	$('#percent1').html(parseInt(data.data.fangzhuratio)+'%')
 	            	$('#num2').html(data.data.dianzhunum)
-	            	$('#percent2').html(data.data.dianzhuratio+'%')
+	            	$('#percent2').html(parseInt(data.data.dianzhuratio)+'%')
 	            	$('#num3').html(data.data.zuhunum)
-	            	$('#percent3').html(data.data.zuhuratio+'%')
+	            	$('#percent3').html(parseInt(data.data.zuhuratio)+'%')
 	            	$('#num4').html(data.data.yuangongnum)
-	            	$('#percent4').html(data.data.yuangongratio+'%')
+	            	$('#percent4').html(parseInt(data.data.yuangongratio)+'%')
 	            	$('#num5').html(data.data.jiashunum)
-	            	$('#percent5').html(data.data.jiashuratio+'%')
+	            	$('#percent5').html(parseInt(data.data.jiashuratio)+'%')
 	            	var dom = document.getElementById("house");
 					var myChart = echarts.init(dom);
 					var app = {};
@@ -560,9 +560,9 @@
 	            success:function(data){
 	            	// console.log(data)
 	            	$('#boyNum').html(data.data.nannum)
-	            	$('#boyPer').html(data.data.nanratio+'%')
+	            	$('#boyPer').html(parseInt(data.data.nanratio)+'%')
 	            	$('#girlNum').html(data.data.nvnum)
-	            	$('#girlPer').html(data.data.nvratio+'%')
+	            	$('#girlPer').html(parseInt(data.data.nvratio)+'%')
 	            	var dom0 = document.getElementById("container");
 					var myChart0 = echarts.init(dom0);
 					var app0 = {};
@@ -700,7 +700,7 @@
 										'<div class="Proportion">'+
 											'<div>占比</div>'+
 											'<div>'+
-												'<span>'+((data.data[i].ratio)*100).toFixed(0)+'%</span>'+
+												'<span>'+parseInt((data.data[i].ratio)*100)+'%</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -794,7 +794,7 @@
 										'<div class="Proportion">'+
 											'<div>占比</div>'+
 											'<div>'+
-												'<span>'+((res[i].ratio)*100).toFixed(0)+'%</span>'+
+												'<span>'+parseInt((res[i].ratio)*100)+'%</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
