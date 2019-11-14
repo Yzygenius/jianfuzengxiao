@@ -65,9 +65,89 @@
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/layer/layer.js"></script>
+<script src="js/alrem.js" type="text/javascript" charset="utf-8"></script>     
 <script>
+    function setupWebViewJavascriptBridge(callback) {
+        if(window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            document.addEventListener(
+                'WebViewJavascriptBridgeReady',
+                function() {
+                    callback(WebViewJavascriptBridge)
+                },
+                false
+            );
+        }
+
+        if(window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback);
+        }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function() {
+            document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+    }
+
+    setupWebViewJavascriptBridge(function(bridge) {
+        //注册原生调起方法
+        //参数1： buttonjs 注册flag 供原生使用，要和原生统一
+        //参数2： data  是原生传给js 的数据
+        //参数3： responseCallback 是js 的回调，可以通过该方法给原生传数据
+        bridge.registerHandler("webReCall", function(data, responseCallback) {
+
+            document.getElementById("content").innerHTML = data;
+            responseCallback("button js callback");
+        });
+    })
+
+     //获取参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    var type = getQueryString("type");
+
     $(function () {
         layer.load(1);
+        if(type == 0){
+            // layer.msg('ok')
+            if(sessionStorage.token == undefined || !sessionStorage.token){
+                var data = {
+                    'action': 'jsNGetToken',
+                    'needCallBack': '',
+                    'message': '',
+                    "parameter":{
+                    "business":"业务"
+                }
+            }
+            window.WebViewJavascriptBridge.callHandler('nativeListener', data, function(resp) {
+                var list=JSON.parse(resp)
+                if(list.code == 0){
+                    sessionStorage.token = list.data.token;
+                    sessionStorage.userId = list.data.userid;
+                    sessionStorage.opId = list.data.opid;
+                    houseguanli()
+                }
+            });
+            // sessionStorage.userId = 'b5e7909152bc449b967789fc70ae4'
+        }
+           if($('.admin_list').hasClass('active')){
+              $('.admin_list').removeClass('active');
+              $('.newsCenter').addClass('active');
+              $('.administration').fadeOut(0);
+              $('.news').fadeIn(0);
+           }
+        }
+        houseguanli()
         // onload();
         $('.header .header_btn').click(function () {
             $('.cont_list').fadeOut(0)
@@ -85,54 +165,6 @@
             $(this).fadeOut(200);
             $('.pop_up').fadeOut(200);
         })
-        $.ajax({
-            //请求方式
-            type:'POST',
-            //发送请求的地址
-            url:'/jianfuzengxiao/api/personnel/getHousesPage.html',
-            //服务器返回的数据类型
-            dataType:'json',
-            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
-            data:{
-                userId:sessionStorage.userId,
-                // userId:'3f46dc65c0494fd88c08b5f013d446f0',
-                pageSize:10,
-                page:1
-            },
-            success:function(data){
-              layer.closeAll('loading')
-              console.log(data.data)
-              var html='';
-              var img='';
-              for(var i=0;i<data.data.rows.length;i++){
-                    // console.log(data.data[i].housesStatus)
-                    // 1为房屋2为门店
-                    if(data.data.rows[i].housesStatus ==1){
-                        img = '<img src="images/list/icon_01.png" alt="">'
-                        var title_time = '<div class="title_time">'+data.data.rows[i].storiedBuildingNumber+'-'+data.data.rows[i].unit+'-'+data.data.rows[i].houseNumber+'</div>'
-                    }else if(data.data.rows[i].housesStatus == 2){
-                        img = '<img src="images/list/icon_02.png" alt="">'
-                        var title_time = '<div class="title_time">'+data.data.rows[i].houseNumber+'号</div>'
-                    }
-                    html += '<a class="address" href="house_z.html?housesId='+data.data.rows[i].housesId+'">'+
-                                '<div class="cont">'+
-                                    '<div class="cont_title">'
-                                    +img+
-                                        '<div class="title_text">'+data.data.rows[i].communityStreetName+'</div>'
-                                        +title_time+
-                                    '</div>'+
-                                    '<div class="address">'+data.data.rows[i].provName+''+data.data.rows[i].cityName+''+data.data.rows[i].areaName+''+data.data.rows[i].communityName+''+data.data.rows[i].communityStreetName+''+data.data.rows[i].housesAddress+'</div>'+
-                                '</div>'+
-                                '</a>';
-                }
-                 $('.cont_list0').html(html);
-                
-                 $('.admin_list').attr('data-page',1);
-                 $('.admin_list').attr('data-total',data.data.total);
-            },
-            error:function(jqXHR){
-            }
-        });
          var totalHeight = $(document).height();//整个文档高度
          var seeHeight = $(window).height();//浏览器可视窗口高度
          var scrollTop = $(window).scrollTop();//浏览器可视窗口顶端距离网页顶端的高度（垂直偏移）
@@ -194,6 +226,56 @@
             }
         });
     })
+    // 获取社区列表
+    function houseguanli(){
+        $.ajax({
+        //请求方式
+        type:'POST',
+        //发送请求的地址
+        url:'/jianfuzengxiao/api/personnel/getHousesPage.html',
+        //服务器返回的数据类型
+        dataType:'json',
+        //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+        data:{
+            userId:sessionStorage.userId,
+            // userId:'3f46dc65c0494fd88c08b5f013d446f0',
+            pageSize:10,
+            page:1
+        },
+        success:function(data){
+          layer.closeAll('loading')
+          var html='';
+          var img='';
+          for(var i=0;i<data.data.rows.length;i++){
+                // console.log(data.data[i].housesStatus)
+                // 1为房屋2为门店
+                if(data.data.rows[i].housesStatus ==1){
+                    img = '<img src="images/list/icon_01.png" alt="">'
+                    var title_time = '<div class="title_time">'+data.data.rows[i].storiedBuildingNumber+'-'+data.data.rows[i].unit+'-'+data.data.rows[i].houseNumber+'</div>'
+                }else if(data.data.rows[i].housesStatus == 2){
+                    img = '<img src="images/list/icon_02.png" alt="">'
+                    var title_time = '<div class="title_time">'+data.data.rows[i].houseNumber+'号</div>'
+                }
+                html += '<a class="address" href="house_z.html?housesId='+data.data.rows[i].housesId+'">'+
+                            '<div class="cont">'+
+                                '<div class="cont_title">'
+                                +img+
+                                    '<div class="title_text">'+data.data.rows[i].communityStreetName+'</div>'
+                                    +title_time+
+                                '</div>'+
+                                '<div class="address">'+data.data.rows[i].provName+''+data.data.rows[i].cityName+''+data.data.rows[i].areaName+''+data.data.rows[i].communityName+''+data.data.rows[i].communityStreetName+''+data.data.rows[i].housesAddress+'</div>'+
+                            '</div>'+
+                            '</a>';
+            }
+             $('.cont_list0').html(html);
+            
+             $('.admin_list').attr('data-page',1);
+             $('.admin_list').attr('data-total',data.data.total);
+        },
+        error:function(jqXHR){
+        }
+        });
+        }
     function onlad(){
         // 消息中心新消息数量
         $.ajax({
