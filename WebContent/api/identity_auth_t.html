@@ -11,8 +11,9 @@
     <title>身份信息认证上报</title>
 </head>
 <body>
+<div id="titleaaa"></div>
     <div class="title">
-        <div class="live">
+        <div class="live" style="display:none;">
             <p class="live-time">居住时效</p>
             <div class="means-input">
                 <input type="text" placeholder="选择居住开始时间" class="measn" id="select_1" onfocus="this.blur()">
@@ -45,29 +46,29 @@
                 </div>
             </div>
         </div>
-        <div class="border"></div>
+        <!-- <div class="border"></div> -->
         <div class="means">
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">证件类型</div>
                 <div class="means-input">
                     <input type="text" placeholder="选择证件类型" class="measn" id="trigger1" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
                 <div class="means-input12">
                     <input type="text" placeholder="录入姓名" class="measn12" id="namev">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</div>
                 <div class="means-input">
                     <input type="text" placeholder="选择性别" class="measn" id="trigger2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
 
                 <div class="means-input">
@@ -76,7 +77,7 @@
                 </div>
 
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
 
                 <div class="means-input">
@@ -84,13 +85,13 @@
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">证件号码</div>
                 <div class="means-input12">
                     <input type="text" placeholder="录入证件号码" class="measn12" id="measnnum">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">证件时效</div>
 
                 <div class="means-input" id="select_date1" style="justify-content:space-between; padding: 0 1.5%;box-sizing: border-box;">
@@ -99,13 +100,13 @@
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">办证机关</div>
                 <div class="means-input12">
                     <input type="text" placeholder="录入办证机关" class="measn12" id="measn12">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist" style="display:none;">
                 <div class="means-name">证件地址</div>
                 <div class="means-input13">
                     <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address"></textarea>
@@ -129,7 +130,7 @@
     <script type="text/javascript" src="js/demo.js" charset="utf-8"></script>
     <script>
     $(function(){
-        $('#titleaaa').html('userId'+sessionStorage.userId);
+        $('#titleaaa').html('userId:'+sessionStorage.userId);
         /* 控制第一个选择器显示 */
         var select1 = $.selectDate("#select_1", {
             start: 1994,
@@ -223,7 +224,6 @@
                     'certificatesOffice' : document.getElementById('measn12').value,
                     'certificatesAddress' : document.getElementById('address').value,
                     'telephone' : document.getElementById('telephone').value,
-                    'leaseStartTime' : document.getElementById('select_1').value,
                 };
             infor.certificatesTypeId = contain(weekdayArr,infor.certificatesTypeName);
             infor.nationId = contain(weekdayArr2,infor.nationName);
@@ -231,6 +231,9 @@
             // if($('#preview10').attr('name') !== 'success'){
             //     infor.facePhoto = ''
             // }
+            if(!infor.facePhoto.match(base)){
+                infor.facePhoto = ''
+            }
             if(!infor.certificatesNegativePhoto.match(base)){
                 infor.certificatesNegativePhoto = ''
             }
@@ -243,35 +246,37 @@
                 infor.gender = 2
             }
             console.log(infor)
-            if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
-                layer.msg('请选择居住开始时间');
-            }else if(infor.facePhoto == undefined || infor.facePhoto == ''){
+            // if(infor.leaseStartTime  == undefined || infor.leaseStartTime == ''){
+            //     layer.msg('请选择居住开始时间');
+            // }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
+            //     layer.msg('请选择证件类型');
+            // }else if(infor.username  == undefined || infor.username == ''){
+            //     layer.msg('请填写姓名');
+            // }else if(infor.gender  == undefined || infor.gender == ''){
+            //     layer.msg('请选择性别');
+            // }else if(infor.birthDate  == undefined || infor.birthDate == ''){
+            //     layer.msg('请选择生日');
+            // }else if(infor.nationName  == undefined || infor.nationName == ''){
+            //     layer.msg('请选择民族');
+            // }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
+            //     layer.msg('请填写证件号码');
+            // }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
+            //     layer.msg('请选择证件有效期');
+            // }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
+            //     layer.msg('请填写办证机关');
+            // }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
+            //     layer.msg('请填写证件地址');
+            // }else if(infor.telephone  == undefined || infor.telephone == ''){
+            //     layer.msg('请填写联系电话');
+            // }else 
+            if(infor.facePhoto == undefined || infor.facePhoto == ''){
                 layer.msg('请添加人脸照片');
             }else if(infor.certificatesPositivePhoto == undefined || infor.certificatesPositivePhoto == '' || infor.certificatesNegativePhoto == undefined || infor.certificatesNegativePhoto == ''){
                 layer.msg('请添加完整的身份证照片');
-            }else if(infor.certificatesTypeName  == undefined || infor.certificatesTypeName == ''){
-                layer.msg('请选择证件类型');
-            }else if(infor.username  == undefined || infor.username == ''){
-                layer.msg('请填写姓名');
-            }else if(infor.gender  == undefined || infor.gender == ''){
-                layer.msg('请选择性别');
-            }else if(infor.birthDate  == undefined || infor.birthDate == ''){
-                layer.msg('请选择生日');
-            }else if(infor.nationName  == undefined || infor.nationName == ''){
-                layer.msg('请选择民族');
-            }else if(infor.certificatesNumber  == undefined || infor.certificatesNumber == ''){
-                layer.msg('请填写证件号码');
-            }else if(infor.certificatesStartTime  == undefined || infor.certificatesStartTime == '' || infor.certificatesStopTime  == undefined || infor.certificatesStopTime == ''){
-                layer.msg('请选择证件有效期');
-            }else if(infor.certificatesOffice  == undefined || infor.certificatesOffice == ''){
-                layer.msg('请填写办证机关');
-            }else if(infor.certificatesAddress  == undefined || infor.certificatesAddress == ''){
-                layer.msg('请填写证件地址');
-            }else if(infor.telephone  == undefined || infor.telephone == ''){
-                layer.msg('请填写联系电话');
             }else if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(infor.telephone))){
                 layer.msg('请填写正确的联系电话');
             }else{
+                // layer.msg(infor.birthDate)
                 layer.load(1);
                 $.ajax({
                     //发送请求的地址
@@ -287,15 +292,17 @@
                         layer.closeAll('loading');
                         if(data.code == 1){
                             // layer.msg('提交成功');
-                            setTimeout(function(){
-                                // location.replace("idenWait_y.html")
-                                window.location.href = "verify1_y.html"
-                            }, 1500);
+                            // setTimeout(function(){
+                            //     // location.replace("idenWait_y.html")
+                            //     window.location.href = "verify1_y.html"
+                            // }, 1500);
                         }else{
                             layer.msg(data.msg);
                         }
                     },
                     error:function(jqXHR){
+                        layer.closeAll('loading');
+                        layer.msg(jqXHR);
                     }
                 }); 
             }

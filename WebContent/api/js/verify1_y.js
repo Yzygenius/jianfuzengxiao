@@ -1,5 +1,5 @@
 //只有trigger 和 wheels 是必要参数  其他都是选填参数
-// 加载房屋街道
+// 加载房屋道路
     $.ajax({
     　　type: 'POST', 
         url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
@@ -57,14 +57,14 @@
         var arr = $('.mobileSelect')
         console.log(arr.length)
         for(var i = 0; i< arr.length;i++){
-            if(arr.eq(i).find('.title').html() === "请选择小区" || arr.eq(i).find('.title').html() === "请选择小区/街道"){
+            if(arr.eq(i).find('.title').html() === "请选择小区" || arr.eq(i).find('.title').html() === "请选择小区/道路"){
                 arr.eq(i).remove();
             }
         }
         if(housesStatus == 1){
             title = '请选择小区'
         }else if(housesStatus == 2){
-            title = '请选择小区/街道'
+            title = '请选择小区/道路'
         }
         $.ajax({
         　　type: 'POST', 
