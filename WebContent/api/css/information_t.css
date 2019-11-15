@@ -217,8 +217,8 @@ margin-top:40px;
     color:#0091FF;
     font-size: 10px;
     text-align:center;
-    position: relative;
-    top:-27px;
+    position: absolute;
+    bottom: 20px;
     display: block;
 }
 .faceword1{

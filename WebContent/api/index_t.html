@@ -42,6 +42,8 @@
 <!-- <script src="js/demo.js" type="text/javascript" charset="utf-8"></script> -->
 <script type="text/javascript">
     console.log(jQuery.base64.encode('eGlhb21hYnVoZWk='))
+    
+    sessionStorage.userId = '3f46dc65c0494fd88c08b5f013d446f0'
     function setupWebViewJavascriptBridge(callback) {
         if(window.WebViewJavascriptBridge) {
             callback(WebViewJavascriptBridge)
@@ -75,7 +77,7 @@
         //参数3： responseCallback 是js 的回调，可以通过该方法给原生传数据
         bridge.registerHandler("webReCall", function(data, responseCallback) {
 
-            document.getElementById("content").innerHTML = data;
+            // document.getElementById("content").innerHTML = data;
             responseCallback("button js callback");
         });
     })
@@ -135,10 +137,8 @@
          }else{
              load(2);
          }
-         // sessionStorage.userId = '3f46dc65c0494fd88c08b5f013d446f0'
     })
     //var userid =""
-    //sessionStorage.userId = '3f46dc65c0494fd88c08b5f013d446f0'
     function load(idcar) {
         layer.load(1);
         $.ajax({

@@ -61,7 +61,7 @@
       <!--新增关联人-->
       <div class="popup1">
             <div class="popcont1">
-                <div class="pop_title1">房屋（租户&家属）录入</div>
+                <div class="pop_title1">房屋（租户）录入</div>
                 <div class="pop_close1"><img src="images/list/close.png" alt=""></div>
                 <div class="pop_exhibition1"></div>
             </div>
@@ -181,7 +181,7 @@
                // alert(address)
               // 是房屋的时候上报家属或者租户点击跳页
               $('.pop_exhibition1').append('<a href="identity_zh_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="lessee">上报租户</div></a>')
-              $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
+              // $('.pop_exhibition1').append('<a href="identity_family_t.html?address='+encodeURI(encodeURI(address))+'&housesId='+housesId+'"><div class="family">上报家属</div></a>')
               if(data.data.houses.hStatus !== '2'){
                 $('.total_add').parent('a').fadeOut(0);
               }
