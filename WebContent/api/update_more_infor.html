@@ -288,13 +288,13 @@
         }); 
         // 点击提交
         $('#submit').click(function(){
-            if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
-                   leaseStartTime = document.getElementById('select_1').value
-                   leaseStopTime = ""
-            }else{
-                   leaseStartTime = document.getElementById('date3').value
-                   leaseStopTime = document.getElementById('date4').value
-            }
+            // if(liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7){
+            //        leaseStartTime = document.getElementById('select_1').value
+            //        leaseStopTime = ""
+            // }else{
+            //        leaseStartTime = document.getElementById('date3').value
+            //        leaseStopTime = document.getElementById('date4').value
+            // }
             var infor = {
                     'personnelId':personnelId,
                     'facePhoto' : $('#preview10').attr('src'),
@@ -311,8 +311,8 @@
                     'certificatesOffice' : document.getElementById('measn12').value,
                     'certificatesAddress' : document.getElementById('address').value,
                     'telephone' : document.getElementById('telephone').value,
-                    'leaseStartTime':leaseStartTime,
-                    'leaseStopTime':leaseStopTime,
+                    // 'leaseStartTime':leaseStartTime,
+                    // 'leaseStopTime':leaseStopTime,
                     'liveTypeId':liveTypeId,
                     'liveTypeName':liveTypeName
                 };
