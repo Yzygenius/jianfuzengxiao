@@ -16,6 +16,12 @@ public class Lgzg extends Entity {
     protected  String  updateTime;
     
     protected  String  sts;
+    
+	protected String gwhId;
+	
+	protected String gwhName;
+	
+	
 
     public String getLgzgId() {
         return lgzgId;
@@ -23,7 +29,20 @@ public class Lgzg extends Entity {
     public void setLgzgId(String  lgzgId) {
         this.lgzgId = lgzgId;
     }
-    public String getAdminId() {
+    
+    public String getGwhId() {
+		return gwhId;
+	}
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+	public String getGwhName() {
+		return gwhName;
+	}
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
+	}
+	public String getAdminId() {
         return adminId;
     }
     public void setAdminId(String  adminId) {

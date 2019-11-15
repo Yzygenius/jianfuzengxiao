@@ -94,7 +94,7 @@
 					<th>市</th>
 					<th>区/县</th>
 					<th>社区</th>
-					<th>小区/街道</th>
+					<th>小区/道路</th>
 					<th>门牌号</th>
 					<th>产权人</th>
 					<th>房主</th>
@@ -376,7 +376,7 @@
 				success : function(result){
 					if(result.code == 1){
 						$('#communityStreetSel').html('');
-						var str = '<option value="">请选择小区/街道</option>';
+						var str = '<option value="">请选择小区/道路</option>';
 						for(var i=0;i<result.data.length;i++){
 							str += '<option value="'+result.data[i].communityStreetId+'">'+result.data[i].communityStreetName+'</option>'
 						}

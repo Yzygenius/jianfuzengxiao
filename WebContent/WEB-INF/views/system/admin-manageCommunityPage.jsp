@@ -107,7 +107,7 @@
 			<td row="area"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesFwDetail.html')">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/community/toCommunityDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
@@ -469,7 +469,7 @@
 		}
 		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids2]').text();
-			x_admin_show(title, url + '?housesId=' + id, w, h);
+			x_admin_show(title, url + '?communityId=' + id, w, h);
 		}
 		
 		/*删除*/

@@ -27,6 +27,10 @@ public class CommunityInfo extends Entity {
 	protected String areaCode;
 	
 	protected String areaName;
+	
+	protected String gwhId;
+	
+	protected String gwhName;
 
 	public String getCommunityId() {
 		return communityId;
@@ -34,6 +38,22 @@ public class CommunityInfo extends Entity {
 
 	public void setCommunityId(String communityId) {
 		this.communityId = communityId;
+	}
+
+	public String getGwhId() {
+		return gwhId;
+	}
+
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+
+	public String getGwhName() {
+		return gwhName;
+	}
+
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
 	}
 
 	public String getCommunityName() {

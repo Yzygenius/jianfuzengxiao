@@ -13,10 +13,10 @@
 <link rel="stylesheet" type="text/css" href="/jianfuzengxiao/statics/system/css/daterangepicker.css" />
 <link rel="stylesheet" href="/jianfuzengxiao/statics/system/css/xadmin.css" media="all">
 <style type="text/css">
-	#page{
+	/* #page{
 		position: absolute;
     	bottom: 0;
-	}
+	} */
 </style>
 <title>首页</title>
 </head>
@@ -151,14 +151,15 @@
 						</tbody>
 					</table>
 			
-					<div id="page"></div>
+					
 				</div>
+				<div id="page"></div>
 			</div>
 			<div class="infor_right">
 				<div class="topHead">
 					<div class="headItem1">
 						<div class="newsInfo">
-							<span>最新上报信息</span>
+							<span>上报信息统计</span>
 							<p class="line"></p>
 						</div>
 						<div class="date">2019-11-8</div>
@@ -185,29 +186,6 @@
 							<p class="value" id="f4">100%</p>
 						</div>
 					</div>
-
-				</div>
-				<div class="report_list">
-					<p class="title">店主认证上报</p>
-					<div class="block">
-						<div class="item">
-							<p class="ques">总量</p>
-							<p class="value" id="d1">1231</p>
-						</div>
-						<div class="item">
-							<p class="ques">待处理</p>
-							<p class="value" id="d2">1231</p>
-						</div>
-						<div class="item">
-							<p class="ques">已处理</p>
-							<p class="value" id="d3">1231</p>
-						</div>
-						<div class="item">
-							<p class="ques">处理率</p>
-							<p class="value" id="d4">100%</p>
-						</div>
-					</div>
-
 				</div>
 				<div class="report_list">
 					<p class="title">租户认证上报</p>
@@ -232,6 +210,29 @@
 
 				</div>
 				<div class="report_list">
+					<p class="title">店主认证上报</p>
+					<div class="block">
+						<div class="item">
+							<p class="ques">总量</p>
+							<p class="value" id="d1">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">待处理</p>
+							<p class="value" id="d2">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">已处理</p>
+							<p class="value" id="d3">1231</p>
+						</div>
+						<div class="item">
+							<p class="ques">处理率</p>
+							<p class="value" id="d4">100%</p>
+						</div>
+					</div>
+
+				</div>
+				
+				<!-- <div class="report_list">
 					<p class="title">家属认证上报</p>
 					<div class="block">
 						<div class="item">
@@ -252,7 +253,7 @@
 						</div>
 					</div>
 
-				</div>
+				</div> -->
 				<div class="report_list">
 					<p class="title">员工认证上报</p>
 					<div class="block">
@@ -438,12 +439,13 @@
 					}else{
 						tr.find('[row=leaseAddress]').text('');
 					}
-					
-					if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
+					//居住时间
+					/* if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
 						tr.find('[row=leaseTime]').text('长期');
 					}else{
 						tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
-					}
+					} */
+					tr.find('[row=leaseTime]').text('长期');
 					if(data[i].status == 1){
 						tr.find('[row=status]').text('待审核');
 					}else if(data[i].status == 2){

@@ -15,9 +15,9 @@ public class CommunityInfo extends Entity {
     
     protected  String  sts;
     
-    protected  String  provCode;
-    
     protected  String  provName;
+    
+    protected  String  provCode;
     
     protected  String  cityCode;
     
@@ -26,6 +26,10 @@ public class CommunityInfo extends Entity {
     protected  String  areaCode;
     
     protected  String  areaName;
+    
+    protected  String  gwhId;
+    
+    protected  String  gwhName;
 
     public String getCommunityId() {
         return communityId;
@@ -63,17 +67,17 @@ public class CommunityInfo extends Entity {
     public void setSts(String  sts) {
         this.sts = sts;
     }
-    public String getProvCode() {
-        return provCode;
-    }
-    public void setProvCode(String  provCode) {
-        this.provCode = provCode;
-    }
     public String getProvName() {
         return provName;
     }
     public void setProvName(String  provName) {
         this.provName = provName;
+    }
+    public String getProvCode() {
+        return provCode;
+    }
+    public void setProvCode(String  provCode) {
+        this.provCode = provCode;
     }
     public String getCityCode() {
         return cityCode;
@@ -98,5 +102,17 @@ public class CommunityInfo extends Entity {
     }
     public void setAreaName(String  areaName) {
         this.areaName = areaName;
+    }
+    public String getGwhId() {
+        return gwhId;
+    }
+    public void setGwhId(String  gwhId) {
+        this.gwhId = gwhId;
+    }
+    public String getGwhName() {
+        return gwhName;
+    }
+    public void setGwhName(String  gwhName) {
+        this.gwhName = gwhName;
     }
 }

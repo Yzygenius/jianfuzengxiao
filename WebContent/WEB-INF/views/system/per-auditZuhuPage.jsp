@@ -269,11 +269,13 @@
 							tr.find('[row=nationName]').text(data[i].nationName);
 							tr.find('[row=telephone]').text(data[i].telephone);
 							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
-							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
+							//居住时间
+							/* if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
 								tr.find('[row=leaseTime]').text('长期');
 							}else{
 								tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
-							}
+							} */
+							tr.find('[row=leaseTime]').text('长期');
 							if(data[i].status == 1){
 								tr.find('[row=status]').text('待审核');
 							}else if(data[i].status == 2){

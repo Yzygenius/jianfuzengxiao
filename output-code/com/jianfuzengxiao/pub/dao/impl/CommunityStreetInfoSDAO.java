@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
 @Override
     public CommunityStreetInfoMVO insert(final CommunityStreetInfoMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO COMMUNITY_STREET_INFO (community_street_id,community_street_name,status,community_id,list_order,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO COMMUNITY_STREET_INFO (community_street_id,community_street_name,status,community_id,list_order,create_time,update_time,sts,gwh_id,gwh_name) ");
+        sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -38,6 +38,8 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
                 	ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
                 	return ps;
               }
             });
@@ -82,6 +84,14 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
                 sql.append("sts=?,");
                 params.add(entity.getSts());
             }
+            if (entity.getGwhId() != null) {
+                sql.append("gwh_id=?,");
+                params.add(entity.getGwhId());
+            }
+            if (entity.getGwhName() != null) {
+                sql.append("gwh_name=?,");
+                params.add(entity.getGwhName());
+            }
             sql.deleteCharAt(sql.length() - 1);
             sql.append(" WHERE community_street_id=?");
             params.add(entity.getCommunityStreetId());
@@ -111,7 +121,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
     @Override
     public List<CommunityStreetInfoMVO> queryList(CommunityStreetInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT community_street_id,community_street_name,status,community_id,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT community_street_id,community_street_name,status,community_id,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  COMMUNITY_STREET_INFO ");
         sql.append("WHERE 1=1 ");
         List<CommunityStreetInfoMVO> resultList = null;
@@ -150,6 +160,14 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
                 sql.append(" AND sts=?");
                 params.add(entity.getSts());
             }
+            	if (StringUtils.isNotBlank(entity.getGwhId())) {
+                sql.append(" AND gwh_id=?");
+                params.add(entity.getGwhId());
+            }
+            	if (StringUtils.isNotBlank(entity.getGwhName())) {
+                sql.append(" AND gwh_name=?");
+                params.add(entity.getGwhName());
+            }
         	   }
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(),
@@ -164,7 +182,7 @@ private static Logger logger = LoggerFactory.getLogger(CommunityStreetInfoSDAO.c
     @Override
     public CommunityStreetInfoMVO queryBean(CommunityStreetInfoMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT community_street_id,community_street_name,status,community_id,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT community_street_id,community_street_name,status,community_id,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  COMMUNITY_STREET_INFO ");
         sql.append("WHERE community_street_id=? ");
         List<Object> params = new ArrayList<Object>();

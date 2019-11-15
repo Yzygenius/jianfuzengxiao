@@ -23,8 +23,8 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	@Override
 	public AduitDistributionMVO insert(final AduitDistributionMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,community_id,houses_id,status,create_time,update_time,sts) ");
-		sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+		sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,community_id,houses_id,status,create_time,update_time,sts,gwh_id,gwh_name) ");
+		sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -39,6 +39,8 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 					ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
 					return ps;
 				}
 			});
@@ -84,6 +86,14 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 				sql.append("sts=?,");
 				params.add(entity.getSts());
 			}
+			if (entity.getGwhId() != null) {
+				sql.append("gwh_id=?,");
+				params.add(entity.getGwhId());
+			}
+			if (entity.getGwhName() != null) {
+				sql.append("gwh_name=?,");
+				params.add(entity.getGwhName());
+			}
 			sql.deleteCharAt(sql.length() - 1);
 			sql.append(" WHERE id=?");
 			params.add(entity.getId());
@@ -115,7 +125,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	public List<AduitDistributionMVO> queryList(AduitDistributionMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("FROM  ADUIT_DISTRIBUTION ");
 		sql.append("WHERE 1=1 ");
 		List<AduitDistributionMVO> resultList = null;
@@ -153,6 +163,14 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 					sql.append(" AND sts=?");
 					params.add(entity.getSts());
 				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND gwh_name=?");
+					params.add(entity.getGwhName());
+				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
@@ -168,7 +186,7 @@ public class AduitDistributionSDAO extends BaseDAO<AduitDistributionMVO> impleme
 	public AduitDistributionMVO queryBean(AduitDistributionMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("FROM  ADUIT_DISTRIBUTION ");
 		sql.append("WHERE id=? ");
 		List<Object> params = new ArrayList<Object>();

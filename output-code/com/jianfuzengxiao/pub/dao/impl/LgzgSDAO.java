@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
 @Override
     public LgzgMVO insert(final LgzgMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO LGZG (lgzg_id,admin_id,community_id,status,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO LGZG (lgzg_id,admin_id,community_id,status,create_time,update_time,sts,gwh_id,gwh_name) ");
+        sql.append("VALUES (?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -37,6 +37,8 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
                 	ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
                 	return ps;
               }
             });
@@ -77,6 +79,14 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
                 sql.append("sts=?,");
                 params.add(entity.getSts());
             }
+            if (entity.getGwhId() != null) {
+                sql.append("gwh_id=?,");
+                params.add(entity.getGwhId());
+            }
+            if (entity.getGwhName() != null) {
+                sql.append("gwh_name=?,");
+                params.add(entity.getGwhName());
+            }
             sql.deleteCharAt(sql.length() - 1);
             sql.append(" WHERE lgzg_id=?");
             params.add(entity.getLgzgId());
@@ -106,7 +116,7 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
     @Override
     public List<LgzgMVO> queryList(LgzgMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  LGZG ");
         sql.append("WHERE 1=1 ");
         List<LgzgMVO> resultList = null;
@@ -141,6 +151,14 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
                 sql.append(" AND sts=?");
                 params.add(entity.getSts());
             }
+            	if (StringUtils.isNotBlank(entity.getGwhId())) {
+                sql.append(" AND gwh_id=?");
+                params.add(entity.getGwhId());
+            }
+            	if (StringUtils.isNotBlank(entity.getGwhName())) {
+                sql.append(" AND gwh_name=?");
+                params.add(entity.getGwhName());
+            }
         	   }
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(),
@@ -155,7 +173,7 @@ private static Logger logger = LoggerFactory.getLogger(LgzgSDAO.class);
     @Override
     public LgzgMVO queryBean(LgzgMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  LGZG ");
         sql.append("WHERE lgzg_id=? ");
         List<Object> params = new ArrayList<Object>();

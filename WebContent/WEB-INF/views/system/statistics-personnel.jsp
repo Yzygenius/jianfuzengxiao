@@ -119,7 +119,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="house_infor">
+						<!-- <div class="house_infor">
 							<div class="owner">
 								<div class="owner_title">
 									<div class="circle" style="background:#de9f83;"></div>
@@ -135,7 +135,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="chart">
 						<div id="house" style="height: 100%"></div>
@@ -151,7 +151,7 @@
 					<div class="so_far" data-liveTypeId ="1,3" data-type ="person">房主</div>
 					<div class="so_far" data-liveTypeId ="2,4" data-type ="person">店主</div>
 					<div class="so_far" data-liveTypeId ="5" data-type ="person">租户</div>
-					<div class="so_far" data-liveTypeId ="7" data-type ="person">家属</div>
+					<!-- <div class="so_far" data-liveTypeId ="7" data-type ="person">家属</div> -->
 					<div class="so_far" data-liveTypeId ="6" data-type ="person">员工</div>
 				</div>
 				<div class="clear"></div>
@@ -206,7 +206,7 @@
 					<div class="so_far" data-liveTypeId ="1,3" data-type="age">房主</div>
 					<div class="so_far" data-liveTypeId ="2,4" data-type="age">店主</div>
 					<div class="so_far" data-liveTypeId ="5" data-type="age">租户</div>
-					<div class="so_far" data-liveTypeId ="7" data-type="age">家属</div>
+					<!-- <div class="so_far" data-liveTypeId ="7" data-type="age">家属</div> -->
 					<div class="so_far" data-liveTypeId ="6" data-type="age">员工</div>
 				</div>
 				<div class="clear"></div>
@@ -330,7 +330,7 @@
 					<div class="so_far" data-liveTypeId ="1,3" data-type ="nation">房主</div>
 					<div class="so_far" data-liveTypeId ="2,4" data-type ="nation">店主</div>
 					<div class="so_far" data-liveTypeId ="5" data-type ="nation">租户</div>
-					<div class="so_far" data-liveTypeId ="7" data-type ="nation">家属</div>
+					<!-- <div class="so_far" data-liveTypeId ="7" data-type ="nation">家属</div> -->
 					<div class="so_far" data-liveTypeId ="6" data-type ="nation">员工</div>
 				</div>
 				<div class="clear"></div>
@@ -599,8 +599,8 @@
 					                }
 					            },
 					            data:[
-					                {value:(data.data.nanratio)*10, name:'女生'},
-					                {value:(data.data.nvratio)*10, name:'男生'}
+					                {value:(data.data.nanratio)*10, name:'女性'},
+					                {value:(data.data.nvratio)*10, name:'男性'}
 					            ]
 					        }
 					    ]

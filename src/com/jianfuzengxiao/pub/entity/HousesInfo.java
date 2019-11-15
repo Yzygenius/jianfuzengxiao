@@ -79,6 +79,11 @@ public class HousesInfo extends Entity {
 	protected String updateTime;
 
 	protected String sts;
+	
+	protected String gwhId;
+	
+	protected String gwhName;
+	
 
 	public String getHousesId() {
 		return housesId;
@@ -86,6 +91,22 @@ public class HousesInfo extends Entity {
 
 	public void setHousesId(String housesId) {
 		this.housesId = housesId;
+	}
+
+	public String getGwhId() {
+		return gwhId;
+	}
+
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+
+	public String getGwhName() {
+		return gwhName;
+	}
+
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
 	}
 
 	public String getAdminId() {

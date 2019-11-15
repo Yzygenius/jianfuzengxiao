@@ -24,9 +24,9 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 	public HousesInfoMVO insert(final HousesInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO HOUSES_INFO (houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts) ");
+				"INSERT INTO HOUSES_INFO (houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,create_time,update_time,sts,gwh_id,gwh_name) ");
 		sql.append(
-				"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+				"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -66,6 +66,8 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 					ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
 					return ps;
 				}
 			});
@@ -211,6 +213,14 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 				sql.append("sts=?,");
 				params.add(entity.getSts());
 			}
+			if (entity.getGwhId() != null) {
+				sql.append("gwh_id=?,");
+				params.add(entity.getGwhId());
+			}
+			if (entity.getGwhName() != null) {
+				sql.append("gwh_name=?,");
+				params.add(entity.getGwhName());
+			}
 			sql.deleteCharAt(sql.length() - 1);
 			sql.append(" WHERE houses_id=?");
 			params.add(entity.getHousesId());
@@ -242,7 +252,7 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 	public List<HousesInfoMVO> queryList(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("FROM  HOUSES_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<HousesInfoMVO> resultList = null;
@@ -380,6 +390,14 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 					sql.append(" AND sts=?");
 					params.add(entity.getSts());
 				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND gwh_name=?");
+					params.add(entity.getGwhName());
+				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
@@ -395,7 +413,7 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 	public HousesInfoMVO queryBean(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("FROM  HOUSES_INFO ");
 		sql.append("WHERE houses_id=? ");
 		List<Object> params = new ArrayList<Object>();

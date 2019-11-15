@@ -47,7 +47,7 @@
 					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
 					</c:if>
 					<th>排序</th>
-					<th>小区街道名称</th>
+					<th>小区/道路</th>
 					<th>类别</th>
 					<th>社区名称</th>
 					<th>创建时间</th>
@@ -189,7 +189,7 @@
 							if(data[i].status == 1){
 								tr.find('[row=status]').text('小区');
 							}else if(data[i].status == 2){
-								tr.find('[row=status]').text('街道');
+								tr.find('[row=status]').text('道路');
 							}else{
 								tr.find('[row=status]').text('其他');
 							}

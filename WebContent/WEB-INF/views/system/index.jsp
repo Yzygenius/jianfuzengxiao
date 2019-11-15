@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>智慧平安社区社群服务系统</title>
+	<title>智慧平安社区社群服务</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -22,7 +22,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="/jianfuzengxiao/system.html">智慧平安社区社群服务	</a></div>
+        <div class="logo"><a href="/jianfuzengxiao/system.html">智慧平安社区社群服务</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -45,7 +45,7 @@
               <dd><a href="/jianfuzengxiao/system/logout.html">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="/jianfuzengxiao/home.html">前台首页</a></li>
+         <!--  <li class="layui-nav-item to-index"><a href="/jianfuzengxiao/home.html">前台首页</a></li> -->
         </ul>
         
     </div>
@@ -64,6 +64,12 @@
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
+                	<li>
+                        <a _href="/jianfuzengxiao/system/gwh/toGwhPage.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>管委会管理</cite>
+                        </a>
+                    </li >
                     <li>
                         <a _href="/jianfuzengxiao/system/community/toCommunityPage.html">
                             <i class="iconfont">&#xe6a7;</i>
@@ -147,7 +153,7 @@
                     <li>
                         <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>业主审核</cite>
+                            <cite>房主/店主审核</cite>
                         </a>
                     </li >
                     <li>
@@ -230,7 +236,7 @@
                     <li>
                         <a _href="/jianfuzengxiao/system/per/toAuditYezhuPage.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>业主审核</cite>
+                            <cite>房主/店主审核</cite>
                         </a>
                     </li >
                     <li>

@@ -141,7 +141,7 @@
 		  	<tr>
 		    	<td>居住类型：${per.liveTypeName }</td>
 		  	</tr>
-		  	<c:if test="${per.liveTypeId==1 || per.liveTypeId==2 || per.liveTypeId==7 }">
+		  	<%-- <c:if test="${per.liveTypeId==1 || per.liveTypeId==2 || per.liveTypeId==7 }">
 			  	<tr>
 			    	<td>居住时效：长期</td>
 			  	</tr>
@@ -150,13 +150,23 @@
 			  	<tr>
 			    	<td>居住时效：${per.leaseStartTime }&nbsp;-&nbsp;${per.leaseStopTime }</td>
 			  	</tr>
-		  	</c:if>
+		  	</c:if> --%>
+		  	<tr>
+		    	<td>居住时效：长期</td>
+		  	</tr>
 		  	<tr>
 		    	<td>居住开始时间：${per.leaseStartTime }</td>
 		  	</tr>
+		  	<c:if test="${per.leaseDay == '' || per.leaseDay == null}">
+		  	<tr>
+		    	<td>已居住时长：0天</td>
+		  	</tr>
+		  	</c:if>
+		  	<c:if test="${per.leaseDay != '' && per.leaseDay != null}">
 		  	<tr>
 		    	<td>已居住时长：${per.leaseDay }天</td>
 		  	</tr>
+		  	</c:if>
 		  	<tr>
 		    	<td>&nbsp;</td>
 		  	</tr>
@@ -248,6 +258,7 @@
 					});
 					return false;
 				}
+				layer.load(1)
 				var data = {
 					'personnelId': personnelId,
 					'status': data.field.audit,

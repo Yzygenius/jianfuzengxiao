@@ -19,6 +19,11 @@ public class CommunityStreetInfo extends Entity {
 	protected String updateTime;
 
 	protected String sts;
+	
+	protected String gwhId;
+	
+	protected String gwhName;
+	
 
 	public String getCommunityStreetId() {
 		return communityStreetId;
@@ -26,6 +31,22 @@ public class CommunityStreetInfo extends Entity {
 
 	public void setCommunityStreetId(String communityStreetId) {
 		this.communityStreetId = communityStreetId;
+	}
+
+	public String getGwhId() {
+		return gwhId;
+	}
+
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+
+	public String getGwhName() {
+		return gwhName;
+	}
+
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
 	}
 
 	public String getCommunityStreetName() {

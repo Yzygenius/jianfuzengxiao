@@ -21,7 +21,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public PageInfo queryPage(HousesInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
 		sql.append(",b.username,b.admin_telephone,b.admin_id ");
 		sql.append(",count(c.personnel_id)lease_count ");
 		sql.append(",ifnull(d.username,'')fangzhu ");
@@ -165,7 +165,14 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 					sql.append(" AND a.sts like ?");
 					params.add("%" + entity.getSts() + "%");
 				}
-				
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND a.gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND a.gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
+				}
 				if (StringUtils.isNotBlank(entity.getKeyword())) {
 					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? or d.usename like ?) ");
 					params.add("%" + entity.getKeyword() + "%");

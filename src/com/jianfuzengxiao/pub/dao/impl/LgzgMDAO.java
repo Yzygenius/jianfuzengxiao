@@ -23,7 +23,7 @@ public class LgzgMDAO extends LgzgSDAO implements ILgzgMDAO {
 	public PageInfo queryPage(LgzgMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"select lgzg_id,admin_id,community_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("from LGZG ");
 		sql.append("where 1=1");
 
@@ -58,6 +58,14 @@ public class LgzgMDAO extends LgzgSDAO implements ILgzgMDAO {
 					sql.append(" AND sts like ?");
 					params.add("%" + entity.getSts() + "%");
 				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
+				}
 			}
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<LgzgMVO>(LgzgMVO.class));
@@ -72,7 +80,7 @@ public class LgzgMDAO extends LgzgSDAO implements ILgzgMDAO {
 	@Override
 	public PageInfo queryManageCommunityPage(LgzgMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select a.lgzg_id,a.admin_id,a.community_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+		sql.append("select a.lgzg_id,a.admin_id,a.community_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
 		sql.append(",b.community_name,b.prov_name,b.city_name,b.area_name ");
 		sql.append("from LGZG a ");
 		sql.append("left join community_info b on(a.community_id=b.community_id) ");
@@ -108,6 +116,14 @@ public class LgzgMDAO extends LgzgSDAO implements ILgzgMDAO {
 					sql.append(" AND a.sts like ?");
 					params.add("%" + entity.getSts() + "%");
 				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND a.gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND a.gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
+				}
 			}
 			pageInfo = this.pagingQuery(sql.toString(), pageInfo, params,
 					new BeanPropertyRowMapper<LgzgMVO>(LgzgMVO.class));
@@ -123,7 +139,7 @@ public class LgzgMDAO extends LgzgSDAO implements ILgzgMDAO {
 	public PageInfo queryPageNotAdminCommuntiy(CommunityInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.community_id,a.community_name,a.list_order,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.prov_code,a.prov_name,a.city_code,a.city_name,a.area_code,a.area_name ");
+				"select a.community_id,a.community_name,a.list_order,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.prov_code,a.prov_name,a.city_code,a.city_name,a.area_code,a.area_name,a.gwh_id,a.gwh_name ");
 		//sql.append(",b.username,b.telephone admin_telephone ");
 		sql.append("from COMMUNITY_INFO a ");
 	//	sql.append("left join admin_info b on(a.admin_id=b.admin_id) ");

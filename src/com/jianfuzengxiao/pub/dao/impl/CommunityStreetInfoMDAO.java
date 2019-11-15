@@ -21,7 +21,7 @@ public class CommunityStreetInfoMDAO extends CommunityStreetInfoSDAO implements 
 	public PageInfo queryPage(CommunityStreetInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.community_street_id,a.community_street_name,a.status,a.community_id,a.list_order,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+				"select a.community_street_id,a.community_street_name,a.status,a.community_id,a.list_order,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
 		sql.append(",b.community_name ");
 		sql.append("from COMMUNITY_STREET_INFO a ");
 		sql.append("left join community_info b on(a.community_id=b.community_id) ");
@@ -64,6 +64,14 @@ public class CommunityStreetInfoMDAO extends CommunityStreetInfoSDAO implements 
 				if (StringUtils.isNotBlank(entity.getCommunityName())) {
 					sql.append(" AND b.community_name like ?");
 					params.add("%" + entity.getCommunityName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND a.gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND a.gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
 				}
 			}
 			logger.info(sql.toString()+" -- "+params.toString());

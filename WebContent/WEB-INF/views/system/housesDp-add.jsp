@@ -62,7 +62,7 @@
 			</div>
 			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
-				<span>小区/街道</span>
+				<span>小区/道路</span>
 				</label>
 				<div class="layui-input-inline">
 					<select id="communityStreetSel" name="communityStreetSel" lay-verify="required" lay-filter="communityStreetSel" lay-search="">

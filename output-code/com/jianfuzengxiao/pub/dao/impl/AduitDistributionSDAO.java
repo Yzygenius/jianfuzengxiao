@@ -21,8 +21,8 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
 @Override
     public AduitDistributionMVO insert(final AduitDistributionMVO entity) throws SysException { 
         final StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,houses_id,status,create_time,update_time,sts) ");
-        sql.append("VALUES (?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+        sql.append("INSERT INTO ADUIT_DISTRIBUTION (id,admin_id,community_id,houses_id,status,create_time,update_time,sts,gwh_id,gwh_name) ");
+        sql.append("VALUES (?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
         try {
             logger.info(sql.toString());
             jdbcTemplate.update(
@@ -32,11 +32,14 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
                 	java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString()); 
                 	ps.setString(++i, StringUtils.trimToNull(entity.getId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getAdminId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getCommunityId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getHousesId()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getStatus()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
                 	ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+                	ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
                 	return ps;
               }
             });
@@ -57,6 +60,10 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
                 sql.append("admin_id=?,");
                 params.add(entity.getAdminId());
             }
+            if (entity.getCommunityId() != null) {
+                sql.append("community_id=?,");
+                params.add(entity.getCommunityId());
+            }
             if (entity.getHousesId() != null) {
                 sql.append("houses_id=?,");
                 params.add(entity.getHousesId());
@@ -76,6 +83,14 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
             if (entity.getSts() != null) {
                 sql.append("sts=?,");
                 params.add(entity.getSts());
+            }
+            if (entity.getGwhId() != null) {
+                sql.append("gwh_id=?,");
+                params.add(entity.getGwhId());
+            }
+            if (entity.getGwhName() != null) {
+                sql.append("gwh_name=?,");
+                params.add(entity.getGwhName());
             }
             sql.deleteCharAt(sql.length() - 1);
             sql.append(" WHERE id=?");
@@ -106,7 +121,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
     @Override
     public List<AduitDistributionMVO> queryList(AduitDistributionMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT id,admin_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  ADUIT_DISTRIBUTION ");
         sql.append("WHERE 1=1 ");
         List<AduitDistributionMVO> resultList = null;
@@ -120,6 +135,10 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
             	if (StringUtils.isNotBlank(entity.getAdminId())) {
                 sql.append(" AND admin_id=?");
                 params.add(entity.getAdminId());
+            }
+            	if (StringUtils.isNotBlank(entity.getCommunityId())) {
+                sql.append(" AND community_id=?");
+                params.add(entity.getCommunityId());
             }
             	if (StringUtils.isNotBlank(entity.getHousesId())) {
                 sql.append(" AND houses_id=?");
@@ -141,6 +160,14 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
                 sql.append(" AND sts=?");
                 params.add(entity.getSts());
             }
+            	if (StringUtils.isNotBlank(entity.getGwhId())) {
+                sql.append(" AND gwh_id=?");
+                params.add(entity.getGwhId());
+            }
+            	if (StringUtils.isNotBlank(entity.getGwhName())) {
+                sql.append(" AND gwh_name=?");
+                params.add(entity.getGwhName());
+            }
         	   }
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(),
@@ -155,7 +182,7 @@ private static Logger logger = LoggerFactory.getLogger(AduitDistributionSDAO.cla
     @Override
     public AduitDistributionMVO queryBean(AduitDistributionMVO entity) throws SysException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT id,admin_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+        sql.append("SELECT id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
         sql.append("FROM  ADUIT_DISTRIBUTION ");
         sql.append("WHERE id=? ");
         List<Object> params = new ArrayList<Object>();

@@ -8,6 +8,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 public class PushUtils {
@@ -17,17 +18,25 @@ public class PushUtils {
 	public static void toPush(String userId, String opId, String title, String content, String type) throws ClientProtocolException, IOException{
 		String url = "http://property.pasq.com/message/platform?username=ptuser&password=5ca33811121e41e0b64fd017814af26a";
 		JSONObject json = new JSONObject();
-		json.put("type", 0);//消息类型 0通知 1消息 
+		json.put("type", 1);//消息类型 0通知 1消息 
 		json.put("userId", opId);
-		json.put("userType", 1);// 目标类型：1 业主 
+		json.put("userType", "1");// 目标类型：1 业主 
 		json.put("appKey", "pasq");//系统标识： pasq
+		
+		/*JSONObject json3 = new JSONObject();
+		json3.put("type", type);
+		json3.put("content", content);*/
 		
 		JSONObject json2 = new JSONObject();
 		json2.put("title", title);//消息头
 		json2.put("body", content);//消息体
 		json2.put("type", type);//消息业务类型
 		
+		//json2.put("extend", json3);
+		
 		json.put("body", json2);//消息内容
+		
+		
 		logger.info(json.toString());
 		logger.info(HttpClientUtlis.doPost(url, json).toJSONString());
 	}

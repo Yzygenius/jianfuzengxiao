@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <!-- 房屋家属 -->
-                <div class="details" id="house_js">
+                <!-- <div class="details" id="house_js">
                     <div class="details_title">上报房屋家属</div>
                     <div class="details_num"><span>3432424</span>条</div>
                     <div class="Situation">
@@ -122,7 +122,7 @@
                             <div class="listNum1">3234424</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- 店主 -->
                 <div class="details" id="house_dz">
                     <div class="details_title">上报店主认证</div>
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="house_infor" id="jiashu">
+                        <!-- <div class="house_infor" id="jiashu">
                             <div class="owner">
                                 <div class="owner_title">
                                     <div class="circle" style="background: rgb(255,97,96);"></div>
@@ -238,7 +238,7 @@
                                     <div><span class="pass">30%</span></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="house_infor" id="zuhu">
                             <div class="owner">
                                 <div class="owner_title">

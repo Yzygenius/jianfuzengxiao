@@ -161,7 +161,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 				type = "z0104";
 			}
 			model.setLeaseMode(PersonnelInfo.lease_mode_changqi);
-			model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
+			//model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
 		}else {//否则为租赁房产
 			//如果为房屋
 			throwAppException(StringUtils.isBlank(model.getLeaseContract()), RC.HOUSES_INFO_PARAM_CONTRACT_FILE_NULL); 
@@ -388,8 +388,6 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		userInfoMVO.setUserId(personnelInfo.getUserId());
 		userInfoMVO = userInfoMDAO.queryBean(userInfoMVO);
 		
-		personnelInfoMDAO.update(entity);
-		
 		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
 		housesInfoMVO.setHousesId(per.getHousesId());
 		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);
@@ -463,6 +461,8 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		
 		if (StringUtils.equals(entity.getStatus(), PersonnelInfo.status_passed)) {
+			//添加居住时间
+			entity.setLeaseStartTime(DateUtil.nowTime());
 			//如果是更新上报
 			if (per.getUpdateStatus().equals(PersonnelInfo.update_status_again)) {
 				type = "z0302";
@@ -523,7 +523,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 				logger.info("发送通知错误", e);
 			}
 		}
-		return 1;
+		return personnelInfoMDAO.update(entity);
 	}
 
 	@Override

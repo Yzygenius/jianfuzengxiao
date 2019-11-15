@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.common.SessionAdmin;
@@ -198,6 +199,8 @@ public class PersonnelSysController extends BaseController {
 			for(int i=0; i<list.size(); i++){
 				PersonnelInfoMVO per = new PersonnelInfoMVO();
 				per.setPersonnelId(list.get(i));
+				//居住截止时间
+				per.setLeaseStopTime(DateUtil.nowTime());
 				per.setSts("P");
 				personnelInfoService.update(per);
 			}

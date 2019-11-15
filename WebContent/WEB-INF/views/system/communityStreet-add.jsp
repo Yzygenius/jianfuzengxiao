@@ -67,7 +67,7 @@
 					<select id="selectType" name="selectType" lay-verify="required" lay-filter="selectType" lay-search="">
 						<option value="">请选择</option>
 			          	<option value="1">小区</option>
-			          	<option value="2">街道</option>
+			          	<option value="2">道路</option>
 			        </select>
 				</div>
 				<div class="layui-form-mid layui-word-aux">

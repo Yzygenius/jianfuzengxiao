@@ -19,6 +19,10 @@ public class AduitDistribution extends Entity {
 	protected String updateTime;
 
 	protected String sts;
+	
+	protected String gwhId;
+	
+	protected String gwhName;
 
 	public String getId() {
 		return id;
@@ -26,6 +30,22 @@ public class AduitDistribution extends Entity {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getGwhId() {
+		return gwhId;
+	}
+
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+
+	public String getGwhName() {
+		return gwhName;
+	}
+
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
 	}
 
 	public String getCommunityId() {

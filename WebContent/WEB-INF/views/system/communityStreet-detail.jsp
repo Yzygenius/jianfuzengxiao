@@ -32,7 +32,7 @@
 		
 		<tbody id="x-img">
 			<tr>
-		    	<td class="title">小区/街道信息</td>
+		    	<td class="title">小区/道路信息</td>
 		  	</tr>
 		  	<tr>
 		    	<td>&nbsp;</td>
@@ -50,7 +50,7 @@
 		    	<td><span>社区：</span>${communityStreet.communityName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>小区/街道：</span>${communityStreet.communityStreetName }</td>
+		    	<td><span>小区/道路：</span>${communityStreet.communityStreetName }</td>
 		  	</tr>
 		  	<tr>
 		    	<td><span>排序：</span>${communityStreet.listOrder }</td>

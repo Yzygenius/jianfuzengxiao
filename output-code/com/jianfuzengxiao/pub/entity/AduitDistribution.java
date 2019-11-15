@@ -7,6 +7,8 @@ public class AduitDistribution extends Entity {
     
     protected  String  adminId;
     
+    protected  String  communityId;
+    
     protected  String  housesId;
     
     protected  String  status;
@@ -16,6 +18,10 @@ public class AduitDistribution extends Entity {
     protected  String  updateTime;
     
     protected  String  sts;
+    
+    protected  String  gwhId;
+    
+    protected  String  gwhName;
 
     public String getId() {
         return id;
@@ -28,6 +34,12 @@ public class AduitDistribution extends Entity {
     }
     public void setAdminId(String  adminId) {
         this.adminId = adminId;
+    }
+    public String getCommunityId() {
+        return communityId;
+    }
+    public void setCommunityId(String  communityId) {
+        this.communityId = communityId;
     }
     public String getHousesId() {
         return housesId;
@@ -58,5 +70,17 @@ public class AduitDistribution extends Entity {
     }
     public void setSts(String  sts) {
         this.sts = sts;
+    }
+    public String getGwhId() {
+        return gwhId;
+    }
+    public void setGwhId(String  gwhId) {
+        this.gwhId = gwhId;
+    }
+    public String getGwhName() {
+        return gwhName;
+    }
+    public void setGwhName(String  gwhName) {
+        this.gwhName = gwhName;
     }
 }

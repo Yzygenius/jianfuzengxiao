@@ -55,7 +55,7 @@
 		    	<td><span>社区：</span>${houses.communityName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>小区：</span>${houses.communityStreetName }</td>
+		    	<td><span>小区/道路：</span>${houses.communityStreetName }</td>
 		  	</tr>
 		  	<c:if test="${houses.housesStatus == 1}">
 			  	<tr>

@@ -22,7 +22,7 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 	public PageInfo queryPage(AduitDistributionMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"select id,admin_id,community_id,houses_id,status,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
 		sql.append("from ADUIT_DISTRIBUTION ");
 		sql.append("where 1=1");
 
@@ -56,6 +56,14 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 				if (StringUtils.isNotBlank(entity.getSts())) {
 					sql.append(" AND sts like ?");
 					params.add("%" + entity.getSts() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND gwh_id = ?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
 				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());

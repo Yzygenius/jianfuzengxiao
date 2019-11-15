@@ -23,8 +23,8 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	@Override
 	public CommunityInfoMVO insert(final CommunityInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO COMMUNITY_INFO (community_id,community_name,list_order,create_time,update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name) ");
-		sql.append("VALUES (?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?)");
+		sql.append("INSERT INTO COMMUNITY_INFO (community_id,community_name,list_order,create_time,update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name,gwh_id,gwh_name) ");
+		sql.append("VALUES (?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -43,6 +43,8 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					ps.setString(++i, StringUtils.trimToNull(entity.getCityName()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getAreaCode()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getAreaName()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhName()));
 					return ps;
 				}
 			});
@@ -104,6 +106,14 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 				sql.append("area_name=?,");
 				params.add(entity.getAreaName());
 			}
+			if (entity.getGwhId() != null) {
+				sql.append("gwh_id=?,");
+				params.add(entity.getGwhId());
+			}
+			if (entity.getGwhName() != null) {
+				sql.append("gwh_name=?,");
+				params.add(entity.getGwhName());
+			}
 			sql.deleteCharAt(sql.length() - 1);
 			sql.append(" WHERE community_id=?");
 			params.add(entity.getCommunityId());
@@ -135,7 +145,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	public List<CommunityInfoMVO> queryList(CommunityInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
+				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name,gwh_id,gwh_name ");
 		sql.append("FROM  COMMUNITY_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<CommunityInfoMVO> resultList = null;
@@ -177,6 +187,14 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 					sql.append(" AND area_code=?");
 					params.add(entity.getAreaCode());
 				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND gwh_name=?");
+					params.add(entity.getGwhName());
+				}
 			}
 			logger.info(sql.toString() + "--" + params.toString());
 			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
@@ -192,7 +210,7 @@ public class CommunityInfoSDAO extends BaseDAO<CommunityInfoMVO> implements ICom
 	public CommunityInfoMVO queryBean(CommunityInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name ");
+				"SELECT community_id,community_name,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,prov_code,prov_name,city_code,city_name,area_code,area_name,gwh_id,gwh_name ");
 		sql.append("FROM  COMMUNITY_INFO ");
 		sql.append("WHERE community_id=? ");
 		List<Object> params = new ArrayList<Object>();

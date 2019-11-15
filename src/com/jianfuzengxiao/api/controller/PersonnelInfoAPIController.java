@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bamboo.framework.common.util.DateUtil;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
@@ -264,6 +265,8 @@ public class PersonnelInfoAPIController extends BaseController {
 		try {
 			PersonnelInfoMVO personnelInfo = new PersonnelInfoMVO();
 			personnelInfo.setPersonnelId(model.getPersonnelId());
+			//居住截止时间
+			personnelInfo.setLeaseStopTime(DateUtil.nowTime());
 			personnelInfo.setSts("P");
 			personnelInfoService.update(personnelInfo);
 			return apiResult(RC.SUCCESS);
