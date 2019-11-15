@@ -66,8 +66,8 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/verify", method=RequestMethod.POST)
 	public String verify(UserInfoMVO model){
 		try{
-			logger.info("userid---"+model.getUserId());
-			logger.info("opid---"+model.getOpId());
+			logger.info("userId---"+model.getUserId());
+			logger.info("opId---"+model.getOpId());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
@@ -99,8 +99,9 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public String addUser(UserInfoMVO model){
 		try {
-			//System.out.println(model.getUserId());
-			//System.out.println(model.toString());
+			System.out.println("userId---"+model.getUserId());
+			System.out.println("opId---"+model.getOpId());
+			System.out.println(model.toString());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
