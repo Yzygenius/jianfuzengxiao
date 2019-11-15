@@ -291,11 +291,11 @@
                     	console.log(data)
                         layer.closeAll('loading');
                         if(data.code == 1){
-                            // layer.msg('提交成功');
-                            // setTimeout(function(){
-                            //     // location.replace("idenWait_y.html")
-                            //     window.location.href = "verify1_y.html"
-                            // }, 1500);
+                            layer.msg('提交成功');
+                            setTimeout(function(){
+                                // location.replace("idenWait_y.html")
+                                window.location.href = "verify1_y.html"
+                            }, 1500);
                         }else{
                             layer.msg(data.msg);
                         }
