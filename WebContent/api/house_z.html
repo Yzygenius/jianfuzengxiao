@@ -200,11 +200,13 @@
                 }
                 if(data.data.houses.housesStatus==1){  //房屋
                     // 房屋的话是居住时效
-                    var prescription = '<div class="contact_apartment">居住时效：<span>'+apartment+'</span></div>'
+                    var prescription = '<div class="contact_apartment">居住时效：<span>长期</span></div>'
+                    var pretype = '居住'
                 
                 }else if(data.data.houses.housesStatus==2){  //门店
                     // 门店的话是驻店时效
-                    var prescription = '<div class="contact_apartment">驻店时效：<span>'+apartment+'</span></div>'
+                    var prescription = '<div class="contact_apartment">驻店时效：<span>长期</span></div>'
+                    var pretype = '驻店'
                 }
                 // 判断性别
                 if(res[i].gender == 1){
@@ -233,6 +235,11 @@
                     var examine = '<div class="role end">'+res[i].liveTypeName+'（已撤销）</div>'
                      console.log(res[i].liveTypeName)
                 }
+                if(res[i].status == 1 || res[i].status == 3){
+                    leaseDay = 0
+                }else{
+                    leaseDay = res[i].leaseDay
+                }
                 if(res[i].status == 4 || res[i].status == 5 || res[i].status == 6){
                 	list += '<a class="address" href="personnel_y.html?personnelId='+res[i].personnelId+'">'+
                     '<div class="contact end">'+
@@ -248,7 +255,7 @@
                             '</div>'+
                             '<div class="bordertop"></div>'+
                              prescription+
-                            '<div class="contact_apartment">已居住时长：<span>'+res[i].leaseDay+'天</span></div>'+
+                            '<div class="contact_apartment">已'+pretype+'时长：<span>'+leaseDay+'天</span></div>'+
                         '</div>'+
                     '</div>'+
                 '</a>'
@@ -267,7 +274,7 @@
                             '</div>'+
                             '<div class="bordertop"></div>'+
                              prescription+
-                            '<div class="contact_apartment">已居住时长：<span>'+res[i].leaseDay+'天</span></div>'+
+                            '<div class="contact_apartment">已'+pretype+'时长：<span>'+leaseDay+'天</span></div>'+
                         '</div>'+
                     '</div>'+
                 '</a>'

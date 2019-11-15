@@ -173,21 +173,22 @@
                     <div class="item-one">驻店类型：</div>
                     <div class="item-two">{{list.liveTypeName}}</div>
                 </div>
-                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                <div class="item">
                     <div class="item-one">驻店时效：</div>
                     <div class="item-two">长期</div>
                 </div>
-                <div class="item" v-else>
+                <!-- <div class="item" v-else>
                     <div class="item-one">驻店时效：</div>
                     <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
-                </div>
+                </div> -->
                 <div class="item">
                     <div class="item-one">驻店开始时间：</div>
                     <div class="item-two">{{list.leaseStartTime}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">已驻店时长：</div>
-                    <div class="item-two">{{list.leaseDay}}天</div>
+                    <div class="item-two" v-if="status == 1 || status == 3">0天</div>
+                    <div class="item-two" v-else>{{list.leaseDay}}天</div>
                 </div>
             </div>
             <!-- 房屋信息 -->
@@ -216,21 +217,22 @@
                     <div class="item-one">居住类型：</div>
                     <div class="item-two">{{list.liveTypeName}}</div>
                 </div>
-                <div class="item" v-if="liveTypeId == 1 || liveTypeId == 2 || liveTypeId == 7">
+                <div class="item">
                     <div class="item-one">房屋时效：</div>
                     <div class="item-two">长期</div>
                 </div>
-                <div class="item" v-else>
+                <!-- <div class="item">
                     <div class="item-one">房屋时效：</div>
                     <div class="item-two">{{list.leaseStartTime}} - {{list.leaseStopTime}}</div>
-                </div>
+                </div> -->
                 <div class="item">
                     <div class="item-one">居住开始时间：</div>
                     <div class="item-two">{{list.leaseStartTime}}</div>
                 </div>
                 <div class="item">
                     <div class="item-one">已居住时长：</div>
-                    <div class="item-two">{{list.leaseDay}}天</div>
+                    <div class="item-two" v-if="status == 1 || status == 3">0天</div>
+                    <div class="item-two" v-else>{{list.leaseDay}}天</div>
                 </div>
             </div>
         </div>
