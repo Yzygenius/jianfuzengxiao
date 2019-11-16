@@ -122,7 +122,7 @@ public class ExcelUtil {
 						bufferImg = ImageIO.read(new File(fangchanzheng));
 						ImageIO.write(bufferImg, FileUtil.getExtName(fangchanzheng), byteArrayOut);
 						// 图片一导出到单元格B2中
-						HSSFClientAnchor anchor = new HSSFClientAnchor(480, 30, 700, 250, (short) 20, i + 1, (short) 20,
+						HSSFClientAnchor anchor = new HSSFClientAnchor(480, 30, 700, 250, (short) 23, i + 1, (short) 23,
 								i + 1);
 						// 插入图片
 						patriarch.createPicture(anchor,
@@ -142,14 +142,14 @@ public class ExcelUtil {
 						bufferImg2 = ImageIO.read(new File(huxingtu));
 						ImageIO.write(bufferImg2, FileUtil.getExtName(huxingtu), byteArrayOut2);
 						// 图片一导出到单元格B2中
-						HSSFClientAnchor anchor = new HSSFClientAnchor(480, 30, 700, 250, (short) 21, i + 1, (short) 21,
+						HSSFClientAnchor anchor = new HSSFClientAnchor(480, 30, 700, 250, (short) 24, i + 1, (short) 24,
 								i + 1);
 						// 插入图片
 						patriarch2.createPicture(anchor,
 								wb.addPicture(byteArrayOut2.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 					}
 				}
-
+				
 
 				String housesStatus = "";
 				if (keeSpecimen.getHousesStatus().equals("1")) {
@@ -173,16 +173,16 @@ public class ExcelUtil {
 				cell.setCellValue(housesStatus);
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(2);
-				cell.setCellValue(keeSpecimen.getPropertyOwnerName());
+				cell.setCellValue(keeSpecimen.getProvName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(3);
-				cell.setCellValue(keeSpecimen.getPropertyOwnerTel());
+				cell.setCellValue(keeSpecimen.getCityName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(4);
-				cell.setCellValue(keeSpecimen.getPropertyOwnerIdcard());
+				cell.setCellValue(keeSpecimen.getAreaName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(5);
-				cell.setCellValue(keeSpecimen.getPropertyCertificatesNumber());
+				cell.setCellValue(keeSpecimen.getGwhName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(6);
 				cell.setCellValue(keeSpecimen.getCommunityName());
@@ -191,7 +191,7 @@ public class ExcelUtil {
 				cell.setCellValue(keeSpecimen.getCommunityStreetName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(8);
-				cell.setCellValue(keeSpecimen.getHouseType());
+				cell.setCellValue(storeLocation);
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(9);
 				cell.setCellValue(keeSpecimen.getStoriedBuildingNumber());
@@ -206,24 +206,33 @@ public class ExcelUtil {
 				cell.setCellValue(keeSpecimen.getHousesAddress());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(13);
-				cell.setCellValue(keeSpecimen.getHousesTypeName());
+				cell.setCellValue(keeSpecimen.getHouseType());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(14);
-				cell.setCellValue(storeLocation);
+				cell.setCellValue(keeSpecimen.getHousesTypeName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(15);
-				cell.setCellValue(keeSpecimen.getProvName());
+				cell.setCellValue(keeSpecimen.getFangzhu());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(16);
-				cell.setCellValue(keeSpecimen.getCityName());
+				cell.setCellValue(keeSpecimen.getFangzhuTel());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(17);
-				cell.setCellValue(keeSpecimen.getAreaName());
+				cell.setCellValue(keeSpecimen.getPropertyOwnerName());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(18);
-				cell.setCellValue(keeSpecimen.getCreateTime());
+				cell.setCellValue(keeSpecimen.getPropertyOwnerTel());
 				cell.setCellStyle(styleCon);
 				cell = row.createCell(19);
+				cell.setCellValue(keeSpecimen.getPropertyOwnerIdcard());
+				cell.setCellStyle(styleCon);
+				cell = row.createCell(20);
+				cell.setCellValue(keeSpecimen.getPropertyCertificatesNumber());
+				cell.setCellStyle(styleCon);
+				cell = row.createCell(21);
+				cell.setCellValue(keeSpecimen.getCreateTime());
+				cell.setCellStyle(styleCon);
+				cell = row.createCell(22);
 				cell.setCellValue(keeSpecimen.getUpdateTime());
 				cell.setCellStyle(styleCon);
 			}

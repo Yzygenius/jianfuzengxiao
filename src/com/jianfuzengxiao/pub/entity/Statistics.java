@@ -20,7 +20,8 @@ public class Statistics extends Entity {
 	
 	protected String startTime;
 	protected String stopTime;
-	
+	protected String startTime2;
+	protected String stopTime2;
 
 	protected String communityId;
 	protected String communityStreetId;
@@ -96,9 +97,43 @@ public class Statistics extends Entity {
 	protected String month;
 	protected String day;
 	
+	protected String thisWeekRatio;
+	protected String lastWeekRatio;
+	protected String bianhualv;
 	
 	
 	
+	
+	public String getBianhualv() {
+		return bianhualv;
+	}
+	public void setBianhualv(String bianhualv) {
+		this.bianhualv = bianhualv;
+	}
+	public String getStartTime2() {
+		return startTime2;
+	}
+	public void setStartTime2(String startTime2) {
+		this.startTime2 = startTime2;
+	}
+	public String getStopTime2() {
+		return stopTime2;
+	}
+	public void setStopTime2(String stopTime2) {
+		this.stopTime2 = stopTime2;
+	}
+	public String getThisWeekRatio() {
+		return thisWeekRatio;
+	}
+	public void setThisWeekRatio(String thisWeekRatio) {
+		this.thisWeekRatio = thisWeekRatio;
+	}
+	public String getLastWeekRatio() {
+		return lastWeekRatio;
+	}
+	public void setLastWeekRatio(String lastWeekRatio) {
+		this.lastWeekRatio = lastWeekRatio;
+	}
 	public String getHousesId() {
 		return housesId;
 	}

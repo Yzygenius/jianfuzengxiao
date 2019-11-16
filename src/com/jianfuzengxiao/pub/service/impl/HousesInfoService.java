@@ -73,4 +73,9 @@ public class HousesInfoService extends BaseService implements IHousesInfoService
 		return housesInfoMDAO.queryGroupByCommunity(housesInfo);
 	}
 
+	@Override
+	public List<HousesInfoMVO> queryHousesList(HousesInfoMVO housesInfo) throws SysException {
+		return housesInfoMDAO.queryHousesList(housesInfo);
+	}
+
 }

@@ -78,8 +78,8 @@ public class CommonSysContoller extends BaseController {
 	private ILgzgService lgzgService;
 	
 	@ResponseBody
-	@RequestMapping(value="/uploadExcel")
-	public String uploadExcel(@RequestParam("file") CommonsMultipartFile file){
+	@RequestMapping(value="/uploadFangwuExcel")
+	public String uploadFangwuExcel(@RequestParam("file") CommonsMultipartFile file){
 		try {
 			throwAppException(file == null, RC.COMMON_IMAGE_FILE_INVALID);
 			AttachFileMVO attachFile = DataFileUtil.saveDBImage(file);
@@ -89,7 +89,26 @@ public class CommonSysContoller extends BaseController {
 			for(int i=0; i<housesList.size(); i++) {
 				housesInfoService.insert(housesList.get(i));
 			}*/
-			excelImportService.addPersonnelExcel(fileName);
+			excelImportService.addFangwuExcel(fileName);
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "导入excel错误", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/uploadMendianExcel")
+	public String uploadMendianExcel(@RequestParam("file") CommonsMultipartFile file){
+		try {
+			throwAppException(file == null, RC.COMMON_IMAGE_FILE_INVALID);
+			AttachFileMVO attachFile = DataFileUtil.saveDBImage(file);
+		
+			String fileName = request.getSession().getServletContext().getRealPath(attachFile.getSaveName());
+			/*List<HousesInfoMVO> housesList = Upxml.getDataFromExcel(fileName);
+			for(int i=0; i<housesList.size(); i++) {
+				housesInfoService.insert(housesList.get(i));
+			}*/
+			excelImportService.addMendianExcel(fileName);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "导入excel错误", e);
@@ -100,11 +119,48 @@ public class CommonSysContoller extends BaseController {
 	@RequestMapping(value="/downloadExcel")
 	public void downloadExcel(RedirectAttributes redirectAttributes, HousesInfoMVO entity){
 		String fileName = "房产信息.xls";
-		String[] title = {"房产ID", "产权类型", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "社区", "小区", "户型", "楼号", "单元", "门牌号", "详细地址", "房产类型", "内/外铺", "省", "市", "区", "创建时间", "最新更新时间", "房产证照片", "户型图"};
+		//String[] title = {"房产ID", "产权类型", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "社区", "小区", "户型", "楼号", "单元", "门牌号", "详细地址", "房产类型", "内/外铺", "省", "市", "区", "创建时间", "最新更新时间", "房产证照片", "户型图"};
+		String[] title = {"房产ID", "产权类型", "省", "市", "区/县", "管委会", "社区", "小区/道路", "内/外铺", "楼号", "单元", "门牌号", "详细地址", "户型", "房产类型", "房主", "房主联系电话", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "创建时间", "最新更新时间", "房产证照片", "户型图"};
 		
 		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
 			entity.setSts("A");
-			List<HousesInfoMVO> list = housesInfoService.queryList(entity);
+			List<HousesInfoMVO> list = housesInfoService.queryHousesList(entity);
 			HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(fileName, title, list, null);
 			
 			this.setResponseHeader(response, fileName);

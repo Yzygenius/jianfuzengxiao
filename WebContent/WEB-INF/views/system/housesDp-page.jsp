@@ -81,6 +81,8 @@
 				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesDp.html', 820)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
+			<button type="button" class="layui-btn" id="uploadExcel"><i class="layui-icon">&#xe608;</i>excel导入</button>
+			<button type="button" class="layui-btn" onclick="banner_download()"><i class="layui-icon">&#xe608;</i>excel导出</button>
 			</c:if>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
@@ -93,6 +95,7 @@
 					<th>省</th>
 					<th>市</th>
 					<th>区/县</th>
+					<th>管委会</th>
 					<th>社区</th>
 					<th>小区/道路</th>
 					<th>门牌号</th>
@@ -121,6 +124,7 @@
 			<td row="prov"></td>
 			<td row="city"></td>
 			<td row="area"></td>
+			<td row="gwhName"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
@@ -161,7 +165,7 @@
 
 	<script>
 		//var lPage;
-		var $, form, layer, laydate, lement, laypage;
+		var $, form, layer, laydate, lement, laypage,upload;
 		var provinceList, cityList, areaList = "";
 		var provCode = ''
 		var cityCode = ''
@@ -173,13 +177,17 @@
 		var unit = ''
 		var keyword  = '';
 		var houseNumber = '';
+		var provCodeSreach ='', cityCodeSreach = '', areaCodeSreach = ''
+			, communityIdSreach = '', communityStreetIdSreach = '', storiedBuildingNumberSreach = ''
+			, unitSreach = '', houseNumberSreach = '', keywordSreach = '';
 		$(function() {
-			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
+			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer','upload' ], function() {
 				//var total;
 				$ = layui.jquery//jquery
 				, form = layui.form, layer = layui.layer//弹出层
 				, laydate = layui.laydate//日期插件
 				, lement = layui.element//面包导航
+				, upload = layui.upload
 				, laypage = layui.laypage;//分页
 				//lPage = layui.laypage
 				//以上模块根据需要引入
@@ -194,19 +202,41 @@
 
 				});
 				
+				//导入excel
+				upload.render({
+		        	elem: '#uploadExcel',
+		            url: '/jianfuzengxiao/system/common/uploadFangwuExcel.html', //上传接口
+		            accept: 'file', //普通文件
+		            data: {},
+		            before: function(obj){
+		                //loading
+		                layer.load(1)
+		            },
+		            done: function(res){ //上传成功后的回调
+		            	if(res.code==1){
+		            		layer.msg('导入成功', {icon: 1})
+							page();
+		            	}else{
+		            		layer.msg('导入失败，请重新操作', {icon: 2})
+		            	}
+		            }
+		            ,error: function(){
+		            	layer.msg('导入失败，请重新操作', {icon: 2});
+		            }
+		        });
+				
 				//监听检索
 				form.on('submit(sreach)', function(data){
 					//console.log(data)
-					provCode = data.field.province;
-					cityCode = data.field.city;
-					areaCode = data.field.area;
-					communityId = data.field.communitySel;
-					communityStreetId = data.field.communityStreetSel;
-					storeLocation = data.field.storeLocationSel;
-					/* storiedBuildingNumber = data.field.storiedBuildingNumber;
-					unit = data.field.unit; */
-					houseNumber = data.field.houseNumber;
-					keyword = data.field.keyword;
+					provCodeSreach = data.field.province;
+					cityCodeSreach = data.field.city;
+					areaCodeSreach = data.field.area;
+					communityIdSreach = data.field.communitySel;
+					communityStreetIdSreach = data.field.communityStreetSel;
+					storiedBuildingNumberSreach = data.field.storiedBuildingNumber;
+					unitSreach = data.field.unit;
+					houseNumberSreach = data.field.houseNumber;
+					keywordSreach = data.field.keyword;
 					
 					page()
 					//loading
@@ -389,19 +419,29 @@
 				}
 			})
 	    }
+	    
+	    /*导出excel*/
+		function banner_download() {
+			var param = "?housesStatus=2&provCode="+provCodeSreach+"&cityCode="+cityCodeSreach+"&areaCode="+areaCodeSreach+"&communityId="+communityIdSreach
+				+ "&communityStreetId="+communityStreetIdSreach+"&storiedBuildingNumberSreach="+storiedBuildingNumber+"&unit="+unitSreach
+				+ "&houseNumber="+houseNumberSreach+"&keyword="+keywordSreach;
+
+			location.href = "/jianfuzengxiao/system/common/downloadExcel.html" + param; 
+		}
 
 		//分页
 		function page() {
 			var data = {
 				'housesStatus': '2',
-				'provCode': provCode,
-				'cityCode': cityCode,
-				'areaCode': areaCode,
-				'communityId': communityId,
-				'communityStreetId': communityStreetId,
-				'storeLocation': storeLocation,
-				'houseNumber': houseNumber,
-				'keyword': keyword
+				'provCode': provCodeSreach,
+				'cityCode': cityCodeSreach,
+				'areaCode': areaCodeSreach,
+				'communityId': communityIdSreach,
+				'communityStreetId': communityStreetIdSreach,
+				'storiedBuildingNumber': storiedBuildingNumberSreach,
+				'unit': unitSreach,
+				'houseNumber': houseNumberSreach,
+				'keyword': keywordSreach
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
@@ -436,14 +476,15 @@
 			var data = {
 				'page' : page,
 				'housesStatus': '2',
-				'provCode': provCode,
-				'cityCode': cityCode,
-				'areaCode': areaCode,
-				'communityId': communityId,
-				'communityStreetId': communityStreetId,
-				'storeLocation': storeLocation,
-				'houseNumber': houseNumber,
-				'keyword': keyword
+				'provCode': provCodeSreach,
+				'cityCode': cityCodeSreach,
+				'areaCode': areaCodeSreach,
+				'communityId': communityIdSreach,
+				'communityStreetId': communityStreetIdSreach,
+				'storiedBuildingNumber': storiedBuildingNumberSreach,
+				'unit': unitSreach,
+				'houseNumber': houseNumberSreach,
+				'keyword': keywordSreach
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/houses/getHousesPage.html",
@@ -464,6 +505,7 @@
 							tr.find('[row=prov]').text(data[i].provName);
 							tr.find('[row=city]').text(data[i].cityName);
 							tr.find('[row=area]').text(data[i].areaName);
+							tr.find('[row=gwhName]').text(data[i].gwhName);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
 							if(data[i].storeLocation == 1){

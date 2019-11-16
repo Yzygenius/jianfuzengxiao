@@ -138,41 +138,23 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			// 获得获得第i行第0列的 String类型对象
 
 			HousesInfoMVO houses = new HousesInfoMVO();
-			// 详细地址
+			// 省
 			Cell cell = row.getCell((short) 1);
-			houses.setHousesAddress(cell.getStringCellValue().trim());
-			//产权人
+			// 市
 			cell = row.getCell((short) 2);
-			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
-			
-			//产权人联系电话
-			row.getCell((short) 3).setCellType(Cell.CELL_TYPE_STRING);
+			// 区
 			cell = row.getCell((short) 3);
-			houses.setPropertyOwnerTel(cell.getStringCellValue().trim());
-
-			//产权证号
+			// 管委会
 			cell = row.getCell((short) 4);
-			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
-
-			//房主身份证号	
-			row.getCell((short) 6).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell(6);
-			houses.setPropertyOwnerIdcard(cell.getStringCellValue().trim());
-			
-			//房主联系电话
-			row.getCell((short) 7).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 7);
-	
-			
 			//社区
-			cell = row.getCell((short) 8);
+			cell = row.getCell((short) 5);
 			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
 			communityInfo.setCommunityName(cell.getStringCellValue().trim());
 			communityInfo.setSts(STS_NORMAL);
 			List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
 			communityInfo = cList.get(0);
 			houses.setCommunityId(communityInfo.getCommunityId());
-			houses.setCommunityName(cell.getStringCellValue().trim());
+			houses.setCommunityName(communityInfo.getCommunityName());
 			//省市区
 			houses.setProvName(communityInfo.getProvName());
 			houses.setProvCode(communityInfo.getProvCode());
@@ -180,55 +162,66 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			houses.setCityCode(communityInfo.getCityCode());
 			houses.setAreaName(communityInfo.getAreaName());
 			houses.setAreaCode(communityInfo.getAreaCode());
+			houses.setGwhId(communityInfo.getGwhId());
+			houses.setGwhName(communityInfo.getGwhName());
 			
 			//小区
-			cell = row.getCell((short) 9);
+			cell = row.getCell((short) 6);
 			CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
 			communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
 			communityStreetInfo.setSts(STS_NORMAL);
 			List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
 			communityStreetInfo = scList.get(0);
 			houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
-			houses.setCommunityStreetName(cell.getStringCellValue().trim());
+			houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
 			
 			//楼号
-			row.getCell((short) 10).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 10);
+			row.getCell((short) 7).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 7);
 			houses.setStoriedBuildingNumber(cell.getStringCellValue().trim());
 			
 			//单元
-			row.getCell((short) 11).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 11);
+			row.getCell((short) 8).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 8);
 			houses.setUnit(cell.getStringCellValue().trim());
 			
 			//门牌
-			row.getCell((short) 12).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 12);
+			row.getCell((short) 9).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 9);
 			houses.setHouseNumber(cell.getStringCellValue().trim());
 			
+			//详细地址
+			cell = row.getCell((short) 10);
+			houses.setHousesAddress(cell.getStringCellValue().trim());
+			
 			//户型
-			cell = row.getCell((short) 13);
+			cell = row.getCell((short) 11);
 			houses.setHouseType(cell.getStringCellValue().trim());
 			
 			//房屋类型
-			cell = row.getCell((short) 15);
+			cell = row.getCell((short) 12);
 			String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
 			houses.setHousesTypeId(housesTypeId);
 			houses.setHousesTypeName(cell.getStringCellValue().trim());
 			
-			//居住性质 自持/自持
+			//产权人
+			cell = row.getCell((short) 13);
+			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
+			
+			//产权人联系电话
+			row.getCell((short) 14).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 14);
+			houses.setPropertyOwnerTel(cell.getStringCellValue().trim());
+			
+			//产权人身份证号
+			row.getCell((short) 15).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 15);
+			houses.setPropertyOwnerIdcard(cell.getStringCellValue().trim());
+
+			//产权证号
 			cell = row.getCell((short) 16);
+			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
 			
-			//租赁失效
-			cell = row.getCell((short) 17);
-			
-			//首次上报时间
-			cell = row.getCell((short) 18);
-			houses.setCreateTime(cell.getStringCellValue().trim().replace("/", "-"));
-			
-			//最近上报时间
-			cell = row.getCell((short) 19);
-			houses.setUpdateTime(cell.getStringCellValue().trim().replace("/", "-"));
 			
 			houses.setHousesStatus(HousesInfo.houses_status_fangwu);
 			houses.setSts(STS_NORMAL);
@@ -241,11 +234,11 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 				for (int t = 0; t < tStrings.length; t++) {
 					if (tStrings[0].equals(Integer.valueOf(i + 1).toString())) {
 						//房产证照片
-						if (tStrings[1].equals("5")) {
+						if (tStrings[1].equals("17")) {
 							list.get(i).setPropertyCertificatesPhoto(map.get(key));
 						}
 						//户型图
-						if (tStrings[1].equals("14")) {
+						if (tStrings[1].equals("18")) {
 							list.get(i).setHouseTypePhoto(map.get(key));
 						}
 					}
@@ -329,94 +322,93 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			// 获得获得第i行第0列的 String类型对象
 
 			HousesInfoMVO houses = new HousesInfoMVO();
-			// 详细地址
+			// 省
 			Cell cell = row.getCell((short) 1);
-			houses.setHousesAddress(cell.getStringCellValue().trim());
-			//产权人
+			// 市
 			cell = row.getCell((short) 2);
-			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
-			
-			//产权人联系电话
-			row.getCell((short) 3).setCellType(Cell.CELL_TYPE_STRING);
+			// 区
 			cell = row.getCell((short) 3);
-			houses.setPropertyOwnerTel(cell.getStringCellValue().trim());
-
-			//产权证号
+			// 管委会
 			cell = row.getCell((short) 4);
-			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
-
-			//店主
-			row.getCell((short) 6).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell(6);
-			houses.setPropertyOwnerIdcard(cell.getStringCellValue().trim());
-			
-			//店主联系电话
-			row.getCell((short) 7).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 7);
-			
 			//社区
-			cell = row.getCell((short) 8);
+			cell = row.getCell((short) 5);
 			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
 			communityInfo.setCommunityName(cell.getStringCellValue().trim());
 			communityInfo.setSts(STS_NORMAL);
 			List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
 			communityInfo = cList.get(0);
 			houses.setCommunityId(communityInfo.getCommunityId());
-			houses.setCommunityName(cell.getStringCellValue().trim());
+			houses.setCommunityName(communityInfo.getCommunityName());
+			//省市区
+			houses.setProvName(communityInfo.getProvName());
+			houses.setProvCode(communityInfo.getProvCode());
+			houses.setCityName(communityInfo.getCityName());
+			houses.setCityCode(communityInfo.getCityCode());
+			houses.setAreaName(communityInfo.getAreaName());
+			houses.setAreaCode(communityInfo.getAreaCode());
+			houses.setGwhId(communityInfo.getGwhId());
+			houses.setGwhName(communityInfo.getGwhName());
 			
 			//小区
-			cell = row.getCell((short) 9);
+			cell = row.getCell((short) 6);
 			CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
 			communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
 			communityStreetInfo.setSts(STS_NORMAL);
 			List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
 			communityStreetInfo = scList.get(0);
 			houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
-			houses.setCommunityStreetName(cell.getStringCellValue().trim());
+			houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
 			
-			//内/外铺
-			row.getCell((short) 10).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 10);
-			if (cell.getStringCellValue().trim().equals("内铺")) {
+			//内外铺
+			cell = row.getCell((short) 7);
+			if(cell.getStringCellValue().trim().equals("内铺")){
 				houses.setStoreLocation("1");
 			}else if (cell.getStringCellValue().trim().equals("外铺")) {
 				houses.setStoreLocation("2");
+			}else {
+				houses.setStoreLocation("");
 			}
 			
-			//单元
-			row.getCell((short) 11).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 11);
-			houses.setUnit(cell.getStringCellValue().trim());
 			
 			//门牌
-			row.getCell((short) 12).setCellType(Cell.CELL_TYPE_STRING);
-			cell = row.getCell((short) 12);
+			row.getCell((short) 8).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 8);
 			houses.setHouseNumber(cell.getStringCellValue().trim());
 			
+			//详细地址
+			cell = row.getCell((short) 9);
+			houses.setHousesAddress(cell.getStringCellValue().trim());
+			
 			//户型
-			cell = row.getCell((short) 13);
+			cell = row.getCell((short) 10);
 			houses.setHouseType(cell.getStringCellValue().trim());
 			
 			//房屋类型
-			cell = row.getCell((short) 15);
+			cell = row.getCell((short) 11);
 			String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
 			houses.setHousesTypeId(housesTypeId);
 			houses.setHousesTypeName(cell.getStringCellValue().trim());
 			
-			//居住性质 自持/自持
-			cell = row.getCell((short) 16);
+			//产权人
+			cell = row.getCell((short) 12);
+			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
 			
-			//租赁失效
-			cell = row.getCell((short) 17);
+			//产权人联系电话
+			row.getCell((short) 13).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 13);
+			houses.setPropertyOwnerTel(cell.getStringCellValue().trim());
 			
-			//首次上报时间
-			cell = row.getCell((short) 18);
-			houses.setCreateTime(cell.getStringCellValue().trim().replace("/", "-"));
+			//产权人身份证号
+			row.getCell((short) 14).setCellType(Cell.CELL_TYPE_STRING);
+			cell = row.getCell((short) 14);
+			houses.setPropertyOwnerIdcard(cell.getStringCellValue().trim());
+
+			//产权证号
+			cell = row.getCell((short) 15);
+			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
 			
-			//最近上报时间
-			cell = row.getCell((short) 19);
-			houses.setUpdateTime(cell.getStringCellValue().trim().replace("/", "-"));
 			
+			houses.setHousesStatus(HousesInfo.houses_status_dianpu);
 			houses.setSts(STS_NORMAL);
 			list.add(houses);
 		}
@@ -427,11 +419,11 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 				for (int t = 0; t < tStrings.length; t++) {
 					if (tStrings[0].equals(Integer.valueOf(i + 1).toString())) {
 						//房产证照片
-						if (tStrings[1].equals("5")) {
+						if (tStrings[1].equals("16")) {
 							list.get(i).setPropertyCertificatesPhoto(map.get(key));
 						}
 						//户型图
-						if (tStrings[1].equals("14")) {
+						if (tStrings[1].equals("17")) {
 							list.get(i).setHouseTypePhoto(map.get(key));
 						}
 					}

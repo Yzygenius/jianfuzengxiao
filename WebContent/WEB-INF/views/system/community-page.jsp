@@ -53,6 +53,7 @@
 					<th>省</th>
 					<th>市</th>
 					<th>区/县</th>
+					<th>管委会</th>
 					<th>创建时间</th>
 					<th>操作</th>
 				</tr>
@@ -78,6 +79,7 @@
 			<td row="provName"></td>
 			<td row="cityName"></td>
 			<td row="areaName"></td>
+			<td row="gwhName"></td>
 			<td row="createTime"></td>
 			
 			<td class="td-manage">
@@ -193,6 +195,7 @@
 							tr.find('[row=provName]').text(data[i].provName);
 							tr.find('[row=cityName]').text(data[i].cityName);
 							tr.find('[row=areaName]').text(data[i].areaName);
+							tr.find('[row=gwhName]').text(data[i].gwhName);
 							tr.find('[row=createTime]').text(data[i].createTime);
 
 							$('#x-img').append(tr);

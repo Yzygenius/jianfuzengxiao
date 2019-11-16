@@ -168,20 +168,20 @@
                 <div class="curve_left">
                     <div class="cleft_title">
                         <div class="quantity">上报量</div>
-                        <div class="strip"><span>3432424</span> 条</div>
+                        <div class="strip bhl_total"><span>3432424</span> 条</div>
                     </div>
                     <div class="cleft_num">
                         <div class="this_week">
                             <div class="week_title">本周期变化率</div>
-                            <div class="week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt=""></div>
+                            <div class="week_rate this_week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt=""></div>
                         </div>
                         <div class="this_week">
                             <div class="week_title">比上周期变化率</div>
-                            <div class="week_rate active">34.23%<img src="/jianfuzengxiao/statics/system/images/down.png" alt=""></div>
+                            <div class="week_rate last_week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/down.png" alt=""></div>
                         </div>
                         <div class="change">
                             <div class="change_title">本周期变化量</div>
-                            <div class="change_num"><span>+23244</span> 条</div>
+                            <div class="change_num bhl_count"><span>+23244</span> 条</div>
                         </div>
                     </div>
                 </div>
@@ -332,20 +332,20 @@
                 <div class="curve_left">
                     <div class="cleft_title">
                         <div class="quantity">上报量</div>
-                        <div class="strip"><span>3432424</span> 条</div>
+                        <div class="strip bhl_total"><span>3432424</span> 条</div>
                     </div>
                     <div class="cleft_num">
                         <div class="this_week">
                             <div class="week_title">本周期变化率</div>
-                            <div class="week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt=""></div>
+                            <div class="week_rate this_week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt=""></div>
                         </div>
                         <div class="this_week">
                             <div class="week_title">比上周期变化率</div>
-                            <div class="week_rate active">34.23%<img src="/jianfuzengxiao/statics/system/images/down.png" alt=""></div>
+                            <div class="week_rate last_week_rate">34.23%<img src="/jianfuzengxiao/statics/system/images/down.png" alt=""></div>
                         </div>
                         <div class="change">
                             <div class="change_title">本周期变化量</div>
-                            <div class="change_num"><span>+23244</span> 条</div>
+                            <div class="change_num bhl_count"><span>+23244</span> 条</div>
                         </div>
                     </div>
                 </div>
@@ -365,10 +365,21 @@
         var communityStreetId=""  //小区id
         var communityId=""        //社区id
         window.sessionStorage.clear();   //清除缓存
+        
+        var today2 = new Date();
+        var year2 = today2.getFullYear();        //获取当前年
+        var month2 = today2.getMonth()+1;   //获取当前月
+        var date2 = today2.getDate();            //获取当前日
+        var nowDay2 = year2+'-'+month2+"-"+date2;
+        
         inforStat()  //上报信息统计
         house_fw()   //房屋上报信息
         house_md()   //门店信息上报
-        curve()      //曲线
+        
+        curve(hq_date(30), nowDay2)      //曲线
+        var day3 = hq_date_two(hq_date(30), 30)
+        zhouqibianhualv(hq_date(30), nowDay2, day3, hq_date(30));
+       
         $('.Community li').click(function () {
             $(this).addClass('active').siblings('li').removeClass('active')
         })
@@ -398,6 +409,8 @@
                house_md()  //门店信息上报
             }
         })
+        
+       
      // 社区
         $.ajax({
             //请求方式
@@ -486,7 +499,8 @@
                   $('#willDay').html(day)
                   $('.display0').fadeIn(0);
                   curve(day,nowDay)
-
+                  var day2 = hq_date_two(day, 30)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }else if($(this).attr("data-day") == "7"){
                   hq_date(7)
                   var day = hq_date(7)
@@ -494,8 +508,9 @@
                   $('#willDay').html(day)
                   $('.display0').fadeIn(0);
                   curve(day,nowDay)
-
-
+					
+                  var day2 = hq_date_two(day, 7)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }else if($(this).attr("data-day") == "180"){
                   hq_date(180)
                   var day = hq_date(180)
@@ -503,6 +518,9 @@
                   $('#willDay').html(day)
                   $('.display0').fadeIn(0);
                   curve(day,nowDay)
+                  
+                  var day2 = hq_date_two(day, 180)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }else if($(this).attr("data-day") == "before_3"){
                   hq_date(30)
                   var day = hq_date(30)
@@ -510,6 +528,9 @@
                   $('#willDay1').html(day)
                   $('.display1').fadeIn(0);
                   curve(day,nowDay)
+                  
+                  var day2 = hq_date_two(day, 30)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }else if($(this).attr("data-day") == "before_7"){
                 console.log('7')
                   hq_date(7)
@@ -518,6 +539,9 @@
                   $('#willDay1').html(day)
                   $('.display1').fadeIn(0);
                   curve(day,nowDay)
+                  
+                  var day2 = hq_date_two(day, 7)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }else if($(this).attr("data-day") == "before_180"){
                 console.log('180')
 
@@ -527,9 +551,26 @@
                   $('#willDay1').html(day)
                   $('.display1').fadeIn(0);
                   curve(day,nowDay)
+                  var day2 = hq_date_two(day, 180)
+                  zhouqibianhualv(day, nowDay, day2, day);
              }
          })
     })
+   
+    // 获取时间函数
+    function hq_date_two(dateTime,sky){
+        var today=new Date(dateTime);
+        var day=today.setDate(today.getDate()-sky);
+        day=new Date(day);
+        //获取当前年
+        var year=day.getFullYear();
+        //获取当前月
+        var month=day.getMonth()+1;
+        //获取当前日
+        var date = day.getDate();
+        day = year+'-'+month+"-"+date;
+        return day;
+    }
     // 获取时间函数
     function hq_date(sky){
         var today=new Date();
@@ -752,6 +793,45 @@
             error:function(jqXHR){}
         });
     }
+    
+    function zhouqibianhualv(start, end, start2, end2){
+    	 $.ajax({
+             //请求方式
+             type:'POST',
+             //发送请求的地址
+             url:'/jianfuzengxiao/system/statistics/getZqbhl.html',
+             //服务器返回的数据类型
+             dataType:'json',
+             //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+             data:{
+            	 'startTime': start,
+             	 'stopTime': end,
+             	 'startTime2': start2,
+             	 'stopTime2': end2
+             },
+             success:function(data){
+                 console.log(data)
+                 if(data.code == 1){
+                	 $('.bhl_total').children('span').text('').text(data.data.total)
+                	 $('.this_week_rate').html('').html(data.data.thisWeekRatio + '<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt="">')
+                	 if(data.data.bianhualv >= 0){
+                		 $('.last_week_rate').html('').html(data.data.bianhualv + '<img src="/jianfuzengxiao/statics/system/images/Upward.png" alt="">')
+                		 $('.last_week_rate').removeClass('active')
+                	 }else{
+                		 $('.last_week_rate').html('').html(data.data.bianhualv + '<img src="/jianfuzengxiao/statics/system/images/down.png" alt="">')
+                		 $('.last_week_rate').addClass('active')
+                	 }
+                	 if(data.data.count >= 0){
+                		 $('.bhl_count').children('span').text('').text('+'+parseInt(data.data.count));
+                	 }else{
+                		 $('.bhl_count').children('span').text('').text('-'+parseInt(data.data.count));
+                	 }
+                 }
+             },
+             error:function(jqXHR){}
+         });
+    }
+    
     // 上报曲线图
     function curve(start,end){
          $.ajax({

@@ -384,4 +384,179 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<HousesInfoMVO> queryHousesList(HousesInfoMVO entity) throws SysException {
+		StringBuffer sql = new StringBuffer();
+		sql.append(
+				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
+		sql.append(",b.username,b.admin_telephone,b.admin_id ");
+		sql.append(",count(c.personnel_id)lease_count ");
+		sql.append(",ifnull(d.username,'')fangzhu,ifnull(d.telephone,'')fangzhu_tel ");
+		sql.append("from HOUSES_INFO a ");
+		sql.append("left join (select ad.admin_id,ad.houses_id,ai.username,ai.telephone admin_telephone from aduit_distribution ad left join admin_info ai on(ad.admin_id=ai.admin_id) where ad.sts='A') b on(a.houses_id=b.houses_id) ");
+		//sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.status in(2) ) ");
+		sql.append("left join personnel_info c on(a.houses_id=c.houses_id and c.sts='A' ) ");
+		sql.append("left join personnel_info d on(a.houses_id=d.houses_id and d.sts='A' and d.live_type_id in(1,2,3,4) ) ");
+		sql.append("where 1=1 ");
+		List<HousesInfoMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND a.houses_id in("+entity.getHousesId()+") ");
+				}
+				if (StringUtils.isNotBlank(entity.getAdminId())) {
+					sql.append(" AND b.admin_id=?");
+					params.add(entity.getAdminId());
+				}
+				if (StringUtils.isNotBlank(entity.getUserId())) {
+					sql.append(" AND a.user_id like ?");
+					params.add("%" + entity.getUserId() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesStatus())) {
+					sql.append(" AND a.houses_status=?");
+					params.add(entity.getHousesStatus());
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerName())) {
+					sql.append(" AND a.property_owner_name like ?");
+					params.add("%" + entity.getPropertyOwnerName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerTel())) {
+					sql.append(" AND a.property_owner_tel like ?");
+					params.add("%" + entity.getPropertyOwnerTel() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyOwnerIdcard())) {
+					sql.append(" AND a.property_owner_idcard like ?");
+					params.add("%" + entity.getPropertyOwnerIdcard() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyCertificatesNumber())) {
+					sql.append(" AND a.property_certificates_number like ?");
+					params.add("%" + entity.getPropertyCertificatesNumber() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyCertificatesPhoto())) {
+					sql.append(" AND a.property_certificates_photo like ?");
+					params.add("%" + entity.getPropertyCertificatesPhoto() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getPropertyCertificatesFile())) {
+					sql.append(" AND a.property_certificates_file like ?");
+					params.add("%" + entity.getPropertyCertificatesFile() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND a.community_id in("+entity.getCommunityId()+") ");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityName())) {
+					sql.append(" AND a.community_name like ?");
+					params.add("%" + entity.getCommunityName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND a.community_street_id=?");
+					params.add(entity.getCommunityStreetId());
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetName())) {
+					sql.append(" AND a.community_street_name like ?");
+					params.add("%" + entity.getCommunityStreetName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHouseType())) {
+					sql.append(" AND a.house_type like ?");
+					params.add("%" + entity.getHouseType() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHouseTypePhoto())) {
+					sql.append(" AND a.house_type_photo like ?");
+					params.add("%" + entity.getHouseTypePhoto() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHouseTypeFile())) {
+					sql.append(" AND a.house_type_file like ?");
+					params.add("%" + entity.getHouseTypeFile() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getStoriedBuildingNumber())) {
+					sql.append(" AND a.storied_building_number like ?");
+					params.add("%" + entity.getStoriedBuildingNumber() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getUnit())) {
+					sql.append(" AND a.unit like ?");
+					params.add("%" + entity.getUnit() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHouseNumber())) {
+					sql.append(" AND a.house_number like ?");
+					params.add("%" + entity.getHouseNumber() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesAddress())) {
+					sql.append(" AND a.houses_address like ?");
+					params.add("%" + entity.getHousesAddress() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesTypeId())) {
+					sql.append(" AND a.houses_type_id=?");
+					params.add(entity.getHousesTypeId());
+				}
+				if (StringUtils.isNotBlank(entity.getHousesTypeName())) {
+					sql.append(" AND a.houses_type_name like ?");
+					params.add("%" + entity.getHousesTypeName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getStoreLocation())) {
+					sql.append(" AND a.store_location=?");
+					params.add(entity.getStoreLocation());
+				}
+				if (StringUtils.isNotBlank(entity.getProvName())) {
+					sql.append(" AND a.prov_name like ?");
+					params.add("%" + entity.getProvName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getProvCode())) {
+					sql.append(" AND a.prov_code like ?");
+					params.add("%" + entity.getProvCode() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCityName())) {
+					sql.append(" AND a.city_name like ?");
+					params.add("%" + entity.getCityName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCityCode())) {
+					sql.append(" AND a.city_code like ?");
+					params.add("%" + entity.getCityCode() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getAreaName())) {
+					sql.append(" AND a.area_name like ?");
+					params.add("%" + entity.getAreaName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getAreaCode())) {
+					sql.append(" AND a.area_code like ?");
+					params.add("%" + entity.getAreaCode() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCreateTime())) {
+					sql.append("  AND a.create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getCreateTime());
+				}
+				if (StringUtils.isNotBlank(entity.getUpdateTime())) {
+					sql.append("  AND a.update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					params.add(entity.getUpdateTime());
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts like ?");
+					params.add("%" + entity.getSts() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND a.gwh_id=?");
+					params.add(entity.getGwhId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhName())) {
+					sql.append(" AND a.gwh_name like ?");
+					params.add("%" + entity.getGwhName() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getKeyword())) {
+					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? or d.usename like ?) ");
+					params.add("%" + entity.getKeyword() + "%");
+					params.add("%" + entity.getKeyword() + "%");
+					params.add("%" + entity.getKeyword() + "%");
+					params.add("%" + entity.getKeyword() + "%");
+				}
+			}
+			sql.append(" group by a.houses_id ");
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<HousesInfoMVO>(HousesInfoMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询HOUSES_INFO错误：{}", e.getMessage());
+			throw new SysException("查询HOUSES_INFO错误", "10000", e);
+		}
+		return resultList;
+	}
 }

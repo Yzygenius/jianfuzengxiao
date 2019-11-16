@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.Base64ToFile;
+import com.jianfuzengxiao.base.utils.FaceComparison;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
@@ -99,25 +100,32 @@ public class UserInfoAPIController extends BaseController {
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
 	public String addUser(UserInfoMVO model){
 		try {
-			System.out.println("userId---"+model.getUserId());
-			System.out.println("opId---"+model.getOpId());
-			System.out.println(model.toString());
+			//System.out.println("userId---"+model.getUserId());
+		//	System.out.println("opId---"+model.getOpId());
+			//System.out.println(model.toString());
 			throwAppException(StringUtils.isBlank(model.getUserId()), RC.USER_INFO_PARAM_USERID_INVALID);
 			UserInfoMVO userInfoMVO = new UserInfoMVO();
 			userInfoMVO.setUserId(model.getUserId());
-			userInfoMVO.setOpId(model.getOpId());
 			userInfoMVO.setSts("A");
 			List<UserInfoMVO> uList = userInfoService.queryList(userInfoMVO);
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
 			//model.setStatus(UserInfo.status_waiting);
 			model.setStatus(UserInfo.status_passed);
+			model.setOpId(model.getOpId());
 			//base64转file
 			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
 			Map<String, String> facePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
-			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
-			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
-			model.setFacePhoto(request.getContextPath() + "/" + facePhoto.get("relativePath"));
+			
+			String positivePhotoStr = request.getContextPath() + "/" + positivePhoto.get("relativePath");
+			String negativePhotoStr = request.getContextPath() + "/" + negativePhoto.get("relativePath");
+			String facePhotoStr = request.getContextPath() + "/" + facePhoto.get("relativePath");
+			model.setCertificatesPositivePhoto(positivePhotoStr);
+			model.setCertificatesNegativePhoto(negativePhotoStr);
+			model.setFacePhoto(facePhotoStr);
+			int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
+			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+			throwAppException(result == 2, RC.OTHER_ERROR);
 			userInfoService.insert(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -235,6 +243,11 @@ public class UserInfoAPIController extends BaseController {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
+			
+			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+			throwAppException(result == 2, RC.OTHER_ERROR);
+			
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -272,6 +285,9 @@ public class UserInfoAPIController extends BaseController {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
+			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+			throwAppException(result == 2, RC.OTHER_ERROR);
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

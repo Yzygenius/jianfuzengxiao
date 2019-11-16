@@ -52,6 +52,9 @@
 		    	<td><span>区/县：</span>${houses.areaName }</td>
 		  	</tr>
 		  	<tr>
+		    	<td><span>管委会：</span>${houses.gwhName }</td>
+		  	</tr>
+		  	<tr>
 		    	<td><span>社区：</span>${houses.communityName }</td>
 		  	</tr>
 		  	<tr>
@@ -82,9 +85,6 @@
 			  	<tr>
 			    	<td><span>门牌号：</span>${houses.houseNumber }</td>
 			  	</tr>
-			  	<tr>
-			    	<td>&nbsp;</td>
-			  	</tr>
 			</c:if>
 		  	<tr>
 		    	<td><span>详细地址：</span>${houses.housesAddress }</td>
@@ -97,9 +97,7 @@
 		  	</tr>
 		  	
 		  	<c:if test="${houses.housesStatus == 2}">
-		  	<tr>
-		    	<td>&nbsp;</td>
-		  	</tr>
+		  	
 		  	<tr>
 		    	<td><span>门店名称：</span>${houses.enterpriseName }</td>
 		  	</tr>
@@ -112,6 +110,9 @@
 		  	</tr>
 		  	<tr>
 		    	<td><span>产权人：</span>${houses.propertyOwnerName }</td>
+		  	</tr>
+		  	<tr>
+		    	<td><span>产权人联系电话：</span>${houses.propertyOwnerTel }</td>
 		  	</tr>
 		  	<tr>
 		    	<td><span>产权人身份证号：</span>${houses.propertyOwnerIdcard }</td>

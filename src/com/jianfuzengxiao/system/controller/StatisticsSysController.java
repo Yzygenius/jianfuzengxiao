@@ -17,11 +17,13 @@ import com.jianfuzengxiao.base.common.SessionAdmin;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
+import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.entity.Statistics;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
+import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IStatisticsService;
@@ -43,6 +45,9 @@ public class StatisticsSysController extends BaseController {
 	@Autowired
 	private IHousesInfoService husesInfoService;
 	
+	@Autowired
+	private ICommunityStreetInfoService communityStreetInfoService;
+	
 	@RequestMapping(value="/toIndex")
 	public String toIndex(){
 		return "/system/statistics-index";
@@ -57,6 +62,119 @@ public class StatisticsSysController extends BaseController {
 	public String toPersonnel(){
 		return "/system/statistics-personnel";
 	}
+	
+	/** 
+	 * 首页场所
+	 * */
+	@ResponseBody
+	@RequestMapping(value="/getCommunityStreetCount")
+	public String getCommunityStreetCount(CommunityStreetInfoMVO entity){
+		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					HousesInfoMVO housesInfo = new HousesInfoMVO();
+					housesInfo.setHousesId(housesId);
+					housesInfo.setSts("A");
+					List<HousesInfoMVO> hList = husesInfoService.queryGroupByCommunity(housesInfo);
+					if (hList.size() > 0) {
+						List<String> sList = new ArrayList<>();
+						for(HousesInfoMVO h : hList){
+							sList.add(h.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(sList.toArray(),","));
+					}else {
+						entity.setCommunityId("0");
+					}
+				}else {
+					entity.setCommunityId("0");
+				}
+			}
+			entity.setSts("A");
+			List<CommunityStreetInfoMVO> list = communityStreetInfoService.queryList(entity);
+			return apiResult(RC.SUCCESS, list.size());
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
+	/** 
+	 * 周期变化率
+	 * */
+	@ResponseBody
+	@RequestMapping(value="/getZqbhl")
+	public String getZqbhl(Statistics entity){
+		try {
+			//流管专干
+			if (StringUtils.isBlank(entity.getCommunityId())) {
+				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+				if (list.size() > 0) {
+					List<String> list2 = new ArrayList<String>();
+					for (AduitDistributionMVO ad : list) {
+						list2.add(ad.getHousesId());
+					}
+					String housesId = StringUtils.join(list2.toArray(),",");
+					entity.setHousesId(housesId);
+				}else {
+					entity.setHousesId("0");
+				}
+			}
+			
+			entity = statisticsService.queryReportChangeCount(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "查询统计失败", e);
+		}
+	}
+	
 	
 	/** 
 	 * 今日上报信息列表

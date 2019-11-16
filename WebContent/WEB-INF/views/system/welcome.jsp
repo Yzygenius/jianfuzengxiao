@@ -38,7 +38,7 @@
 			<div class="statist">
 				<div class="stat_cont scont">
 					<div class="title">场所</div>
-					<div class="number">
+					<div class="number" id="changsuo">
 						28321<span>个</span>
 					</div>
 				</div>
@@ -336,6 +336,7 @@
 		houseInfor()
 		personInfor()
 		kind()
+		changsuo()
 		
 		
 		$('.select').each(function() {
@@ -365,6 +366,20 @@
 	function banner_details(obj, title, url, w, h) {
 		var id = $(obj).parent('td').siblings('[row=ids]').text();
 		x_admin_show(title, url + '?personnelId=' + id, w, h);
+	}
+	
+	function changsuo() {
+		$.ajax({
+			url : "/jianfuzengxiao/system/statistics/getCommunityStreetCount.html",
+			type : 'post',
+			dataType : "json",
+			data: {},
+			success : function(result) {
+				if(result.code == 1){
+					$('#changsuo').html('').append(result.data + '<span>个</span>');
+				}
+			}
+		})
 	}
 	
 	function page() {

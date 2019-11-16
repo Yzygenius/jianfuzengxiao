@@ -75,6 +75,19 @@ public class GwhSysController extends BaseController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/getGwhList", method = RequestMethod.POST)
+	public String getGwhList(GwhInfoMVO entity){
+		try {
+			
+			entity.setSts("A");
+			List<GwhInfoMVO> list = gwhInfoService.queryList(entity);
+			return apiResult(RC.SUCCESS, list);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取管委会列表失败", e);
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/addGwh", method = RequestMethod.POST)
 	public String addGwh(GwhInfoMVO entity){
 		try {

@@ -48,6 +48,17 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">管委会</label>
+				<div class="layui-input-inline">
+					<select id="gwh" name="gwh" lay-filter="gwh" lay-verify="required" lay-search="">
+						<option value="">请选择</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
 					<span>社区</span>
 				</label>
@@ -112,6 +123,7 @@
 
 var type = ${communityStreet.status }
 var communitySel = ${communityStreet.communityId }
+var gwhId = ${communityStreet.gwhId};
 var ids = ${communityStreet.communityStreetId }
 var provCode, provName, cityCode, cityName, areaCode, areaName = '';
 var form, layer;
@@ -124,7 +136,7 @@ layui.use(['form','layer'], function(){
     var cityList = "";
     var areaList = "";
     
-    
+    getGwhList()
      
     $.ajax({  
 		url : "/jianfuzengxiao/common/getAreaList.html",  
@@ -245,7 +257,9 @@ layui.use(['form','layer'], function(){
 			'communityStreetName': $('#communityStreetName').val(),
 			'communityId': communitySel,
 			'status': type,
-			'listOrder': $('#listOrder').val()
+			'listOrder': $('#listOrder').val(),
+			'gwhId': $('#gwh option:selected').val(),
+			'gwhName': $('#gwh option:selected').text()
 		},
 		success : function(result){
 			if(result.code == 1){
@@ -298,6 +312,39 @@ function serchData(){
 			layer.msg("数据加载出错，请刷新页面", {icon: 2})
 		}
 	})
+}
+function getGwhList(){
+	
+	$.ajax({  
+		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+		type : 'post',
+		dataType: "json",
+		data: {
+		},
+		success : function(result){
+			//console.log(result)
+			if(result.code == 1){
+				var str = '';
+				$.each(result.data, function (index, item) {
+					if(item.gwhId == gwhId){
+						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+					}else{
+						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+					}
+		        });
+		        $("#gwh").append(str);
+		        //append后必须从新渲染
+		        form.render('select')
+		       
+			}else{
+				layer.msg(result.msg, {icon: 7});
+			}
+			
+		},
+		error : function(result){
+			layer.msg("加载数据出错，请刷新页面", {icon : 2})
+		}
+	});
 }
 </script>
 </body>

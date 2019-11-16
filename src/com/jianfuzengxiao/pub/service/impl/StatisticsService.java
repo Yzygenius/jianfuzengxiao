@@ -110,4 +110,18 @@ public class StatisticsService extends BaseService implements IStatisticsService
 	public PageInfo queryTodayReportPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException, AppException {
 		return statisticsMDAO.queryTodayReportPage(entity, pageInfo);
 	}
+
+	@Override
+	public Statistics queryReportChangeCount(Statistics entity) throws SysException, AppException {
+		Statistics this_week = statisticsMDAO.queryReportChangeCount(entity);
+		entity.setStartTime(entity.getStartTime2());
+		entity.setStopTime(entity.getStopTime2());
+		Statistics last_week = statisticsMDAO.queryReportChangeCount(entity);
+		
+		double bianhualv = BigDouble.getRoundingCount(Double.parseDouble(this_week.getThisWeekRatio()) - Double.parseDouble(last_week.getThisWeekRatio()));
+		double count = BigDouble.getRoundingCount(Double.parseDouble(this_week.getTotal()) - Double.parseDouble(last_week.getTotal()));
+		this_week.setBianhualv(String.valueOf(bianhualv));
+		this_week.setCount(String.valueOf(count));
+		return this_week;
+	}
 }

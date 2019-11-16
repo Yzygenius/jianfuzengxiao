@@ -48,7 +48,17 @@
 					<span class="x-red">*</span>
 				</div>
 			</div>
-			
+			<div class="layui-form-item">
+				<label class="layui-form-label">管委会</label>
+				<div class="layui-input-inline">
+					<select id="gwh" name="gwh" lay-filter="gwh" lay-verify="required" lay-search="">
+						<option value="">请选择</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
+				</div>
+			</div>
 			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
 				<span>社区</span>
@@ -248,6 +258,7 @@ var housesTypeId = '${houses.housesTypeId }';
 var housesTypeName = '${houses.housesTypeName }';
 var propertyCertificatesPhoto = '${houses.propertyCertificatesPhoto }';
 var houseTypePhoto = '${houses.houseTypePhoto }';
+var gwhId = ${houses.gwhId};
 
 var provinceList = "";
 var cityList = "";
@@ -270,7 +281,7 @@ layui.use(['form','layer', 'upload'], function(){
 	/* 房屋类型加载 */
 	serchHousesType();
     
-    
+	getGwhList()
     
   	//监听省下拉框
     form.on('select(province)', function(data){
@@ -396,12 +407,14 @@ layui.use(['form','layer', 'upload'], function(){
 			dataType: "json",
 			data: {
 				'housesId': housesId,
-				'provCode': provCode,
-				'provName': provName,
-				'cityCode': cityCode,
-				'cityName': cityName,
-				'areaCode': areaCode,
-				'areaName': areaName,
+				'provCode': $("#province option:selected").val(),
+				'cityCode': $("#city option:selected").val(),
+				'areaCode': $("#area option:selected").val(),
+				'provName': $("#province option:selected").text(),
+				'cityName': $("#city option:selected").text(),
+				'areaName': $("#area option:selected").text(),
+				'gwhId': $('#gwh option:selected').val(),
+				'gwhName': $('#gwh option:selected').text(),
 				'communityId': communityId,
 				'communityName': communityName,
 				'communityStreetId': communityStreetId,
@@ -608,6 +621,39 @@ function serchHousesType(){
 			layer.msg("数据加载出错，请刷新页面", {icon: 2})
 		}
 	})
+}
+
+function getGwhList(){
+	$.ajax({  
+		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+		type : 'post',
+		dataType: "json",
+		data: {
+		},
+		success : function(result){
+			//console.log(result)
+			if(result.code == 1){
+				var str = '';
+				$.each(result.data, function (index, item) {
+					if(item.gwhId == gwhId){
+						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+					}else{
+						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+					}
+		        });
+		        $("#gwh").append(str);
+		        //append后必须从新渲染
+		        form.render('select')
+		       
+			}else{
+				layer.msg(result.msg, {icon: 7});
+			}
+			
+		},
+		error : function(result){
+			layer.msg("加载数据出错，请刷新页面", {icon : 2})
+		}
+	});
 }
 </script>
 </body>

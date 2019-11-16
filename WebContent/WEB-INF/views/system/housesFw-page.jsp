@@ -89,6 +89,7 @@
 					<th>省</th>
 					<th>市</th>
 					<th>区/县</th>
+					<th>管委会</th>
 					<th>社区</th>
 					<th>小区</th>
 					<th>楼号</th>
@@ -119,6 +120,7 @@
 			<td row="prov"></td>
 			<td row="city"></td>
 			<td row="area"></td>
+			<td row="gwhName"></td>
 			<td row="communityName"></td>
 			<td row="communityStreetName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
@@ -200,7 +202,7 @@
 				//导入excel
 				upload.render({
 		        	elem: '#uploadExcel',
-		            url: '/jianfuzengxiao/system/common/uploadExcel.html', //上传接口
+		            url: '/jianfuzengxiao/system/common/uploadFangwuExcel.html', //上传接口
 		            accept: 'file', //普通文件
 		            data: {},
 		            before: function(obj){
@@ -477,6 +479,7 @@
 							tr.find('[row=prov]').text(data[i].provName);
 							tr.find('[row=city]').text(data[i].cityName);
 							tr.find('[row=area]').text(data[i].areaName);
+							tr.find('[row=gwhName]').text(data[i].gwhName);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
 							tr.find('[row=storiedBuildingNumber]').text(data[i].storiedBuildingNumber);

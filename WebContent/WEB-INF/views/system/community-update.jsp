@@ -49,9 +49,20 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">管委会</label>
+				<div class="layui-input-inline">
+					<select id="gwh" name="gwh" lay-filter="gwh" lay-verify="required" lay-search="">
+						<option value="">请选择</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">社区</label>
 				<div class="layui-input-inline">
-					<input type="text" id=communityName name="communityName" value="${community.communityName }" required="" autocomplete="off" class="layui-input">
+					<input type="text" id=communityName name="communityName" value="${community.communityName }" lay-verify="required" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -62,7 +73,7 @@
 					<span>排序</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="listOrder" name="listOrder" value="${community.listOrder }" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="listOrder" name="listOrder" value="${community.listOrder }" lay-verify="required" required="" autocomplete="off" class="layui-input">
 					<span class="x-red">展示顺序，填写1-9999，数值越小展示顺序越靠前</span>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
@@ -80,21 +91,19 @@
 <script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 <script>
-
+var gwhId = ${community.gwhId}
 
 layui.use(['form','layer'], function(){
 	var $ = layui.jquery
     ,form = layui.form
     ,layer = layui.layer
     
-    
+    getGwhList()
+	
     var provinceList = "";
     var cityList = "";
     var areaList = "";
     
-    var provName = '${community.provName }';
-    var cityName = '${community.cityName }';
-    var areaName = '${community.areaName }';
     var provCode = ${community.provCode };
     var cityCode = ${community.cityCode };
     var areaCode = ${community.areaCode };
@@ -260,12 +269,14 @@ layui.use(['form','layer'], function(){
 			'communityId': $('#id').val(),
 			'communityName': $('#communityName').val(),
 			'listOrder': $('#listOrder').val(),
-			'provCode': provCode,
-			'provName': provName,
-			'cityCode': cityCode,
-			'cityName': cityName,
-			'areaCode': areaCode,
-			'areaName': areaName
+			'provCode': $("#province option:selected").val(),
+			'cityCode': $("#city option:selected").val(),
+			'areaCode': $("#area option:selected").val(),
+			'provName': $("#province option:selected").text(),
+			'cityName': $("#city option:selected").text(),
+			'areaName': $("#area option:selected").text(),
+			'gwhId': $('#gwh option:selected').val(),
+			'gwhName': $('#gwh option:selected').text()
 		},
 		success : function(result){
 			if(result.code == 1){
@@ -288,6 +299,39 @@ layui.use(['form','layer'], function(){
   });
   
 });
+
+function getGwhList(){
+	$.ajax({  
+		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+		type : 'post',
+		dataType: "json",
+		data: {
+		},
+		success : function(result){
+			//console.log(result)
+			if(result.code == 1){
+				var str = '';
+				$.each(result.data, function (index, item) {
+					if(item.gwhId == gwhId){
+						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+					}else{
+						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+					}
+		        });
+		        $("#gwh").append(str);
+		        //append后必须从新渲染
+		        form.render('select')
+		       
+			}else{
+				layer.msg(result.msg, {icon: 7});
+			}
+			
+		},
+		error : function(result){
+			layer.msg("加载数据出错，请刷新页面", {icon : 2})
+		}
+	});
+}
 </script>
 </body>
 

@@ -47,6 +47,9 @@
 		    	<td><span>区/县：</span>${communityStreet.areaName }</td>
 		  	</tr>
 		  	<tr>
+		    	<td><span>管委会：</span>${communityStreet.gwhName }</td>
+		  	</tr>
+		  	<tr>
 		    	<td><span>社区：</span>${communityStreet.communityName }</td>
 		  	</tr>
 		  	<tr>
@@ -54,6 +57,9 @@
 		  	</tr>
 		  	<tr>
 		    	<td><span>排序：</span>${communityStreet.listOrder }</td>
+		  	</tr>
+		  	<tr>
+		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
 		    	<td>首次上报时间：${communityStreet.createTime }</td>

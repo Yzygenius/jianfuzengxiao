@@ -96,6 +96,7 @@ public enum RC {
 	COMMON_IMAGE_FILE_INVALID("7101", "图片文件无效"),
 	COMMON_LIST_ORDER_NULL("7102", "排序不能为空"),
 	COMMON_TYPE_INVALID("7103", "类别无效"),
+	COMMON_IMAGE_FACE_NOT("7104", "人脸照片与身份证不匹配"),
 
 	OTHER_TOKEN_TIMEOUT("9000", "登录会话过期，请重新登录"),
 	OTHER_UNAUTHORIZED("9001", "无权操作"),

@@ -9,6 +9,8 @@ import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 public interface IHousesInfoMDAO extends IHousesInfoSDAO {
 	/** 分页查询 */
 	public PageInfo queryPage(HousesInfoMVO housesInfo, PageInfo pagInfo) throws SysException;
+	
+	public List<HousesInfoMVO> queryHousesList(HousesInfoMVO housesInfo) throws SysException;
 
 	public List<HousesInfoMVO> queryBuildingUnitNumList(HousesInfoMVO housesInfo) throws SysException;
 	

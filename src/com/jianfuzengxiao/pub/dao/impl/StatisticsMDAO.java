@@ -743,4 +743,62 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		return pageInfo;
 	}
 
+	@Override
+	public Statistics queryReportChangeCount(Statistics entity) throws SysException, AppException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select COUNT(*) as total ");
+		sql.append(",ifnull(cast(COUNT(*)/(select COUNT(*) from personnel_info a left join houses_info b on(a.houses_id=b.houses_id) where a.sts ='A' ");
+		if (StringUtils.isNotBlank(entity.getStartTime())) {
+			sql.append("and a.update_time < '"+entity.getStartTime()+"' ");
+		}
+		if (StringUtils.isNotBlank(entity.getHousesId())) {
+			sql.append(" AND a.houses_id in (" + entity.getHousesId() + ")");
+		}
+		if (StringUtils.isNotBlank(entity.getCommunityId())) {
+			sql.append(" AND b.community_id in (" + entity.getCommunityId() + ")");
+		}
+		if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+			sql.append(" AND b.community_street_id in (" + entity.getCommunityStreetId() + ")");
+		}
+		sql.append(") as decimal(18,2)),0) as this_week_ratio  ");
+		sql.append("from personnel_info c  ");
+		sql.append("left join houses_info d on(c.houses_id=d.houses_id) where c.sts ='A' ");
+		List<Statistics> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND c.houses_id in (" + entity.getHousesId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND d.community_id in (" + entity.getCommunityId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+					sql.append(" AND d.community_street_id in (" + entity.getCommunityStreetId() + ")");
+				}
+				if (StringUtils.isNotBlank(entity.getStartTime())) {
+					sql.append(" AND c.update_time >= ? ");
+					params.add(entity.getStartTime());
+				}
+				if (StringUtils.isNotBlank(entity.getStopTime())) {
+					sql.append(" AND c.update_time <= ? ");
+					params.add(entity.getStopTime());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<Statistics>(Statistics.class));
+			if (resultList.size() > 0) {
+				entity = resultList.get(0);
+			} else {
+				return null;
+			}
+		} catch (DataAccessException e) {
+			logger.error("查询统计错误：{}", e.getMessage());
+			throw new SysException("查询统计错误", "10000", e);
+		}
+		return entity;
+	}
+
+
 }

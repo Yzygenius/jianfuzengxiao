@@ -59,4 +59,7 @@ public interface IStatisticsMDAO extends IDAO<Statistics> {
 	
 	/** 上报曲线 */
 	public List<Statistics> queryReportCurve(Statistics entity) throws SysException, AppException;
+	
+	/** 上报周期变化率 */
+	public Statistics queryReportChangeCount(Statistics entity) throws SysException, AppException;
 }

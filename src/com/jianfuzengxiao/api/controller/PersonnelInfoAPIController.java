@@ -23,6 +23,7 @@ import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.Base64ToFile;
+import com.jianfuzengxiao.base.utils.FaceComparison;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.MsgInfo;
@@ -191,9 +192,17 @@ public class PersonnelInfoAPIController extends BaseController {
 			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
 			Map<String, String> facePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
-			model.setCertificatesPositivePhoto(request.getContextPath() + "/" + positivePhoto.get("relativePath"));
-			model.setCertificatesNegativePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
-			model.setFacePhoto(request.getContextPath() + "/" + facePhoto.get("relativePath"));
+			
+			String positivePhotoStr = request.getContextPath() + "/" + positivePhoto.get("relativePath");
+			String negativePhotoStr = request.getContextPath() + "/" + negativePhoto.get("relativePath");
+			String facePhotoStr = request.getContextPath() + "/" + facePhoto.get("relativePath");
+			model.setCertificatesPositivePhoto(positivePhotoStr);
+			model.setCertificatesNegativePhoto(negativePhotoStr);
+			model.setFacePhoto(facePhotoStr);
+			int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
+			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+			throwAppException(result == 2, RC.OTHER_ERROR);
+			
 			personnelInfoService.addPersonnel(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -240,6 +249,10 @@ public class PersonnelInfoAPIController extends BaseController {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
+			
+			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+			throwAppException(result == 2, RC.OTHER_ERROR);
 			
 			personnelInfoService.updatePersonnel(model);
 			return apiResult(RC.SUCCESS);

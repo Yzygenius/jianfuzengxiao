@@ -39,34 +39,34 @@
 		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>省：</span>${community.provName }</td>
+		    	<td><span>省：</span>${gwh.provName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>市：</span>${community.cityName }</td>
+		    	<td><span>市：</span>${gwh.cityName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>区/县：</span>${community.areaName }</td>
+		    	<td><span>区/县：</span>${gwh.areaName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>管委会：</span>${community.gwhName }</td>
+		    	<td><span>管委会：</span>${gwh.gwhName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>社区：</span>${community.communityName }</td>
+		    	<td><span>排序：</span>${gwh.listOrder }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>排序：</span>${community.listOrder }</td>
+		    	<td>&nbsp;</td>
 		  	</tr>
 		  	<tr>
-		    	<td>首次上报时间：${community.createTime }</td>
+		    	<td>首次上报时间：${gwh.createTime }</td>
 		  	</tr>
-		  	<c:if test="${community.updateTime == null || community.updateTime == '' }">
+		  	<c:if test="${gwh.updateTime == null || gwh.updateTime == '' }">
 			  	<tr>
-			    	<td>最新上报时间：${community.createTime }</td>
+			    	<td>最新上报时间：${gwh.createTime }</td>
 			  	</tr>
 		  	</c:if>
-		  	<c:if test="${community.updateTime != null && community.updateTime != '' }">
+		  	<c:if test="${gwh.updateTime != null && gwh.updateTime != '' }">
 			  	<tr>
-			    	<td>最新上报时间：${community.updateTime }</td>
+			    	<td>最新上报时间：${gwh.updateTime }</td>
 			  	</tr>
 		  	</c:if>
 		  	
@@ -84,7 +84,7 @@
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
 		</c:if> --%>
-		<span class="title">小区/道路</span>
+		<span class="title">社区</span>
 		<span id="total" class="x-right" style="line-height: 40px"></span></xblock>
 		<table class="layui-table">
 			<thead>
@@ -93,8 +93,6 @@
 					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
 					</c:if> --%>
 					<th>排序</th>
-					<th>小区/道路</th>
-					<th>类别</th>
 					<th>社区名称</th>
 					<th>创建时间</th>
 					<!-- <th>更新时间</th> -->
@@ -116,7 +114,7 @@
 	<script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		var $, form, layer, laypage;
-		var communityId = ${community.communityId };
+		var gwhId = ${gwh.gwhId };
 		layui.use(['form', 'layer', 'laypage'], function() {
 			$ = layui.jquery//jquery
 			, form = layui.form
@@ -129,10 +127,10 @@
 		//分页
 		function page() {
 			$.ajax({
-				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				url : "/jianfuzengxiao/system/community/getCommunityPage.html",
 				type : 'post',
 				dataType : "json",
-				data: {'communityId': communityId},
+				data: {'gwhId': gwhId},
 				success : function(result) {
 					laypage.render({
 						elem : 'page',
@@ -156,10 +154,10 @@
 
 			var data = {
 				'page' : page,
-				'communityId': communityId
+				'gwhId': gwhId
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/communityStreet/getCommunityStreetPage.html",
+				url : "/jianfuzengxiao/system/community/getCommunityPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -171,19 +169,11 @@
 						var data = result.data.rows;
 						for (var i = 0; i < data.length; i++) {
 							var tr = $('#clone-tr').find('tr').clone();
-							tr.find('[row=checkBoxId]').children().val(data[i].communityStreetId);
-							tr.find('[row=ids]').text(data[i].communityStreetId);
+							tr.find('[row=checkBoxId]').children().val(data[i].communityId);
+							tr.find('[row=ids]').text(data[i].communityId);
 							tr.find('[row=listOrder]').text(data[i].listOrder);
-							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
-							if(data[i].status == 1){
-								tr.find('[row=status]').text('小区');
-							}else if(data[i].status == 2){
-								tr.find('[row=status]').text('道路');
-							}else{
-								tr.find('[row=status]').text('其他');
-							}
-							
 							tr.find('[row=communityName]').text(data[i].communityName);
+							
 							tr.find('[row=createTime]').text(data[i].createTime);
 							tr.find('[row=updateTime]').text(data[i].updateTime);
 
@@ -212,36 +202,34 @@
 		
 		function banner_details(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityStreetId=' + id, w, h);
+			x_admin_show(title, url + '?communityId=' + id, w, h);
 		}
-		// 编辑
+		
 		function banner_edit(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?communityStreetId=' + id, w, h);
+			x_admin_show(title, url + '?communityId=' + id, w, h);
 		}
-
-		/*删除*/
+		
 		function banner_del(obj) {
 			layer.confirm('确认要删除吗？', function(index) {
 				var id = $(obj).parent('td').siblings('[row=ids]').text();
 				$.ajax({
-					url : "/jianfuzengxiao/system/communityStreet/delCommunityStreet.html",
+					url : "/jianfuzengxiao/system/community/delCommunity.html",
 					type : 'post',
 					dataType : "json",
 					data : {
-						'communityStreetId' : id
+						'communityId' : id
 					},
 					success : function(result) {
 						if (result.code == 1) {
 							page();
-							serchData();
 							layer.msg('删除成功', {icon : 1});
 						} else {
 							layer.msg(result.msg, {icon : 7});
 						}
 					},
 					error : function(result) {
-						layer.msg("加载数据出错，请刷新页面", {icon : 2})
+						layer.msg("加载数据出错，请刷新页面后，重新操作", {icon : 2})
 					}
 				});
 
@@ -257,8 +245,6 @@
 			</c:if> --%>
 			<td row="ids" style="display: none;"></td>
 			<td row="listOrder"></td>
-			<td row="communityStreetName">
-			<td row="status">
 			<td row="communityName">
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
@@ -266,12 +252,12 @@
 			<!-- <td row="updateTime"></td> -->
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/communityStreet/toCommunityStreetDetail.html', 1000, 620)">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/community/toCommunityDetail.html', 1000, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/communityStreet/toUpdateCommunityStreet.html', 780, 520)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/community/toUpdateCommunity.html', 780, 520)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button>
 				<button class="layui-btn-danger layui-btn layui-btn-xs"
