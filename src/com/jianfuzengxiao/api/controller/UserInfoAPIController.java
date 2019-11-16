@@ -123,9 +123,9 @@ public class UserInfoAPIController extends BaseController {
 			model.setCertificatesPositivePhoto(positivePhotoStr);
 			model.setCertificatesNegativePhoto(negativePhotoStr);
 			model.setFacePhoto(facePhotoStr);
-			int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
+			/*int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
 			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.OTHER_ERROR);
+			throwAppException(result == 2, RC.OTHER_ERROR);*/
 			userInfoService.insert(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
@@ -244,9 +244,9 @@ public class UserInfoAPIController extends BaseController {
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
 			
-			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			/*int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.OTHER_ERROR);
+			throwAppException(result == 2, RC.OTHER_ERROR);*/
 			
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
@@ -285,9 +285,9 @@ public class UserInfoAPIController extends BaseController {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
-			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			/*int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.OTHER_ERROR);
+			throwAppException(result == 2, RC.OTHER_ERROR);*/
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

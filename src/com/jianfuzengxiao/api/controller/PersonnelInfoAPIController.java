@@ -199,9 +199,9 @@ public class PersonnelInfoAPIController extends BaseController {
 			model.setCertificatesPositivePhoto(positivePhotoStr);
 			model.setCertificatesNegativePhoto(negativePhotoStr);
 			model.setFacePhoto(facePhotoStr);
-			int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
+			/*int result = FaceComparison.faceUtils(positivePhotoStr, facePhotoStr);
 			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.OTHER_ERROR);
+			throwAppException(result == 2, RC.OTHER_ERROR);*/
 			
 			personnelInfoService.addPersonnel(model);
 			return apiResult(RC.SUCCESS);
@@ -250,9 +250,9 @@ public class PersonnelInfoAPIController extends BaseController {
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
 			
-			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+			/*int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.OTHER_ERROR);
+			throwAppException(result == 2, RC.OTHER_ERROR);*/
 			
 			personnelInfoService.updatePersonnel(model);
 			return apiResult(RC.SUCCESS);
