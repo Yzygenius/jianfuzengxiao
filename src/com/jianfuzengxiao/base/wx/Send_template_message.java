@@ -14,6 +14,7 @@ public class Send_template_message {
 	 */
 	public static void send_template_message(String openId) throws IOException {
 		String access_token = AuthUtil.doGetJson(Constants.ACCESS_TOKEN_URL).getString("access_token");
+		System.out.println(access_token);
 		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token;
 		NewOrdersTemplate temp = new NewOrdersTemplate();
 		WxMssVo wxMssVo = new WxMssVo();

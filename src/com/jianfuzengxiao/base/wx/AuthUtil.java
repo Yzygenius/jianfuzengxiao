@@ -24,6 +24,7 @@ public class AuthUtil {
         if(entity != null){
             String result = EntityUtils.toString(entity,"utf-8");
             jsonObject = JSONObject.parseObject(result);
+            System.out.println(jsonObject);
         }
         httpGet.releaseConnection();
         return jsonObject;

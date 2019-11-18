@@ -52,7 +52,27 @@ public class AdminInfo extends Entity {
 
 	protected String sts;
 
+	protected String wxGzhOpenid;
 	
+	protected String unionId;
+	
+	
+	public String getWxGzhOpenid() {
+		return wxGzhOpenid;
+	}
+
+	public void setWxGzhOpenid(String wxGzhOpenid) {
+		this.wxGzhOpenid = wxGzhOpenid;
+	}
+
+	public String getUnionId() {
+		return unionId;
+	}
+
+	public void setUnionId(String unionId) {
+		this.unionId = unionId;
+	}
+
 	public String getWxName() {
 		return wxName;
 	}

@@ -11,5 +11,5 @@ public class Constants {
 	    public static final String Template_id="0n5Q-EZMCFgG9JcQnOWrOVmYBt0Y2cf3oqV7M0wndxM";
 	    public static final String SCOPE = "snsapi_userinfo";
 	    public static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+APPID+"&secret="+APPSECRET;
-	   
+	    
 }
