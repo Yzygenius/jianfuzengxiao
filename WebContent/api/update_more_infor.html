@@ -68,68 +68,68 @@
                     <input type="number" placeholder="录入手机号码" class="measn12" id="telephone">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">证件类型</div>
                 <div class="means-input">
-                    <input type="text" placeholder="选择证件类型" class="measn" id="trigger1" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn" id="trigger1" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入姓名" class="measn12" id="namev" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn12" id="namev" onfocus="this.blur()">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</div>
                 <div class="means-input">
-                    <input type="text" placeholder="选择性别" class="measn" id="trigger2" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn" id="trigger2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
 
                 <div class="means-input">
-                    <input type="text" placeholder="选择生日" class="measn" id="select_2" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn" id="select_2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
 
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
 
                 <div class="means-input">
-                    <input type="text" placeholder="选择民族" class="measn" id="trigger3" value="" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn" id="trigger3" value="" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">证件号码</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入证件号码" class="measn12" id="measnnum" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn12" id="measnnum" onfocus="this.blur()">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">证件时效</div>
 
                 <div class="means-input" id="select_date1" style="justify-content:space-between; padding: 0 1.5%;box-sizing: border-box;">
-                    <input class="measn" id="date1" onfocus="this.blur()" placeholder="开始时间" style="text-align: center;"><span style="color: #999;">-</span><input class="measn" id="select_3" onfocus="this.blur()" placeholder="结束时间" style="text-align: center;">
+                    <input class="measn measnstart" id="date1" onfocus="this.blur()" placeholder="-"><span class="echo" style="color: #333;">-</span><input class="measn measnstart echo" id="select_3" onfocus="this.blur()" placeholder="-" style="text-align: center;">
                     <!-- <input type="text" placeholder="选择证件有效期" class="measn" id="select_3" onfocus="this.blur()"> -->
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">办证机关</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入办证机关" class="measn12" id="measn12" onfocus="this.blur()">
+                    <input type="text" placeholder="-" class="measn12" id="measn12" onfocus="this.blur()">
                 </div>
             </div>
-            <div class="meanslist">
+            <div class="meanslist meansdisplay">
                 <div class="means-name">证件地址</div>
                 <div class="means-input13">
-                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address" style="box-sizing: border-box;padding: 0px 10px;" onfocus="this.blur()"></textarea>
+                    <div class="text" id="address">-</div>
                 </div>
             </div>
         </div>
@@ -279,7 +279,7 @@
                 document.getElementById('date1').value = res.certificatesStartTime   //开始时间
                 document.getElementById('select_3').value =res.certificatesStopTime //结束时间
                 document.getElementById('measn12').value = res.certificatesOffice    //机关
-                document.getElementById('address').value = res.certificatesAddress   //证件地址
+                document.getElementById('address').innerHTML = res.certificatesAddress   //证件地址
                 document.getElementById('telephone').value = res.telephone //telephone
                 Positive('身份证',gender,res.birthDate,res.nationName+'族');
                 Back(res.certificatesStartTime,res.certificatesStopTime,leaseStartTime,leaseStopTime);
@@ -310,7 +310,7 @@
                     'certificatesStartTime' : document.getElementById('date1').value,
                     'certificatesStopTime' : document.getElementById('select_3').value,
                     'certificatesOffice' : document.getElementById('measn12').value,
-                    'certificatesAddress' : document.getElementById('address').value,
+                    'certificatesAddress' : document.getElementById('address').innerHTML,
                     'telephone' : document.getElementById('telephone').value,
                     // 'leaseStartTime':leaseStartTime,
                     // 'leaseStopTime':leaseStopTime,

@@ -83,7 +83,7 @@ document.getElementById('enter2').onclick = function(e) {
 					}else if(list.data.GetFieldName[i].indexOf('出生') != -1){
 						document.getElementById('select_2').value = list.data.GetRecogResult[i];
 					}else if(list.data.GetFieldName[i] === '住址'){
-						document.getElementById('address').value = list.data.GetRecogResult[i];
+						document.getElementById('address').innerHTML = list.data.GetRecogResult[i];
 					}else if(list.data.GetFieldName[i] === '公民身份号码'){
 						document.getElementById('measnnum').value = list.data.GetRecogResult[i];
 					}
@@ -137,6 +137,7 @@ document.getElementById('enter3').onclick = function(e) {
 						document.getElementById('date1').value = list.data.GetRecogResult[i];
 					}
 				}
+				$('.meansdisplay .echo').fadeIn(0);
 				// Back(document.getElementById('date1').value,document.getElementById('select_3').value);
 				// document.getElementById('date1').value = list.data.GetRecogResult[2];
 				// document.getElementById('select_3').value = list.data.GetRecogResult[3];
