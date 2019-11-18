@@ -96,7 +96,7 @@ document.getElementById('enter2').onclick = function(e) {
 				// document.getElementById('address').value = list.data.GetRecogResult[4];
 				var enter = document.getElementById('prev1');
 				enter.remove();
-				Positive('身份证',document.getElementById('trigger2').value,document.getElementById('select_2').value,document.getElementById('trigger3').value);
+				// Positive('身份证',document.getElementById('trigger2').value,document.getElementById('select_2').value,document.getElementById('trigger3').value);
         	}else if(result == -1){
         		if(document.getElementById('prev1')){
         			var enter = document.getElementById('prev1');
@@ -137,7 +137,7 @@ document.getElementById('enter3').onclick = function(e) {
 						document.getElementById('date1').value = list.data.GetRecogResult[i];
 					}
 				}
-				Back(document.getElementById('date1').value,document.getElementById('select_3').value);
+				// Back(document.getElementById('date1').value,document.getElementById('select_3').value);
 				// document.getElementById('date1').value = list.data.GetRecogResult[2];
 				// document.getElementById('select_3').value = list.data.GetRecogResult[3];
 				// document.getElementById('measn12').value = list.data.GetRecogResult[0];

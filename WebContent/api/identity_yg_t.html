@@ -56,27 +56,33 @@
         </div>
         <!-- <div class="border"></div> -->
         <div class="means">
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
+                <div class="means-name">联系方式</div>
+                <div class="means-input12">
+                    <input type="number" placeholder="录入手机号码" class="measn12" id="telephone">
+                </div>
+            </div>
+            <div class="meanslist">
                 <div class="means-name">证件类型</div>
                 <div class="means-input">
                     <input type="text" placeholder="选择证件类型" class="measn" id="trigger1" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入姓名" class="measn12" id="namev">
+                    <input type="text" placeholder="录入姓名" class="measn12" id="namev" onfocus="this.blur()">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</div>
                 <div class="means-input">
                     <input type="text" placeholder="选择性别" class="measn" id="trigger2" onfocus="this.blur()">
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
 
                 <div class="means-input">
@@ -85,7 +91,7 @@
                 </div>
 
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</div>
 
                 <div class="means-input">
@@ -93,13 +99,13 @@
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">证件号码</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入证件号码" class="measn12" id="measnnum">
+                    <input type="text" placeholder="录入证件号码" class="measn12" id="measnnum" onfocus="this.blur()">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">证件时效</div>
 
                 <div class="means-input" id="select_date1" style="justify-content:space-between; padding: 0 1.5%;box-sizing: border-box;">
@@ -108,26 +114,21 @@
                     <img src="images/tao/down.png">
                 </div>
             </div>
-            <div class="meanslist" style="display:none;">
+            <div class="meanslist">
                 <div class="means-name">办证机关</div>
                 <div class="means-input12">
-                    <input type="text" placeholder="录入办证机关" class="measn12" id="measn12">
-                </div>
-            </div>
-            <div class="meanslist" style="display:none;">
-                <div class="means-name">证件地址</div>
-                <div class="means-input13">
-                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address"></textarea>
+                    <input type="text" placeholder="录入办证机关" class="measn12" id="measn12" onfocus="this.blur()">
                 </div>
             </div>
             <div class="meanslist">
-                <div class="means-name">联系方式</div>
-                <div class="means-input12">
-                    <input type="number" placeholder="录入手机号码" class="measn12" id="telephone">
+                <div class="means-name">证件地址</div>
+                <div class="means-input13">
+                    <textarea rows="5" cols="" placeholder="录入证件地址" class="text" id="address" onfocus="this.blur()"></textarea>
                 </div>
             </div>
         </div>
-       <div class="btn" id="submit">提交</div>
+        <div style="height:100px;"></div>
+        <div class="btn" id="submit">提交</div>
     </div>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/selectDate.js"></script>
@@ -201,8 +202,8 @@
                         if(weekdayArr !== '' && weekdayArr2 !== ''){
                             sessionStorage.setItem('weekdayArr',JSON.stringify(weekdayArr))
                             sessionStorage.setItem('weekdayArr2',JSON.stringify(weekdayArr2))
-                            Positive('身份证','女','1992-01-08','回族');
-                            Back('2012-2-8','2012-2-8');
+                            // Positive('身份证','女','1992-01-08','回族');
+                            // Back('2012-2-8','2012-2-8');
                         }
                     },
                     error:function(jqXHR){
@@ -336,174 +337,174 @@
         }
         return '';
     }
-    function Positive(type,Gender,birthday,Nation){
-        var arr = $('.mobileSelect')
-        console.log(arr.length)
-        for(var i = 0; i< arr.length;i++){
-            if(arr.eq(i).find('.title').html() === "有效证件" || arr.eq(i).find('.title').html() == "性别" || arr.eq(i).find('.title').html() == "生日" || arr.eq(i).find('.title').html() == "民族" ){
-                arr.eq(i).remove();
-            }
-        }
-        //获取民族
-        var weekdayArr2 = JSON.parse(sessionStorage.getItem('weekdayArr2'))
-        var i = contains(weekdayArr2,Nation);
-        var mobileSelect0 = new MobileSelect({
-            trigger: '#trigger3',
-            title: '民族',
-            wheels: [
-                { data: weekdayArr2 }
-            ],
-            position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger3').value = data[0].value
-                //$('#trigger3').val(data.value);
-            }
-        });
-        //获取证件
-        var weekdayArr = JSON.parse(sessionStorage.getItem('weekdayArr'))
-        var i = contains(weekdayArr,type);
-        var mobileSelect1 = new MobileSelect({
-            trigger: '#trigger1',
-            title: '有效证件',
-            wheels: [
-                { data: weekdayArr }
-            ],
-           position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger1').value = data[0].value;
-            }
-        });
-        // var weekdayArr = ['身份证', '驾驶证'];
-        var weekdayArr1 = [{id:0,value:'男'},{id:1,value:'女'}];
-       //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
-        var date=new Date;
-        var i = contains(weekdayArr1,Gender);
-        // console.log(i);
-        var mobileSelect2 = new MobileSelect({
-            trigger: '#trigger2',
-            title: '性别',
-            wheels: [
-                { data: weekdayArr1 }
-            ],
-            position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
-            transitionEnd: function (indexArr, data) {
-                console.log(data);
-            },
-            callback: function (indexArr, data) {
-                console.log(data);
-                document.getElementById('trigger2').value = data[0].value;
-            }
-        });
-        var birthday0 = birthday.split('-')
-        $.selectDate("#select_2", {
-            select: birthday0,
-            title: '生日'
-        }, function (data) {
-            console.log(data);
-            document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
-        });
-    }
+    // function Positive(type,Gender,birthday,Nation){
+    //     var arr = $('.mobileSelect')
+    //     console.log(arr.length)
+    //     for(var i = 0; i< arr.length;i++){
+    //         if(arr.eq(i).find('.title').html() === "有效证件" || arr.eq(i).find('.title').html() == "性别" || arr.eq(i).find('.title').html() == "生日" || arr.eq(i).find('.title').html() == "民族" ){
+    //             arr.eq(i).remove();
+    //         }
+    //     }
+    //     //获取民族
+    //     var weekdayArr2 = JSON.parse(sessionStorage.getItem('weekdayArr2'))
+    //     var i = contains(weekdayArr2,Nation);
+    //     var mobileSelect0 = new MobileSelect({
+    //         trigger: '#trigger3',
+    //         title: '民族',
+    //         wheels: [
+    //             { data: weekdayArr2 }
+    //         ],
+    //         position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    //         transitionEnd: function (indexArr, data) {
+    //             console.log(data);
+    //         },
+    //         callback: function (indexArr, data) {
+    //             console.log(data);
+    //             document.getElementById('trigger3').value = data[0].value
+    //             //$('#trigger3').val(data.value);
+    //         }
+    //     });
+    //     //获取证件
+    //     var weekdayArr = JSON.parse(sessionStorage.getItem('weekdayArr'))
+    //     var i = contains(weekdayArr,type);
+    //     var mobileSelect1 = new MobileSelect({
+    //         trigger: '#trigger1',
+    //         title: '有效证件',
+    //         wheels: [
+    //             { data: weekdayArr }
+    //         ],
+    //        position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    //         transitionEnd: function (indexArr, data) {
+    //             console.log(data);
+    //         },
+    //         callback: function (indexArr, data) {
+    //             console.log(data);
+    //             document.getElementById('trigger1').value = data[0].value;
+    //         }
+    //     });
+    //     // var weekdayArr = ['身份证', '驾驶证'];
+    //     var weekdayArr1 = [{id:0,value:'男'},{id:1,value:'女'}];
+    //    //var weekdayArr2 = [{id:"1",value:'汉族'}, {id:"2",value:'满族'},{id:"3",value:'藏族'} , {id:"4",value:'维吾尔'}, {id:"5",value:'维11吾尔'}];
+    //     var date=new Date;
+    //     var i = contains(weekdayArr1,Gender);
+    //     // console.log(i);
+    //     var mobileSelect2 = new MobileSelect({
+    //         trigger: '#trigger2',
+    //         title: '性别',
+    //         wheels: [
+    //             { data: weekdayArr1 }
+    //         ],
+    //         position: [i], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    //         transitionEnd: function (indexArr, data) {
+    //             console.log(data);
+    //         },
+    //         callback: function (indexArr, data) {
+    //             console.log(data);
+    //             document.getElementById('trigger2').value = data[0].value;
+    //         }
+    //     });
+    //     var birthday0 = birthday.split('-')
+    //     $.selectDate("#select_2", {
+    //         select: birthday0,
+    //         title: '生日'
+    //     }, function (data) {
+    //         console.log(data);
+    //         document.getElementById('select_2').value = data.year + "-" + data.month + "-" + data.day
+    //     });
+    // }
 
-    function Back(Prescription0,Prescription1){
-        var arr = $('.mobileSelect')
-        for(var i = 0; i< arr.length;i++){
-            if(arr.eq(i).find('.title').html() == "证件有效期开始时间" || arr.eq(i).find('.title').html() == "证件有效期结束时间"){
-                arr.eq(i).remove();
-            }
-        }
-        var Prescription0 = Prescription0.split('-');
-        var Prescription1 = Prescription1.split('-')
-        // 证件失效
-        var date1 = $.selectDate("#date1",{
-            start:1994,
-            end:2999,
-            select:Prescription0,
-            title:'证件有效期开始时间'
-        },function (data) {
-            // console.log(data);
-            document.getElementById('date1').value = data.year + "-" + data.month + "-" + data.day
-            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
-            $(this).hide()
-            setTimeout(function(){
-                date2.show()
-            }, 300);
-        });
-        var date2 = $.selectDate("#select_3",{
-            start:1994,
-            end:2999,
-            select:Prescription1,
-            title:'证件有效期结束时间'
-        },function (data) {
-            // console.log(data);
-            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
-            document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
-            var dat3 = document.getElementById('date1').value
-            var dat4 = document.getElementById('select_3').value
-            var t1 = new Date(dat3.replace(/-/g, '/'));
-            var t2 = new Date(dat4.replace(/-/g, '/'));
-            if(t1.getTime()>t2.getTime()){
-                layer.msg("开始时间不能大于结束时间") 
-                document.getElementById('date1').value=""
-                document.getElementById('select_3').value=""
-            }
-            date1.hide()
-            $(this).hide()
-        });
+    // function Back(Prescription0,Prescription1){
+    //     var arr = $('.mobileSelect')
+    //     for(var i = 0; i< arr.length;i++){
+    //         if(arr.eq(i).find('.title').html() == "证件有效期开始时间" || arr.eq(i).find('.title').html() == "证件有效期结束时间"){
+    //             arr.eq(i).remove();
+    //         }
+    //     }
+    //     var Prescription0 = Prescription0.split('-');
+    //     var Prescription1 = Prescription1.split('-')
+    //     // 证件失效
+    //     var date1 = $.selectDate("#date1",{
+    //         start:1994,
+    //         end:2999,
+    //         select:Prescription0,
+    //         title:'证件有效期开始时间'
+    //     },function (data) {
+    //         // console.log(data);
+    //         document.getElementById('date1').value = data.year + "-" + data.month + "-" + data.day
+    //         // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
+    //         $(this).hide()
+    //         setTimeout(function(){
+    //             date2.show()
+    //         }, 300);
+    //     });
+    //     var date2 = $.selectDate("#select_3",{
+    //         start:1994,
+    //         end:2999,
+    //         select:Prescription1,
+    //         title:'证件有效期结束时间'
+    //     },function (data) {
+    //         // console.log(data);
+    //         // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+    //         document.getElementById('select_3').value = data.year + "-" + data.month + "-" + data.day
+    //         var dat3 = document.getElementById('date1').value
+    //         var dat4 = document.getElementById('select_3').value
+    //         var t1 = new Date(dat3.replace(/-/g, '/'));
+    //         var t2 = new Date(dat4.replace(/-/g, '/'));
+    //         if(t1.getTime()>t2.getTime()){
+    //             layer.msg("开始时间不能大于结束时间") 
+    //             document.getElementById('date1').value=""
+    //             document.getElementById('select_3').value=""
+    //         }
+    //         date1.hide()
+    //         $(this).hide()
+    //     });
 
-        $("#select_date1").click(function () {
-            date1.show();
-            date2.hide();
-        })
-        // 居住失效
-        var date3 = $.selectDate("#date3",{
-            start:1994,
-            end:2999,
-            select:Prescription0,
-            title:'居住时效'
-        },function (data) {
-            // console.log(data);
-            document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
-            // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
-            $(this).hide()
-            setTimeout(function(){
-                date4.show()
-            }, 300);
-        });
-        var date4 = $.selectDate("#date4",{
-            start:1994,
-            end:2999,
-            select:Prescription1,
-            title:'居住时效'
-        },function (data) {
-            // console.log(data);
-            // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
-            document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
-            var dat3 = document.getElementById('date3').value
-            var dat4 = document.getElementById('date4').value
-            var t1 = new Date(dat3.replace(/-/g, '/'));
-            var t2 = new Date(dat4.replace(/-/g, '/'));
-            if(t1.getTime()>t2.getTime()){
-                layer.msg("开始时间不能大于结束时间") 
-                document.getElementById('date3').value=""
-                document.getElementById('date4').value=""
-            }
-            date3.hide()
-            $(this).hide()
-        });
+    //     $("#select_date1").click(function () {
+    //         date1.show();
+    //         date2.hide();
+    //     })
+    //     // 居住失效
+    //     var date3 = $.selectDate("#date3",{
+    //         start:1994,
+    //         end:2999,
+    //         select:Prescription0,
+    //         title:'居住时效'
+    //     },function (data) {
+    //         // console.log(data);
+    //         document.getElementById('date3').value = data.year + "-" + data.month + "-" + data.day
+    //         // $("#date1").html(data.year+"-"+data.month+"-"+data.day);
+    //         $(this).hide()
+    //         setTimeout(function(){
+    //             date4.show()
+    //         }, 300);
+    //     });
+    //     var date4 = $.selectDate("#date4",{
+    //         start:1994,
+    //         end:2999,
+    //         select:Prescription1,
+    //         title:'居住时效'
+    //     },function (data) {
+    //         // console.log(data);
+    //         // $("#date2").html(data.year+"-"+data.month+"-"+data.day);
+    //         document.getElementById('date4').value = data.year + "-" + data.month + "-" + data.day
+    //         var dat3 = document.getElementById('date3').value
+    //         var dat4 = document.getElementById('date4').value
+    //         var t1 = new Date(dat3.replace(/-/g, '/'));
+    //         var t2 = new Date(dat4.replace(/-/g, '/'));
+    //         if(t1.getTime()>t2.getTime()){
+    //             layer.msg("开始时间不能大于结束时间") 
+    //             document.getElementById('date3').value=""
+    //             document.getElementById('date4').value=""
+    //         }
+    //         date3.hide()
+    //         $(this).hide()
+    //     });
 
-        $("#select_date2").click(function () {
-            date3.show();
-            date4.hide();
-        })
-    }
+    //     $("#select_date2").click(function () {
+    //         date3.show();
+    //         date4.hide();
+    //     })
+    // }
     function imgPreview(fileDom, id) {
             console.log(id)
             var id = id

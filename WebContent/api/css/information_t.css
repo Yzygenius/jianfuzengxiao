@@ -391,6 +391,9 @@ margin-top:40px;
 
 }
 .btn{
+    position: fixed;
+    left: 13.5%;
+    bottom: 0;
     width:73%;
     height: 50px;
     margin:0 auto;
@@ -399,8 +402,7 @@ margin-top:40px;
     color:white;
     text-align:center;
     line-height: 50px;
-    margin-top:30px;
-     margin-bottom:58px;
+    margin-bottom:25px;
 }
 .type{
     width: 77%;
