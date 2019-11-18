@@ -56,7 +56,7 @@
 		    	<td><span>小区/道路：</span>${communityStreet.communityStreetName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>排序：</span>${communityStreet.listOrder }</td>
+		    	<td><span>排序：</span>${communityStreet.communityStreetId }</td>
 		  	</tr>
 		  	<tr>
 		    	<td>&nbsp;</td>

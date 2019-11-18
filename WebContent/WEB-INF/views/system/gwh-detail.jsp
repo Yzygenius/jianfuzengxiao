@@ -51,7 +51,7 @@
 		    	<td><span>管委会：</span>${gwh.gwhName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>排序：</span>${gwh.listOrder }</td>
+		    	<td><span>排序：</span>${gwh.gwhId }</td>
 		  	</tr>
 		  	<tr>
 		    	<td>&nbsp;</td>

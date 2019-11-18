@@ -182,7 +182,7 @@
 							var tr = $('#clone-tr').find('tr').clone();
 							tr.find('[row=checkBoxId]').children().val(data[i].gwhId);
 							tr.find('[row=ids]').text(data[i].gwhId);
-							tr.find('[row=listOrder]').text(data[i].listOrder);
+							tr.find('[row=listOrder]').text(data[i].gwhId);
 							tr.find('[row=gwhName]').text(data[i].gwhName);
 							tr.find('[row=provName]').text(data[i].provName);
 							tr.find('[row=cityName]').text(data[i].cityName);

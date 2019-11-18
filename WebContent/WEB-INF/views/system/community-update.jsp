@@ -68,7 +68,7 @@
 					<span class="x-red">*</span>
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<%-- <div class="layui-form-item">
 				<label class="layui-form-label"> 
 					<span>排序</span>
 				</label>
@@ -79,7 +79,7 @@
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
 				</div>
-			</div>
+			</div> --%>
 			
 			<div class="layui-form-item">
 				<label for="L_repass" class="layui-form-label"> </label>
@@ -91,8 +91,12 @@
 <script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 <script>
-var gwhId = ${community.gwhId}
-
+var gwhId = '${community.gwhId}'
+var gwhName = '${community.gwhName}'
+var provCode = '${community.provCode }';
+var cityCode = '${community.cityCode }';
+var areaCode = '${community.areaCode }';
+ 
 layui.use(['form','layer'], function(){
 	var $ = layui.jquery
     ,form = layui.form
@@ -104,10 +108,7 @@ layui.use(['form','layer'], function(){
     var cityList = "";
     var areaList = "";
     
-    var provCode = ${community.provCode };
-    var cityCode = ${community.cityCode };
-    var areaCode = ${community.areaCode };
-     
+  
     $.ajax({  
 		url : "/jianfuzengxiao/common/getAreaList.html",  
 		type : 'post',
@@ -192,25 +193,25 @@ layui.use(['form','layer'], function(){
 		}
 	});
     
-  	//监听省下拉框
+    //监听省下拉框
     form.on('select(province)', function(data){
-    	
     	provName = data.elem[data.elem.selectedIndex].text;
     	provCode = data.value;
+    	cityCode = '';
+    	areaCode = '';
+    	gwhId = '';
+    	communityId ='';
     	$.each(provinceList, function (index, item) {
 			if(item.code == data.value){
 				cityList = item.childList;
 			}
         });
-    	//console.log(cityList)
         //移除城市下拉框所有选项
         $("#city").empty();
         var cityHtml = '<option value="">请选择市</option>';
         $("#city").html(cityHtml);
         var areaHtml = '<option value="">请选择县/区</option>';
         $("#area").html(areaHtml);
-        //provinceText = $("#province").find("option:selected").text();
-        //var value = $("#province").val();
         var str = '';
         $.each(cityList, function (index, item) {
            	str += "<option value='" + item.code + "'>" + item.name + "</option>";
@@ -218,26 +219,28 @@ layui.use(['form','layer'], function(){
         $("#city").append(str);
       	//append后必须从新渲染
         form.render('select');
+      	
+        getGwhList()
+        serchCommunity();
+        serchCommunityStreet();
     });
   	
  	//监听市下拉框
     form.on('select(city)', function(data){
     	cityName = data.elem[data.elem.selectedIndex].text;
     	cityCode = data.value;
-    	
+    	areaCode = '';
+    	gwhId = '';
+    	communityId ='';
     	$.each(cityList, function (index, item) {
 			if(item.code == data.value){
 				areaList = item.childList;
 			}
         });
-    	//console.log(dataObj)
-    	//console.log(cityList)
         //移除城区下拉框所有选项
         $("#area").empty();
         var areaHtml = '<option value="">请选择县/区</option>';
         $("#area").html(areaHtml);
-        //provinceText = $("#province").find("option:selected").text();
-        //var value = $("#province").val();
         var str = '';
         $.each(areaList, function (index, item) {
            	str += "<option value='" + item.code + "'>" + item.name + "</option>";
@@ -245,11 +248,30 @@ layui.use(['form','layer'], function(){
         $("#area").append(str);
       	//append后必须从新渲染
         form.render('select');
+      	
+        getGwhList()
+        serchCommunity();
+        serchCommunityStreet();
     });
- 	//监听区/
+ 	//监听区/县
     form.on('select(area)', function(data){
     	areaName = data.elem[data.elem.selectedIndex].text;
     	areaCode = data.value;
+   
+    	gwhId = '';
+    	communityId ='';
+    	getGwhList()
+        serchCommunity();
+        serchCommunityStreet();
+    });
+  	//监听管委会
+    form.on('select(gwh)', function(data){
+    	gwhName = data.elem[data.elem.selectedIndex].text;
+    	gwhId = data.value;
+    	
+    	communityId ='';
+        serchCommunity();
+        serchCommunityStreet();
     });
  	
     
@@ -268,7 +290,7 @@ layui.use(['form','layer'], function(){
 		data: {
 			'communityId': $('#id').val(),
 			'communityName': $('#communityName').val(),
-			'listOrder': $('#listOrder').val(),
+			//'listOrder': $('#listOrder').val(),
 			'provCode': $("#province option:selected").val(),
 			'cityCode': $("#city option:selected").val(),
 			'areaCode': $("#area option:selected").val(),
@@ -301,22 +323,29 @@ layui.use(['form','layer'], function(){
 });
 
 function getGwhList(){
+	var data = {
+			'provCode': provCode,
+			'cityCode': cityCode,
+			'areaCode': areaCode
+			}
+	//console.log(data)
 	$.ajax({  
 		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
 		type : 'post',
 		dataType: "json",
-		data: {
-		},
+		data: data,
 		success : function(result){
 			//console.log(result)
 			if(result.code == 1){
-				var str = '';
+				$("#gwh").html('');
+				var str = '<option value="">请选择</option>';
 				$.each(result.data, function (index, item) {
-					if(item.gwhId == gwhId){
+					/* if(item.gwhId == 1){
 						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
 					}else{
 						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
-					}
+					} */
+					str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
 		        });
 		        $("#gwh").append(str);
 		        //append后必须从新渲染

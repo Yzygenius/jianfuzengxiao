@@ -190,7 +190,7 @@
 							tr.find('[row=checkBoxId]').children().val(
 									data[i].communityId);
 							tr.find('[row=ids]').text(data[i].communityId);
-							tr.find('[row=listOrder]').text(data[i].listOrder);
+							tr.find('[row=listOrder]').text(data[i].communityId);
 							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=provName]').text(data[i].provName);
 							tr.find('[row=cityName]').text(data[i].cityName);

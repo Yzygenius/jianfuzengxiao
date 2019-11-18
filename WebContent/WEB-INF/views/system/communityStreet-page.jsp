@@ -184,7 +184,7 @@
 							var tr = $('#clone-tr').find('tr').clone();
 							tr.find('[row=checkBoxId]').children().val(data[i].communityStreetId);
 							tr.find('[row=ids]').text(data[i].communityStreetId);
-							tr.find('[row=listOrder]').text(data[i].listOrder);
+							tr.find('[row=listOrder]').text(data[i].communityStreetId);
 							tr.find('[row=communityStreetName]').text(data[i].communityStreetName);
 							if(data[i].status == 1){
 								tr.find('[row=status]').text('小区');

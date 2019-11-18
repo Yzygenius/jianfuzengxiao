@@ -64,8 +64,8 @@ public class GwhSysController extends BaseController {
 	public String getGwhPage(GwhInfoMVO entity){
 		try {
 			PageInfo pageInfo = getPage();
-			pageInfo.setSortName("createTime");
-			pageInfo.setSortOrder("desc");
+			/*pageInfo.setSortName("createTime");
+			pageInfo.setSortOrder("desc");*/
 			entity.setSts("A");
 			pageInfo = gwhInfoService.queryPage(entity, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);

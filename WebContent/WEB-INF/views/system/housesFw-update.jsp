@@ -258,8 +258,8 @@ var housesTypeId = '${houses.housesTypeId }';
 var housesTypeName = '${houses.housesTypeName }';
 var propertyCertificatesPhoto = '${houses.propertyCertificatesPhoto }';
 var houseTypePhoto = '${houses.houseTypePhoto }';
-var gwhId = ${houses.gwhId};
-
+var gwhId = '${houses.gwhId}'
+var gwhName = '${houses.gwhName}'
 var provinceList = "";
 var cityList = "";
 var areaList = "";
@@ -283,78 +283,100 @@ layui.use(['form','layer', 'upload'], function(){
     
 	getGwhList()
     
-  	//监听省下拉框
-    form.on('select(province)', function(data){
-    	provName = data.elem[data.elem.selectedIndex].text;
-    	provCode = data.value;
-    	$.each(provinceList, function (index, item) {
-			if(item.code == data.value){
-				cityList = item.childList;
-			}
+      	//监听省下拉框
+        form.on('select(province)', function(data){
+        	provName = data.elem[data.elem.selectedIndex].text;
+        	provCode = data.value;
+        	cityCode = '';
+        	areaCode = '';
+        	gwhId = '';
+        	communityId ='';
+        	$.each(provinceList, function (index, item) {
+				if(item.code == data.value){
+					cityList = item.childList;
+				}
+	        });
+	        //移除城市下拉框所有选项
+	        $("#city").empty();
+	        var cityHtml = '<option value="">请选择市</option>';
+	        $("#city").html(cityHtml);
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        var str = '';
+	        $.each(cityList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#city").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+	      	
+            getGwhList()
+            serchCommunity();
+            serchCommunityStreet();
         });
-        //移除城市下拉框所有选项
-        $("#city").empty();
-        var cityHtml = '<option value="">请选择市</option>';
-        $("#city").html(cityHtml);
-        var areaHtml = '<option value="">请选择县/区</option>';
-        $("#area").html(areaHtml);
-        var str = '';
-        $.each(cityList, function (index, item) {
-           	str += "<option value='" + item.code + "'>" + item.name + "</option>";
-        });
-        $("#city").append(str);
-      	//append后必须从新渲染
-        form.render('select');
       	
-        serchCommunity();
-    });
-  	
- 	//监听市下拉框
-    form.on('select(city)', function(data){
-    	cityName = data.elem[data.elem.selectedIndex].text;
-    	cityCode = data.value;
-    	
-    	$.each(cityList, function (index, item) {
-			if(item.code == data.value){
-				areaList = item.childList;
-			}
+     	//监听市下拉框
+        form.on('select(city)', function(data){
+        	cityName = data.elem[data.elem.selectedIndex].text;
+        	cityCode = data.value;
+        	areaCode = '';
+        	gwhId = '';
+        	communityId ='';
+        	$.each(cityList, function (index, item) {
+				if(item.code == data.value){
+					areaList = item.childList;
+				}
+	        });
+	        //移除城区下拉框所有选项
+	        $("#area").empty();
+	        var areaHtml = '<option value="">请选择县/区</option>';
+	        $("#area").html(areaHtml);
+	        var str = '';
+	        $.each(areaList, function (index, item) {
+               	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+            });
+	        $("#area").append(str);
+	      	//append后必须从新渲染
+            form.render('select');
+	      	
+            getGwhList()
+            serchCommunity();
+            serchCommunityStreet();
         });
-        //移除城区下拉框所有选项
-        $("#area").empty();
-        var areaHtml = '<option value="">请选择县/区</option>';
-        $("#area").html(areaHtml);
-        var str = '';
-        $.each(areaList, function (index, item) {
-           	str += "<option value='" + item.code + "'>" + item.name + "</option>";
+     	//监听区/县
+        form.on('select(area)', function(data){
+        	areaName = data.elem[data.elem.selectedIndex].text;
+        	areaCode = data.value;
+       
+        	gwhId = '';
+        	communityId ='';
+        	getGwhList()
+            serchCommunity();
+            serchCommunityStreet();
         });
-        $("#area").append(str);
-      	//append后必须从新渲染
-        form.render('select');
-      	
-        serchCommunity();
-    });
- 	//监听区/县
-    form.on('select(area)', function(data){
-    	areaName = data.elem[data.elem.selectedIndex].text;
-    	areaCode = data.value;
-    	
-    	serchCommunity();
-    });
- 	
-  	//监听社区
-    form.on('select(communitySel)', function(data){
-    	communityName = data.elem[data.elem.selectedIndex].text;
-    	communityId = data.value;
-    	
-    	serchCommunityStreet();
-    });
-  
-  	//监听社区
-    form.on('select(communityStreetSel)', function(data){
-    	communityStreetName = data.elem[data.elem.selectedIndex].text;
-    	communityStreetId = data.value;
-    	
-    });
+      	//监听管委会
+        form.on('select(gwh)', function(data){
+        	gwhName = data.elem[data.elem.selectedIndex].text;
+        	gwhId = data.value;
+        	
+        	communityId ='';
+            serchCommunity();
+            serchCommunityStreet();
+        });
+      	//监听社区
+        form.on('select(communitySel)', function(data){
+        	communityName = data.elem[data.elem.selectedIndex].text;
+        	communityId = data.value;
+        	
+            serchCommunityStreet();
+        });
+      
+      	//监听社区
+        form.on('select(communityStreetSel)', function(data){
+        	communityStreetName = data.elem[data.elem.selectedIndex].text;
+        	communityStreetId = data.value;
+        	
+        });
   	
   	//监听房屋类型
     form.on('select(housesTypeSel)', function(data){
@@ -415,10 +437,10 @@ layui.use(['form','layer', 'upload'], function(){
 				'areaName': $("#area option:selected").text(),
 				'gwhId': $('#gwh option:selected').val(),
 				'gwhName': $('#gwh option:selected').text(),
-				'communityId': communityId,
-				'communityName': communityName,
-				'communityStreetId': communityStreetId,
-				'communityStreetName': communityStreetName,
+				'communityId': $('#communitySel option:selected').val(),
+				'communityName': $('#communitySel option:selected').text(),
+				'communityStreetId': $('#communityStreetSel option:selected').val(),
+				'communityStreetName': $('#communityStreetSel option:selected').text(),
 				'housesTypeId': housesTypeId,
 				'housesTypeName': housesTypeName,
 				'propertyCertificatesPhoto': propertyCertificatesPhoto,
@@ -542,7 +564,8 @@ function serchCommunity(){
 		data: {
 			'provCode': provCode,
 			'cityCode': cityCode,
-			'areaCode': areaCode
+			'areaCode': areaCode,
+			'gwhId': gwhId
 		},
 		success : function(result){
 			if(result.code == 1){
@@ -571,7 +594,11 @@ function serchCommunityStreet(){
 		type : 'post',
 		dataType: "json",
 		data: {
-			'communityId': communityId,
+			'provCode': provCode,
+			'cityCode': cityCode,
+			'areaCode': areaCode,
+			'gwhId': gwhId,
+			'communityId': communityId
 		},
 		success : function(result){
 			if(result.code == 1){
@@ -624,16 +651,21 @@ function serchHousesType(){
 }
 
 function getGwhList(){
+	var data = {
+			'provCode': provCode,
+			'cityCode': cityCode,
+			'areaCode': areaCode
+			}
 	$.ajax({  
 		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
 		type : 'post',
 		dataType: "json",
-		data: {
-		},
+		data: data,
 		success : function(result){
 			//console.log(result)
 			if(result.code == 1){
-				var str = '';
+				$("#gwh").html('')
+				var str = '<option value="">请选择</option>';
 				$.each(result.data, function (index, item) {
 					if(item.gwhId == gwhId){
 						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";

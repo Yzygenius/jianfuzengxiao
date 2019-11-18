@@ -54,6 +54,7 @@
 					<th>用户名</th>
 					<th>姓名</th>
 					<th>电话</th>
+					<th>所属管委会</th>
 					<th>微信</th>
 					<th>管辖社区</th>
 					<th>操作</th>
@@ -77,6 +78,7 @@
 				<!-- <div style="width:200px;height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div> -->
 			</td>
 			<td row="telephone"></td>
+			<td row="gwhName"></td>
 			<td row="wxAccountNumber"></td>
 			<td row="count"></td>
 			<!-- <td row="username"></td>
@@ -213,6 +215,7 @@
 							tr.find('[row=loginName]').text(data[i].loginName);
 							tr.find('[row=username]').text(data[i].username);
 							tr.find('[row=telephone]').text(data[i].telephone);
+							tr.find('[row=gwhName]').text(data[i].gwhName);
 							tr.find('[row=wxAccountNumber]').text(data[i].wxName);
 							tr.find('[row=count]').text(data[i].manageCommunityCount);
 							$('#x-img').append(tr);

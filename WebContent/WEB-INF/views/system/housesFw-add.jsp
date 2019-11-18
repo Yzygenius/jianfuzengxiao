@@ -245,8 +245,10 @@
 	var provName = '';
 	var cityCode = '';
 	var cityName = '';
-	var areaCode = '';
+	var areaCode = '650105';
 	var areaName = '';
+	var gwhId = '';
+	var gwhName = '';
 	var communityId = '';
 	var communityName = '';
 	var communityStreetId = '';
@@ -261,8 +263,6 @@
         form = layui.form
         layer = layui.layer
         upload = layui.upload;
-
-    	getGwhList()
     	
 	    //监听提交
 		form.on('submit(add)', function(data){
@@ -286,10 +286,10 @@
 					'areaName': $("#area option:selected").text(),
 					'gwhId': $('#gwh option:selected').val(),
 					'gwhName': $('#gwh option:selected').text(),
-					'communityId': communityId,
-					'communityName': communityName,
-					'communityStreetId': communityStreetId,
-					'communityStreetName': communityStreetName,
+					'communityId': $('#communitySel option:selected').val(),
+					'communityName': $('#communitySel option:selected').text(),
+					'communityStreetId': $('#communityStreetSel option:selected').val(),
+					'communityStreetName': $('#communityStreetSel option:selected').text(),
 					'housesTypeId': housesTypeId,
 					'housesTypeName': housesTypeName,
 					'propertyCertificatesPhoto': propertyCertificatesPhoto,
@@ -324,6 +324,8 @@
 	      	return false;
 	    });
     	
+		getGwhList()
+		
     	/* 社区加载 */
     	serchCommunity();
     	
@@ -396,6 +398,8 @@
         	provCode = data.value;
         	cityCode = '';
         	areaCode = '';
+        	gwhId = '';
+        	communityId ='';
         	$.each(provinceList, function (index, item) {
 				if(item.code == data.value){
 					cityList = item.childList;
@@ -415,7 +419,9 @@
 	      	//append后必须从新渲染
             form.render('select');
 	      	
+            getGwhList()
             serchCommunity();
+            serchCommunityStreet();
         });
       	
      	//监听市下拉框
@@ -423,6 +429,8 @@
         	cityName = data.elem[data.elem.selectedIndex].text;
         	cityCode = data.value;
         	areaCode = '';
+        	gwhId = '';
+        	communityId ='';
         	$.each(cityList, function (index, item) {
 				if(item.code == data.value){
 					areaList = item.childList;
@@ -440,22 +448,36 @@
 	      	//append后必须从新渲染
             form.render('select');
 	      	
+            getGwhList()
             serchCommunity();
+            serchCommunityStreet();
         });
      	//监听区/县
         form.on('select(area)', function(data){
         	areaName = data.elem[data.elem.selectedIndex].text;
         	areaCode = data.value;
-        	
-        	serchCommunity();
+       
+        	gwhId = '';
+        	communityId ='';
+        	getGwhList()
+            serchCommunity();
+            serchCommunityStreet();
         });
-     	
+      	//监听管委会
+        form.on('select(gwh)', function(data){
+        	gwhName = data.elem[data.elem.selectedIndex].text;
+        	gwhId = data.value;
+        	
+        	communityId ='';
+            serchCommunity();
+            serchCommunityStreet();
+        });
       	//监听社区
         form.on('select(communitySel)', function(data){
         	communityName = data.elem[data.elem.selectedIndex].text;
         	communityId = data.value;
         	
-        	serchCommunityStreet();
+            serchCommunityStreet();
         });
       
       	//监听社区
@@ -519,7 +541,8 @@
 			data: {
 				'provCode': provCode,
 				'cityCode': cityCode,
-				'areaCode': areaCode
+				'areaCode': areaCode,
+				'gwhId': gwhId
 			},
 			success : function(result){
 				if(result.code == 1){
@@ -545,7 +568,11 @@
 			type : 'post',
 			dataType: "json",
 			data: {
-				'communityId': communityId,
+				'provCode': provCode,
+				'cityCode': cityCode,
+				'areaCode': areaCode,
+				'gwhId': gwhId,
+				'communityId': communityId
 			},
 			success : function(result){
 				if(result.code == 1){
@@ -590,16 +617,22 @@
     }
     
     function getGwhList(){
+    	var data = {
+    			'provCode': provCode,
+				'cityCode': cityCode,
+				'areaCode': areaCode
+				}
+    	//console.log(data)
     	$.ajax({  
 			url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
 			type : 'post',
 			dataType: "json",
-			data: {
-			},
+			data: data,
 			success : function(result){
 				//console.log(result)
 				if(result.code == 1){
-					var str = '';
+					$("#gwh").html('');
+					var str = '<option value="">请选择</option>';
 					$.each(result.data, function (index, item) {
 						/* if(item.gwhId == 1){
 							str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";

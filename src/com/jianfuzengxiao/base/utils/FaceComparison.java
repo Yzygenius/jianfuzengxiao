@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,7 +28,17 @@ import javax.crypto.Mac;
 public class FaceComparison {
 	private static Logger logger = LoggerFactory.getLogger(FaceComparison.class);
 	
-	/** 0 通过 1 比对错误 2系统忙 */
+	public static void main(String[] args) throws Exception {
+		String img1 = "/jianfuzengxiao/data/attach/image/cert/20191112/b3c63afa4d154679a14e5ec4350c629d.png";
+		String img2 = "/jianfuzengxiao/data/attach/image/face/20191112/270c4e0f43dd42feaf3a5fba6d9f115e.png";
+		
+		//String img3 = "/jianfuzengxiao/data/attach/image/cert/20191112/6acdfb20a8f94e908716133131d8884f.png";
+		//String img4 = "/jianfuzengxiao/data/attach/image/face/20191116/c30a1bd8b5b94e85a40662288f481f90.png";
+		System.out.println(faceUtils(img1, img2));
+		
+	}
+	
+	/** 0 通过 1 比对错误 2图像解码失败 3 系统忙 */
 	public static int faceUtils(String img1, String img2){
 		String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
        
@@ -46,18 +57,22 @@ public class FaceComparison {
 			result = sendPost(url, json.toJSONString(), ak_id, ak_secret);
 			logger.info(json.toJSONString());
 			logger.info(result.toJSONString());
-			
 			if ((int)result.get("errno") == 0) {
-				if ((int)result.get("confidence") >= 70) {
+				double confidence = new BigDecimal(result.get("confidence").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				if (confidence >= 30) {
 					return 0;
 				}else {
 					return 1;
 				}
-			}else {
+			}else if((int)result.get("errno") == 2000){
 				return 2;
+			}else {
+				return 3;
 			}
 		} catch (Exception e) {
-			return 2;
+			logger.info("人脸比对", e);
+			//System.out.println("ex");
+			return 3;
 		}
 	}
 

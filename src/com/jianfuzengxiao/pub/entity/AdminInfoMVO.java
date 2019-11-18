@@ -5,11 +5,31 @@ public class AdminInfoMVO extends AdminInfo {
 	private String manageHousesCount;
 	private String manageCommunityCount;
 	
+	private String gwhId;
+	
+	private String gwhName;
+	
 	private String jsCode;
 	
 	private String keyword;
 
 	
+	public String getGwhId() {
+		return gwhId;
+	}
+
+	public void setGwhId(String gwhId) {
+		this.gwhId = gwhId;
+	}
+
+	public String getGwhName() {
+		return gwhName;
+	}
+
+	public void setGwhName(String gwhName) {
+		this.gwhName = gwhName;
+	}
+
 	public String getManageCommunityCount() {
 		return manageCommunityCount;
 	}

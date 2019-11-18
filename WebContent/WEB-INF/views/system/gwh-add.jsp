@@ -58,7 +58,7 @@
 					<span class="x-red">*</span>
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<!-- <div class="layui-form-item">
 				<label for="remark" class="layui-form-label"> 
 				<span>排序</span>
 				</label>
@@ -69,7 +69,7 @@
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
 				</div>
-			</div>
+			</div> -->
 			
 			<div class="layui-form-item">
 				<label for="L_repass" class="layui-form-label"> </label>
@@ -217,7 +217,7 @@
 				dataType: "json",
 				data: {
 					'gwhName': $('#gwhName').val(),
-					'listOrder': $('#listOrder').val(),
+					//'listOrder': $('#listOrder').val(),
 					'provCode': $("#province option:selected").val(),
 					'cityCode': $("#city option:selected").val(),
 					'areaCode': $("#area option:selected").val()

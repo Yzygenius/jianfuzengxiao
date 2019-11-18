@@ -126,50 +126,64 @@ public class CommunityStreetInfoSDAO extends BaseDAO<CommunityStreetInfoMVO> imp
 	public List<CommunityStreetInfoMVO> queryList(CommunityStreetInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT community_street_id,community_street_name,status,community_id,list_order,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,gwh_id,gwh_name ");
-		sql.append("FROM  COMMUNITY_STREET_INFO ");
+				"SELECT a.community_street_id,a.community_street_name,a.status,a.community_id,a.list_order,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
+		sql.append(",b.prov_code,b.city_code,b.area_code ");
+		sql.append("FROM  COMMUNITY_STREET_INFO a ");
+		sql.append("left join community_info b on(a.community_id=b.community_id) ");
 		sql.append("WHERE 1=1 ");
 		List<CommunityStreetInfoMVO> resultList = null;
 		List<Object> params = new ArrayList<Object>();
 		try {
 			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getProvCode())) {
+					sql.append(" AND b.prov_code=?");
+					params.add(entity.getProvCode());
+				}
+				if (StringUtils.isNotBlank(entity.getCityCode())) {
+					sql.append(" AND b.city_code=?");
+					params.add(entity.getCityCode());
+				}
+				if (StringUtils.isNotBlank(entity.getAreaCode())) {
+					sql.append(" AND b.area_code=?");
+					params.add(entity.getAreaCode());
+				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
-					sql.append(" AND community_street_id=?");
+					sql.append(" AND a.community_street_id=?");
 					params.add(entity.getCommunityStreetId());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityStreetName())) {
-					sql.append(" AND community_street_name=?");
+					sql.append(" AND a.community_street_name=?");
 					params.add(entity.getCommunityStreetName());
 				}
 				if (StringUtils.isNotBlank(entity.getStatus())) {
-					sql.append(" AND status=?");
+					sql.append(" AND a.status=?");
 					params.add(entity.getStatus());
 				}
 				if (StringUtils.isNotBlank(entity.getCommunityId())) {
-					sql.append(" AND community_id in("+entity.getCommunityId()+") ");
+					sql.append(" AND a.community_id in("+entity.getCommunityId()+") ");
 				}
 				if (StringUtils.isNotBlank(entity.getListOrder())) {
-					sql.append(" AND list_order=?");
+					sql.append(" AND a.list_order=?");
 					params.add(entity.getListOrder());
 				}
 				if (StringUtils.isNotBlank(entity.getCreateTime())) {
-					sql.append("  AND create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.create_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getCreateTime());
 				}
 				if (StringUtils.isNotBlank(entity.getUpdateTime())) {
-					sql.append("  AND update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
+					sql.append("  AND a.update_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
 					params.add(entity.getUpdateTime());
 				}
 				if (StringUtils.isNotBlank(entity.getSts())) {
-					sql.append(" AND sts=?");
+					sql.append(" AND a.sts=?");
 					params.add(entity.getSts());
 				}
 				if (StringUtils.isNotBlank(entity.getGwhId())) {
-					sql.append(" AND gwh_id=?");
+					sql.append(" AND a.gwh_id=?");
 					params.add(entity.getGwhId());
 				}
 				if (StringUtils.isNotBlank(entity.getGwhName())) {
-					sql.append(" AND gwh_name=?");
+					sql.append(" AND a.gwh_name=?");
 					params.add(entity.getGwhName());
 				}
 			}

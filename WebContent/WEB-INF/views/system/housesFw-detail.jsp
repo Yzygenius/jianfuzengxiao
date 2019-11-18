@@ -369,7 +369,7 @@
 			<td row="auditTime"></td>
 			<td class="td-manage" row="manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1200, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"

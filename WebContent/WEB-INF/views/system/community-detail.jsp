@@ -54,7 +54,7 @@
 		    	<td><span>社区：</span>${community.communityName }</td>
 		  	</tr>
 		  	<tr>
-		    	<td><span>排序：</span>${community.listOrder }</td>
+		    	<td><span>排序：</span>${community.communityId }</td>
 		  	</tr>
 		  	<tr>
 		    	<td>首次上报时间：${community.createTime }</td>

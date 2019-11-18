@@ -57,7 +57,7 @@
 					<span class="x-red">*</span>
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<%-- <div class="layui-form-item">
 				<label class="layui-form-label"> 
 					<span>排序</span>
 				</label>
@@ -68,7 +68,7 @@
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
 				</div>
-			</div>
+			</div> --%>
 			
 			<div class="layui-form-item">
 				<label for="L_repass" class="layui-form-label"> </label>
@@ -256,7 +256,7 @@ layui.use(['form','layer'], function(){
 		data: {
 			'gwhId': $('#id').val(),
 			'gwhName': $('#gwhName').val(),
-			'listOrder': $('#listOrder').val(),
+			//'listOrder': $('#listOrder').val(),
 			'provCode': provCode,
 			'cityCode': cityCode,
 			'areaCode': areaCode

@@ -89,8 +89,8 @@ public class CommunityInfoSysController extends BaseController {
 			}
 			
 			PageInfo pageInfo = getPage();
-			pageInfo.setSortName("listOrder");
-			pageInfo.setSortOrder("asc");
+			/*pageInfo.setSortName("listOrder");
+			pageInfo.setSortOrder("asc");*/
 			communityInfo.setSts("A");
 			pageInfo = communityInfoService.queryPage(communityInfo, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);

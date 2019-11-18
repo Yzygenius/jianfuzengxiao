@@ -110,7 +110,7 @@
 			<td row="auditTime"></td>
 			<td class="td-manage">
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1000, 620)">
+					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1200, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
@@ -270,11 +270,12 @@
 							tr.find('[row=nationName]').text(data[i].nationName);
 							tr.find('[row=telephone]').text(data[i].telephone);
 							tr.find('[row=liveTypeName]').text(data[i].liveTypeName);
-							if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
+							/* if(data[i].liveTypeId == 1 || data[i].liveTypeId == 2 || data[i].liveTypeId == 7){//长期
 								tr.find('[row=leaseTime]').text('长期');
 							}else{
 								tr.find('[row=leaseTime]').text(data[i].leaseStartTime+' - '+data[i].leaseStopTime);
-							}
+							} */
+							tr.find('[row=leaseTime]').text('长期');
 							//居住地址
 							if(data[i].housesStatus == 1){
 								tr.find('[row=leaseAddress]').text(data[i].communityName+data[i].communityStreetName+data[i].storiedBuildingNumber+'号楼'+data[i].unit+'单元'+data[i].houseNumber+'号');

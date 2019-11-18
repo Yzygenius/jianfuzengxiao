@@ -24,11 +24,13 @@ import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
+import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
 import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IAdminInfoService;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
+import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.ILgzgService;
 import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
@@ -53,6 +55,9 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	
 	@Autowired
 	private ILgzgService lgzgService;
+	
+	@Autowired
+	private ICommunityStreetInfoService communityStreetInfoService;
 	
 	@RequestMapping(value="/toHousesFwPage")
 	public String toHousesFwPage(){
@@ -126,6 +131,11 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String toUpdateHousesDp(Model model, HousesInfoMVO entity){
 		try {
 			entity = housesInfoService.queryBean(entity);
+			CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
+			streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
+			streetInfo = communityStreetInfoService.queryBean(streetInfo);
+			entity.setCommunityStreetStatus(streetInfo.getStatus());
+			
 			model.addAttribute("houses", entity);
 		} catch (Exception e) {
 			return "/system/error";
@@ -137,6 +147,12 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String toHousesDpDetail(Model model, HousesInfoMVO entity){
 		try {
 			entity = housesInfoService.queryBean(entity);
+			
+			CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
+			streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
+			streetInfo = communityStreetInfoService.queryBean(streetInfo);
+			entity.setCommunityStreetStatus(streetInfo.getStatus());
+			
 			AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
 			aduitDistribution.setHousesId(entity.getHousesId());
 			aduitDistribution.setSts("A");

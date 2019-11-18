@@ -6,8 +6,35 @@ public class CommunityStreetInfoMVO extends CommunityStreetInfo {
 	private String provName;
 	private String cityName;
 	private String areaName;
+	private String provCode;
+	private String cityCode;
+	private String areaCode;
 
 	
+	public String getProvCode() {
+		return provCode;
+	}
+
+	public void setProvCode(String provCode) {
+		this.provCode = provCode;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
 	public String getProvName() {
 		return provName;
 	}

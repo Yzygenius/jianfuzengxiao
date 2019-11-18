@@ -99,8 +99,8 @@ public class CommunityStreetSysController extends BaseController {
 				}
 			}
 			PageInfo pageInfo = getPage();
-			pageInfo.setSortName("listOrder");
-			pageInfo.setSortOrder("asc");
+			/*pageInfo.setSortName("listOrder");
+			pageInfo.setSortOrder("asc");*/
 			communityStreetInfo.setSts("A");
 			pageInfo = communityStreetInfoService.queryPage(communityStreetInfo, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);
