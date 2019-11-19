@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bamboo.framework.common.util.DateUtil;
 
 public class Send_template_message {
 	/**
@@ -12,37 +13,37 @@ public class Send_template_message {
 	 * 
 	 * @throws IOException
 	 */
-	public static void send_template_message(String openId) throws IOException {
+	public static void send_template_message(String openId, String remarkStr) throws IOException {
 		String access_token = AuthUtil.doGetJson(Constants.ACCESS_TOKEN_URL).getString("access_token");
 		System.out.println(access_token);
 		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token;
 		NewOrdersTemplate temp = new NewOrdersTemplate();
 		WxMssVo wxMssVo = new WxMssVo();
 		Map<String, TemplateData> m = new HashMap<>(6);
-		TemplateData first = new TemplateData();
-		first.setValue("购买买地点");
-		m.put("first", first);
+		/*TemplateData first = new TemplateData();
+		first.setValue("审核待处理");
+		m.put("first", first);*/
 		TemplateData keyword1 = new TemplateData();
-		keyword1.setValue("购买买地点");
+		keyword1.setValue("审核待处理");
 		m.put("keyword1", keyword1);
 
 		TemplateData keyword2 = new TemplateData();
-		keyword2.setValue("购买时间");
+		keyword2.setValue(DateUtil.nowTime());
 		m.put("keyword2", keyword2);
 		wxMssVo.setData(m);
 
-		TemplateData keyword3 = new TemplateData();
+		/*TemplateData keyword3 = new TemplateData();
 		keyword3.setValue("交易单号");
 		m.put("keyword3", keyword3);
-		wxMssVo.setData(m);
+		wxMssVo.setData(m);*/
 
-		TemplateData keyword4 = new TemplateData();
+		/*TemplateData keyword4 = new TemplateData();
 		keyword4.setValue("这里填取件地址");
 		m.put("keyword4", keyword4);
 		wxMssVo.setData(m);
-		temp.setTouser(openId);
+		temp.setTouser(openId);*/
 		TemplateData remark = new TemplateData();
-		remark.setValue("这里填取件地址");
+		remark.setValue(remarkStr);
 		m.put("remark", remark);
 		wxMssVo.setData(m);
 		temp.setTouser(openId);
@@ -50,9 +51,10 @@ public class Send_template_message {
 		temp.setTemplate_id(Constants.Template_id);
 		// temp.setUrl("http://www.baidu.com");
 		// temp.setUrl("http://www.baidu.com");
-		// miniprogram miniprogra=new miniprogram();
-		// miniprogra.setAppid("");//所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系）
-		// miniprogra.setPagepath("pagepath");//
+		miniprogram miniprogram = new miniprogram();
+		miniprogram.setAppid("wxe5f125ef95b24fb6");//所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系）
+		miniprogram.setPagepath("pages/index/index");//
+		temp.setMiniprogram(miniprogram);
 		// 所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar）
 		temp.setForm_id("formid");
 		temp.setData(m);
