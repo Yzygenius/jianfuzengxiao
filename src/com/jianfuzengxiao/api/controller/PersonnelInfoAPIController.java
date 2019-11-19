@@ -141,19 +141,6 @@ public class PersonnelInfoAPIController extends BaseController {
 			
 			personnelInfoService.addUserPersonnel(model);
 			
-			AduitDistributionMVO ad = new AduitDistributionMVO();
-			ad.setHousesId(model.getHousesId());
-			ad.setSts("A");
-			List<AduitDistributionMVO> list = aduitDistributionService.queryList(ad);
-			if (list.size() > 0) {
-				ad = list.get(0);
-				AdminInfoMVO adminInfo = new AdminInfoMVO();
-				adminInfo.setAdminId(ad.getAdminId());
-				adminInfo = adminInfoService.queryBean(adminInfo);
-				
-				Send_template_message.send_template_message(adminInfo.getWxGzhOpenid());
-			}
-			
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "身份证信息认证上报失败", e);
@@ -180,18 +167,7 @@ public class PersonnelInfoAPIController extends BaseController {
 			
 			personnelInfoService.updatePersonnel(model);
 			
-			AduitDistributionMVO ad = new AduitDistributionMVO();
-			ad.setHousesId(model.getHousesId());
-			ad.setSts("A");
-			List<AduitDistributionMVO> list = aduitDistributionService.queryList(ad);
-			if (list.size() > 0) {
-				ad = list.get(0);
-				AdminInfoMVO adminInfo = new AdminInfoMVO();
-				adminInfo.setAdminId(ad.getAdminId());
-				adminInfo = adminInfoService.queryBean(adminInfo);
-				
-				Send_template_message.send_template_message(adminInfo.getWxGzhOpenid());
-			}
+			
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "身份证信息认证上报失败", e);
@@ -238,24 +214,13 @@ public class PersonnelInfoAPIController extends BaseController {
 			if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.isNotBlank(model.getFacePhoto())){
 				int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 				throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_NOT);
+				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_ERROR);
 				throwAppException(result == 3, RC.OTHER_ERROR);
 			}
 			
 			personnelInfoService.addPersonnel(model);
 			
-			AduitDistributionMVO ad = new AduitDistributionMVO();
-			ad.setHousesId(model.getHousesId());
-			ad.setSts("A");
-			List<AduitDistributionMVO> list2 = aduitDistributionService.queryList(ad);
-			if (list2.size() > 0) {
-				ad = list2.get(0);
-				AdminInfoMVO adminInfo = new AdminInfoMVO();
-				adminInfo.setAdminId(ad.getAdminId());
-				adminInfo = adminInfoService.queryBean(adminInfo);
-				
-				Send_template_message.send_template_message(adminInfo.getWxGzhOpenid());
-			}
+			
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "身份证信息认证上报失败", e);
@@ -302,35 +267,16 @@ public class PersonnelInfoAPIController extends BaseController {
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
 			
-			/*
-			 * if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) &&
-			 * StringUtils.isNotBlank(model.getFacePhoto())){ int result =
-			 * FaceComparison.faceUtils(model.getCertificatesPositivePhoto(),
-			 * model.getFacePhoto()); throwAppException(result == 1,
-			 * RC.COMMON_IMAGE_FACE_NOT); throwAppException(result == 2,
-			 * RC.COMMON_IMAGE_FACE_NOT); throwAppException(result == 3, RC.OTHER_ERROR); }
-			 */
+			
+			if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.isNotBlank(model.getFacePhoto())){ 
+				int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(),model.getFacePhoto()); 
+				throwAppException(result == 1,RC.COMMON_IMAGE_FACE_NOT); 
+				throwAppException(result == 2,RC.COMMON_IMAGE_FACE_ERROR); 
+				throwAppException(result == 3, RC.OTHER_ERROR); 
+			}
 			
 			personnelInfoService.updatePersonnel(model);
 			
-			PersonnelInfoMVO pi = new PersonnelInfoMVO();
-			pi.setPersonnelId(model.getPersonnelId());
-			pi = personnelInfoService.queryBean(pi);
-			
-			AduitDistributionMVO ad = new AduitDistributionMVO();
-			ad.setHousesId(pi.getHousesId());
-			System.out.println("++++++++++"+model.getHousesId());
-			ad.setSts("A");
-			List<AduitDistributionMVO> list2 = aduitDistributionService.queryList(ad);
-			System.out.println(list2.toString());
-			if (list2.size() > 0) {
-				ad = list2.get(0);
-				AdminInfoMVO adminInfo = new AdminInfoMVO();
-				adminInfo.setAdminId(ad.getAdminId());
-				adminInfo = adminInfoService.queryBean(adminInfo);
-				System.out.println("---------"+adminInfo.getAdminId());
-				Send_template_message.send_template_message(adminInfo.getWxGzhOpenid());
-			}
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {
 			return exceptionResult(logger, "身份证信息认证上报失败", e);

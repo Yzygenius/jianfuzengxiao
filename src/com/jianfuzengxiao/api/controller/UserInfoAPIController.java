@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jianfuzengxiao.base.common.RC;
 import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.base.utils.Base64ToFile;
+import com.jianfuzengxiao.base.utils.BigDouble;
 import com.jianfuzengxiao.base.utils.FaceComparison;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
@@ -111,7 +112,7 @@ public class UserInfoAPIController extends BaseController {
 			throwAppException(uList.size() > 0, RC.USER_INFO_EXIST);
 			//model.setStatus(UserInfo.status_waiting);
 			model.setStatus(UserInfo.status_passed);
-			model.setOpId(model.getOpId());
+			model.setOpId(BigDouble.scientificNotation(Double.parseDouble(model.getOpId())));
 			//base64转file
 			Map<String, String> positivePhoto = Base64ToFile.base64ToFile(model.getCertificatesPositivePhoto(), "B");
 			Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getCertificatesNegativePhoto(), "B");
@@ -126,7 +127,7 @@ public class UserInfoAPIController extends BaseController {
 			if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.isNotBlank(model.getFacePhoto())){
 				int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 				throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_NOT);
+				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_ERROR);
 				throwAppException(result == 3, RC.OTHER_ERROR);
 			}
 			userInfoService.insert(model);
@@ -249,7 +250,7 @@ public class UserInfoAPIController extends BaseController {
 			if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.isNotBlank(model.getFacePhoto())){
 				int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
 				throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_NOT);
+				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_ERROR);
 				throwAppException(result == 3, RC.OTHER_ERROR);
 			}
 			
@@ -290,10 +291,12 @@ public class UserInfoAPIController extends BaseController {
 				Map<String, String> negativePhoto = Base64ToFile.base64ToFile(model.getFacePhoto(), "A");
 				model.setFacePhoto(request.getContextPath() + "/" + negativePhoto.get("relativePath"));
 			}
-			int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
-			throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
-			throwAppException(result == 2, RC.COMMON_IMAGE_FACE_ERROR);
-			throwAppException(result == 3, RC.OTHER_ERROR);
+			if(StringUtils.isNotBlank(model.getCertificatesPositivePhoto()) && StringUtils.isNotBlank(model.getFacePhoto())){
+				int result = FaceComparison.faceUtils(model.getCertificatesPositivePhoto(), model.getFacePhoto());
+				throwAppException(result == 1, RC.COMMON_IMAGE_FACE_NOT);
+				throwAppException(result == 2, RC.COMMON_IMAGE_FACE_ERROR);
+				throwAppException(result == 3, RC.OTHER_ERROR);
+			}
 			userInfoService.updateUserPer(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

@@ -706,7 +706,7 @@
                             },
                             data:[
                                 {value:(data.data.fangzhuPassRatio)*1000, name:'房主通过'},
-                                {value:(data.data.jiashuPassRatio)*1000, name:'家属通过'},
+                              //  {value:(data.data.jiashuPassRatio)*1000, name:'家属通过'},
                                 {value:(data.data.zuhuPassRatio)*1000, name:'租户通过'},
                             ]
                         }

@@ -21,12 +21,17 @@ import com.jianfuzengxiao.api.controller.CertificatesTypeAPIController;
 import com.jianfuzengxiao.base.common.HttpClientUtlis;
 import com.jianfuzengxiao.base.common.PushUtils;
 import com.jianfuzengxiao.base.common.RC;
+import com.jianfuzengxiao.base.wx.Send_template_message;
+import com.jianfuzengxiao.pub.dao.IAdminInfoMDAO;
+import com.jianfuzengxiao.pub.dao.IAduitDistributionMDAO;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
 import com.jianfuzengxiao.pub.dao.ILiveTypeMDAO;
 import com.jianfuzengxiao.pub.dao.IMsgTypeMDAO;
 import com.jianfuzengxiao.pub.dao.IPersonnelInfoMDAO;
 import com.jianfuzengxiao.pub.dao.IUserInfoMDAO;
 import com.jianfuzengxiao.pub.dao.impl.ContractFileMDAO;
+import com.jianfuzengxiao.pub.entity.AdminInfoMVO;
+import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.ContractFileMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfo;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
@@ -66,6 +71,12 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 	
 	@Autowired
 	private ContractFileMDAO contractFileMDAO;
+	
+	@Autowired
+	private IAduitDistributionMDAO aduitDistributionMDAO;
+	
+	@Autowired
+	private IAdminInfoMDAO adminInfoMDAO;
 
 	/** 插入 */
 	@Override
@@ -164,7 +175,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 			//model.setLeaseStartTime(userInfoMVO.getLeaseStartTime());
 		}else {//否则为租赁房产
 			//如果为房屋
-			throwAppException(StringUtils.isBlank(model.getLeaseContract()), RC.HOUSES_INFO_PARAM_CONTRACT_FILE_NULL); 
+			//throwAppException(StringUtils.isBlank(model.getLeaseContract()), RC.HOUSES_INFO_PARAM_CONTRACT_FILE_NULL); 
 			if (StringUtils.equals(housesInfo.getHousesStatus(), HousesInfo.houses_status_fangwu)) {
 				liveType.setLiveTypeId(LiveType.fangzhu_zulin);
 				liveType = liveTypeMDAO.queryBean(liveType);
@@ -205,7 +216,7 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		
 		//如果是租赁的上传租赁合同
 		////上传租赁合同
-		if (!StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), userInfoMVO.getCertificatesNumber())) {
+		if (!StringUtils.equals(housesInfo.getPropertyOwnerIdcard(), userInfoMVO.getCertificatesNumber()) && StringUtils.isNotBlank(model.getLeaseContract())) {
 			List<String> sList = Arrays.asList(model.getLeaseContract().split(","));
 			for(int i=0; i< sList.size(); i++){
 				ContractFileMVO contractFile = new ContractFileMVO();
@@ -246,8 +257,22 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
 		
+		
 		try {
-			
+			AduitDistributionMVO ad = new AduitDistributionMVO();
+			ad.setHousesId(model.getHousesId());
+			ad.setSts("A");
+			List<AduitDistributionMVO> list = aduitDistributionMDAO.queryList(ad);
+			if (list.size() > 0) {
+				ad = list.get(0);
+				AdminInfoMVO adminInfo = new AdminInfoMVO();
+				adminInfo.setAdminId(ad.getAdminId());
+				adminInfo = adminInfoMDAO.queryBean(adminInfo);
+				String remark = "【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已提交申请";
+				
+				Send_template_message.send_template_message(adminInfo.getWxGzhOpenid(), remark);
+				
+			}
 			PushUtils.toPush(userInfoMVO.getUserId(), userInfoMVO.getOpId(), title, content, type);	
 		} catch (Exception e) {
 			logger.info("发送通知错误", e);
@@ -320,7 +345,25 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		if (model.getLiveTypeId().equals("7")) {
 			type = "z0205";
 		}
+		
 		try {
+			AduitDistributionMVO ad = new AduitDistributionMVO();
+			ad.setHousesId(personnelInfoMVO.getHousesId());
+			ad.setSts("A");
+			List<AduitDistributionMVO> list2 = aduitDistributionMDAO.queryList(ad);
+			if (list.size() > 0) {
+				ad = list2.get(0);
+				AdminInfoMVO adminInfo = new AdminInfoMVO();
+				adminInfo.setAdminId(ad.getAdminId());
+				adminInfo = adminInfoMDAO.queryBean(adminInfo);
+				String remark = "【"+hname+"】"+model.getLiveTypeName()+"申请【人员姓名："+model.getUsername()+"】已提交申请";
+				try {
+					Send_template_message.send_template_message(adminInfo.getWxGzhOpenid(), remark);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			PushUtils.toPush(userId, userInfoMVO.getOpId(), title, content, type);	
 		} catch (Exception e) {
@@ -361,7 +404,37 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		msgInfoMVO.setStatus(MsgInfo.status_not_read);
 		msgInfoService.insert(msgInfoMVO);
 		
+		HousesInfoMVO housesInfoMVO = new HousesInfoMVO();
+		housesInfoMVO.setHousesId(personnelInfoMVO.getHousesId());
+		housesInfoMVO = housesInfoMDAO.queryBean(housesInfoMVO);
+		String hname = "";
+		if (StringUtils.equals(HousesInfo.houses_status_fangwu, housesInfoMVO.getHousesStatus())) {
+			hname = housesInfoMVO.getCommunityName()+" "+housesInfoMVO.getStoriedBuildingNumber()+"-"+housesInfoMVO.getUnit()+"-"+housesInfoMVO.getHouseNumber();
+		}
+		if (StringUtils.equals(HousesInfo.houses_status_dianpu, housesInfoMVO.getHousesStatus())) {
+			hname = personnelInfoMVO.getEnterpriseName();
+		}
+		
+		
+		
 		try {
+			AduitDistributionMVO ad = new AduitDistributionMVO();
+			ad.setHousesId(personnelInfoMVO.getHousesId());
+			ad.setSts("A");
+			List<AduitDistributionMVO> list2 = aduitDistributionMDAO.queryList(ad);
+			if (list.size() > 0) {
+				ad = list2.get(0);
+				AdminInfoMVO adminInfo = new AdminInfoMVO();
+				adminInfo.setAdminId(ad.getAdminId());
+				adminInfo = adminInfoMDAO.queryBean(adminInfo);
+				String remark = "【"+hname+"】"+personnelInfoMVO.getLiveTypeName()+"申请【人员姓名："+personnelInfoMVO.getUsername()+"】已提交申请";
+				try {
+					Send_template_message.send_template_message(adminInfo.getWxGzhOpenid(), remark);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			PushUtils.toPush(personnelInfo.getUserId(), userInfoMVO.getOpId(),title, content, "z0301");	
 		} catch (Exception e) {

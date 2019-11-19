@@ -528,7 +528,7 @@
 					                {value:(data.data.dianzhuratio)*10, name:'店主'},
 					                {value:(data.data.zuhuratio)*10, name:'租户'},
 					                {value:(data.data.yuangongratio)*10, name:'员工'},
-					                {value:(data.data.jiashuratio)*10, name:'家属'},
+					               // {value:(data.data.jiashuratio)*10, name:'家属'},
 					            ]
 					        }
 					    ]
