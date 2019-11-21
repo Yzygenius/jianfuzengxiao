@@ -131,7 +131,7 @@ public class CommunityInfoSysController extends BaseController {
 	public String addCommunity(CommunityInfoMVO communityInfo){
 		try {
 			throwAppException(StringUtils.isBlank(communityInfo.getCommunityName()), RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_NULL);
-			throwAppException(StringUtils.isBlank(communityInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
+			//throwAppException(StringUtils.isBlank(communityInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
 			//查询新增社区名称是否重复
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
 			communityInfoMVO.setCommunityName(communityInfo.getCommunityName());
@@ -152,7 +152,7 @@ public class CommunityInfoSysController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(communityInfo.getCommunityId()), RC.COMMUNITY_INFO_PARAM_COMMUNITY_ID_INVALID);
 			throwAppException(StringUtils.isBlank(communityInfo.getCommunityName()), RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_NULL);
-			throwAppException(StringUtils.isBlank(communityInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
+			//throwAppException(StringUtils.isBlank(communityInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
 			//查询新增社区名称是否重复
 			CommunityInfoMVO communityInfoMVO = new CommunityInfoMVO();
 			communityInfoMVO.setCommunityName(communityInfo.getCommunityName());

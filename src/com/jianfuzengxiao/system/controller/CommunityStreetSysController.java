@@ -145,7 +145,7 @@ public class CommunityStreetSysController extends BaseController {
 		try {
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getCommunityId()), RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_NULL);
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getCommunityStreetName()), RC.COMMUNITY_STREET_INFO_PARAM_COMMUNITY_STREET_NAME_NULL);
-			throwAppException(StringUtils.isBlank(communityStreetInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
+	//		throwAppException(StringUtils.isBlank(communityStreetInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getStatus()), RC.COMMON_TYPE_INVALID);
 			//查询新增社区名称是否重复
 			CommunityStreetInfoMVO communityStreetInfoMVO = new CommunityStreetInfoMVO();
@@ -168,7 +168,7 @@ public class CommunityStreetSysController extends BaseController {
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getCommunityStreetId()), RC.COMMUNITY_STREET_INFO_PARAM_COMMUNITY_STREET_ID_INVALID);
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getCommunityId()), RC.COMMUNITY_INFO_PARAM_COMMUNITY_NAME_NULL);
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getCommunityStreetName()), RC.COMMUNITY_STREET_INFO_PARAM_COMMUNITY_STREET_NAME_NULL);
-			throwAppException(StringUtils.isBlank(communityStreetInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
+	//		throwAppException(StringUtils.isBlank(communityStreetInfo.getListOrder()), RC.COMMON_LIST_ORDER_NULL);
 			throwAppException(StringUtils.isBlank(communityStreetInfo.getStatus()), RC.COMMON_TYPE_INVALID);
 			//查询新增社区名称是否重复
 			CommunityStreetInfoMVO communityStreetInfoMVO = new CommunityStreetInfoMVO();
