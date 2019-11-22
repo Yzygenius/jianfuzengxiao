@@ -21,7 +21,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	public PageInfo queryPage(PersonnelInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.update_status ");
+				"select a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_number,a.certificates_start_time,a.certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.update_status ");
 		sql.append(",b.houses_status,b.community_name,b.community_street_name,b.storied_building_number,b.unit,b.house_number,b.houses_address,ifnull(b.store_location, 0)store_location ");
 		sql.append("from PERSONNEL_INFO a ");
 		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
@@ -127,14 +127,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 					sql.append(" AND a.certificates_number like ?");
 					params.add("%" + entity.getCertificatesNumber() + "%");
 				}
-				if (StringUtils.isNotBlank(entity.getCertificatesStartTime())) {
-					sql.append("  AND a.certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-					params.add(entity.getCertificatesStartTime());
-				}
-				if (StringUtils.isNotBlank(entity.getCertificatesStopTime())) {
-					sql.append("  AND a.certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-					params.add(entity.getCertificatesStopTime());
-				}
+				
 				if (StringUtils.isNotBlank(entity.getCertificatesAddress())) {
 					sql.append(" AND a.certificates_address like ?");
 					params.add("%" + entity.getCertificatesAddress() + "%");
@@ -260,7 +253,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	@Override
 	public PersonnelInfoMVO queryPersonnelBean(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
-		sql.append( "SELECT a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_positive_photo,a.certificates_positive_file,a.certificates_negative_photo,a.certificates_negative_file,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,ifnull(date_format(a.update_time,'%Y-%m-%d %H:%i:%s'),'')update_time,a.sts,DATEDIFF(current_date, a.lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
+		sql.append( "SELECT a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_positive_photo,a.certificates_positive_file,a.certificates_negative_photo,a.certificates_negative_file,a.certificates_number,a.certificates_start_time,a.certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,ifnull(date_format(a.update_time,'%Y-%m-%d %H:%i:%s'),'')update_time,a.sts,DATEDIFF(current_date, a.lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
 		sql.append(",b.houses_status,b.prov_name,b.city_name,b.area_name,ifnull(b.community_name,'')community_name,ifnull(b.community_street_name,'')community_street_name ");
 		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address,b.property_owner_name ");
 		sql.append(",b.house_type,b.houses_type_name,b.houses_type_id ");
@@ -287,7 +280,7 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 	public List<PersonnelInfoMVO> queryPerList(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age  ");
 		sql.append("FROM  PERSONNEL_INFO ");
 		sql.append("WHERE 1=1 ");

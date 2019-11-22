@@ -26,7 +26,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 		sql.append(
 				"INSERT INTO PERSONNEL_INFO (personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,lease_start_time,lease_stop_time,username,gender,face_photo,face_file,birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,create_time,update_time,sts,update_status) ");
 		sql.append(
-				"VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?)");
+				"VALUES (?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -184,11 +184,11 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 				params.add(entity.getCertificatesNumber());
 			}
 			if (entity.getCertificatesStartTime() != null) {
-				sql.append("certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
+				sql.append("certificates_start_time=?,");
 				params.add(entity.getCertificatesStartTime());
 			}
 			if (entity.getCertificatesStopTime() != null) {
-				sql.append("certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s'),");
+				sql.append("certificates_stop_time=?,");
 				params.add(entity.getCertificatesStopTime());
 			}
 			if (entity.getCertificatesAddress() != null) {
@@ -258,7 +258,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 	public List<PersonnelInfoMVO> queryList(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
 		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age  ");
 		sql.append("FROM  PERSONNEL_INFO ");
 		sql.append("WHERE 1=1 ");
@@ -360,14 +360,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 					sql.append(" AND certificates_number=?");
 					params.add(entity.getCertificatesNumber());
 				}
-				if (StringUtils.isNotBlank(entity.getCertificatesStartTime())) {
-					sql.append("  AND certificates_start_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-					params.add(entity.getCertificatesStartTime());
-				}
-				if (StringUtils.isNotBlank(entity.getCertificatesStopTime())) {
-					sql.append("  AND certificates_stop_time=str_to_date(?,'%Y-%m-%d %H:%i:%s')");
-					params.add(entity.getCertificatesStopTime());
-				}
+				
 				if (StringUtils.isNotBlank(entity.getCertificatesAddress())) {
 					sql.append(" AND certificates_address=?");
 					params.add(entity.getCertificatesAddress());
@@ -414,7 +407,7 @@ public class PersonnelInfoSDAO extends BaseDAO<PersonnelInfoMVO> implements IPer
 	public PersonnelInfoMVO queryBean(PersonnelInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,date_format(certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(certificates_stop_time,'%Y-%m-%d')certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
+				"SELECT personnel_id,houses_id,user_id,per_sort,live_type_id,live_type_name,lease_mode,date_format(lease_start_time,'%Y-%m-%d')lease_start_time,date_format(lease_stop_time,'%Y-%m-%d')lease_stop_time,username,gender,face_photo,face_file,date_format(birth_date,'%Y-%m-%d')birth_date,nation_id,nation_name,telephone,certificates_type_id,certificates_type_name,certificates_positive_photo,certificates_positive_file,certificates_negative_photo,certificates_negative_file,certificates_number,certificates_start_time,certificates_stop_time,certificates_address,certificates_office,enterprise_name,status,audit_remark,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,update_status ");
 		sql.append(",DATEDIFF(current_date, lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,birth_date,CURDATE())age ");
 		sql.append("FROM  PERSONNEL_INFO ");
 		sql.append("WHERE personnel_id=? ");
