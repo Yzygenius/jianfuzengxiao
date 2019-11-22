@@ -10,14 +10,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
+import com.baidu.aip.face.AipFace;
+import com.baidu.aip.face.MatchRequest;
 import com.jianfuzengxiao.base.common.HttpClientUtlis;
 import com.jianfuzengxiao.system.controller.AdminSysController;
 
@@ -28,18 +31,78 @@ import javax.crypto.Mac;
 public class FaceComparison {
 	private static Logger logger = LoggerFactory.getLogger(FaceComparison.class);
 	
+	public static final String APP_ID = "11511958";
+    public static final String API_KEY = "YCKK6aTaKYMXobLQXoFsRQpq";
+    public static final String SECRET_KEY = "EAMPOIB4z6WzWsDjcFx9ujOBxV09LSDh";
+	
 	public static void main(String[] args) throws Exception {
-		String img1 = "/jianfuzengxiao/data/attach/image/cert/20191112/b3c63afa4d154679a14e5ec4350c629d.png";
-		String img2 = "/jianfuzengxiao/data/attach/image/face/20191112/270c4e0f43dd42feaf3a5fba6d9f115e.png";
+		/*String img1 = "/jianfuzengxiao/data/attach/image/cert/20191122/8f374127c8874c80a1730b7723a9acfd.png";
+		String img2 = "/jianfuzengxiao/data/attach/image/face/20191122/1a8d2df6040f462d8f849d31ba872854.png";
 		
 		//String img3 = "/jianfuzengxiao/data/attach/image/cert/20191112/6acdfb20a8f94e908716133131d8884f.png";
 		//String img4 = "/jianfuzengxiao/data/attach/image/face/20191116/c30a1bd8b5b94e85a40662288f481f90.png";
-		System.out.println(faceUtils(img1, img2));
+		System.out.println(faceUtils(img1, img2));*/
 		
+		// 初始化一个AipFace
+		AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
+
+        String image1 = "http://pasq.niutuwangluo.com/jianfuzengxiao/data/attach/image/cert/20191122/4fbdaa9565be46649ee99e96a4733701.png";
+        String image2 = "http://pasq.niutuwangluo.com/jianfuzengxiao/data/attach/image/face/20191122/b2f89d185d654212942f3b6f76a9c2e9.png";
+
+        // image1/image2也可以为url或facetoken, 相应的imageType参数需要与之对应。
+        MatchRequest req1 = new MatchRequest(image1, "URL");
+        MatchRequest req2 = new MatchRequest(image2, "URL");
+        ArrayList<MatchRequest> requests = new ArrayList<MatchRequest>();
+        requests.add(req1);
+        requests.add(req2);
+
+        JSONObject res = client.match(requests);
+        System.out.println(res.toString(2));
+        System.out.println(res.get("result"));
+        JSONObject res2 = res.getJSONObject("result");
+        System.out.println(res2.get("score"));
+        /*System.out.println(jsonObject.toJSONString());
+        System.out.println(jsonObject.get("score"));*/
+	}
+
+	/** 0 通过 1 比对错误 2图像解码失败 3 系统忙 */
+	public static int faceUtils(String image1, String image2){
+		AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
+		String url = "http://pasq.niutuwangluo.com";
+        // image1/image2也可以为url或facetoken, 相应的imageType参数需要与之对应。
+        MatchRequest req1 = new MatchRequest(url+image1, "URL");
+        MatchRequest req2 = new MatchRequest(url+image2, "URL");
+        ArrayList<MatchRequest> requests = new ArrayList<MatchRequest>();
+        requests.add(req1);
+        requests.add(req2);
+        
+        logger.info(requests.toString());
+        JSONObject res = client.match(requests);
+        logger.info(res.toString());
+        
+       // System.out.println(res2.get("score"));
+    	
+		try {
+			if ((int)res.get("error_code") == 0) {
+				JSONObject res2 = res.getJSONObject("result");
+				double confidence = new BigDecimal(res2.get("score").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				if (confidence >= 50) {
+					return 0;
+				}else {
+					return 1;
+				}
+			}else {
+				return 2;
+			}
+		} catch (Exception e) {
+			logger.info("人脸比对", e);
+			//System.out.println("ex");
+			return 3;
+		}
 	}
 	
 	/** 0 通过 1 比对错误 2图像解码失败 3 系统忙 */
-	public static int faceUtils(String img1, String img2){
+	/*public static int faceUtils(String img1, String img2){
 		String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
        
     	String ak_id = "3JMbkvG8UfjEyvqg"; //用户ak
@@ -74,7 +137,7 @@ public class FaceComparison {
 			//System.out.println("ex");
 			return 3;
 		}
-	}
+	}*/
 
 	/*
 	 * 计算MD5+BASE64
@@ -126,7 +189,7 @@ public class FaceComparison {
 	/*
 	 * 发送POST请求
 	 */
-	public static JSONObject sendPost(String url, String body, String ak_id, String ak_secret) throws Exception {
+	public static com.alibaba.fastjson.JSONObject sendPost(String url, String body, String ak_id, String ak_secret) throws Exception {
 		PrintWriter out = null;
 		BufferedReader in = null;
 		String result = "";
@@ -193,7 +256,7 @@ public class FaceComparison {
 		if (statusCode != 200) {
 			throw new IOException("\nHttp StatusCode: " + statusCode + "\nErrorMessage: " + result);
 		}
-		return JSONObject.parseObject(result);
+		return com.alibaba.fastjson.JSONObject.parseObject(result);
 	}
 
 	/*
