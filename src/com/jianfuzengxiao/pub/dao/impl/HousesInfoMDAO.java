@@ -21,7 +21,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public PageInfo queryPage(HousesInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
+				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,ifnull(a.storied_building_number,'')storied_building_number,ifnull(a.unit,'')unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
 		sql.append(",b.username,b.admin_telephone,b.admin_id ");
 		sql.append(",count(c.personnel_id)lease_count ");
 		sql.append(",ifnull(d.username,'')fangzhu ");
@@ -197,7 +197,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> queryBuildingUnitNumList(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT houses_id,houses_status,community_id,community_street_id,storied_building_number,unit,house_number,houses_type_id,houses_type_name,store_location,sts ");
+				"SELECT houses_id,houses_status,community_id,community_street_id,ifnull(storied_building_number,'')storied_building_number,ifnull(unit,'')unit,house_number,houses_type_id,houses_type_name,store_location,sts ");
 		sql.append("FROM  HOUSES_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<HousesInfoMVO> resultList = null;
@@ -275,7 +275,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT a.houses_id,a.houses_status,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.storied_building_number,a.unit,a.house_number,a.store_location,a.sts ");
+				"SELECT a.houses_id,a.houses_status,a.community_id,a.community_name,a.community_street_id,a.community_street_name,ifnull(a.storied_building_number,'')storied_building_number,ifnull(a.unit,'')unit,a.house_number,a.store_location,a.sts ");
 		sql.append(",b.status community_street_status ");
 		sql.append("FROM  HOUSES_INFO a ");
 		sql.append("left join community_street_info b on(a.community_street_id=b.community_street_id) ");
@@ -358,7 +358,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> queryGroupByCommunity(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,storied_building_number,unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT houses_id,admin_id,user_id,houses_status,property_owner_name,property_owner_tel,property_owner_idcard,property_certificates_number,property_certificates_photo,property_certificates_file,community_id,community_name,community_street_id,community_street_name,house_type,house_type_photo,house_type_file,ifnull(storied_building_number,'')storied_building_number,ifnull(unit,'')unit,house_number,houses_address,houses_type_id,houses_type_name,store_location,prov_name,prov_code,city_name,city_code,area_name,area_code,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
 		sql.append("FROM  HOUSES_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<HousesInfoMVO> resultList = null;
@@ -389,7 +389,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> queryHousesList(HousesInfoMVO entity) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,a.storied_building_number,a.unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
+				"select a.houses_id,a.user_id,a.houses_status,a.property_owner_name,a.property_owner_tel,a.property_owner_idcard,a.property_certificates_number,a.property_certificates_photo,a.property_certificates_file,a.community_id,a.community_name,a.community_street_id,a.community_street_name,a.house_type,a.house_type_photo,a.house_type_file,ifnull(a.storied_building_number,'')storied_building_number,ifnull(a.unit,'')unit,a.house_number,a.houses_address,a.houses_type_id,a.houses_type_name,a.store_location,a.prov_name,a.prov_code,a.city_name,a.city_code,a.area_name,a.area_code,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.gwh_id,a.gwh_name ");
 		sql.append(",b.username,b.admin_telephone,b.admin_id ");
 		sql.append(",count(c.personnel_id)lease_count ");
 		sql.append(",ifnull(d.username,'')fangzhu,ifnull(d.telephone,'')fangzhu_tel ");

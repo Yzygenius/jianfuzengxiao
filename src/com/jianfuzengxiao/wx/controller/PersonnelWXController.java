@@ -121,4 +121,30 @@ public class PersonnelWXController extends BaseController{
 			return exceptionResult(logger, "查询房产列表失败", e);
 		}
 	}
+	
+	/**
+	 * 
+	 * <p style="color:#36F;">
+	 * 审核
+	 * </p>
+	 * @param personnelId, status 
+	 * @return    
+	 * String    返回类型 
+	 * @throws 
+	 * @author 闫子扬 
+	 * @date 2019年12月3日 下午7:39:08
+	 */
+	@ResponseBody
+	@RequestMapping(value="/auditPer", method=RequestMethod.POST)
+	public String auditPer(PersonnelInfoMVO entity){
+		try{
+			throwAppException(StringUtils.isBlank(entity.getPersonnelId()), RC.PERSONNEL_PARAM_PERSONNEL_ID_INVALID);
+			throwAppException(StringUtils.isBlank(entity.getStatus()), RC.COMPANY_CERT_STATE_INVALID);
+			
+			personnelInfoService.updateAuditPersonnel(entity);
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "审核人员失败", e);
+		}
+	}
 }

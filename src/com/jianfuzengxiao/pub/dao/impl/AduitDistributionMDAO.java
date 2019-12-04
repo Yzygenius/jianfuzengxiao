@@ -82,7 +82,7 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 		StringBuffer sql = new StringBuffer();
 		sql.append("select a.id,a.admin_id,a.houses_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
 		sql.append(",b.houses_status,b.property_owner_name,b.property_owner_tel,b.property_owner_idcard,b.community_id,b.community_name,b.community_street_id,b.community_street_name ");
-		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address,b.property_certificates_number,b.house_type,b.houses_type_name,b.store_location ");
+		sql.append(",ifnull(b.storied_building_number,'')storied_building_number,ifnull(b.unit,'')unit,b.house_number,b.houses_address,b.property_certificates_number,b.house_type,b.houses_type_name,b.store_location ");
 		sql.append(",b.prov_code,b.city_code,b.area_code ");
 		sql.append("from ADUIT_DISTRIBUTION a ");
 		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
@@ -169,7 +169,7 @@ public class AduitDistributionMDAO extends AduitDistributionSDAO implements IAdu
 		StringBuffer sql = new StringBuffer();
 		sql.append("select a.id,a.admin_id,a.houses_id,a.status,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
 		sql.append(",b.houses_status,b.property_owner_name,b.property_owner_tel,b.property_owner_idcard,b.community_name,b.community_street_name ");
-		sql.append(",b.storied_building_number,b.unit,b.house_number,b.houses_address ");
+		sql.append(",ifnull(b.storied_building_number,'')storied_building_number,ifnull(b.unit,'')unit,b.house_number,b.houses_address ");
 		sql.append("from ADUIT_DISTRIBUTION a ");
 		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
 		sql.append("where 1=1 ");

@@ -44,12 +44,12 @@ public class WxBindController extends BaseController {
 	public void bind() throws IOException {
 		String code = request.getParameter("code");//获取微信服务器授权返回的code值
       
-       // String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc3cd63a0dedc396d&secret=fe938164018ad9edcc12f6c66fdcd132&code="+code+"&grant_type=authorization_code";                   
-       // Map<String, Object> map = HttpClientUtlis.doGet(url);
-       // String openid = map.get("openid").toString();
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc3cd63a0dedc396d&secret=fe938164018ad9edcc12f6c66fdcd132&code="+code+"&grant_type=authorization_code";                   
+        Map<String, Object> map = HttpClientUtlis.doGet(url);
+        String openid = map.get("openid").toString();
         
-      //  logger.info("openid:"+openid);
-        String url2 = "http://pasq.niutuwangluo.com/jianfuzengxiao/wx/gzh_bind.html?openid=12";
+        logger.info("openid:"+openid);
+        String url2 = "http://pasq.niutuwangluo.com/jianfuzengxiao/wx/gzh_bind.html?openid="+openid;
         response.sendRedirect(url2);
 	}
 	

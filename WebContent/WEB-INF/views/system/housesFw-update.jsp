@@ -74,7 +74,7 @@
 			</div>
 			<div class="layui-form-item">
 				<label for="remark" class="layui-form-label">
-				<span>小区</span>
+				<span>小区/道路</span>
 				</label>
 				<div class="layui-input-inline">
 					<select id="communityStreetSel" name="communityStreetSel" lay-verify="required" lay-filter="communityStreetSel" lay-search="">
@@ -90,10 +90,10 @@
 				<span>楼号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" value="${houses.storiedBuildingNumber }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="storiedBuildingNumber" name="storiedBuildingNumber" value="${houses.storiedBuildingNumber }" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
+					<!-- <span class="x-red">*</span> -->
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -101,10 +101,10 @@
 				<span>单元</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="unit" name="unit" value="${houses.unit }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="unit" name="unit" value="${houses.unit }" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
-					<span class="x-red">*</span>
+					<!-- <span class="x-red">*</span> -->
 				</div>
 			</div>
 			<div class="layui-form-item">

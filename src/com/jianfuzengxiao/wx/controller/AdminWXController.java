@@ -149,7 +149,8 @@ public class AdminWXController extends BaseController {
 		try{
 			throwAppException(StringUtils.isBlank(model.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
 		//	String openid = getOpenid(model.getJsCode());
-			model.setWxOpenid(model.getWxOpenid());
+		//	model.setWxOpenid(model.getWxOpenid());
+			System.out.println("openid-----"+model.getWxOpenid());
 			model.setIsWx(AdminInfo.is_wx_yes);
 			model.setWxTime(DateUtil.nowTime());
 			adminInfoService.update(model);
@@ -171,6 +172,7 @@ public class AdminWXController extends BaseController {
 			throwAppException(StringUtils.isBlank(model.getAdminId()), RC.ADMIN_INFO_PARAM_ADMIN_ID_INVALID);
 			model.setWxPassword("");
 			model.setIsWx(AdminInfo.is_wx_no);
+			model.setWxOpenid("");
 			adminInfoService.update(model);
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

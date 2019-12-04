@@ -55,7 +55,7 @@
 				</div>
 				<div class="layui-input-inline">
 					<select id="communityStreetSel" name="communityStreetSel" lay-filter="communityStreetSel" lay-search="">
-						<option value="">请选择小区</option>
+						<option value="">请选择小区/道路</option>
 			        </select>
 				</div>
 				<input type="text" name="storiedBuildingNumber" placeholder="请输入楼号" autocomplete="off" class="layui-input">
@@ -91,7 +91,7 @@
 					<th>区/县</th>
 					<th>管委会</th>
 					<th>社区</th>
-					<th>小区</th>
+					<th>小区/道路</th>
 					<th>楼号</th>
 					<th>单元</th>
 					<th>门牌号</th>
@@ -398,7 +398,7 @@
 				success : function(result){
 					if(result.code == 1){
 						$('#communityStreetSel').html('');
-						var str = '<option value="">请选择小区</option>';
+						var str = '<option value="">请选择小区/道路</option>';
 						for(var i=0;i<result.data.length;i++){
 							str += '<option value="'+result.data[i].communityStreetId+'">'+result.data[i].communityStreetName+'</option>'
 						}
