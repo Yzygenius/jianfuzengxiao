@@ -9,47 +9,52 @@
         },   //映射或字符串值，规定连同请求发送到服务器的数据；
         dataType:'json',
         success: function(data){
-            var uplinkData0 = data.data;
-            for(var i in uplinkData0){
-                for(var j in uplinkData0[i]){
-                    if(j == 'communityName'){
-                        uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                        delete uplinkData0[i]['communityName']//删除“nationName”
-                    }
-                    if(j == 'communityId'){
-                        uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                        delete uplinkData0[i]['communityId']//删除“nationId”
+            if(data.data == [] || data.data == ''){
+                layer.msg('房屋或门店暂无信息')
+                return false
+            }else{
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityName']//删除“nationName”
+                        }
+                        if(j == 'communityId'){
+                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            delete uplinkData0[i]['communityId']//删除“nationId”
+                        }
                     }
                 }
+                var mobileSelect0 = new MobileSelect({
+                    trigger: '#add_btna',
+                    title: '请选择社区',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                    },
+                    callback:function(indexArr, data){
+                        document.getElementById('add_btna').value = data[0].value;
+                        // document.getElementById('add_btna').style.display='block';
+                        quarter(1,data[0].id);
+                    }
+                });
+                var mobileSelecta = new MobileSelect({
+                    trigger: '#add_btn0',
+                    title: '请选择社区',
+                    wheels: [
+                        {data : uplinkData0}
+                    ],
+                    transitionEnd:function(indexArr, data){
+                    },
+                    callback:function(indexArr, data){
+                        document.getElementById('add_btn0').value = data[0].value;
+                        // document.getElementById('add_btna').style.display='block';
+                        quarter(2,data[0].id);
+                    }
+                });
             }
-            var mobileSelect0 = new MobileSelect({
-                trigger: '#add_btna',
-                title: '请选择社区',
-                wheels: [
-                    {data : uplinkData0}
-                ],
-                transitionEnd:function(indexArr, data){
-                },
-                callback:function(indexArr, data){
-                    document.getElementById('add_btna').value = data[0].value;
-                    // document.getElementById('add_btna').style.display='block';
-                    quarter(1,data[0].id);
-                }
-            });
-            var mobileSelecta = new MobileSelect({
-                trigger: '#add_btn0',
-                title: '请选择社区',
-                wheels: [
-                    {data : uplinkData0}
-                ],
-                transitionEnd:function(indexArr, data){
-                },
-                callback:function(indexArr, data){
-                    document.getElementById('add_btn0').value = data[0].value;
-                    // document.getElementById('add_btna').style.display='block';
-                    quarter(2,data[0].id);
-                }
-            });
         }, 
     })
     // 选择小区
@@ -76,58 +81,68 @@
             },   //映射或字符串值，规定连同请求发送到服务器的数据；
             dataType:'json',
             success: function(data){
-                var uplinkData0 = data.data;
-                for(var i in uplinkData0){
-                    for(var j in uplinkData0[i]){
-                        if(j == 'communityStreetName'){
-                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                            delete uplinkData0[i]['communityStreetName']//删除“nationName”
-                        }
-                        if(j == 'communityStreetId'){
-                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                            delete uplinkData0[i]['communityStreetId']//删除“nationId”
-                        }
-                    }
-                }
-                var mobileSelect1 = new MobileSelect({
-                    trigger: '#add_btnb',
-                    title: title,
-                    wheels: [
-                        {data : uplinkData0}
-                    ],
-                    transitionEnd:function(indexArr, data){
-                        console.log(data);
-                    },
-                    callback:function(indexArr, data){
-                        console.log(data);
-                        document.getElementById('add_btnb').value = data[0].value;
-                        if(housesStatus == 1){
-                            quarters0(housesStatus,communityId,data[0].id);
-                        }else if(housesStatus == 2){
-                            if(data[0].communityStreetStatus == 1){
-                                var UplinkData = [{id:1,value:'内铺'},{id:2,value:'外铺'}]
-                                var mobileSelecta = new MobileSelect({
-                                    trigger: '#add_btn1',
-                                    title: '内铺/外铺',
-                                    wheels: [
-                                        {data : UplinkData}
-                                    ],
-                                    transitionEnd:function(indexArr, data){
-                                    },
-                                    callback:function(indexArr, data){
-                                        document.getElementById('add_btn1').value = data[0].value;
-                                        Number(housesStatus,communityId,data[0].communityStreetStatus,data[0].id);
-                                    }
-                                });
-                                mobileSelecta.show(1500)
-                            }else if(data[0].communityStreetStatus == 2){
-                                Number(housesStatus,communityId,data[0].communityStreetStatus);
+                if(data.data == [] || data.data == ''){
+                    layer.msg('暂无信息')
+                    return false;
+                }else{
+                    var uplinkData0 = data.data;
+                    for(var i in uplinkData0){
+                        for(var j in uplinkData0[i]){
+                            if(j == 'communityStreetName'){
+                                uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                delete uplinkData0[i]['communityStreetName']//删除“nationName”
+                            }
+                            if(j == 'communityStreetId'){
+                                uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                                delete uplinkData0[i]['communityStreetId']//删除“nationId”
                             }
                         }
-                        
                     }
-                }); 
-                mobileSelect1.show(1500);
+                    var mobileSelect1 = new MobileSelect({
+                        trigger: '#add_btnb',
+                        title: title,
+                        wheels: [
+                            {data : uplinkData0}
+                        ],
+                        transitionEnd:function(indexArr, data){
+                            console.log(data);
+                        },
+                        callback:function(indexArr, data){
+                            console.log(data);
+                            document.getElementById('add_btnb').value = data[0].value;
+                            if(housesStatus == 1){
+                                
+                                if(data[0].communityStreetStatus == 1){
+                                    quarters0(housesStatus,communityId,data[0].id);
+                                }else if(data[0].communityStreetStatus == 2){
+                                    quartersn(housesStatus,communityId,data[0].id,'','');
+                                }
+                            }else if(housesStatus == 2){
+                                if(data[0].communityStreetStatus == 1){
+                                    var UplinkData = [{id:1,value:'内铺'},{id:2,value:'外铺'}]
+                                    var mobileSelecta = new MobileSelect({
+                                        trigger: '#add_btn1',
+                                        title: '内铺/外铺',
+                                        wheels: [
+                                            {data : UplinkData}
+                                        ],
+                                        transitionEnd:function(indexArr, data){
+                                        },
+                                        callback:function(indexArr, data){
+                                            document.getElementById('add_btn1').value = data[0].value;
+                                            Number(housesStatus,communityId,data[0].communityStreetStatus,data[0].id);
+                                        }
+                                    });
+                                    mobileSelecta.show(1500)
+                                }else if(data[0].communityStreetStatus == 2){
+                                    Number(housesStatus,communityId,data[0].communityStreetStatus);
+                                }
+                            }
+                            
+                        }
+                    }); 
+                    mobileSelect1.show(1500);
+                }
             }, 
         })
     }
@@ -158,78 +173,79 @@
                 if(data.data == [] || data.data == ''){
                     layer.msg('暂无信息')
                     return false
-                }
-                var uplinkData0 = data.data;
-                for(var i in uplinkData0){
-                    for(var j in uplinkData0[i]){
-                        if(j == 'houseNumber'){
-                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                            delete uplinkData0[i]['houseNumber']//删除“nationName”
+                }else{
+                    var uplinkData0 = data.data;
+                    for(var i in uplinkData0){
+                        for(var j in uplinkData0[i]){
+                            if(j == 'houseNumber'){
+                                uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                delete uplinkData0[i]['houseNumber']//删除“nationName”
+                            }
+                            // if(j == 'storiedBuildingNumber'){
+                            //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            //     delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
+                            // }
                         }
-                        // if(j == 'storiedBuildingNumber'){
-                        //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                        //     delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
-                        // }
                     }
-                }
-                var mobileSelectb = new MobileSelect({
-                    trigger: '#add_btn2',
-                    title: '请选择门店号',
-                    wheels: [
-                        {data : uplinkData0}
-                    ],
-                    transitionEnd:function(indexArr, data){
-                    },
-                    callback:function(indexArr, data){
-                        document.getElementById('add_btn2').value = data[0].value;
-                        layer.load(1);
-                        var housesId = data[0].housesId;
-                        $.ajax({
-                        　　type: 'POST', 
-                            url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
-                            data: {
-                                'userId':sessionStorage.userId,
-                                'housesId':housesId
-                            },  //映射或字符串值，规定连同请求发送到服务器的数据；
-                            dataType:'json',
-                            success: function(data){
-                                layer.closeAll('loading');
-                                var infor = data.data;
-                                if(data.code == 1){
-                                    $('.select_house').fadeOut(0);
-                                    $('.select_time .box-one').fadeOut(0);
-                                    $('.images').html('');
-                                    // layer.msg('添加成功');
-                                    if(data.data.housesMode == 1){
-                                        $('#support').fadeIn(200);
-                                        $('#support').find('.store').fadeIn(200);
-                                        $('#support .store').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
-                                            infor.communityStreetName+infor.houseNumber+'号'+'</span>'+
-                                            '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>'+
-                                            '<div class="inputInput"><p>企业名称</p><input type="text" placeholder="填写企业名称" id="ent_name"></div>');
-                                        $('#support .store').attr('data-houseId',housesId);
-                                        $('#submit').attr('data-type',3);
-                                    }else if(data.data.housesMode == 2){
-                                        $('#lease').fadeIn(200);
-                                        $('#lease').find('.store').fadeIn(200);
-                                        $('#lease .store .box-title').html('<img src="images/yang/house4.png" alt=""><span>'+
-                                            infor.communityStreetName+infor.houseNumber+'号'+'</span>');
-                                        $('#lease .store .box-cont').html(infor.housesAddress);
-                                        $('#lease .store').attr('data-houseId',housesId);
-                                        $('#submit').attr('data-type',4);
+                    var mobileSelectb = new MobileSelect({
+                        trigger: '#add_btn2',
+                        title: '请选择门店号',
+                        wheels: [
+                            {data : uplinkData0}
+                        ],
+                        transitionEnd:function(indexArr, data){
+                        },
+                        callback:function(indexArr, data){
+                            document.getElementById('add_btn2').value = data[0].value;
+                            layer.load(1);
+                            var housesId = data[0].housesId;
+                            $.ajax({
+                            　　type: 'POST', 
+                                url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
+                                data: {
+                                    'userId':sessionStorage.userId,
+                                    'housesId':housesId
+                                },  //映射或字符串值，规定连同请求发送到服务器的数据；
+                                dataType:'json',
+                                success: function(data){
+                                    layer.closeAll('loading');
+                                    var infor = data.data;
+                                    if(data.code == 1){
+                                        $('.select_house').fadeOut(0);
+                                        $('.select_time .box-one').fadeOut(0);
+                                        $('.images').html('');
+                                        // layer.msg('添加成功');
+                                        if(data.data.housesMode == 1){
+                                            $('#support').fadeIn(200);
+                                            $('#support').find('.store').fadeIn(200);
+                                            $('#support .store').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
+                                                infor.communityStreetName+infor.houseNumber+'号'+'</span>'+
+                                                '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>'+
+                                                '<div class="inputInput"><p>企业名称</p><input type="text" placeholder="填写企业名称" id="ent_name"></div>');
+                                            $('#support .store').attr('data-houseId',housesId);
+                                            $('#submit').attr('data-type',3);
+                                        }else if(data.data.housesMode == 2){
+                                            $('#lease').fadeIn(200);
+                                            $('#lease').find('.store').fadeIn(200);
+                                            $('#lease .store .box-title').html('<img src="images/yang/house4.png" alt=""><span>'+
+                                                infor.communityStreetName+infor.houseNumber+'号'+'</span>');
+                                            $('#lease .store .box-cont').html(infor.housesAddress);
+                                            $('#lease .store').attr('data-houseId',housesId);
+                                            $('#submit').attr('data-type',4);
+                                        }
+                                    }else{
+                                        layer.msg(data.msg);
                                     }
-                                }else{
-                                    layer.msg(data.msg);
-                                }
-                                $('.new_select').click(function(){
-                                    $('.select_house').fadeIn(0);
-                                    $('.select_time').fadeOut(0);
-                                })
-                            }, 
-                        })
-                    }
-                }); 
-                mobileSelectb.show(1500);
+                                    $('.new_select').click(function(){
+                                        $('.select_house').fadeIn(0);
+                                        $('.select_time').fadeOut(0);
+                                    })
+                                }, 
+                            })
+                        }
+                    }); 
+                    mobileSelectb.show(1500);
+                }
             }, 
         })
     }
@@ -253,33 +269,38 @@
             },   //映射或字符串值，规定连同请求发送到服务器的数据；
             dataType:'json',
             success: function(data){
-                var uplinkData0 = data.data;
-                for(var i in uplinkData0){
-                    for(var j in uplinkData0[i]){
-                        if(j == 'storiedBuildingNumber'){
-                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                            delete uplinkData0[i]['storiedBuildingNumber']//删除“nationName”
-                        }
-                        if(j == 'storiedBuildingNumber'){
-                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                            delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
+                if(data.data == [] || data.data == ''){
+                    layer.msg('暂无信息')
+                    return false
+                }else{
+                    var uplinkData0 = data.data;
+                    for(var i in uplinkData0){
+                        for(var j in uplinkData0[i]){
+                            if(j == 'storiedBuildingNumber'){
+                                uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                delete uplinkData0[i]['storiedBuildingNumber']//删除“nationName”
+                            }
+                            if(j == 'storiedBuildingNumber'){
+                                uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                                delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
+                            }
                         }
                     }
+                    var mobileSelect2 = new MobileSelect({
+                        trigger: '#add_btnc',
+                        title: '请选择楼号',
+                        wheels: [
+                            {data : uplinkData0}
+                        ],
+                        transitionEnd:function(indexArr, data){
+                        },
+                        callback:function(indexArr, data){
+                            document.getElementById('add_btnc').value = data[0].value;
+                            quartersnum(housesStatus,communityId,communityStreetId,data[0].id);
+                        }
+                    }); 
+                    mobileSelect2.show(1500);
                 }
-                var mobileSelect2 = new MobileSelect({
-                    trigger: '#add_btnc',
-                    title: '请选择楼号',
-                    wheels: [
-                        {data : uplinkData0}
-                    ],
-                    transitionEnd:function(indexArr, data){
-                    },
-                    callback:function(indexArr, data){
-                        document.getElementById('add_btnc').value = data[0].value;
-                        quartersnum(housesStatus,communityId,communityStreetId,data[0].id);
-                    }
-                }); 
-                mobileSelect2.show(1500);
             }, 
         })
     }
@@ -304,33 +325,38 @@
             },   //映射或字符串值，规定连同请求发送到服务器的数据；
             dataType:'json',
             success: function(data){
-                var uplinkData0 = data.data;
-                for(var i in uplinkData0){
-                    for(var j in uplinkData0[i]){
-                        if(j == 'unit'){
-                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                            delete uplinkData0[i]['unit']//删除“nationName”
-                        }
-                        if(j == 'unit'){
-                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                            delete uplinkData0[i]['unit']//删除“nationId”
+                if(data.data == [] || data.data == ''){
+                    layer.msg('暂无信息')
+                    return false
+                }else{
+                    var uplinkData0 = data.data;
+                    for(var i in uplinkData0){
+                        for(var j in uplinkData0[i]){
+                            if(j == 'unit'){
+                                uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                delete uplinkData0[i]['unit']//删除“nationName”
+                            }
+                            if(j == 'unit'){
+                                uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                                delete uplinkData0[i]['unit']//删除“nationId”
+                            }
                         }
                     }
+                    var mobileSelect3 = new MobileSelect({
+                        trigger: '#add_btnd',
+                        title: '请选择单元',
+                        wheels: [
+                            {data : uplinkData0}
+                        ],
+                        transitionEnd:function(indexArr, data){
+                        },
+                        callback:function(indexArr, data){
+                            document.getElementById('add_btnd').value = data[0].value;
+                            quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].id);
+                        }
+                    }); 
+                    mobileSelect3.show(1500);
                 }
-                var mobileSelect3 = new MobileSelect({
-                    trigger: '#add_btnd',
-                    title: '请选择单元',
-                    wheels: [
-                        {data : uplinkData0}
-                    ],
-                    transitionEnd:function(indexArr, data){
-                    },
-                    callback:function(indexArr, data){
-                        document.getElementById('add_btnd').value = data[0].value;
-                        quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].id);
-                    }
-                }); 
-                mobileSelect3.show(1500);
             }, 
         })
     }
@@ -343,86 +369,93 @@
                 arr.eq(i).remove();
             }
         }
+        var data = {}
+            data.keyword = 'E';
+            data.communityId = communityId;
+            data.housesStatus = housesStatus;
+            data.communityStreetId = communityStreetId;
+        if(storiedBuildingNumber !== '' && unit !== ''){
+            data.storiedBuildingNumber = storiedBuildingNumber;
+            data.unit = unit;
+        }
         $.ajax({
         　　type: 'POST', 
             url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
-            data: {
-                'keyword': 'E',
-                'communityId':communityId,
-                'housesStatus':housesStatus,
-                'communityStreetId':communityStreetId,
-                'storiedBuildingNumber':storiedBuildingNumber,
-                'unit':unit
-            },   //映射或字符串值，规定连同请求发送到服务器的数据；
+            data: data,   //映射或字符串值，规定连同请求发送到服务器的数据；
             dataType:'json',
             success: function(data){
-                var uplinkData0 = data.data;
-                for(var i in uplinkData0){
-                    for(var j in uplinkData0[i]){
-                        if(j == 'houseNumber'){
-                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
-                            delete uplinkData0[i]['houseNumber']//删除“nationName”
+                if(data.data == [] || data.data == ''){
+                    layer.msg('暂无信息')
+                    return false
+                }else{
+                    var uplinkData0 = data.data;
+                    for(var i in uplinkData0){
+                        for(var j in uplinkData0[i]){
+                            if(j == 'houseNumber'){
+                                uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                delete uplinkData0[i]['houseNumber']//删除“nationName”
+                            }
                         }
                     }
-                }
-                var mobileSelect4 = new MobileSelect({
-                    trigger: '#add_btne',
-                    title: '请选择门牌号',
-                    wheels: [
-                        {data : uplinkData0}
-                    ],
-                    transitionEnd:function(indexArr, data){
-                        // console.log(data);
-                    },
-                    callback:function(indexArr, data){
-                        // console.log(data);
-                        document.getElementById('add_btne').value = data[0].value;
-                        layer.load(1);
-                        var housesId = data[0].housesId;
-                        $.ajax({
-                        　　type: 'POST', 
-                            url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
-                            data: {
-                                'userId':sessionStorage.userId,
-                                'housesId':housesId
-                            },  //映射或字符串值，规定连同请求发送到服务器的数据；
-                            dataType:'json',
-                            success: function(data){
-                                layer.closeAll('loading');
-                                var infor = data.data;
-                                if(data.code == 1){
-                                    $('.select_house').fadeOut(0);
-                                    $('.select_time .box-one').fadeOut(0);
-                                    $('.images').html('');
-                                    if(data.data.housesMode == 1){
-                                        $('#support').fadeIn(200);
-                                        $('#support').find('.house').fadeIn(200);
-                                        $('#support .house').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
-                                            infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>'+
-                                            '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>')
-                                        $('#support .house').attr('data-houseId',housesId);
-                                        $('#submit').attr('data-type',1);
-                                    }else if(data.data.housesMode == 2){
-                                        $('#lease').fadeIn(200);
-                                        $('#lease').find('.house').fadeIn(200);
-                                        $('#lease .house .box-title').html('<img src="images/yang/house3.png" alt=""><span>'+
-                                            infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>');
-                                        $('#lease .house .box-cont').html(infor.housesAddress);
-                                        $('#lease .house').attr('data-houseId',housesId);
-                                        $('#submit').attr('data-type',2)
+                    var mobileSelect4 = new MobileSelect({
+                        trigger: '#add_btne',
+                        title: '请选择门牌号',
+                        wheels: [
+                            {data : uplinkData0}
+                        ],
+                        transitionEnd:function(indexArr, data){
+                            // console.log(data);
+                        },
+                        callback:function(indexArr, data){
+                            // console.log(data);
+                            document.getElementById('add_btne').value = data[0].value;
+                            layer.load(1);
+                            var housesId = data[0].housesId;
+                            $.ajax({
+                            　　type: 'POST', 
+                                url: '/jianfuzengxiao/api/personnel/getVerifyHouses.html',    //规定连同请求发送到服务器的数据；
+                                data: {
+                                    'userId':sessionStorage.userId,
+                                    'housesId':housesId
+                                },  //映射或字符串值，规定连同请求发送到服务器的数据；
+                                dataType:'json',
+                                success: function(data){
+                                    layer.closeAll('loading');
+                                    var infor = data.data;
+                                    if(data.code == 1){
+                                        $('.select_house').fadeOut(0);
+                                        $('.select_time .box-one').fadeOut(0);
+                                        $('.images').html('');
+                                        if(data.data.housesMode == 1){
+                                            $('#support').fadeIn(200);
+                                            $('#support').find('.house').fadeIn(200);
+                                            $('#support .house').html('<div class="box-title"><img src="images/yang/house4.png" alt=""><span>'+
+                                                infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>'+
+                                                '<span class="zc">自持</span></div><div class="box-cont">'+infor.housesAddress+'</div>')
+                                            $('#support .house').attr('data-houseId',housesId);
+                                            $('#submit').attr('data-type',1);
+                                        }else if(data.data.housesMode == 2){
+                                            $('#lease').fadeIn(200);
+                                            $('#lease').find('.house').fadeIn(200);
+                                            $('#lease .house .box-title').html('<img src="images/yang/house3.png" alt=""><span>'+
+                                                infor.communityStreetName+infor.storiedBuildingNumber+'号楼'+infor.unit+'单元'+infor.houseNumber+'</span>');
+                                            $('#lease .house .box-cont').html(infor.housesAddress);
+                                            $('#lease .house').attr('data-houseId',housesId);
+                                            $('#submit').attr('data-type',2)
+                                        }
+                                    }else{
+                                        layer.msg(data.msg);
                                     }
-                                }else{
-                                    layer.msg(data.msg);
-                                }
-                                $('.new_select').click(function(){
-                                    $('.select_house').fadeIn(0);
-                                    $('.select_time').fadeOut(0);
-                                })
-                            }, 
-                        })
-                    }
-                }); 
-                mobileSelect4.show(1500);
+                                    $('.new_select').click(function(){
+                                        $('.select_house').fadeIn(0);
+                                        $('.select_time').fadeOut(0);
+                                    })
+                                }, 
+                            })
+                        }
+                    }); 
+                    mobileSelect4.show(1500);
+                }
             }, 
         })
     }
