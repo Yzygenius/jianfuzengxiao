@@ -205,7 +205,7 @@
 				//导入excel
 				upload.render({
 		        	elem: '#uploadExcel',
-		            url: '/jianfuzengxiao/system/common/uploadFangwuExcel.html', //上传接口
+		            url: '/jianfuzengxiao/system/common/uploadMendianExcel.html', //上传接口
 		            accept: 'file', //普通文件
 		            data: {},
 		            before: function(obj){

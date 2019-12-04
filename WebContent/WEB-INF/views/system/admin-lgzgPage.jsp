@@ -32,6 +32,11 @@
 		<div class="layui-row">
 			<form class="layui-form layui-col-md12 x-so">
 				<input type="text" name="keyword" style="width: 190px;" placeholder="请输入用户名/姓名/手机号" autocomplete="off" class="layui-input">
+				<div class="layui-input-inline">
+					<select id="gwh" name="gwh" lay-filter="gwh" lay-search="">
+						<option value="">请选择管委会</option>
+					</select>
+				</div>
 				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
@@ -41,7 +46,7 @@
 				<i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn"
-				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddLgzg.html', 460, 410)">
+				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddLgzg.html', 460, 500)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
@@ -94,7 +99,7 @@
 					<i class="layui-icon">&#xe615;</i>管辖社区
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/admin/toUpdateAdmin.html', 460, 370)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/admin/toUpdateAdmin.html', 460, 470)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
@@ -117,6 +122,7 @@
 		//var lPage;
 		var $, form, layer, laydate, element, laypage;
 		var keyword  = '';
+		var gwhId = '';
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
 				//var total;
@@ -138,10 +144,13 @@
 
 				});
 				
+				getGwhList()
+				
 				//监听检索
 				form.on('submit(sreach)', function(data){
 					
 					keyword = data.field.keyword;
+					gwhId = data.field.gwh;
 					
 					page()
 					//loading..
@@ -160,7 +169,8 @@
 		function page() {
 			var data = {
 				'keyword': keyword,
-				'roleId': 3
+				'roleId': 3,
+				'gwhId': gwhId
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -195,7 +205,8 @@
 			var data = {
 				'page' : page,
 				'keyword': keyword,
-				'roleId': 3
+				'roleId': 3,
+				'gwhId': gwhId
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -309,6 +320,42 @@
 					}
 				});
 
+			});
+		}
+		
+		function getGwhList(){
+			
+			//console.log(data)
+			$.ajax({  
+				url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+				type : 'post',
+				dataType: "json",
+				data: {},
+				success : function(result){
+					//console.log(result)
+					if(result.code == 1){
+						$("#gwh").html('');
+						var str = '<option value="">请选择管委会</option>';
+						$.each(result.data, function (index, item) {
+							if(item.gwhId == gwhId){
+								str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+							}else{
+								str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+							}
+							
+				        });
+				        $("#gwh").append(str);
+				        //append后必须从新渲染
+				        form.render('select')
+				       
+					}else{
+						layer.msg(result.msg, {icon: 7});
+					}
+					
+				},
+				error : function(result){
+					layer.msg("加载数据出错，请刷新页面", {icon : 2})
+				}
 			});
 		}
 	</script>

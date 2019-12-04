@@ -12,8 +12,18 @@ public class AdminInfoMVO extends AdminInfo {
 	private String jsCode;
 	
 	private String keyword;
+	
+	private String communityName;
 
 	
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
+
 	public String getGwhId() {
 		return gwhId;
 	}

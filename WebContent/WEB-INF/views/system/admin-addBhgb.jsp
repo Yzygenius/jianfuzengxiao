@@ -31,7 +31,7 @@
 					<span>用户名</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="loginName" name="loginName" lay-verify="required" placeholder="请输入6-16位的用户名" required="" maxlength="16" autocomplete="off" class="layui-input">
+					<input type="text" id="loginName" name="loginName" lay-verify="required" placeholder="请输入用户名" required="" maxlength="16" autocomplete="off" class="layui-input">
 					<span id="loginNameAlt" class="x-red"></span>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
@@ -62,6 +62,19 @@
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">
+					<span>社区</span>
+				</label>
+				<div class="layui-input-inline">
+					<select id="communitySel" name="communitySel" lay-verify="required" lay-filter="communitySel" lay-search="">
+						
+			        </select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -100,22 +113,25 @@
 	
 	var loginName, password, username, telephone = '';
 	var roleId = '';
+	var communityId = '', communityName = '';
     layui.use(['form','layer','upload'], function(){
     	var $ = layui.jquery
         form = layui.form
         layer = layui.layer
         upload = layui.upload;
     	
+    	serchCommunity()
+    	
     	form.on('select(roleSel)', function(data){
     		roleId = data.value;
         });
-
+    	//监听社区
+        form.on('select(communitySel)', function(data){
+        	communityName = data.elem[data.elem.selectedIndex].text;
+        	communityId = data.value;
+        });
 	    //监听提交
 		form.on('submit(add)', function(data){
-			if($('#loginName').val().length < 6 || $('#loginName').val().length > 16){
-				layer.msg("请输入6-16位的用户名", {icon: 7});
-				return false;
-			}
 			if($('#password').val().length < 6 || $('#password').val().length > 16){
 				layer.msg("请输入6-16位的密码", {icon: 7});
 				return false;
@@ -137,7 +153,8 @@
 					'password': $('#password').val(),
 					'username': $('#username').val(),
 					'telephone': $('#telephone').val(),
-					'roleId': 2
+					'roleId': 2,
+					'communityId': communityId
 				},
 				success : function(result){
 					if(result.code == 1){
@@ -162,7 +179,29 @@
 
     });
     
-    
+    function serchCommunity(){
+    	$.ajax({  
+			url : "/jianfuzengxiao/system/community/getCommunityList.html",  
+			type : 'post',
+			dataType: "json",
+			data: {
+			},
+			success : function(result){
+				if(result.code == 1){
+					$('#communitySel').html('');
+					var str = '<option value="">请选择</option>';
+					for(var i=0;i<result.data.length;i++){
+						str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
+					}
+					$('#communitySel').append(str);
+					form.render('select');
+				}
+			},
+			error : function(result){
+				layer.msg("数据加载出错，请刷新页面", {icon: 2})
+			}
+		})
+    }
 </script>
 </body>
 

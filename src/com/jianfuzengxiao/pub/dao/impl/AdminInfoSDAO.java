@@ -24,9 +24,9 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 	public AdminInfoMVO insert(final AdminInfoMVO entity) throws SysException {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO ADMIN_INFO (admin_id,login_name,password,satl,username,gender,birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,wx_time,wx_password,create_time,update_time,sts) ");
+				"INSERT INTO ADMIN_INFO (admin_id,login_name,password,satl,username,gender,birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,wx_time,wx_password,create_time,update_time,sts,community_id,gwh_id) ");
 		sql.append(
-				"VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?)");
+				"VALUES (?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?,?,?,?,?,?,?,?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,str_to_date(?,'%Y-%m-%d %H:%i:%s'),str_to_date(?,'%Y-%m-%d %H:%i:%s'),?,?,?)");
 		try {
 			logger.info(sql.toString());
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -55,6 +55,8 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 					ps.setString(++i, StringUtils.trimToNull(entity.getCreateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getUpdateTime()));
 					ps.setString(++i, StringUtils.trimToNull(entity.getSts()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getCommunityId()));
+					ps.setString(++i, StringUtils.trimToNull(entity.getGwhId()));
 					return ps;
 				}
 			});
@@ -164,6 +166,14 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 				sql.append("union_id=?,");
 				params.add(entity.getUnionId());
 			}
+			if (entity.getCommunityId() != null) {
+				sql.append("community_id=?,");
+				params.add(entity.getCommunityId());
+			}
+			if (entity.getGwhId() != null) {
+				sql.append("gwh_id=?,");
+				params.add(entity.getGwhId());
+			}
 			sql.deleteCharAt(sql.length() - 1);
 			sql.append(" WHERE admin_id=?");
 			params.add(entity.getAdminId());
@@ -195,7 +205,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 	public List<AdminInfoMVO> queryList(AdminInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts ");
+				"SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,community_id,gwh_id ");
 		sql.append("FROM  ADMIN_INFO ");
 		sql.append("WHERE 1=1 ");
 		List<AdminInfoMVO> resultList = null;
@@ -305,7 +315,7 @@ public class AdminInfoSDAO extends BaseDAO<AdminInfoMVO> implements IAdminInfoSD
 	public AdminInfoMVO queryBean(AdminInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,wx_gzh_openid,union_id ");
+				"SELECT admin_id,login_name,password,satl,username,gender,date_format(birth_date,'%Y-%m-%d %H:%i:%s')birth_date,nation_id,nation_name,telephone,role_id,role_name,is_wx,wx_name,wx_account_number,wx_openid,wx_photo,date_format(wx_time,'%Y-%m-%d %H:%i:%s')wx_time,wx_password,date_format(create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(update_time,'%Y-%m-%d %H:%i:%s')update_time,sts,wx_gzh_openid,union_id,community_id,gwh_id ");
 		sql.append("FROM  ADMIN_INFO ");
 		sql.append("WHERE admin_id=? ");
 		List<Object> params = new ArrayList<Object>();

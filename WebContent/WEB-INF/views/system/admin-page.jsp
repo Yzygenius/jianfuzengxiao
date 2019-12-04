@@ -32,6 +32,11 @@
 		<div class="layui-row">
 			<form class="layui-form layui-col-md12 x-so">
 				<input type="text" name="keyword" style="width: 190px;" placeholder="请输入用户名/姓名/手机号" autocomplete="off" class="layui-input">
+				<div class="layui-input-inline">
+					<select id="communitySel" name="communitySel" lay-filter="communitySel" lay-search="">
+						
+			        </select>
+				</div>
 				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 			</form>
 		</div>
@@ -42,7 +47,7 @@
 			</button>
 			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
 			<button class="layui-btn"
-				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 410)">
+				onclick="banner_add('添加','/jianfuzengxiao/system/admin/toAddAdmin.html', 460, 500)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button>
 			</c:if>
@@ -57,6 +62,7 @@
 					<th>姓名</th>
 					<th>电话</th>
 					<th>微信</th>
+					<th>所属社区</th>
 					<th>管辖房屋</th>
 					<th>操作</th>
 				</tr>
@@ -80,6 +86,7 @@
 			</td>
 			<td row="telephone"></td>
 			<td row="wxAccountNumber"></td>
+			<td row="communityName"></td>
 			<td row="housesCount"></td>
 			<!-- <td row="username"></td>
 			<td row="adminTelephone"></td>
@@ -94,7 +101,7 @@
 					<i class="layui-icon">&#xe615;</i>管辖房屋
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
-					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/admin/toUpdateAdmin.html', 460, 370)">
+					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/admin/toUpdateAdmin.html', 460, 470)">
 					<i class="layui-icon">&#xe642;</i>编辑
 				</button>
 				<button class="layui-btn layui-btn layui-btn-xs"
@@ -117,6 +124,7 @@
 		//var lPage;
 		var $, form, layer, laydate, element, laypage;
 		var keyword  = '';
+		var communityId = '';
 		$(function() {
 			layui.use([ 'laydate', 'form', 'element', 'laypage', 'layer' ], function() {
 				//var total;
@@ -137,12 +145,14 @@
 					});
 
 				});
+				serchCommunity()
+				
 				
 				//监听检索
 				form.on('submit(sreach)', function(data){
-					
+					//console.log(data)
 					keyword = data.field.keyword;
-					
+					communityId = data.field.communitySel;
 					page()
 					//loading..
 					layer.load(1)
@@ -160,7 +170,8 @@
 		function page() {
 			var data = {
 				'keyword': keyword,
-				'roleId': 2
+				'roleId': 2,
+				'communityId':communityId
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -195,7 +206,8 @@
 			var data = {
 				'page' : page,
 				'keyword': keyword,
-				'roleId': 2
+				'roleId': 2,
+				'communityId':communityId
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/admin/getAdminPage.html",
@@ -215,6 +227,7 @@
 							tr.find('[row=loginName]').text(data[i].loginName);
 							tr.find('[row=username]').text(data[i].username);
 							tr.find('[row=telephone]').text(data[i].telephone);
+							tr.find('[row=communityName]').text(data[i].communityName);
 							tr.find('[row=wxAccountNumber]').text(data[i].wxName);
 							tr.find('[row=housesCount]').text(data[i].manageHousesCount);
 							$('#x-img').append(tr);
@@ -308,6 +321,30 @@
 
 			});
 		}
+		
+		function serchCommunity(){
+	    	$.ajax({  
+				url : "/jianfuzengxiao/system/community/getCommunityList.html",  
+				type : 'post',
+				dataType: "json",
+				data: {
+				},
+				success : function(result){
+					if(result.code == 1){
+						$('#communitySel').html('');
+						var str = '<option value="">请选择社区</option>';
+						for(var i=0;i<result.data.length;i++){
+							str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
+						}
+						$('#communitySel').append(str);
+						form.render('select');
+					}
+				},
+				error : function(result){
+					layer.msg("数据加载出错，请刷新页面", {icon: 2})
+				}
+			})
+	    }
 	</script>
 </body>
 </html>

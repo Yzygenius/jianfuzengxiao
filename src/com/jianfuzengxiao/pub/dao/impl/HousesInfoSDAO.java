@@ -71,6 +71,11 @@ public class HousesInfoSDAO extends BaseDAO<HousesInfoMVO> implements IHousesInf
 					return ps;
 				}
 			});
+			
+			String sqlid = "SELECT @@IDENTITY as houses_id";
+			int count = jdbcTemplate.queryForObject(sqlid, Integer.class);
+			entity.setHousesId(String.valueOf(count));
+			
 		} catch (DataAccessException e) {
 			logger.error("增加HOUSES_INFO 错误：{}", e.getMessage());
 			throw new SysException("增加HOUSES_INFO错误", "10000", e);
