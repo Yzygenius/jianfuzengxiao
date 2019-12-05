@@ -147,6 +147,7 @@
                                     quartersn(housesStatus,communityId,data[0].id,'','');
                                 }
                             }else if(housesStatus == 2){
+                                var communityStreetId = data[0].id
                                 if(data[0].communityStreetStatus == 1){
                                     var UplinkData = [{id:1,value:'内铺'},{id:2,value:'外铺'}]
                                     var mobileSelecta = new MobileSelect({
@@ -159,12 +160,12 @@
                                         },
                                         callback:function(indexArr, data){
                                             document.getElementById('add_btn1').value = data[0].value;
-                                            Number(housesStatus,communityId,data[0].communityStreetStatus,data[0].id);
+                                            Number(housesStatus,communityId,communityStreetId,data[0].id);
                                         }
                                     });
                                     mobileSelecta.show(1500)
                                 }else if(data[0].communityStreetStatus == 2){
-                                    Number(housesStatus,communityId,data[0].communityStreetStatus);
+                                    Number(housesStatus,communityId,communityStreetId);
                                 }
                             }
                             
@@ -176,7 +177,7 @@
         })
     }
     //选择门店的号
-    function Number(housesStatus,communityId,communityStreetStatus,storeLocation){
+    function Number(housesStatus,communityId,communityStreetId,storeLocation){
         var arr = $('.mobileSelect')
         console.log(arr.length)
         for(var i = 0; i< arr.length;i++){
@@ -188,7 +189,7 @@
             'keyword': 'E',
             'communityId':communityId,
             'housesStatus':housesStatus,   
-            'communityStreetStatus':communityStreetStatus
+            'communityStreetId':communityStreetId
         }
         if(storeLocation !== undefined || storeLocation !== 'undefined'){
             infor.storeLocation = storeLocation
@@ -307,12 +308,13 @@
                         for(var j in uplinkData0[i]){
                             if(j == 'storiedBuildingNumber'){
                                 uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                                // uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
                                 delete uplinkData0[i]['storiedBuildingNumber']//删除“nationName”
                             }
-                            if(j == 'storiedBuildingNumber'){
-                                uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                                delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
-                            }
+                            // if(j == 'storiedBuildingNumber'){
+                            //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            //     // delete uplinkData0[i]['storiedBuildingNumber']//删除“nationId”
+                            // }
                         }
                     }
                     var mobileSelect2 = new MobileSelect({
@@ -325,7 +327,7 @@
                         },
                         callback:function(indexArr, data){
                             document.getElementById('add_btnc').value = data[0].value;
-                            quartersnum(housesStatus,communityId,communityStreetId,data[0].id);
+                            quartersnum(housesStatus,communityId,communityStreetId,data[0].value);
                         }
                     }); 
                     mobileSelect2.show(1500);
@@ -365,10 +367,10 @@
                                 uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
                                 delete uplinkData0[i]['unit']//删除“nationName”
                             }
-                            if(j == 'unit'){
-                                uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
-                                delete uplinkData0[i]['unit']//删除“nationId”
-                            }
+                            // if(j == 'unit'){
+                            //     uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            //     delete uplinkData0[i]['unit']//删除“nationId”
+                            // }
                         }
                     }
                     var mobileSelect3 = new MobileSelect({
@@ -381,7 +383,7 @@
                         },
                         callback:function(indexArr, data){
                             document.getElementById('add_btnd').value = data[0].value;
-                            quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].id);
+                            quartersn(housesStatus,communityId,communityStreetId,storiedBuildingNumber,data[0].value);
                         }
                     }); 
                     mobileSelect3.show(1500);
