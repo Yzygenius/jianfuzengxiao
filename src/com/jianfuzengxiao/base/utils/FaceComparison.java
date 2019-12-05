@@ -67,8 +67,11 @@ public class FaceComparison {
 
 	/** 0 通过 1 比对错误 2图像解码失败 3 系统忙 */
 	public static int faceUtils(String image1, String image2){
+		
 		AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
 		String url = "http://pasq.niutuwangluo.com";
+		logger.info(url+image1);
+		logger.info(url+image2);
         // image1/image2也可以为url或facetoken, 相应的imageType参数需要与之对应。
         MatchRequest req1 = new MatchRequest(url+image1, "URL");
         MatchRequest req2 = new MatchRequest(url+image2, "URL");

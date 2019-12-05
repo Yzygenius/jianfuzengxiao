@@ -275,7 +275,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 	public List<HousesInfoMVO> querySelHousesList(HousesInfoMVO entity) throws SysException {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT a.houses_id,a.houses_status,a.community_id,a.community_name,a.community_street_id,a.community_street_name,ifnull(a.storied_building_number,'')storied_building_number,ifnull(a.unit,'')unit,a.house_number,a.store_location,a.sts ");
+				"SELECT a.houses_id,a.houses_status,ifnull(a.community_id,'')community_id,ifnull(a.community_name,'')community_name,ifnull(a.community_street_id,'')community_street_id,ifnull(a.community_street_name,'')community_street_name,ifnull(a.storied_building_number,'')storied_building_number,ifnull(a.unit,'')unit,ifnull(a.house_number,'')house_number,a.store_location,a.sts ");
 		sql.append(",b.status community_street_status ");
 		sql.append("FROM  HOUSES_INFO a ");
 		sql.append("left join community_street_info b on(a.community_street_id=b.community_street_id) ");

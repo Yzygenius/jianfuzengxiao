@@ -131,10 +131,14 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 	public String toUpdateHousesDp(Model model, HousesInfoMVO entity){
 		try {
 			entity = housesInfoService.queryBean(entity);
-			CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
-			streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
-			streetInfo = communityStreetInfoService.queryBean(streetInfo);
-			entity.setCommunityStreetStatus(streetInfo.getStatus());
+			if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+				CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
+				streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
+				streetInfo = communityStreetInfoService.queryBean(streetInfo);
+				entity.setCommunityStreetStatus(streetInfo.getStatus());
+			}else {
+				entity.setCommunityStreetStatus("1");
+			}
 			
 			model.addAttribute("houses", entity);
 		} catch (Exception e) {
@@ -148,10 +152,14 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 		try {
 			entity = housesInfoService.queryBean(entity);
 			
-			CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
-			streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
-			streetInfo = communityStreetInfoService.queryBean(streetInfo);
-			entity.setCommunityStreetStatus(streetInfo.getStatus());
+			if (StringUtils.isNotBlank(entity.getCommunityStreetId())) {
+				CommunityStreetInfoMVO streetInfo = new CommunityStreetInfoMVO();
+				streetInfo.setCommunityStreetId(entity.getCommunityStreetId());
+				streetInfo = communityStreetInfoService.queryBean(streetInfo);
+				entity.setCommunityStreetStatus(streetInfo.getStatus());
+			}else {
+				entity.setCommunityStreetStatus("1");
+			}
 			
 			AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
 			aduitDistribution.setHousesId(entity.getHousesId());
