@@ -40,6 +40,35 @@
                         quarter(1,data[0].id);
                     }
                 });
+            }
+        }, 
+    })
+    $.ajax({
+    　　type: 'POST', 
+        url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
+        data: {
+            'keyword':'A',
+            'housesStatus':2
+        },   //映射或字符串值，规定连同请求发送到服务器的数据；
+        dataType:'json',
+        success: function(data){
+            if(data.data == [] || data.data == ''){
+                layer.msg('房屋或门店暂无信息')
+                return false
+            }else{
+                var uplinkData0 = data.data;
+                for(var i in uplinkData0){
+                    for(var j in uplinkData0[i]){
+                        if(j == 'communityName'){
+                            uplinkData0[i]['value'] = uplinkData0[i][j]//修改属性名为“value”
+                            delete uplinkData0[i]['communityName']//删除“nationName”
+                        }
+                        if(j == 'communityId'){
+                            uplinkData0[i]['id'] = uplinkData0[i][j]//修改属性id为“id”
+                            delete uplinkData0[i]['communityId']//删除“nationId”
+                        }
+                    }
+                }
                 var mobileSelecta = new MobileSelect({
                     trigger: '#add_btn0',
                     title: '请选择社区',
