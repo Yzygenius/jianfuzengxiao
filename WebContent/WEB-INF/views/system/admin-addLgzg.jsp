@@ -31,7 +31,7 @@
 					<span>用户名</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="loginName" name="loginName" lay-verify="required" placeholder="请输入6-16位的用户名" required="" maxlength="16" autocomplete="off" class="layui-input">
+					<input type="text" id="loginName" name="loginName" lay-verify="required" placeholder="请输入用户名" required="" maxlength="16" autocomplete="off" class="layui-input">
 					<span id="loginNameAlt" class="x-red"></span>
 				</div>
 				<div class="layui-form-mid layui-word-aux">
@@ -62,6 +62,17 @@
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">管委会</label>
+				<div class="layui-input-inline">
+					<select id="gwh" name="gwh" lay-filter="gwh" lay-verify="required" lay-search="">
+						<option value="">请选择管委会</option>
+					</select>
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+					<span class="x-red">*</span>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -106,16 +117,15 @@
         layer = layui.layer
         upload = layui.upload;
     	
+    	getGwhList()
+    	
     	form.on('select(roleSel)', function(data){
     		roleId = data.value;
         });
 
 	    //监听提交
 		form.on('submit(add)', function(data){
-			if($('#loginName').val().length < 6 || $('#loginName').val().length > 16){
-				layer.msg("请输入6-16位的用户名", {icon: 7});
-				return false;
-			}
+			
 			if($('#password').val().length < 6 || $('#password').val().length > 16){
 				layer.msg("请输入6-16位的密码", {icon: 7});
 				return false;
@@ -137,7 +147,8 @@
 					'password': $('#password').val(),
 					'username': $('#username').val(),
 					'telephone': $('#telephone').val(),
-					'roleId': 3
+					'roleId': 3,
+					'gwhId':data.field.gwh
 				},
 				success : function(result){
 					if(result.code == 1){
@@ -162,7 +173,41 @@
 
     });
     
-    
+    function getGwhList(){
+    	var data = {}
+    	//console.log(data)
+    	$.ajax({  
+			url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+			type : 'post',
+			dataType: "json",
+			data: data,
+			success : function(result){
+				//console.log(result)
+				if(result.code == 1){
+					$("#gwh").html('');
+					var str = '<option value="">请选择管委会</option>';
+					$.each(result.data, function (index, item) {
+						/* if(item.gwhId == 1){
+							str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+						}else{
+							str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+						} */
+						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+			        });
+			        $("#gwh").append(str);
+			        //append后必须从新渲染
+			        form.render('select')
+			       
+				}else{
+					layer.msg(result.msg, {icon: 7});
+				}
+				
+			},
+			error : function(result){
+				layer.msg("加载数据出错，请刷新页面", {icon : 2})
+			}
+		});
+    }
 </script>
 </body>
 

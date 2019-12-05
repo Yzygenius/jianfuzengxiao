@@ -21,12 +21,16 @@ public class AdminInfoMDAO extends AdminInfoSDAO implements IAdminInfoMDAO {
 	public PageInfo queryPage(AdminInfoMVO entity, PageInfo pageInfo) throws SysException {
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-				"select a.admin_id,a.login_name,a.password,a.satl,a.username,a.gender,date_format(a.birth_date,'%Y-%m-%d %H:%i:%s')birth_date,a.nation_id,a.nation_name,a.telephone,a.role_id,a.role_name,a.is_wx,a.wx_name,a.wx_account_number,a.wx_openid,a.wx_photo,date_format(a.wx_time,'%Y-%m-%d %H:%i:%s')wx_time,a.wx_password,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts ");
+				"select a.admin_id,a.login_name,a.password,a.satl,a.username,a.gender,date_format(a.birth_date,'%Y-%m-%d %H:%i:%s')birth_date,a.nation_id,a.nation_name,a.telephone,a.role_id,a.role_name,a.is_wx,a.wx_name,a.wx_account_number,a.wx_openid,a.wx_photo,date_format(a.wx_time,'%Y-%m-%d %H:%i:%s')wx_time,a.wx_password,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.community_id ");
 		sql.append(",count(b.id)manage_houses_count ");
-		sql.append(",count(c.lgzg_id)manage_community_count,c.gwh_id,c.gwh_name ");
+		sql.append(",count(c.lgzg_id)manage_community_count ");
+		sql.append(",d.community_name ");
+		sql.append(",e.gwh_name ");
 		sql.append("from ADMIN_INFO a ");
 		sql.append("left join aduit_distribution b on(a.admin_id=b.admin_id and b.sts='A') ");
 		sql.append("left join lgzg c on(a.admin_id=c.admin_id and c.sts='A') ");
+		sql.append("left join community_info d on(a.community_id=d.community_id) ");
+		sql.append("left join gwh_info e on(a.gwh_id=e.gwh_id) ");
 		sql.append("where 1=1");
 
 		List<Object> params = new ArrayList<Object>();
@@ -119,6 +123,14 @@ public class AdminInfoMDAO extends AdminInfoSDAO implements IAdminInfoMDAO {
 				if (StringUtils.isNotBlank(entity.getSts())) {
 					sql.append(" AND a.sts like ?");
 					params.add("%" + entity.getSts() + "%");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND a.community_id=?");
+					params.add(entity.getCommunityId());
+				}
+				if (StringUtils.isNotBlank(entity.getGwhId())) {
+					sql.append(" AND a.gwh_id=?");
+					params.add(entity.getGwhId());
 				}
 				if (StringUtils.isNotBlank(entity.getKeyword())) {
 					sql.append(" AND (a.login_name like ? or a.username like ? or a.telephone like ?) ");

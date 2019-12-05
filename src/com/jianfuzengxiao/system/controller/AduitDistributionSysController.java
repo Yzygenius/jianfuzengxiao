@@ -126,6 +126,8 @@ public class AduitDistributionSysController extends BaseController {
 				aduitDistribution.setAdminId(entity.getAdminId());
 				aduitDistribution.setCommunityId(housesInfoMVO.getCommunityId());
 				aduitDistribution.setHousesId(housesInfoMVO.getHousesId());
+				aduitDistribution.setGwhId(housesInfoMVO.getGwhId());
+				aduitDistribution.setGwhName(housesInfoMVO.getGwhName());
 				aduitDistributionService.insert(aduitDistribution);
 			}
 			return apiResult(RC.SUCCESS);

@@ -56,6 +56,8 @@ public class AdminInfo extends Entity {
 	
 	protected String unionId;
 	
+	protected String communityId;
+	
 	
 	public String getWxGzhOpenid() {
 		return wxGzhOpenid;
@@ -247,6 +249,14 @@ public class AdminInfo extends Entity {
 
 	public void setWxAccountNumber(String wxAccountNumber) {
 		this.wxAccountNumber = wxAccountNumber;
+	}
+
+	public String getCommunityId() {
+		return communityId;
+	}
+
+	public void setCommunityId(String communityId) {
+		this.communityId = communityId;
 	}
 	
 }

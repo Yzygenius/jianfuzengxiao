@@ -20,6 +20,7 @@ import com.jianfuzengxiao.base.controller.BaseController;
 import com.jianfuzengxiao.pub.entity.AduitDistributionMVO;
 import com.jianfuzengxiao.pub.entity.CommunityInfoMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
+import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ILgzgService;
 
 @Controller
@@ -29,6 +30,9 @@ public class LgzgSysController extends BaseController {
 	
 	@Autowired
 	private ILgzgService lgzgService;
+	
+	@Autowired
+	private ICommunityInfoService communityInfoService;
 	
 	@RequestMapping(value="/toManagePage")
 	public String toManagePage(){
@@ -77,6 +81,11 @@ public class LgzgSysController extends BaseController {
 				LgzgMVO lgzg = new LgzgMVO();
 				lgzg.setAdminId(entity.getAdminId());
 				lgzg.setCommunityId(list.get(i));
+				CommunityInfoMVO communityInfo = new CommunityInfoMVO();
+				communityInfo.setCommunityId(list.get(i));
+				communityInfo = communityInfoService.queryBean(communityInfo);
+				lgzg.setGwhId(communityInfo.getGwhId());
+				lgzg.setGwhName(communityInfo.getGwhName());
 				lgzgService.insert(lgzg);
 			}
 			return apiResult(RC.SUCCESS);

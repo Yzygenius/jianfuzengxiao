@@ -59,6 +59,34 @@
 					<span class="x-red"></span>
 				</div>
 			</div>
+			<c:if test="${admin.roleId == 2}">
+				<div class="layui-form-item">
+					<label class="layui-form-label">
+						<span>社区</span>
+					</label>
+					<div class="layui-input-inline">
+						<select id="communitySel" name="communitySel" lay-verify="required" lay-filter="communitySel" lay-search="">
+							
+				        </select>
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${admin.roleId == 3}">
+				<div class="layui-form-item">
+					<label class="layui-form-label">管委会</label>
+					<div class="layui-input-inline">
+						<select id="gwh" name="gwh" lay-filter="gwh" lay-verify="required" lay-search="">
+							<option value="">请选择管委会</option>
+						</select>
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>
+					</div>
+				</div>
+			</c:if>
 			<div class="layui-form-item">
 				<label class="layui-form-label">
 					<span>姓名</span>
@@ -87,29 +115,30 @@
 			</div>
 		</form>
 	</div>
+	<input type="text" id="communityId" value="${admin.communityId}" style="display: none;">
+	<input type="text" id="gwhId" value="${admin.gwhId}" style="display: none;">
 <script src="/jianfuzengxiao/statics/system/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/jianfuzengxiao/statics/system/js/xadmin.js" charset="utf-8"></script>
 <script>
 
 var form, layer, upload;
-
+var communityId = $('#communityId').val();
+var gwhId = $('#gwhId').val();
 var adminId = ${admin.adminId }
+var roleId = ${admin.roleId }
+
 layui.use(['form','layer', 'upload'], function(){
 	var $ = layui.jquery;
     form = layui.form;
     layer = layui.layer;
     upload = layui.upload;
     
-    
-    
-    
+    serchCommunity()
+    getGwhList()
    
   	//监听提交
 	form.on('submit(update)', function(data){
-		if($('#loginName').val().length < 6 || $('#loginName').val().length > 16){
-			layer.msg("请输入6-16位的用户名", {icon: 7});
-			return false;
-		}
+		
 		if($('#username').val().length < 1){
 			layer.msg("请输入有效姓名", {icon: 7});
 			return false;
@@ -118,15 +147,28 @@ layui.use(['form','layer', 'upload'], function(){
 			layer.msg("请输入有效电话", {icon: 7});
 			return false;
 		}
+		var param;
+		if(roleId == 2){
+			param =  {
+					'adminId': adminId,
+					'username': $('#username').val(),
+					'telephone': $('#telephone').val(),
+					'communityId': data.field.communitySel
+				}
+		}else if(roleId == 3){
+			param =  {
+					'adminId': adminId,
+					'username': $('#username').val(),
+					'telephone': $('#telephone').val(),
+					'gwhId': data.field.gwh
+				}
+		}
+		 
 	    $.ajax({  
 			url : "/jianfuzengxiao/system/admin/updateAdmin.html",  
 			type : 'post',
 			dataType: "json",
-			data: {
-				'adminId': adminId,
-				'username': $('#username').val(),
-				'telephone': $('#telephone').val()
-			},
+			data: param,
 			success : function(result){
 				if(result.code == 1){
 					layer.msg("更新成功", {icon: 1},function () {
@@ -148,7 +190,68 @@ layui.use(['form','layer', 'upload'], function(){
 	});
   
 });
-
+function serchCommunity(){
+	$.ajax({  
+		url : "/jianfuzengxiao/system/community/getCommunityList.html",  
+		type : 'post',
+		dataType: "json",
+		data: {
+		},
+		success : function(result){
+			if(result.code == 1){
+				$('#communitySel').html('');
+				var str = '<option value="">请选择社区</option>';
+				for(var i=0;i<result.data.length;i++){
+					if(communityId == result.data[i].communityId){
+						str += '<option value="'+result.data[i].communityId+'" selected>'+result.data[i].communityName+'</option>'
+					}else{
+						str += '<option value="'+result.data[i].communityId+'">'+result.data[i].communityName+'</option>'
+					}
+				}
+				$('#communitySel').append(str);
+				form.render('select');
+			}
+		},
+		error : function(result){
+			layer.msg("数据加载出错，请刷新页面", {icon: 2})
+		}
+	})
+}
+function getGwhList(){
+	
+	//console.log(data)
+	$.ajax({  
+		url : "/jianfuzengxiao/system/gwh/getGwhList.html",  
+		type : 'post',
+		dataType: "json",
+		data: {},
+		success : function(result){
+			//console.log(result)
+			if(result.code == 1){
+				$("#gwh").html('');
+				var str = '<option value="">请选择管委会</option>';
+				$.each(result.data, function (index, item) {
+					if(item.gwhId == gwhId){
+						str += "<option value='" + item.gwhId + "' selected>" + item.gwhName + "</option>";
+					}else{
+						str += "<option value='" + item.gwhId + "'>" + item.gwhName + "</option>";
+					}
+					
+		        });
+		        $("#gwh").append(str);
+		        //append后必须从新渲染
+		        form.render('select')
+		       
+			}else{
+				layer.msg(result.msg, {icon: 7});
+			}
+			
+		},
+		error : function(result){
+			layer.msg("加载数据出错，请刷新页面", {icon : 2})
+		}
+	});
+}
 </script>
 </body>
 
