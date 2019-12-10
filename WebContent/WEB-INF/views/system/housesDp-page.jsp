@@ -74,7 +74,7 @@
 		</div>
 		
 		<xblock style="height: 38px;">
-			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 			<button class="layui-btn layui-btn-danger" onclick="delAll()"> <i class="layui-icon">&#xe640;</i>批量删除
 			</button>
 			<button class="layui-btn"
@@ -89,7 +89,7 @@
 		<table class="layui-table">
 			<thead>
 				<tr>
-					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+					<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 					<th><input type="checkbox" value="" name="" id="checkAll" onclick="checkAll(this)"></th>
 					</c:if>
 					<th>省</th>
@@ -117,7 +117,7 @@
 
 	<table id="clone-tr" style="display: none;">
 		<tr>
-			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+			<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 			<td row="checkBoxId"><input type="checkbox" class="checkId" value="" name=""></td>
 			</c:if>
 			<td row="ids" style="display: none;"></td>
@@ -142,7 +142,7 @@
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/houses/toHousesDpDetail.html')">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
-				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1}">
+				<c:if test="${sessionScope.SESSION_ADMIN.roleId == 1 || sessionScope.SESSION_ADMIN.roleId == 2}">
 				<button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesDp.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
