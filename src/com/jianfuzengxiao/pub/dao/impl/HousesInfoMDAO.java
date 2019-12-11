@@ -174,7 +174,7 @@ public class HousesInfoMDAO extends HousesInfoSDAO implements IHousesInfoMDAO {
 					params.add("%" + entity.getGwhName() + "%");
 				}
 				if (StringUtils.isNotBlank(entity.getKeyword())) {
-					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? or d.usename like ?) ");
+					sql.append(" AND (a.property_owner_name like ? or a.property_owner_tel like ? or a.property_owner_idcard like ? or d.username like ?) ");
 					params.add("%" + entity.getKeyword() + "%");
 					params.add("%" + entity.getKeyword() + "%");
 					params.add("%" + entity.getKeyword() + "%");
