@@ -202,7 +202,8 @@
 				'nationId': nationId,
 				'liveTypeId': liveTypeId,
 				'certificatesNumber': certificatesNumber,
-				'telephone': telephone
+				'telephone': telephone,
+				'sts':'A'
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/per/getPerPage.html",
@@ -242,7 +243,8 @@
 				'nationId': nationId,
 				'liveTypeId': liveTypeId,
 				'certificatesNumber': certificatesNumber,
-				'telephone': telephone
+				'telephone': telephone,
+				'sts':'A'
 			};
 			$.ajax({
 				url : "/jianfuzengxiao/system/per/getPerPage.html",

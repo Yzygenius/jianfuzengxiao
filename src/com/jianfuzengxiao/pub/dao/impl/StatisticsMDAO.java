@@ -714,7 +714,7 @@ public class StatisticsMDAO extends BaseDAO<Statistics> implements IStatisticsMD
 		StringBuffer sql = new StringBuffer();
 		sql.append(
 				"select a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_number,date_format(a.certificates_start_time,'%Y-%m-%d')certificates_start_time,date_format(a.certificates_stop_time,'%Y-%m-%d')certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,a.audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,date_format(a.update_time,'%Y-%m-%d %H:%i:%s')update_time,a.sts,a.update_status ");
-		sql.append(",b.houses_status,b.community_name,b.community_street_name,b.storied_building_number,b.unit,b.house_number,b.houses_address,ifnull(b.store_location, 0)store_location ");
+		sql.append(",b.houses_status,b.community_name,b.community_street_name,ifnull(b.storied_building_number,'')storied_building_number,ifnull(b.unit,'')unit,b.house_number,b.houses_address,ifnull(b.store_location, 0)store_location ");
 		sql.append("from PERSONNEL_INFO a ");
 		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
 		sql.append("where date(a.update_time)=curdate() ");
