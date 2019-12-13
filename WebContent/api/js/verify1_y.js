@@ -141,11 +141,11 @@
                             document.getElementById('add_btnb').value = data[0].value;
                             if(housesStatus == 1){
                                 
-                                if(data[0].communityStreetStatus == 1){
+                                // if(data[0].communityStreetStatus == 1){
                                     quarters0(housesStatus,communityId,data[0].id);
-                                }else if(data[0].communityStreetStatus == 2){
-                                    quartersn(housesStatus,communityId,data[0].id,'','');
-                                }
+                                // }else if(data[0].communityStreetStatus == 2){
+                                //     quartersn(housesStatus,communityId,data[0].id,'','');
+                                // }
                             }else if(housesStatus == 2){
                                 var communityStreetId = data[0].id
                                 if(data[0].communityStreetStatus == 1){
@@ -405,10 +405,10 @@
             data.communityId = communityId;
             data.housesStatus = housesStatus;
             data.communityStreetId = communityStreetId;
-        if(storiedBuildingNumber !== '' && unit !== ''){
+        // if(storiedBuildingNumber !== '' && unit !== ''){
             data.storiedBuildingNumber = storiedBuildingNumber;
             data.unit = unit;
-        }
+        // }
         $.ajax({
         　　type: 'POST', 
             url: '/jianfuzengxiao/api/common/getSelHousesList.html',    //规定连同请求发送到服务器的数据；
