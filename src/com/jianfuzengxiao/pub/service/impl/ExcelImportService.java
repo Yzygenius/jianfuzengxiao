@@ -222,14 +222,18 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			houses.setHouseType(cell.getStringCellValue().trim());
 			
 			//房屋类型
-			cell = row.getCell((short) 12);
-			String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
-			houses.setHousesTypeId(housesTypeId);
-			houses.setHousesTypeName(cell.getStringCellValue().trim());
+			if (row.getCell((short) 12) != null) {
+				cell = row.getCell((short) 12);
+				String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
+				houses.setHousesTypeId(housesTypeId);
+				houses.setHousesTypeName(cell.getStringCellValue().trim());
+			}
 			
 			//产权人
-			cell = row.getCell((short) 13);
-			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
+			if (row.getCell((short) 13) != null) {
+				cell = row.getCell((short) 13);
+				houses.setPropertyOwnerName(cell.getStringCellValue().trim());
+			}
 			
 			//产权人联系电话
 			if (row.getCell((short) 14) != null) {
@@ -246,8 +250,11 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			}
 
 			//产权证号
-			cell = row.getCell((short) 16);
-			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
+			if (row.getCell((short) 16) != null) {
+				row.getCell((short) 16).setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell((short) 16);
+				houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
+			}
 			
 			//包户干部姓名
 			cell = row.getCell((short) 19);
@@ -449,14 +456,18 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			houses.setHouseType(cell.getStringCellValue().trim());
 			
 			//房屋类型
-			cell = row.getCell((short) 11);
-			String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
-			houses.setHousesTypeId(housesTypeId);
-			houses.setHousesTypeName(cell.getStringCellValue().trim());
+			if (row.getCell((short) 11) != null) {
+				cell = row.getCell((short) 11);
+				String housesTypeId = (String) CacheManager.getInstance().get("table.cache.idvalue.housestypeid", cell.getStringCellValue().trim());
+				houses.setHousesTypeId(housesTypeId);
+				houses.setHousesTypeName(cell.getStringCellValue().trim());
+			}
 			
 			//产权人
-			cell = row.getCell((short) 12);
-			houses.setPropertyOwnerName(cell.getStringCellValue().trim());
+			if (row.getCell((short) 12) != null) {
+				cell = row.getCell((short) 12);
+				houses.setPropertyOwnerName(cell.getStringCellValue().trim());
+			}
 			
 			//产权人联系电话
 			if (row.getCell((short) 13) != null) {
@@ -473,8 +484,11 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			}
 
 			//产权证号
-			cell = row.getCell((short) 15);
-			houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
+			if (row.getCell((short) 15) != null) {
+				row.getCell((short) 15).setCellType(Cell.CELL_TYPE_STRING);
+				cell = row.getCell((short) 15);
+				houses.setPropertyCertificatesNumber(cell.getStringCellValue().trim());
+			}
 			
 			//包户干部姓名
 			cell = row.getCell((short) 18);

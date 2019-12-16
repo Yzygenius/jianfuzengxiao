@@ -236,6 +236,7 @@
 
 		function serchData(page) {
 			var data = {
+				'page': page,
 				'keyword': keyword,
 				'status': 2,
 				'username': username,
