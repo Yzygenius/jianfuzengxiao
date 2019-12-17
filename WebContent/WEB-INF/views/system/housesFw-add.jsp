@@ -110,7 +110,7 @@
 				<span>门牌号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="houseNumber" name="houseNumber" lay-verify="required" required="" maxlength="10" autocomplete="off" class="layui-input">
+					<input type="text" id="houseNumber" name="houseNumber" lay-verify="required" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>

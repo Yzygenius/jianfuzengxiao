@@ -160,36 +160,40 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			// 管委会
 			cell = row.getCell((short) 4);
 			//社区
-			cell = row.getCell((short) 5);
-			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
-			communityInfo.setCommunityName(cell.getStringCellValue().trim());
-			communityInfo.setSts(STS_NORMAL);
-			List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
-			if (cList.size() > 0) {
-				communityInfo = cList.get(0);
-				houses.setCommunityId(communityInfo.getCommunityId());
-				houses.setCommunityName(communityInfo.getCommunityName());
-				//省市区
-				houses.setProvName(communityInfo.getProvName());
-				houses.setProvCode(communityInfo.getProvCode());
-				houses.setCityName(communityInfo.getCityName());
-				houses.setCityCode(communityInfo.getCityCode());
-				houses.setAreaName(communityInfo.getAreaName());
-				houses.setAreaCode(communityInfo.getAreaCode());
-				houses.setGwhId(communityInfo.getGwhId());
-				houses.setGwhName(communityInfo.getGwhName());
+			if (row.getCell((short) 5) != null) {
+				cell = row.getCell((short) 5);
+				CommunityInfoMVO communityInfo = new CommunityInfoMVO();
+				communityInfo.setCommunityName(cell.getStringCellValue().trim());
+				communityInfo.setSts(STS_NORMAL);
+				List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
+				if (cList.size() > 0) {
+					communityInfo = cList.get(0);
+					houses.setCommunityId(communityInfo.getCommunityId());
+					houses.setCommunityName(communityInfo.getCommunityName());
+					//省市区
+					houses.setProvName(communityInfo.getProvName());
+					houses.setProvCode(communityInfo.getProvCode());
+					houses.setCityName(communityInfo.getCityName());
+					houses.setCityCode(communityInfo.getCityCode());
+					houses.setAreaName(communityInfo.getAreaName());
+					houses.setAreaCode(communityInfo.getAreaCode());
+					houses.setGwhId(communityInfo.getGwhId());
+					houses.setGwhName(communityInfo.getGwhName());
+				}
 			}
 			
 			//小区
-			cell = row.getCell((short) 6);
-			CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
-			communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
-			communityStreetInfo.setSts(STS_NORMAL);
-			List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
-			if (scList.size() > 0) {
-				communityStreetInfo = scList.get(0);
-				houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
-				houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+			if (row.getCell((short) 6) != null) {
+				cell = row.getCell((short) 6);
+				CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
+				communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
+				communityStreetInfo.setSts(STS_NORMAL);
+				List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
+				if (scList.size() > 0) {
+					communityStreetInfo = scList.get(0);
+					houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
+					houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+				}
 			}
 			
 			//楼号
@@ -214,12 +218,16 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			}
 			
 			//详细地址
-			cell = row.getCell((short) 10);
-			houses.setHousesAddress(cell.getStringCellValue().trim());
+			if (row.getCell((short) 10) != null) {
+				cell = row.getCell((short) 10);
+				houses.setHousesAddress(cell.getStringCellValue().trim());
+			}
 			
 			//户型
-			cell = row.getCell((short) 11);
-			houses.setHouseType(cell.getStringCellValue().trim());
+			if (row.getCell((short) 11) != null) {
+				cell = row.getCell((short) 11);
+				houses.setHouseType(cell.getStringCellValue().trim());
+			}
 			
 			//房屋类型
 			if (row.getCell((short) 12) != null) {
@@ -397,48 +405,53 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			// 管委会
 			cell = row.getCell((short) 4);
 			//社区
-			cell = row.getCell((short) 5);
-			CommunityInfoMVO communityInfo = new CommunityInfoMVO();
-			communityInfo.setCommunityName(cell.getStringCellValue().trim());
-			communityInfo.setSts(STS_NORMAL);
-			List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
-			if (cList.size() > 0) {
-				communityInfo = cList.get(0);
-				houses.setCommunityId(communityInfo.getCommunityId());
-				houses.setCommunityName(communityInfo.getCommunityName());
-				//省市区
-				houses.setProvName(communityInfo.getProvName());
-				houses.setProvCode(communityInfo.getProvCode());
-				houses.setCityName(communityInfo.getCityName());
-				houses.setCityCode(communityInfo.getCityCode());
-				houses.setAreaName(communityInfo.getAreaName());
-				houses.setAreaCode(communityInfo.getAreaCode());
-				houses.setGwhId(communityInfo.getGwhId());
-				houses.setGwhName(communityInfo.getGwhName());
+			if (row.getCell((short) 5) != null) {
+				cell = row.getCell((short) 5);
+				CommunityInfoMVO communityInfo = new CommunityInfoMVO();
+				communityInfo.setCommunityName(cell.getStringCellValue().trim());
+				communityInfo.setSts(STS_NORMAL);
+				List<CommunityInfoMVO> cList = communityInfoMDAO.queryList(communityInfo);
+				if (cList.size() > 0) {
+					communityInfo = cList.get(0);
+					houses.setCommunityId(communityInfo.getCommunityId());
+					houses.setCommunityName(communityInfo.getCommunityName());
+					//省市区
+					houses.setProvName(communityInfo.getProvName());
+					houses.setProvCode(communityInfo.getProvCode());
+					houses.setCityName(communityInfo.getCityName());
+					houses.setCityCode(communityInfo.getCityCode());
+					houses.setAreaName(communityInfo.getAreaName());
+					houses.setAreaCode(communityInfo.getAreaCode());
+					houses.setGwhId(communityInfo.getGwhId());
+					houses.setGwhName(communityInfo.getGwhName());
+				}
 			}
 			
 			//小区
-			cell = row.getCell((short) 6);
-			CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
-			communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
-			communityStreetInfo.setSts(STS_NORMAL);
-			List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
-			if (scList.size()>0) {
-				communityStreetInfo = scList.get(0);
-				houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
-				houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+			if (row.getCell((short) 6) != null) {
+				cell = row.getCell((short) 6);
+				CommunityStreetInfoMVO communityStreetInfo = new CommunityStreetInfoMVO();
+				communityStreetInfo.setCommunityStreetName(cell.getStringCellValue().trim());
+				communityStreetInfo.setSts(STS_NORMAL);
+				List<CommunityStreetInfoMVO> scList = communityStreetInfoMDAO.queryList(communityStreetInfo);
+				if (scList.size()>0) {
+					communityStreetInfo = scList.get(0);
+					houses.setCommunityStreetId(communityStreetInfo.getCommunityStreetId());
+					houses.setCommunityStreetName(communityStreetInfo.getCommunityStreetName());
+				}
 			}
 			
 			//内外铺
-			cell = row.getCell((short) 7);
-			if(cell.getStringCellValue().trim().equals("内铺")){
-				houses.setStoreLocation("1");
-			}else if (cell.getStringCellValue().trim().equals("外铺")) {
-				houses.setStoreLocation("2");
-			}else {
-				houses.setStoreLocation("");
+			if (row.getCell((short) 7) != null) {
+				cell = row.getCell((short) 7);
+				if(cell.getStringCellValue().trim().equals("内铺")){
+					houses.setStoreLocation("1");
+				}else if (cell.getStringCellValue().trim().equals("外铺")) {
+					houses.setStoreLocation("2");
+				}else {
+					houses.setStoreLocation("");
+				}
 			}
-			
 			
 			//门牌
 			if (row.getCell((short) 8) != null) {
@@ -448,12 +461,16 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			}
 			
 			//详细地址
-			cell = row.getCell((short) 9);
-			houses.setHousesAddress(cell.getStringCellValue().trim());
+			if (row.getCell((short) 9) != null) {
+				cell = row.getCell((short) 9);
+				houses.setHousesAddress(cell.getStringCellValue().trim());
+			}
 			
 			//户型
-			cell = row.getCell((short) 10);
-			houses.setHouseType(cell.getStringCellValue().trim());
+			if (row.getCell((short) 10) != null) {
+				cell = row.getCell((short) 10);
+				houses.setHouseType(cell.getStringCellValue().trim());
+			}
 			
 			//房屋类型
 			if (row.getCell((short) 11) != null) {
