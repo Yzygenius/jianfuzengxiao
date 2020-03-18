@@ -43,6 +43,7 @@ import com.jianfuzengxiao.pub.entity.CommunityStreetInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
 import com.jianfuzengxiao.pub.entity.HousesTypeMVO;
 import com.jianfuzengxiao.pub.entity.LgzgMVO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IAduitDistributionService;
 import com.jianfuzengxiao.pub.service.ICommunityInfoService;
 import com.jianfuzengxiao.pub.service.ICommunityStreetInfoService;
@@ -50,6 +51,7 @@ import com.jianfuzengxiao.pub.service.IExcelImportService;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 import com.jianfuzengxiao.pub.service.IHousesTypeService;
 import com.jianfuzengxiao.pub.service.ILgzgService;
+import com.jianfuzengxiao.pub.service.IPersonnelInfoService;
 
 @Controller
 @RequestMapping(value="/system/common")
@@ -73,6 +75,9 @@ public class CommonSysContoller extends BaseController {
 	
 	@Autowired
 	private IAduitDistributionService aduitDistributionService;
+	
+	@Autowired
+	private IPersonnelInfoService personnelInfoService;
 	
 	@Autowired
 	private ILgzgService lgzgService;
@@ -124,8 +129,69 @@ public class CommonSysContoller extends BaseController {
 		
 		try {
 			//流管专干
-			if (StringUtils.isBlank(entity.getCommunityId())) {
-				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				if (StringUtils.isBlank(entity.getCommunityId())) {
+					LgzgMVO lgzg = new LgzgMVO();
+					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					lgzg.setSts("A");
+					List<LgzgMVO> lgzgList = lgzgService.queryList(lgzg);
+					if (lgzgList.size() > 0) {
+						List<String> list = new ArrayList<String>();
+						for(LgzgMVO lg : lgzgList){
+							list.add(lg.getCommunityId());
+						}
+						entity.setCommunityId(StringUtils.join(list.toArray(),","));
+					}else{
+						entity.setCommunityId("0");
+					}
+				}
+			}
+			
+			//包户干部
+			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
+				if (StringUtils.isBlank(entity.getHousesId())) {
+					AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+					aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					aduitDistribution.setSts("A");
+					List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+					if (list.size() > 0) {
+						List<String> list2 = new ArrayList<String>();
+						for (AduitDistributionMVO ad : list) {
+							list2.add(ad.getHousesId());
+						}
+						String housesId = StringUtils.join(list2.toArray(),",");
+						entity.setHousesId(housesId);
+					}else {
+						entity.setHousesId("0");
+					}
+				}
+			}
+			entity.setSts("A");
+			List<HousesInfoMVO> list = housesInfoService.queryHousesList(entity);
+			HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(fileName, title, list, null);
+			
+			this.setResponseHeader(response, fileName);
+			OutputStream os = response.getOutputStream();
+			wb.write(os);
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			logger.info("导出excel错误", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/downloadPerExcel")
+	public void downloadPerExcel(RedirectAttributes redirectAttributes, PersonnelInfoMVO entity){
+		String fileName = "人员信息.xls";
+		//String[] title = {"房产ID", "产权类型", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "社区", "小区", "户型", "楼号", "单元", "门牌号", "详细地址", "房产类型", "内/外铺", "省", "市", "区", "创建时间", "最新更新时间", "房产证照片", "户型图"};
+		//String[] title = {"房产ID", "产权类型", "省", "市", "区/县", "管委会", "社区", "小区/道路", "内/外铺", "楼号", "单元", "门牌号", "详细地址", "户型", "房产类型", "房主", "房主联系电话", "产权人姓名", "产权人联系电话", "产权人身份证号", "房产证号码", "创建时间", "最新更新时间", "房产证照片", "户型图"};
+		String[] title = {"姓名", "性别", "出生日期", "民族", "联系电话", "身份证号", "证件时效", "证件地址", "办证机关", "审核状态", "最新上报时间", "人脸照片", "证件正面照片", "证件反面照片", "居住地址", "详细地址", "产权人", "房屋类型", "房屋户型", "居住类型", "居住开始时间", "已居住时长"};
+
+		try {
+			//流管专干
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				if (StringUtils.isBlank(entity.getCommunityId())) {
 					LgzgMVO lgzg = new LgzgMVO();
 					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
 					lgzg.setSts("A");
@@ -159,9 +225,9 @@ public class CommonSysContoller extends BaseController {
 					entity.setHousesId("0");
 				}
 			}
-			entity.setSts("A");
-			List<HousesInfoMVO> list = housesInfoService.queryHousesList(entity);
-			HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(fileName, title, list, null);
+			//entity.setSts("A");
+			List<PersonnelInfoMVO> list = personnelInfoService.queryPersonnelList(entity);
+			HSSFWorkbook wb = ExcelUtil.getHSSFWorkbookPer(fileName, title, list, null);
 			
 			this.setResponseHeader(response, fileName);
 			OutputStream os = response.getOutputStream();

@@ -62,7 +62,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">社区</label>
 				<div class="layui-input-inline">
-					<input type="text" id=communityName name="communityName" value="${community.communityName }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="communityName" name="communityName" value="${community.communityName }" lay-verify="required" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>

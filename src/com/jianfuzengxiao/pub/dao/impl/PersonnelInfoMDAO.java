@@ -415,4 +415,68 @@ public class PersonnelInfoMDAO extends PersonnelInfoSDAO implements IPersonnelIn
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<PersonnelInfoMVO> queryPersonnelList(PersonnelInfoMVO entity) throws SysException {
+		StringBuilder sql = new StringBuilder();
+		sql.append( "SELECT a.personnel_id,a.houses_id,a.user_id,a.per_sort,a.live_type_id,a.live_type_name,a.lease_mode,date_format(a.lease_start_time,'%Y-%m-%d')lease_start_time,date_format(a.lease_stop_time,'%Y-%m-%d')lease_stop_time,a.username,a.gender,a.face_photo,a.face_file,date_format(a.birth_date,'%Y-%m-%d')birth_date,a.nation_id,a.nation_name,a.telephone,a.certificates_type_id,a.certificates_type_name,a.certificates_positive_photo,a.certificates_positive_file,a.certificates_negative_photo,a.certificates_negative_file,a.certificates_number,a.certificates_start_time,a.certificates_stop_time,a.certificates_address,a.certificates_office,a.enterprise_name,a.status,ifnull(a.audit_remark,'')audit_remark,date_format(a.create_time,'%Y-%m-%d %H:%i:%s')create_time,ifnull(date_format(a.update_time,'%Y-%m-%d %H:%i:%s'),'')update_time,a.sts,DATEDIFF(current_date, a.lease_start_time)lease_day,TIMESTAMPDIFF(YEAR,a.birth_date,CURDATE())age ");
+		sql.append(",b.houses_status,b.prov_name,b.city_name,b.area_name,ifnull(b.community_name,'')community_name,ifnull(b.community_street_name,'')community_street_name ");
+		sql.append(",ifnull(b.storied_building_number,'')storied_building_number,ifnull(b.unit,'')unit,b.house_number,b.houses_address,b.property_owner_name ");
+		sql.append(",b.house_type,b.houses_type_name,b.houses_type_id ");
+		sql.append("FROM PERSONNEL_INFO a ");
+		sql.append("left join houses_info b on(a.houses_id=b.houses_id) ");
+		sql.append("WHERE 1=1 ");
+		List<PersonnelInfoMVO> resultList = null;
+		List<Object> params = new ArrayList<Object>();
+		try {
+			if (entity != null) {
+				if (StringUtils.isNotBlank(entity.getPersonnelId())) {
+					sql.append(" AND a.personnel_id in("+entity.getPersonnelId()+") ");
+				}
+				if (StringUtils.isNotBlank(entity.getUsername())) {
+					sql.append(" AND a.username like ?");
+					params.add("%"+entity.getUsername()+"%");
+				}
+				if (StringUtils.isNotBlank(entity.getGender())) {
+					sql.append(" AND a.gender = ?");
+					params.add(entity.getGender());
+				}
+				if (StringUtils.isNotBlank(entity.getNationId())) {
+					sql.append(" AND a.nation_id = ?");
+					params.add(entity.getNationId());
+				}
+				if (StringUtils.isNotBlank(entity.getLiveTypeId())) {
+					sql.append(" AND a.live_type_id in ("+entity.getLiveTypeId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getStatus())) {
+					sql.append(" AND a.status in ("+entity.getStatus()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getCertificatesNumber())) {
+					sql.append(" AND a.certificates_number like ?");
+					params.add("%"+entity.getCertificatesNumber()+"%");
+				}
+				if (StringUtils.isNotBlank(entity.getTelephone())) {
+					sql.append(" AND a.telephone like ?");
+					params.add("%"+entity.getTelephone()+"%");
+				}
+				if (StringUtils.isNotBlank(entity.getHousesId())) {
+					sql.append(" AND b.houses_id in ("+entity.getHousesId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getCommunityId())) {
+					sql.append(" AND b.community_id in ("+entity.getCommunityId()+")");
+				}
+				if (StringUtils.isNotBlank(entity.getSts())) {
+					sql.append(" AND a.sts = ?");
+					params.add(entity.getSts());
+				}
+			}
+			logger.info(sql.toString() + "--" + params.toString());
+			resultList = jdbcTemplate.query(sql.toString(), params.toArray(),
+					new BeanPropertyRowMapper<PersonnelInfoMVO>(PersonnelInfoMVO.class));
+		} catch (DataAccessException e) {
+			logger.error("查询PERSONNEL_INFO错误：{}", e.getMessage());
+			throw new SysException("查询PERSONNEL_INFO错误", "10000", e);
+		}
+		return resultList;
+	}
 }

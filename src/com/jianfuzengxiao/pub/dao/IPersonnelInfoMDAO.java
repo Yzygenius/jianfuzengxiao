@@ -17,5 +17,7 @@ public interface IPersonnelInfoMDAO extends IPersonnelInfoSDAO {
 	public PersonnelInfoMVO queryPersonnelBean(PersonnelInfoMVO personnelInfo) throws SysException;
 	
 	public List<PersonnelInfoMVO> queryPerList(PersonnelInfoMVO entity) throws SysException;
+	
+	public List<PersonnelInfoMVO> queryPersonnelList(PersonnelInfoMVO entity) throws SysException;
 
 }

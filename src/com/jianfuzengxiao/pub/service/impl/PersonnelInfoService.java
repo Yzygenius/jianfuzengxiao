@@ -610,4 +610,9 @@ public class PersonnelInfoService extends BaseService implements IPersonnelInfoS
 		return 0;
 	}
 
+	@Override
+	public List<PersonnelInfoMVO> queryPersonnelList(PersonnelInfoMVO entity) throws SysException {
+		return personnelInfoMDAO.queryPersonnelList(entity);
+	}
+
 }

@@ -146,7 +146,7 @@
 				<span>房屋户型</span>
 				</label>
 				<div class="layui-input-inline"> 
-					<input type="text" id="houseType" name="houseType" value="${houses.houseType }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="houseType" name="houseType" value="${houses.houseType }" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>
@@ -170,7 +170,7 @@
 					<span>产权证号</span>
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="propertyCertificatesNumber" name="propertyCertificatesNumber" value="${houses.propertyCertificatesNumber }" lay-verify="required" required="" autocomplete="off" class="layui-input">
+					<input type="text" id="propertyCertificatesNumber" name="propertyCertificatesNumber" value="${houses.propertyCertificatesNumber }" required="" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux">
 					<span class="x-red">*</span>

@@ -71,6 +71,9 @@
 				onclick="banner_add('新增','/jianfuzengxiao/system/houses/toAddHousesFw.html', 820)">
 				<i class="layui-icon">&#xe608;</i>添加
 			</button> -->
+			<button class="layui-btn" onclick="downloadExcel()">
+				<i class="layui-icon">&#xe608;</i>导出Excel
+			</button>
 			<span id="total" class="x-right" style="line-height: 40px"></span>
 		</xblock>
 		<table class="layui-table">
@@ -119,6 +122,9 @@
 					onclick="banner_details(this,'查看','/jianfuzengxiao/system/per/toAuditYezhuDetail.html', 1200, 620)">
 					<i class="layui-icon">&#xe615;</i>查看
 				</button>
+				<button class="layui-btn layui-btn layui-btn-xs" onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/per/toPerEdit.html')">
+					<i class="layui-icon">&#xe642;</i>编辑
+				</button>
 				<!-- <button class="layui-btn layui-btn layui-btn-xs"
 					onclick="banner_edit(this,'编辑','/jianfuzengxiao/system/houses/toUpdateHousesFw.html', 820)">
 					<i class="layui-icon">&#xe642;</i>编辑
@@ -141,7 +147,7 @@
 	<script>
 		//var lPage;
 		var $, form, layer, laydate, lement, laypage;
-		var username,  gender, nationId, certificatesNumber, telephone = '';
+		var username='',  gender='', nationId='', certificatesNumber='', telephone = '';
 		var liveTypeId = '1,2,3,4';
 		var keyword  = '';
 		var status = '';
@@ -367,7 +373,7 @@
 		// 编辑
 		function banner_edit(obj, title, url, w, h) {
 			var id = $(obj).parent('td').siblings('[row=ids]').text();
-			x_admin_show(title, url + '?housesId=' + id, w, h);
+			x_admin_show(title, url + '?personnelId=' + id, w, h);
 		}
 
 		/*删除*/
@@ -451,6 +457,14 @@
 					layer.msg("加载数据出错，请刷新页面", {icon: 2})
 				}
 			});
+		}
+		
+		function downloadExcel(){
+			
+			var param = "?status="+status+"&username="+username+"&gender="+gender+"&nationId="+nationId+"&liveTypeId="+liveTypeId+"&certificatesNumber="+certificatesNumber+"&telephone="+telephone;
+
+			location.href = "/jianfuzengxiao/system/common/downloadPerExcel.html" + param; 
+			
 		}
 	</script>
 </body>

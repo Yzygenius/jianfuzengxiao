@@ -6,13 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.POIXMLDocumentPart;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFShape;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -117,7 +120,6 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 		
 		// 判断用07还是03的方法获取图片
 		if (filePath.endsWith(".xls")) {
-			System.out.println(sheet);
 			maplist = getPictures1((HSSFSheet) sheet);
 		} else if (filePath.endsWith(".xlsx")) {
 			maplist = getPictures2((XSSFSheet) sheet);
@@ -162,6 +164,9 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			//社区
 			if (row.getCell((short) 5) != null) {
 				cell = row.getCell((short) 5);
+				if (StringUtils.isBlank(cell.getStringCellValue().trim())) {
+					break;
+				}
 				CommunityInfoMVO communityInfo = new CommunityInfoMVO();
 				communityInfo.setCommunityName(cell.getStringCellValue().trim());
 				communityInfo.setSts(STS_NORMAL);
@@ -407,6 +412,9 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 			//社区
 			if (row.getCell((short) 5) != null) {
 				cell = row.getCell((short) 5);
+				if (StringUtils.isBlank(cell.getStringCellValue().trim())) {
+					break;
+				}
 				CommunityInfoMVO communityInfo = new CommunityInfoMVO();
 				communityInfo.setCommunityName(cell.getStringCellValue().trim());
 				communityInfo.setSts(STS_NORMAL);
@@ -859,6 +867,17 @@ public class ExcelImportService extends BaseService implements IExcelImportServi
 
 	}
 
+	private int CheckRowNull(HSSFRow hssfRow){
+		int num = 0;
+		Iterator<Cell> cellItr =hssfRow.iterator();
+		while(cellItr.hasNext()){
+		 Cell c =cellItr.next();                        
+		 if(c.getCellType() ==HSSFCell.CELL_TYPE_BLANK){
+		 num++;
+		 }
+		}
+		return num;
+	}
 
 
 }

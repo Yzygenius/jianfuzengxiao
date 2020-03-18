@@ -140,13 +140,24 @@ public class PersonnelSysController extends BaseController {
 		return "/system/per-auditZuhuDetail";
 	}
 	
+	@RequestMapping(value="/toPerEdit")
+	public String toPerEdit(PersonnelInfoMVO entity, Model model){
+		try {
+			entity = personnelInfoService.queryBean(entity);
+			model.addAttribute("per", entity);
+		} catch (Exception e) {
+			return "/system/error";
+		}
+		return "/system/per-edit";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/getPerPage", method=RequestMethod.POST)
 	public String getPerPage(PersonnelInfoMVO entity){
 		try{
 			//流管专干
-			if (StringUtils.isBlank(entity.getCommunityId())) {
-				if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+			if (SessionAdmin.get(SessionAdmin.ROLE_ID).equals("3")) {
+				if (StringUtils.isBlank(entity.getCommunityId())) {
 					LgzgMVO lgzg = new LgzgMVO();
 					lgzg.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
 					lgzg.setSts("A");
@@ -164,25 +175,42 @@ public class PersonnelSysController extends BaseController {
 			}
 			//
 			if (StringUtils.equals(SessionAdmin.get(SessionAdmin.ROLE_ID), "2")) {
-				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
-				aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
-				aduitDistribution.setSts("A");
-				List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
-				if (list.size() > 0) {
-					List<String> list2 = new ArrayList<String>();
-					for (AduitDistributionMVO ad : list) {
-						list2.add(ad.getHousesId());
+				if (StringUtils.isBlank(entity.getHousesId())) {
+					AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+					aduitDistribution.setAdminId(SessionAdmin.get(SessionAdmin.ADMIN_ID));
+					aduitDistribution.setSts("A");
+					List<AduitDistributionMVO> list = aduitDistributionService.queryList(aduitDistribution);
+					if (list.size() > 0) {
+						List<String> list2 = new ArrayList<String>();
+						for (AduitDistributionMVO ad : list) {
+							list2.add(ad.getHousesId());
+						}
+						String housesId = StringUtils.join(list2.toArray(),",");
+						entity.setHousesId(housesId);
+					}else {
+						entity.setHousesId("0");
 					}
-					String housesId = StringUtils.join(list2.toArray(),",");
-					entity.setHousesId(housesId);
-				}else {
-					entity.setHousesId("0");
 				}
 			}
 			PageInfo pageInfo = getPage();
 			pageInfo.setSortName("updateTime");
 			pageInfo.setSortOrder("desc");
 			//entity.setSts("A");
+			pageInfo = personnelInfoService.queryPage(entity, pageInfo);
+			return apiResult(RC.SUCCESS, pageInfo);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取人员列表失败", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getHourseDetailPerPage", method=RequestMethod.POST)
+	public String getHourseDetailPerPage(PersonnelInfoMVO entity){
+		try{
+			PageInfo pageInfo = getPage();
+			pageInfo.setSortName("updateTime");
+			pageInfo.setSortOrder("desc");
+			entity.setSts("A");
 			pageInfo = personnelInfoService.queryPage(entity, pageInfo);
 			return apiResult(RC.SUCCESS, pageInfo);
 		} catch (Exception e) {
@@ -234,6 +262,30 @@ public class PersonnelSysController extends BaseController {
 			return apiResult(RC.SUCCESS, list);
 		} catch (Exception e) {
 			return exceptionResult(logger, "审核人员失败", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getPerDetail")
+	public String getPerDetail(PersonnelInfoMVO entity){
+		try{
+			throwAppException(StringUtils.isBlank(entity.getPersonnelId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			entity = personnelInfoService.queryBean(entity);
+			return apiResult(RC.SUCCESS, entity);
+		} catch (Exception e) {
+			return exceptionResult(logger, "获取人员信息失败", e);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updatePer")
+	public String updatePer(PersonnelInfoMVO entity){
+		try{
+			throwAppException(StringUtils.isBlank(entity.getPersonnelId()), RC.USER_INFO_PARAM_USERID_INVALID);
+			personnelInfoService.update(entity);
+			return apiResult(RC.SUCCESS);
+		} catch (Exception e) {
+			return exceptionResult(logger, "更新人员信息失败", e);
 		}
 	}
 	

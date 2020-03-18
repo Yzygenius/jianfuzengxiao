@@ -402,6 +402,15 @@ private static Logger logger = LoggerFactory.getLogger(HousesSysController.class
 				eneity.setHousesId(list.get(i));
 				eneity.setSts("P");
 				housesInfoService.update(eneity);
+				
+				AduitDistributionMVO aduitDistribution = new AduitDistributionMVO();
+				aduitDistribution.setHousesId(list.get(i));
+				aduitDistribution.setSts("A");
+				List<AduitDistributionMVO> list2 = aduitDistributionService.queryList(aduitDistribution);
+				for(AduitDistributionMVO ad : list2){
+					ad.setSts("P");
+					aduitDistributionService.update(ad);
+				}
 			}
 			return apiResult(RC.SUCCESS);
 		} catch (Exception e) {

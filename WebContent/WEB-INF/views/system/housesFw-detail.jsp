@@ -214,7 +214,7 @@
 				'housesId': housesId
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/per/getPerPage.html",
+				url : "/jianfuzengxiao/system/per/getHourseDetailPerPage.html",
 				type : 'post',
 				dataType : "json",
 				data: data,
@@ -241,7 +241,7 @@
 				'housesId': housesId
 			};
 			$.ajax({
-				url : "/jianfuzengxiao/system/per/getPerPage.html",
+				url : "/jianfuzengxiao/system/per/getHourseDetailPerPage.html",
 				type : 'post',
 				dataType : "json",
 				data : data,
@@ -282,7 +282,7 @@
 							tr.find('[row=auditTime]').text(data[i].updateTime);
 							//删除
 							
-							if(roleId == 1){
+							if(roleId == 1 || roleId == 2){
 								if(data[i].status != 1){
 									tr.find('[row=manage]').append('<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="banner_del(this)" href="javascript:;"><i class="layui-icon">&#xe640;</i>解除人房关系</button>');
 								}
