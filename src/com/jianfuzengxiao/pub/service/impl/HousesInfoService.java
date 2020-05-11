@@ -9,7 +9,9 @@ import com.bamboo.framework.exception.AppException;
 import com.bamboo.framework.exception.SysException;
 import com.bamboo.framework.entity.PageInfo;
 import com.jianfuzengxiao.pub.dao.IHousesInfoMDAO;
+import com.jianfuzengxiao.pub.dao.IPersonnelInfoMDAO;
 import com.jianfuzengxiao.pub.entity.HousesInfoMVO;
+import com.jianfuzengxiao.pub.entity.PersonnelInfoMVO;
 import com.jianfuzengxiao.pub.service.IHousesInfoService;
 
 @Service
@@ -17,6 +19,9 @@ public class HousesInfoService extends BaseService implements IHousesInfoService
 
 	@Autowired
 	private IHousesInfoMDAO housesInfoMDAO;
+	
+	@Autowired
+	private IPersonnelInfoMDAO personnelInfoMDAO;
 
 	/** 插入 */
 	@Override
@@ -54,7 +59,25 @@ public class HousesInfoService extends BaseService implements IHousesInfoService
 	/** 分页查询 */
 	@Override
 	public PageInfo queryPage(HousesInfoMVO housesInfo, PageInfo pagInfo) throws SysException, AppException {
-		return housesInfoMDAO.queryPage(housesInfo, pagInfo);
+		pagInfo = housesInfoMDAO.queryPage(housesInfo, pagInfo);
+		List<HousesInfoMVO> housesInfoList = (List<HousesInfoMVO>) pagInfo.getRows();
+		for (HousesInfoMVO houses : housesInfoList) {
+			PersonnelInfoMVO per = new PersonnelInfoMVO();
+			per.setHousesId(houses.getHousesId());
+			per.setSts(STS_NORMAL);
+			List<PersonnelInfoMVO> perList = personnelInfoMDAO.queryList(per);
+			houses.setLeaseCount(String.valueOf(perList.size()));
+			per.setLiveTypeId("1,2,3,4");
+			List<PersonnelInfoMVO> perList2 = personnelInfoMDAO.queryList(per);
+			if (perList2.size() > 0) {
+				per = perList2.get(0);
+				houses.setFangzhu(per.getUsername());
+			}else {
+				houses.setFangzhu("");
+			}
+		}
+		pagInfo.setRows(housesInfoList);
+		return pagInfo;
 	}
 
 	@Override
